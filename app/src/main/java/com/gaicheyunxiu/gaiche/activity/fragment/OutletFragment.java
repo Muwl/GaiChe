@@ -23,6 +23,7 @@ public class OutletFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view=inflater.inflate(R.layout.fragment_store,container,false);
         title= (TextView) view.findViewById(R.id.title_text);
+        view.findViewById(R.id.title_back).setVisibility(View.GONE);
         title.setText("门店");
         return view;
 

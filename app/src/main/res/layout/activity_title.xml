@@ -15,6 +15,16 @@
         android:clickable="true"
         android:src="@drawable/title_code_btn"/>
 
+    <ImageView
+        android:id="@+id/title_back"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:paddingLeft="13dp"
+        android:paddingRight="13dp"
+        android:clickable="true"
+        android:src="@drawable/title_back"/>
+
+
     <TextView
         android:id="@+id/title_text"
         android:layout_width="wrap_content"

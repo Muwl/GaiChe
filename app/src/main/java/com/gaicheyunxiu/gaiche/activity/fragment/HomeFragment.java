@@ -47,6 +47,7 @@ public class HomeFragment extends Fragment {
         lin = (LinearLayout) view.findViewById(R.id.home_lin);
         code.setVisibility(View.VISIBLE);
         message.setVisibility(View.VISIBLE);
+        view.findViewById(R.id.title_back).setVisibility(View.GONE);
         title.setText("盖车云修");
         return view;
 

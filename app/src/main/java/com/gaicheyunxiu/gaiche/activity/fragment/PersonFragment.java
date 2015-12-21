@@ -1,3 +1,5 @@
+
+
 package com.gaicheyunxiu.gaiche.activity.fragment;
 
 import android.os.Bundle;
@@ -27,6 +29,8 @@ public class PersonFragment extends Fragment implements View.OnClickListener{
     private TextView balance;
 
     private TextView title;
+
+    private View dataView;
 
     private TextView rigService;
 
@@ -65,6 +69,7 @@ public class PersonFragment extends Fragment implements View.OnClickListener{
         no= (TextView) view.findViewById(R.id.person_no);
         name= (TextView) view.findViewById(R.id.person_name);
         balance= (TextView) view.findViewById(R.id.person_balance);
+        dataView=view.findViewById(R.id.person_data);
         cartView=view.findViewById(R.id.person_cart);
         orderView=view.findViewById(R.id.person_order);
         serviceOrderView=view.findViewById(R.id.person_serviceorder);
@@ -77,6 +82,7 @@ public class PersonFragment extends Fragment implements View.OnClickListener{
         logisticsView=view.findViewById(R.id.person_logistics);
         crowdorderView=view.findViewById(R.id.person_crowdorder);
         settingView=view.findViewById(R.id.person_setting);
+        view.findViewById(R.id.title_back).setVisibility(View.GONE);
         title.setText("我的");
         return view;
 
@@ -88,6 +94,7 @@ public class PersonFragment extends Fragment implements View.OnClickListener{
         rigService.setOnClickListener(this);
         cartView.setOnClickListener(this);
         orderView.setOnClickListener(this);
+        dataView.setOnClickListener(this);
         serviceOrderView.setOnClickListener(this);
         earningsView.setOnClickListener(this);
         moneyView.setOnClickListener(this);
@@ -106,6 +113,11 @@ public class PersonFragment extends Fragment implements View.OnClickListener{
 
         switch (view.getId()){
             case R.id.title_service:
+
+                break;
+
+            case R.id.person_data:
+
                 break;
 
             case R.id.person_cart:
@@ -115,6 +127,7 @@ public class PersonFragment extends Fragment implements View.OnClickListener{
             case R.id.person_order:
 
                 break;
+
 
             case R.id.person_serviceorder:
 
