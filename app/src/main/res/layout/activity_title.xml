@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:background="@color/title_bg"
+    android:layout_height="49dp">
+
+
+    <ImageView
+        android:id="@+id/title_code"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:paddingLeft="13dp"
+        android:paddingRight="13dp"
+        android:visibility="gone"
+        android:clickable="true"
+        android:src="@drawable/title_code_btn"/>
+
+    <TextView
+        android:id="@+id/title_text"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:layout_centerInParent="true"
+        android:textColor="@color/title_text"
+        android:text="盖车云修"
+        android:textSize="@dimen/title_font"/>
+
+    <ImageView
+        android:id="@+id/title_message"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:paddingLeft="13dp"
+        android:paddingRight="13dp"
+        android:layout_alignParentRight="true"
+        android:src="@drawable/title_message_btn"
+        android:visibility="gone"
+        android:clickable="true"
+        />
+
+    <TextView
+        android:id="@+id/title_service"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:clickable="true"
+        android:gravity="center"
+        android:paddingRight="13dp"
+        android:text="客服"
+        android:textColor="@color/title_text"
+        android:textSize="@dimen/first_font"
+        android:visibility="gone" />
+
+</RelativeLayout>

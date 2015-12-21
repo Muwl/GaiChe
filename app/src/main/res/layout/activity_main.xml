@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/activity_bg"
+    android:orientation="vertical"
+    tools:context=".activity.MainActivity">
+
+    <LinearLayout
+        android:id="@+id/main_fragment"
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical" />
+
+    <LinearLayout
+        android:id="@+id/main_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="58dp"
+        android:background="@color/bottom_bg"
+        android:orientation="vertical"
+        android:padding="0dp">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="@color/bottom_div" />
+
+        <RadioGroup
+            android:id="@+id/main_rg"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:orientation="horizontal"
+            android:padding="0dp">
+            <RadioButton
+                android:id="@+id/main_bottom_home"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:button="@null"
+                android:clickable="true"
+                android:drawableTop="@drawable/bottom_home_rb"
+                android:gravity="center"
+                android:paddingBottom="0dp"
+                android:paddingLeft="0dp"
+                android:paddingRight="0dp"
+                android:paddingTop="4dp"
+                android:text="首页"
+                android:textColor="@color/bottom_text_bn"
+                android:textSize="@dimen/thrid_font" />
+
+            <RadioButton
+                android:id="@+id/main_bottom_store"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:button="@null"
+                android:clickable="true"
+                android:drawableTop="@drawable/bottom_store_rb"
+                android:gravity="center"
+                android:paddingBottom="0dp"
+                android:paddingLeft="0dp"
+                android:paddingRight="0dp"
+                android:paddingTop="4dp"
+                android:text="商城"
+                android:textColor="@color/bottom_text_bn"
+                android:textSize="@dimen/thrid_font" />
+
+            <RadioButton
+                android:id="@+id/main_bottom_outlet"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:button="@null"
+                android:clickable="true"
+                android:drawableTop="@drawable/bottom_outlet_rb"
+                android:gravity="center"
+                android:paddingBottom="0dp"
+                android:paddingLeft="0dp"
+                android:paddingRight="0dp"
+                android:paddingTop="4dp"
+                android:text="商城"
+                android:textColor="@color/bottom_text_bn"
+                android:textSize="@dimen/thrid_font" />
+
+            <RadioButton
+                android:id="@+id/main_bottom_person"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:button="@null"
+                android:clickable="true"
+                android:drawableTop="@drawable/bottom_person_rb"
+                android:gravity="center"
+                android:paddingBottom="0dp"
+                android:paddingLeft="0dp"
+                android:paddingRight="0dp"
+                android:paddingTop="4dp"
+                android:text="我的"
+                android:textColor="@color/bottom_text_bn"
+                android:textSize="@dimen/thrid_font" />
+
+        </RadioGroup>
+
+    </LinearLayout>
+
+
+</LinearLayout>
