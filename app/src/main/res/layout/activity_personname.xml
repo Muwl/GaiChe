@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:background="@color/activity_bg"
+    android:layout_height="match_parent">
+
+    <include
+        android:id="@+id/personname_title"
+        layout="@layout/activity_title"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:background="@color/write"
+        android:layout_marginTop="10dp"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/personname_cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:paddingRight="20dp"
+            android:paddingLeft="10dp"
+            android:paddingTop="10dp"
+            android:layout_alignParentRight="true"
+            android:paddingBottom="10dp"
+            android:src="@mipmap/input_cancel"/>
+        <EditText
+            android:id="@+id/personname_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="20dp"
+            android:paddingRight="10dp"
+            android:paddingTop="10dp"
+            android:textSize="@dimen/first_font"
+            android:textColor="#5F5D5D"
+            android:background="@null"
+            android:layout_toLeftOf="@+id/personname_cancel"
+            android:text="未设置"
+            android:layout_centerVertical="true"
+            android:paddingBottom="10dp"
+            />
+
+    </RelativeLayout>
+
+</LinearLayout>

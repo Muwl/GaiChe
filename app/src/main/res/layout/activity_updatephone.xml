@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:background="@color/write"
+    android:layout_height="match_parent">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:scrollbars="none"
+        android:fillViewport="true"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="center_horizontal">
+
+            <include
+                android:id="@+id/updatephone_title"
+                layout="@layout/activity_title"/>
+
+            <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:layout_marginLeft="25dp"
+            android:layout_marginRight="25dp">
+            <ImageView
+                android:id="@+id/updatephone_image1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:src="@mipmap/phone_phone"/>
+
+            <TextView
+                android:id="@+id/updatephone_oldphone"
+                android:layout_toRightOf="@id/updatephone_image1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:paddingBottom="5dp"
+                android:textColor="#332C2B"
+                android:textSize="@dimen/first_font"
+                android:text="188****3367"
+                />
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_toRightOf="@id/updatephone_image1"
+                android:layout_below="@id/updatephone_oldphone"
+                android:layout_marginLeft="6dp"
+                android:background="@color/bottom_div"/>
+        </RelativeLayout>
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:layout_marginLeft="25dp"
+                android:layout_marginRight="25dp">
+                <ImageView
+                    android:id="@+id/updatephone_image2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:src="@mipmap/phone_code"/>
+
+
+                <TextView
+                    android:id="@+id/updatephone_getoldcode"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/code_bg_btn"
+                    android:textColor="#333333"
+                    android:textSize="@dimen/thrid_font"
+                    android:text="获取验证码"
+                    android:padding="8dp"
+                    android:layout_alignParentRight="true"/>
+
+                <EditText
+                    android:id="@+id/updatephone_oldcode"
+                    android:layout_toRightOf="@id/updatephone_image2"
+                    android:layout_toLeftOf="@id/updatephone_getoldcode"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="15dp"
+                    android:paddingRight="15dp"
+                    android:paddingBottom="5dp"
+                    android:background="@null"
+                    android:textColorHint="#B3B3B3"
+                    android:hint="请输入验证码"
+                    android:textColor="#332C2B"
+                    android:textSize="@dimen/first_font"
+                    />
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_toRightOf="@id/updatephone_image2"
+                    android:layout_below="@id/updatephone_getoldcode"
+                    android:layout_marginLeft="6dp"
+                    android:background="@color/bottom_div"/>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:layout_marginLeft="25dp"
+                android:layout_marginRight="25dp">
+                <ImageView
+                    android:id="@+id/updatephone_image3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:src="@mipmap/phone_phone"/>
+
+                <EditText
+                    android:id="@+id/updatephone_newphone"
+                    android:layout_toRightOf="@id/updatephone_image3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="15dp"
+                    android:paddingRight="15dp"
+                    android:paddingBottom="5dp"
+                    android:textColor="#332C2B"
+                    android:background="@null"
+                    android:textSize="@dimen/first_font"
+                    android:text="188****3367"
+                    />
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_toRightOf="@id/updatephone_image3"
+                    android:layout_below="@id/updatephone_newphone"
+                    android:layout_marginLeft="6dp"
+                    android:background="@color/bottom_div"/>
+            </RelativeLayout>
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:layout_marginLeft="25dp"
+                android:layout_marginRight="25dp">
+                <ImageView
+                    android:id="@+id/updatephone_image4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:src="@mipmap/phone_code"/>
+
+
+                <TextView
+                    android:id="@+id/updatephone_getnewcode"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/code_bg_btn"
+                    android:textColor="#333333"
+                    android:textSize="@dimen/thrid_font"
+                    android:text="获取验证码"
+                    android:padding="8dp"
+                    android:layout_alignParentRight="true"/>
+
+                <EditText
+                    android:id="@+id/updatephone_newcode"
+                    android:layout_toRightOf="@id/updatephone_image4"
+                    android:layout_toLeftOf="@id/updatephone_getnewcode"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="15dp"
+                    android:paddingRight="15dp"
+                    android:paddingBottom="5dp"
+                    android:background="@null"
+                    android:textColorHint="#B3B3B3"
+                    android:hint="请输入验证码"
+                    android:textColor="#332C2B"
+                    android:textSize="@dimen/first_font"
+                    />
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_toRightOf="@id/updatephone_image4"
+                    android:layout_below="@id/updatephone_getnewcode"
+                    android:layout_marginLeft="6dp"
+                    android:background="@color/bottom_div"/>
+            </RelativeLayout>
+
+
+            <TextView
+                android:id="@+id/updatephone_ok"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/write"
+                android:layout_marginTop="25dp"
+                android:background="@drawable/submit_bg_btn"
+                android:textSize="@dimen/first_font"
+                android:text="提交"
+                android:padding="12dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:gravity="center"/>
+
+        </LinearLayout>
+
+
+    </ScrollView>
+
+
+
+</LinearLayout>

@@ -2,6 +2,7 @@
 
 package com.gaicheyunxiu.gaiche.activity.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -12,6 +13,7 @@ import android.webkit.WebView;
 import android.widget.TextView;
 
 import com.gaicheyunxiu.gaiche.R;
+import com.gaicheyunxiu.gaiche.activity.PersonDataActivity;
 import com.gaicheyunxiu.gaiche.view.RoundAngleImageView;
 
 
@@ -117,6 +119,8 @@ public class PersonFragment extends Fragment implements View.OnClickListener{
                 break;
 
             case R.id.person_data:
+                Intent intent=new Intent(getActivity(), PersonDataActivity.class);
+                startActivity(intent);
 
                 break;
 

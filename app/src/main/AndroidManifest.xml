@@ -8,7 +8,10 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity.WelcomeActivity">
+        <activity android:name=".activity.WelcomeActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden|adjustResize" >>
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -16,7 +19,56 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".activity.MainActivity">
+        <activity android:name=".activity.MainActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden|adjustResize" >>
+        </activity>
+
+        <activity
+            android:name=".activity.PersonDataActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden|adjustResize" >
+        </activity>
+        <activity
+            android:name=".activity.PersonnameActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden|adjustResize" >
+        </activity>
+        <activity
+            android:name=".activity.PersonemailActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden|adjustResize" >
+        </activity>
+        <activity
+            android:name=".activity.UpdatePhoneActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden|adjustResize" >
+        </activity>
+        <activity
+            android:name=".activity.PasswordActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden|adjustResize" >
+        </activity>
+
+        <activity
+            android:name=".activity.LoginPwdActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden|adjustResize" >
+        </activity>
+
+
+        <activity
+            android:name=".activity.PayPwdActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden|adjustResize" >
         </activity>
     </application>
 

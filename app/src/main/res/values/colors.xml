@@ -13,5 +13,6 @@
     <color name="item_press">#ebe7e7</color>
     <color name="write">#ffffff</color>
     <color name="text_press">#818181</color>
+    <color name="transparent">#00000000</color>
 
 </resources>

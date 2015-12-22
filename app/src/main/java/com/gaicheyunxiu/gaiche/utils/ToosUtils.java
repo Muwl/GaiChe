@@ -1,5 +1,6 @@
 package com.gaicheyunxiu.gaiche.utils;
 
+import android.os.Environment;
 import android.widget.TextView;
 
 
@@ -42,6 +43,16 @@ public class ToosUtils {
 	 */
 	public static boolean isTextEmpty(TextView textView) {
 		return isStringEmpty(getTextContent(textView));
+	}
+
+
+	public static boolean hasSdcard() {
+		if (Environment.getExternalStorageState().equals(
+				Environment.MEDIA_MOUNTED)) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 
