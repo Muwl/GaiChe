@@ -53,7 +53,7 @@ public class PasswordActivity extends  BaseActivity implements View.OnClickListe
                 startActivity(intent);
                 break;
             case  R.id.password_paypwd:
-                Intent intent1=new Intent(PasswordActivity.this,PayPwdActivity.class);
+                Intent intent1=new Intent(PasswordActivity.this,PaymentPwdActivity.class);
                 startActivity(intent1);
                 break;
         }
