@@ -14,5 +14,7 @@
     <color name="write">#ffffff</color>
     <color name="text_press">#818181</color>
     <color name="transparent">#00000000</color>
+    <color name="clear_normal">#838080</color>
+    <color name="clear_press">#5F5D5D</color>
 
 </resources>

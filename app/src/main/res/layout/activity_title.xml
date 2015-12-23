@@ -61,4 +61,35 @@
         android:textSize="@dimen/first_font"
         android:visibility="gone" />
 
+
+    <RelativeLayout
+        android:id="@+id/title_map"
+        android:layout_width="wrap_content"
+        android:paddingRight="13dp"
+        android:clickable="true"
+        android:visibility="gone"
+        android:layout_height="match_parent">
+
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:src="@drawable/title_map_btn"
+            android:clickable="true"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:gravity="center"
+            android:text="北京"
+            android:textColor="@color/title_text"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="10dp"
+            android:textSize="12sp" />
+
+
+    </RelativeLayout>
+
 </RelativeLayout>

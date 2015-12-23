@@ -13,6 +13,7 @@ import android.webkit.WebView;
 import android.widget.TextView;
 
 import com.gaicheyunxiu.gaiche.R;
+import com.gaicheyunxiu.gaiche.activity.CartActivity;
 import com.gaicheyunxiu.gaiche.activity.PersonDataActivity;
 import com.gaicheyunxiu.gaiche.view.RoundAngleImageView;
 
@@ -125,6 +126,8 @@ public class PersonFragment extends Fragment implements View.OnClickListener{
                 break;
 
             case R.id.person_cart:
+                Intent intent2=new Intent(getActivity(), CartActivity.class);
+                startActivity(intent2);
 
                 break;
 

@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:background="@color/write"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:padding="10dp"
+        android:background="#f7f7f7"
+        android:textColor="#332C2B"
+        android:textSize="@dimen/thrid_font"
+        android:text="用户购买保养类商品后，可以去盖车云修门店进行更换：暂无门店的地区，可以到自己信任的服务机构去更换。"
+        />
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:background="@color/bottom_div"
+        android:layout_marginTop="10dp"
+        android:layout_height="1px" />
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#f7f7f7"
+        android:gravity="center_vertical"
+        android:paddingLeft="13dp"
+        >
+        <TextView
+            android:id="@+id/cart_item_brand"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:textColor="#5F5D5D"
+            android:textSize="@dimen/second_font"
+            android:text="奥迪A6 1.8L 2004年产"
+            />
+
+        <TextView
+            android:id="@+id/cart_item_clear"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/clear_btn"
+            android:paddingRight="13dp"
+            android:paddingLeft="10dp"
+            android:paddingTop="10dp"
+            android:clickable="true"
+            android:paddingBottom="10dp"
+            android:textSize="@dimen/second_font"
+            android:text="清空商品"
+            />
+
+    </LinearLayout>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:background="@color/bottom_div"
+        android:layout_height="1px" />
+
+    <com.gaicheyunxiu.gaiche.view.MyListView
+        android:id="@+id/cart_item_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:background="@color/bottom_div"
+        android:layout_height="1px" />
+
+    <RelativeLayout
+        android:id="@+id/cart_item_outletselect"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="13dp"
+        android:layout_marginRight="13dp"
+        android:paddingTop="13dp"
+        android:paddingBottom="15dp"
+        android:background="@drawable/outletselect_bg_btn"
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#6e6c6c"
+            android:textSize="@dimen/first_font"
+            android:text="选择安装门店"
+            android:layout_centerInParent="true"/>
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/main_go"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="6dp"/>
+
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/cart_item_num"
+        android:layout_width="match_parent"
+        android:layout_marginLeft="13dp"
+        android:layout_marginRight="13dp"
+        android:layout_marginTop="13dp"
+        android:textColor="#332C2B"
+        android:textSize="@dimen/thrid_font"
+        android:text="共2件商品"
+        android:gravity="right"
+        android:layout_height="wrap_content" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="13dp"
+        android:gravity="center_vertical|right"
+        android:layout_marginRight="13dp"
+        android:layout_marginTop="8dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:textColor="#332C2B"
+            android:textSize="@dimen/thrid_font"
+            android:text="商品总金额（不含运费）："
+            android:gravity="right"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/cart_item_money"
+            android:layout_width="wrap_content"
+            android:textColor="#332C2B"
+            android:textSize="@dimen/second_font"
+            android:text="￥200.00"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/cart_item_m"
+        android:layout_width="match_parent"
+        android:layout_marginLeft="13dp"
+        android:layout_marginRight="13dp"
+        android:layout_marginTop="8dp"
+        android:textColor="#332C2B"
+        android:textSize="@dimen/thrid_font"
+        android:text="2.00M"
+        android:gravity="right"
+        android:layout_height="wrap_content" />
+
+
+    <TextView
+        android:id="@+id/cart_item_ok"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/write"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/submit_bg_btn"
+        android:textSize="@dimen/first_font"
+        android:text="结算"
+        android:padding="12dp"
+        android:layout_marginLeft="13dp"
+        android:layout_marginRight="13dp"
+        android:gravity="center"/>
+
+
+
+</LinearLayout>
