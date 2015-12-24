@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="@color/write"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <include
+        android:id="@+id/ouletsel_title"
+        layout="@layout/activity_title"/>
+
+    <RadioGroup
+        android:id="@+id/ouletsel_rb"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
+
+        <RadioButton
+            android:id="@+id/ouletsel_default"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textColor="@color/store_text_rb"
+            android:textSize="@dimen/second_font"
+            android:gravity="center"
+            android:paddingTop="10dp"
+            android:button="@null"
+            android:paddingBottom="10dp"
+            android:text="默认"
+            />
+
+        <ImageView
+            android:layout_width="1px"
+            android:layout_height="match_parent"
+            android:background="@color/bottom_div"/>
+        <RadioButton
+            android:id="@+id/ouletsel_moods"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:textColor="@color/store_text_rb"
+            android:textSize="@dimen/second_font"
+            android:paddingTop="10dp"
+            android:button="@null"
+            android:paddingBottom="10dp"
+            android:text="人气"
+            />
+        <ImageView
+            android:layout_width="1px"
+            android:layout_height="match_parent"
+            android:background="@color/bottom_div"/>
+        <RadioButton
+            android:id="@+id/ouletsel_technology"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:textColor="@color/store_text_rb"
+            android:textSize="@dimen/second_font"
+            android:button="@null"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:text="技术"
+        />
+        <ImageView
+            android:layout_width="1px"
+            android:layout_height="match_parent"
+            android:background="@color/bottom_div"/>
+        <RadioButton
+            android:id="@+id/ouletsel_price"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textColor="@color/store_text_rb"
+            android:textSize="@dimen/second_font"
+            android:paddingTop="10dp"
+            android:button="@null"
+            android:gravity="center"
+            android:paddingBottom="10dp"
+            android:text="价格"
+        />
+    </RadioGroup>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/bottom_div"/>
+
+    <ListView
+        android:id="@+id/ouletsel_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="none"></ListView>
+
+
+</LinearLayout>
