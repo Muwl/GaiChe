@@ -1,12 +1,14 @@
 package com.gaicheyunxiu.gaiche.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.gaicheyunxiu.gaiche.R;
+import com.gaicheyunxiu.gaiche.activity.OultSelActivity;
 import com.gaicheyunxiu.gaiche.view.MyListView;
 
 /**
@@ -54,6 +56,14 @@ public class CartAdapter extends BaseAdapter{
         }else{
             holder= (ViewHolder) convertView.getTag();
         }
+
+        holder.outlet.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent(context, OultSelActivity.class);
+                context.startActivity(intent);
+            }
+        });
         CartItemAdapter adapter=new CartItemAdapter(context);
         holder.listView.setAdapter(adapter);
         return convertView;
