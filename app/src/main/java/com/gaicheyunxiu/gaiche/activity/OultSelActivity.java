@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.gaicheyunxiu.gaiche.R;
 import com.gaicheyunxiu.gaiche.adapter.OuletSelAdapter;
+import com.gaicheyunxiu.gaiche.utils.DensityUtil;
 
 /**
  * Created by Mu on 2015/12/24.
@@ -37,10 +38,13 @@ public class OultSelActivity extends BaseActivity implements View.OnClickListene
 
     private OuletSelAdapter adapter;
 
+    private int width;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ouletsel);
+        width= DensityUtil.getScreenWidth(this);
         initView();
     }
 
@@ -55,12 +59,14 @@ public class OultSelActivity extends BaseActivity implements View.OnClickListene
         price= (RadioButton) findViewById(R.id.ouletsel_price);
         listView= (ListView) findViewById(R.id.ouletsel_list);
 
-        back.setOnClickListener(this);
+
         title.setText("选择门店");
         map.setVisibility(View.VISIBLE);
         map.setOnClickListener(this);
-        adapter=new OuletSelAdapter(this);
+        adapter=new OuletSelAdapter(this,width);
         listView.setAdapter(adapter);
+        group.check(R.id.ouletsel_default);
+        back.setOnClickListener(this);
 
 
     }

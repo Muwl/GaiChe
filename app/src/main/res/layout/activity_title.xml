@@ -65,6 +65,7 @@
     <RelativeLayout
         android:id="@+id/title_map"
         android:layout_width="wrap_content"
+        android:layout_toRightOf="@id/title_text"
         android:paddingRight="13dp"
         android:clickable="true"
         android:visibility="gone"

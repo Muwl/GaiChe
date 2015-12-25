@@ -4,7 +4,9 @@ import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.CheckBox;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
@@ -18,8 +20,12 @@ public class OuletSelAdapter extends BaseAdapter {
 
     private Context context;
 
-    public OuletSelAdapter(Context context) {
+    private int width;
+
+    public OuletSelAdapter(Context context,int width) {
         this.context = context;
+        this.width=width;
+
     }
 
     @Override
@@ -44,6 +50,7 @@ public class OuletSelAdapter extends BaseAdapter {
             convertView=View.inflate(context, R.layout.ouletsel_item,null);
             holder=new ViewHolder();
             holder.imageView= (ImageView) convertView.findViewById(R.id.outlet_item_image);
+            holder.cb= (CheckBox) convertView.findViewById(R.id.outlet_item_cb);
             holder.name= (TextView) convertView.findViewById(R.id.outlet_item_name);
             holder.bar= (RatingBar) convertView.findViewById(R.id.outlet_item_bar);
             holder.num= (TextView) convertView.findViewById(R.id.outlet_item_discussnum);
@@ -55,10 +62,13 @@ public class OuletSelAdapter extends BaseAdapter {
         }else{
             holder= (ViewHolder) convertView.getTag();
         }
+
+        holder.bar.setLayoutParams(new LinearLayout.LayoutParams((int)(0.21*width),(int)(0.045*width)));
         return convertView;
     }
     class ViewHolder{
         public ImageView imageView;
+        public CheckBox cb;
         public TextView name;
         public RatingBar bar;
         public TextView num;

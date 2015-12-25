@@ -19,6 +19,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_marginBottom="10dp"
+        android:layout_marginRight="12dp"
         android:layout_centerVertical="true"
         android:button="@drawable/store_rb"/>
 
@@ -70,7 +71,7 @@
                 android:layout_height="wrap_content"
                 android:textColor="#5F5D5D"
                 android:text="868条"
-                android:layout_marginLeft="10dp"
+                android:layout_marginLeft="15dp"
                 android:textSize="@dimen/thrid_font"/>
         </LinearLayout>
 
