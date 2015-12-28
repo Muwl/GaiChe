@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:background="@color/write"
+    android:layout_height="match_parent">
+
+    <include
+        android:id="@+id/shoporder_back"
+        layout="@layout/activity_title"/>
+
+    <RadioGroup
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/activity_bg"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/shoporder_all"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textSize="@dimen/first_font"
+            android:textColor="@color/bottom_text_bn"
+            android:text="全部"
+            android:background="@drawable/rb_bg"
+            android:button="@null"
+            android:gravity="center"
+            android:paddingTop="12dp"
+            android:paddingBottom="12dp"/>
+
+        <ImageView
+            android:layout_width="1px"
+            android:layout_height="match_parent"
+            android:layout_marginTop="3dp"
+            android:layout_marginBottom="3dp"
+            android:background="@color/bottom_div"/>
+
+        <RadioButton
+            android:id="@+id/shoporder_paying"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textSize="@dimen/first_font"
+            android:textColor="@color/bottom_text_bn"
+            android:text="待支付"
+            android:background="@drawable/rb_bg"
+            android:button="@null"
+            android:gravity="center"
+            android:paddingTop="12dp"
+            android:paddingBottom="12dp"/>
+
+        <ImageView
+            android:layout_width="1px"
+            android:layout_height="match_parent"
+            android:layout_marginTop="3dp"
+            android:layout_marginBottom="3dp"
+            android:background="@color/bottom_div"/>
+
+
+        <RadioButton
+            android:id="@+id/shoporder_receiving"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textSize="@dimen/first_font"
+            android:textColor="@color/bottom_text_bn"
+            android:text="待收货"
+            android:background="@drawable/rb_bg"
+            android:button="@null"
+            android:gravity="center"
+            android:paddingTop="12dp"
+            android:paddingBottom="12dp"/>
+
+        <ImageView
+            android:layout_width="1px"
+            android:layout_height="match_parent"
+            android:layout_marginTop="3dp"
+            android:layout_marginBottom="3dp"
+            android:background="@color/bottom_div"/>
+
+        <RadioButton
+            android:id="@+id/shoporder_evaluating"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textSize="@dimen/first_font"
+            android:textColor="@color/bottom_text_bn"
+            android:text="待评价"
+            android:background="@drawable/rb_bg"
+            android:button="@null"
+            android:gravity="center"
+            android:paddingTop="12dp"
+            android:paddingBottom="12dp"/>
+    </RadioGroup>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/activity_bg"/>
+
+    <ListView
+        android:id="@+id/shoporder_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:divider="@drawable/dashed_lin"
+        android:dividerHeight="1px"
+        android:scrollbars="none"/>
+
+</LinearLayout>

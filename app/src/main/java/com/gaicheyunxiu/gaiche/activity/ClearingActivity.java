@@ -4,10 +4,10 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.ImageView;
-import android.widget.TextClock;
 import android.widget.TextView;
 
 import com.gaicheyunxiu.gaiche.R;
+import com.gaicheyunxiu.gaiche.dialog.PaymentDialog;
 
 /**
  * Created by Mu on 2015/12/28.
@@ -84,7 +84,7 @@ public class ClearingActivity extends BaseActivity implements View.OnClickListen
         money= (TextView) findViewById(R.id.clearing_money);
         submit= (TextView) findViewById(R.id.clearing_ok);
 
-        title.setText("结算");
+        title.setText("去结算");
         back.setOnClickListener(this);
         addressview.setOnClickListener(this);
         zhifubao.setOnClickListener(this);
@@ -119,6 +119,7 @@ public class ClearingActivity extends BaseActivity implements View.OnClickListen
                 break;
 
             case R.id.clearing_ok:
+                PaymentDialog dialog=new PaymentDialog(ClearingActivity.this);
                 break;
         }
     }

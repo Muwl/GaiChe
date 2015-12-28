@@ -28,6 +28,11 @@ public class CartActivity extends BaseActivity  implements View.OnClickListener 
 
     private CartAdapter adapter;
 
+    private View empty;
+
+    private TextView goSale;
+
+    private TextView goCulture;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +46,10 @@ public class CartActivity extends BaseActivity  implements View.OnClickListener 
         title= (TextView) findViewById(R.id.title_text);
         map=findViewById(R.id.title_map);
         listView= (ListView) findViewById(R.id.cart_list);
+        empty=findViewById(R.id.cart_empty);
+        goSale= (TextView) findViewById(R.id.cart_gosale);
+        goCulture= (TextView) findViewById(R.id.cart_gosale);
+
         adapter=new CartAdapter(this);
 
         back.setOnClickListener(this);
