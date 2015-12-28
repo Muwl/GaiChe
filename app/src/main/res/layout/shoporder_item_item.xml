@@ -1,6 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:orientation="horizontal"
+    android:background="@color/write"
+    android:padding="10dp"
+    android:gravity="center_vertical"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/shoporder_item_item_image"
+        android:layout_width="101dp"
+        android:layout_height="101dp"
+        android:scaleType="centerCrop"
+        android:src="@color/activity_bg"/>
+
+    
+
+
+
+
 
 </LinearLayout>
