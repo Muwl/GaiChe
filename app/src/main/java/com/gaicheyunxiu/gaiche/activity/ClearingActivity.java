@@ -1,0 +1,125 @@
+package com.gaicheyunxiu.gaiche.activity;
+
+import android.os.Bundle;
+import android.view.View;
+import android.widget.CheckBox;
+import android.widget.ImageView;
+import android.widget.TextClock;
+import android.widget.TextView;
+
+import com.gaicheyunxiu.gaiche.R;
+
+/**
+ * Created by Mu on 2015/12/28.
+ * 结算界面
+ */
+public class ClearingActivity extends BaseActivity implements View.OnClickListener{
+
+    private ImageView back;
+
+    private TextView title;
+
+    private TextView person;
+
+    private TextView phone;
+
+    private TextView address;
+
+    private TextView delivery;
+
+    private View addressview;
+
+    private View wallet;
+
+    private CheckBox walletcb;
+
+    private View zhifubao;
+
+    private CheckBox zhifubaocb;
+
+    private View weixin;
+
+    private CheckBox weixincb;
+
+    private View yinlian;
+
+    private CheckBox yinliancb;
+
+    private TextView installcost;
+
+    private TextView shopPrice;
+
+    private TextView freightcost;
+
+    private TextView money;
+
+    private TextView submit;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_clearing);
+        initView();
+    }
+
+    private void initView() {
+        back= (ImageView) findViewById(R.id.title_back);
+        title= (TextView) findViewById(R.id.title_text);
+        person= (TextView) findViewById(R.id.clearing_person);
+        phone= (TextView) findViewById(R.id.clearing_phone);
+        address= (TextView) findViewById(R.id.clearing_address);
+        addressview=findViewById(R.id.clearing_addview);
+        delivery= (TextView) findViewById(R.id.clearing_delivery);
+        wallet=findViewById(R.id.pay_wallet);
+        walletcb= (CheckBox) findViewById(R.id.pay_wallet_cb);
+        zhifubao=findViewById(R.id.pay_zhifubao);
+        zhifubaocb= (CheckBox) findViewById(R.id.pay_zhifubao_cb);
+        weixin=findViewById(R.id.pay_weixin);
+        weixincb= (CheckBox) findViewById(R.id.pay_weixin_cb);
+        yinlian=findViewById(R.id.pay_yinlian);
+        yinliancb= (CheckBox) findViewById(R.id.pay_yinlian_cb);
+        installcost= (TextView) findViewById(R.id.pay_install_cost);
+        shopPrice= (TextView) findViewById(R.id.pay_shop_cost);
+        freightcost= (TextView) findViewById(R.id.pay_freight_cost);
+        money= (TextView) findViewById(R.id.clearing_money);
+        submit= (TextView) findViewById(R.id.clearing_ok);
+
+        title.setText("结算");
+        back.setOnClickListener(this);
+        addressview.setOnClickListener(this);
+        zhifubao.setOnClickListener(this);
+        weixin.setOnClickListener(this);
+        wallet.setOnClickListener(this);
+        yinlian.setOnClickListener(this);
+        submit.setOnClickListener(this);
+
+    }
+
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.title_back:
+                finish();
+                break;
+
+            case R.id.clearing_addview:
+                break;
+
+            case R.id.pay_zhifubao:
+                break;
+
+            case R.id.pay_wallet:
+                break;
+
+            case R.id.pay_weixin:
+                break;
+
+            case R.id.pay_yinlian:
+                break;
+
+            case R.id.clearing_ok:
+                break;
+        }
+    }
+}

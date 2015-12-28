@@ -8,6 +8,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.gaicheyunxiu.gaiche.R;
+import com.gaicheyunxiu.gaiche.activity.ClearingActivity;
 import com.gaicheyunxiu.gaiche.activity.OultSelActivity;
 import com.gaicheyunxiu.gaiche.view.MyListView;
 
@@ -66,6 +67,14 @@ public class CartAdapter extends BaseAdapter{
         });
         CartItemAdapter adapter=new CartItemAdapter(context);
         holder.listView.setAdapter(adapter);
+
+        holder.ok.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent(context, ClearingActivity.class);
+                context.startActivity(intent);
+            }
+        });
         return convertView;
     }
     class ViewHolder{
