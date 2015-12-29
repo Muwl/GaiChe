@@ -58,7 +58,6 @@
 
 
             <com.gaicheyunxiu.gaiche.view.RatingBar
-
                 style="@style/foodRatingBar"
                 android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
@@ -69,7 +68,6 @@
                 android:layout_gravity="center"
                 hedgehog:starImageSize="18dp"
                 android:id="@+id/outlet_item_bar">
-
             </com.gaicheyunxiu.gaiche.view.RatingBar>
 
             <TextView

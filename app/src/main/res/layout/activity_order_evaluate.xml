@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:hedgehog="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/activity_bg"
+    android:orientation="vertical">
+
+    <include
+        android:id="@+id/order_evaluate_title"
+        layout="@layout/activity_title" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:src="@mipmap/cricle_org" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/order_evaluate_no"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="订单号：1273198"
+                        android:textColor="#5F5D5D"
+                        android:textSize="@dimen/thrid_font" />
+
+                    <TextView
+                        android:id="@+id/order_evaluate_time"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="3dp"
+                        android:text="2015-10-20 08.55.40"
+                        android:textColor="#5F5D5D"
+                        android:textSize="@dimen/thrid_font" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_marginTop="2dp"
+                android:background="@drawable/dashed_lin" />
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="10dp">
+
+                <ImageView
+                    android:id="@+id/order_evaluate_image"
+                    android:layout_width="73dp"
+                    android:layout_height="73dp"
+                    android:scaleType="centerCrop"
+                    android:src="@color/activity_bg" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="4dp"
+                    android:orientation="vertical">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:id="@+id/order_evaluate_name"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="【奥迪A6 1.8L 车大灯总成】汽车制动系统股份有限公司"
+                            android:textColor="#5F5D5D"
+                            android:textSize="@dimen/second_font" />
+
+                        <TextView
+                            android:id="@+id/order_evaluate_num"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignBottom="@+id/order_evaluate_name"
+                            android:layout_alignParentRight="true"
+                            android:text="x1"
+                            android:textColor="#5F5D5D"
+                            android:textSize="@dimen/second_font" />
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp">
+
+                        <TextView
+                            android:id="@+id/order_evaluate_money"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="￥100.00元"
+                            android:textColor="#ED753A"
+                            android:textSize="@dimen/first_font" />
+
+                        <TextView
+                            android:id="@+id/order_evaluate_m"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:text="1.00M"
+                            android:textColor="#ED753A"
+                            android:textSize="@dimen/first_font" />
+                    </RelativeLayout>
+                </LinearLayout>
+            </LinearLayout>
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_marginTop="2dp"
+                android:background="@drawable/dashed_lin" />
+
+            <EditText
+                android:id="@+id/order_evaluate_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:background="@drawable/evaluate_text_bg"
+                android:gravity="top"
+                android:hint="请输入您的评价"
+                android:lines="5"
+                android:padding="10dp"
+                android:textColor="#5F5D5D"
+                android:textColorHint="#8B8B8C"
+                android:textSize="@dimen/second_font" />
+
+            <CheckBox
+                android:id="@+id/order_evaluate_cb"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:button="@null"
+                android:checked="true"
+                android:drawableLeft="@drawable/evaluate_cb"
+                android:drawablePadding="10dp"
+                android:text="匿名评价"
+                android:textColor="#5F5D5D"
+                android:textSize="@dimen/second_font" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="总体评价："
+                    android:textColor="#5F5D5D"
+                    android:textSize="@dimen/second_font" />
+
+                <com.gaicheyunxiu.gaiche.view.RatingBar
+                    android:id="@+id/order_evaluate_bar"
+                    style="@style/foodRatingBar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:clickable="true"
+                    android:rating="5"
+                    hedgehog:starEmpty="@mipmap/ratbar_normal"
+                    hedgehog:starFill="@mipmap/ratbar_checked"
+                    hedgehog:starImageSize="25dp"></com.gaicheyunxiu.gaiche.view.RatingBar>
+            </LinearLayout>
+
+
+            <TextView
+                android:id="@+id/order_evaluate_ok"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/write"
+                android:layout_marginTop="30dp"
+                android:background="@drawable/submit_bg_btn"
+                android:textSize="@dimen/first_font"
+                android:text="完成"
+                android:clickable="true"
+                android:padding="12dp"
+                android:layout_marginLeft="13dp"
+                android:layout_marginRight="13dp"
+                android:layout_marginBottom="20dp"
+                android:gravity="center"/>
+        </LinearLayout>
+
+
+    </ScrollView>
+</LinearLayout>

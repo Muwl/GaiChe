@@ -2,10 +2,10 @@
     <shape xmlns:android="http://schemas.android.com/apk/res/android"
         android:shape="line" >
         <stroke
-            android:dashGap="4dp"
-            android:dashWidth="2dp"
-            android:width="1dp"
-            android:color="#63a219" />
+            android:dashGap="3dp"
+            android:dashWidth="8dp"
+            android:width="2px"
+            android:color="@color/bottom_div" />
         <!-- 虚线的高度 -->
-        <size android:height="1dp" />
+        <size android:height="2px" />
     </shape>

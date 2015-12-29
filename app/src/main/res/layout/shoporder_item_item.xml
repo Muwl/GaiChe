@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="horizontal"
+    android:orientation="vertical"
     android:background="@color/write"
-    android:padding="10dp"
-    android:gravity="center_vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+<LinearLayout
+    android:orientation="horizontal"
+    android:padding="10dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
 
     <ImageView
         android:id="@+id/shoporder_item_item_image"
@@ -14,10 +17,131 @@
         android:scaleType="centerCrop"
         android:src="@color/activity_bg"/>
 
-    
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="4dp"
+        android:orientation="vertical">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/shoporder_item_item_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#5F5D5D"
+                android:textSize="@dimen/second_font"
+                android:text="【奥迪A6 1.8L 车大灯总成】汽车制动系统股份有限公司"/>
+
+            <TextView
+                android:id="@+id/shoporder_item_item_num"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#5F5D5D"
+                android:textSize="@dimen/second_font"
+                android:layout_alignBottom="@+id/shoporder_item_item_name"
+                android:layout_alignParentRight="true"
+                android:text="x1"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            >
+            <TextView
+                android:id="@+id/shoporder_item_item_money"
+                android:layout_width="wrap_content"
+                android:textColor="#ED753A"
+                android:textSize="@dimen/first_font"
+                android:text="￥100.00元"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/shoporder_item_item_m"
+                android:layout_width="wrap_content"
+                android:textColor="#ED753A"
+                android:textSize="@dimen/first_font"
+                android:layout_alignParentRight="true"
+                android:text="1.00M"
+                android:layout_height="wrap_content" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            >
+            <TextView
+                android:id="@+id/shoporder_item_item_oldmoney"
+                android:layout_width="wrap_content"
+                android:textColor="#5F5D5D"
+                android:textSize="@dimen/second_font"
+                android:text="￥180.00"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/shoporder_item_item_volume"
+                android:layout_width="wrap_content"
+                android:textColor="#5F5D5D"
+                android:textSize="@dimen/second_font"
+                android:layout_alignParentRight="true"
+                android:text="销量：100件"
+                android:layout_height="wrap_content" />
 
 
+        </RelativeLayout>
+    </LinearLayout>
+</LinearLayout>
 
+    <ImageView
+        android:id="@+id/shoporder_item_item_div"
+        android:layout_width="match_parent"
+        android:layout_height="3px"
+        android:background="@drawable/dashed_lin"
+        />
 
+    <LinearLayout
+        android:id="@+id/shoporder_item_item_lin"
+        android:layout_width="match_parent"
+        android:gravity="right"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:orientation="horizontal"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/shoporder_item_item_gradbtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#5F5D5D"
+            android:clickable="true"
+            android:paddingTop="4dp"
+            android:paddingBottom="4dp"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"
+            android:background="@drawable/shoporder_gray_btn"
+            android:textSize="@dimen/thrid_font"
+            android:text="查看物流"/>
+
+        <TextView
+            android:id="@+id/shoporder_item_item_orangebtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#ED753A"
+            android:clickable="true"
+            android:paddingTop="4dp"
+            android:paddingBottom="4dp"
+            android:paddingLeft="8dp"
+            android:layout_marginLeft="10dp"
+            android:paddingRight="8dp"
+            android:background="@drawable/shoporder_orange_btn"
+            android:textSize="@dimen/thrid_font"
+            android:text="确认收货"/>
+    </LinearLayout>
 
 </LinearLayout>
