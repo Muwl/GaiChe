@@ -55,6 +55,8 @@ public class ClearingActivity extends BaseActivity implements View.OnClickListen
 
     private TextView submit;
 
+    private int checkIndex=1;//1钱包 2支付宝 3 微信 4银联
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -93,6 +95,12 @@ public class ClearingActivity extends BaseActivity implements View.OnClickListen
         yinlian.setOnClickListener(this);
         submit.setOnClickListener(this);
 
+        walletcb.setChecked(true);
+        zhifubaocb.setChecked(false);
+        weixincb.setChecked(false);
+        yinliancb.setChecked(false);
+        checkIndex=1;
+
     }
 
 
@@ -107,15 +115,36 @@ public class ClearingActivity extends BaseActivity implements View.OnClickListen
                 break;
 
             case R.id.pay_zhifubao:
+                walletcb.setChecked(false);
+                zhifubaocb.setChecked(true);
+                weixincb.setChecked(false);
+                yinliancb.setChecked(false);
+                checkIndex=2;
+
                 break;
 
             case R.id.pay_wallet:
+                walletcb.setChecked(true);
+                zhifubaocb.setChecked(false);
+                weixincb.setChecked(false);
+                yinliancb.setChecked(false);
+                checkIndex=1;
                 break;
 
             case R.id.pay_weixin:
+                walletcb.setChecked(false);
+                zhifubaocb.setChecked(false);
+                weixincb.setChecked(true);
+                yinliancb.setChecked(false);
+                checkIndex=3;
                 break;
 
             case R.id.pay_yinlian:
+                walletcb.setChecked(false);
+                zhifubaocb.setChecked(false);
+                weixincb.setChecked(false);
+                yinliancb.setChecked(true);
+                checkIndex=4;
                 break;
 
             case R.id.clearing_ok:

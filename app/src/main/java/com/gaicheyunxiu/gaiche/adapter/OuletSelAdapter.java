@@ -63,7 +63,7 @@ public class OuletSelAdapter extends BaseAdapter {
             holder= (ViewHolder) convertView.getTag();
         }
 
-        holder.bar.setLayoutParams(new LinearLayout.LayoutParams((int)(0.25*width),(int)(0.045*width)));
+        holder.bar.setLayoutParams(new LinearLayout.LayoutParams((int)(0.30*width),(int)(0.045*width)));
         return convertView;
     }
     class ViewHolder{
