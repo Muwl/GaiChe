@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="horizontal" android:layout_width="match_parent"
+    xmlns:hedgehog="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
     android:background="@color/write"
     android:layout_height="match_parent">
     
@@ -54,16 +57,20 @@
                 android:textSize="@dimen/thrid_font"/>
 
 
-            <RatingBar
+            <com.gaicheyunxiu.gaiche.view.RatingBar
 
                 style="@style/foodRatingBar"
                 android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
                 android:rating="5"
+                android:clickable="true"
+                hedgehog:starEmpty="@mipmap/ratbar_normal"
+                hedgehog:starFill="@mipmap/ratbar_checked"
                 android:layout_gravity="center"
+                hedgehog:starImageSize="18dp"
                 android:id="@+id/outlet_item_bar">
 
-            </RatingBar>
+            </com.gaicheyunxiu.gaiche.view.RatingBar>
 
             <TextView
                 android:id="@+id/outlet_item_discussnum"

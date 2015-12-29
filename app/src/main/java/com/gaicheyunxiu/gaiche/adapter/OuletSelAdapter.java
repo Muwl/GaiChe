@@ -7,10 +7,10 @@ import android.widget.BaseAdapter;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.gaicheyunxiu.gaiche.R;
+import com.gaicheyunxiu.gaiche.view.RatingBar;
 
 /**
  * Created by Mu on 2015/12/24.
@@ -63,7 +63,7 @@ public class OuletSelAdapter extends BaseAdapter {
             holder= (ViewHolder) convertView.getTag();
         }
 
-        holder.bar.setLayoutParams(new LinearLayout.LayoutParams((int)(0.21*width),(int)(0.045*width)));
+        holder.bar.setLayoutParams(new LinearLayout.LayoutParams((int)(0.25*width),(int)(0.045*width)));
         return convertView;
     }
     class ViewHolder{
