@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:background="@color/activity_bg"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <include
+        android:id="@+id/refunddetail_title"
+        layout="@layout/activity_title"/>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="@color/bottom_div"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@color/write"
+                android:padding="12dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="#474443"
+                        android:textSize="@dimen/first_font"
+                        android:text="退款金额"/>
+
+                    <TextView
+                        android:id="@+id/refunddetail_money"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="#474443"
+                        android:layout_marginLeft="20dp"
+                        android:textSize="@dimen/first_font"
+                        android:text="$110.00"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center_vertical">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="#474443"
+                        android:textSize="@dimen/first_font"
+                        android:text="退回账号"/>
+
+                    <TextView
+                        android:id="@+id/refunddetail_style"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="#757475"
+                        android:layout_marginLeft="20dp"
+                        android:textSize="@dimen/second_font"
+                        android:text="您的钱包"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center_vertical">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="#474443"
+                        android:textSize="@dimen/first_font"
+                        android:text="到账时间"/>
+
+                    <TextView
+                        android:id="@+id/refunddetail_time"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="#757475"
+                        android:layout_marginLeft="20dp"
+                        android:textSize="@dimen/second_font"
+                        android:text="已到账"/>
+                </LinearLayout>
+            </LinearLayout>
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="@color/bottom_div"/>
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:layout_marginTop="12dp"
+                android:background="@color/bottom_div"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="12dp"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:background="@color/write"
+                android:gravity="center_vertical"
+                android:paddingRight="10dp">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:text="退款流程"
+                    android:textSize="@dimen/first_font"
+                    android:textColor="#474443"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="退款帮助"
+                    android:textColor="#757475"
+                    android:textSize="@dimen/second_font"
+                    />
+            </LinearLayout>
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="@color/bottom_div"/>
+
+            <com.gaicheyunxiu.gaiche.view.MyListView
+                android:id="@+id/refunddetail_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/write"
+                android:divider="@color/transparent"
+                android:dividerHeight="0dp"
+                android:paddingTop="12dp"
+                android:scrollbars="none"/>
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="@color/bottom_div"/>
+
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>
