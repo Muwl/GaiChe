@@ -1,6 +1,7 @@
 package com.gaicheyunxiu.gaiche.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.CornerPathEffect;
 import android.media.Image;
 import android.view.View;
@@ -10,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.gaicheyunxiu.gaiche.R;
+import com.gaicheyunxiu.gaiche.activity.ServiceEvaluteActivity;
 
 /**
  * Created by Administrator on 2016/1/1.
@@ -55,6 +57,14 @@ public class ServiceOrderItemAdapter extends BaseAdapter {
         }else{
             holder= (ViewHolder) convertView.getTag();
         }
+
+        holder.evalute.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(context,ServiceEvaluteActivity.class);
+                context.startActivity(intent);
+            }
+        });
         return convertView;
     }
     class ViewHolder{

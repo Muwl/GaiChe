@@ -53,6 +53,7 @@ public class ServiceOrderAdapter extends BaseAdapter {
             holder.div1= (ImageView) convertView.findViewById(R.id.serviceorder_item_div1);
             holder.money= (TextView) convertView.findViewById(R.id.serviceorder_item_money);
             holder.del= (TextView) convertView.findViewById(R.id.serviceorder_item_item_del);
+            holder.pay= (TextView) convertView.findViewById(R.id.serviceorder_item_item_pay);
             convertView.setTag(holder);
         }else{
             holder= (ViewHolder) convertView.getTag();
@@ -71,5 +72,6 @@ public class ServiceOrderAdapter extends BaseAdapter {
         public ImageView div1;
         public TextView money;
         public TextView del;
+        public TextView pay;
     }
 }

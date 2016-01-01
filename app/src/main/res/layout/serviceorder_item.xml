@@ -114,6 +114,21 @@
             android:background="@drawable/shoporder_gray_btn"
             android:textSize="@dimen/thrid_font"
             android:text="删除订单"/>
+
+        <TextView
+            android:id="@+id/serviceorder_item_item_pay"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#ED753A"
+            android:clickable="true"
+            android:paddingTop="4dp"
+            android:paddingBottom="4dp"
+            android:paddingLeft="8dp"
+            android:layout_marginLeft="10dp"
+            android:paddingRight="8dp"
+            android:background="@drawable/shoporder_orange_btn"
+            android:textSize="@dimen/thrid_font"
+            android:text="付款"/>
     </LinearLayout>
 
 
