@@ -1,6 +1,7 @@
 package com.gaicheyunxiu.gaiche.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
@@ -9,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.gaicheyunxiu.gaiche.R;
+import com.gaicheyunxiu.gaiche.activity.ServicePayActivity;
 import com.gaicheyunxiu.gaiche.view.MyListView;
 
 import static com.gaicheyunxiu.gaiche.R.id.serviceorder_item_gps;
@@ -61,6 +63,13 @@ public class ServiceOrderAdapter extends BaseAdapter {
         ServiceOrderItemAdapter adapter=new ServiceOrderItemAdapter(context);
         holder.listView.setAdapter(adapter);
 
+        holder.pay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(context, ServicePayActivity.class);
+                context.startActivity(intent);
+            }
+        });
         return convertView;
     }
     class ViewHolder{

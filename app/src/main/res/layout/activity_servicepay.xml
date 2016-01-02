@@ -1,0 +1,325 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/activity_bg"
+    android:orientation="vertical">
+
+    <include
+        android:id="@+id/servicepay_title"
+        layout="@layout/activity_title" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:id="@+id/servicepay_bom"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:background="@color/write"
+            android:gravity="center_vertical"
+            >
+            <TextView
+                android:id="@+id/servicepay_money"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:textColor="#ED753A"
+                android:text="￥130.00"
+                android:textSize="@dimen/first_font"
+                android:gravity="center"
+                android:layout_weight="1"
+                android:paddingTop="12dp"
+                android:paddingBottom="12dp"/>
+
+            <TextView
+                android:id="@+id/servicepay_ok"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:textColor="@color/write"
+                android:text="结算"
+                android:gravity="center_horizontal"
+                android:layout_weight="1"
+                android:textSize="@dimen/first_font"
+                android:background="@drawable/pay_ok_bg_btn"
+                android:paddingTop="12dp"
+                android:paddingBottom="12dp"/>
+        </LinearLayout>
+
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/servicepay_bom"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/write"
+                android:padding="15dp"
+                android:gravity="center_vertical">
+
+                <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/pay_person"/>
+                <TextView
+                    android:id="@+id/service_pay_person"
+                    android:layout_width="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginLeft="8dp"
+                    android:textSize="@dimen/second_font"
+                    android:textColor="#5F5D5D"
+                    android:layout_height="wrap_content"
+                    android:text="王小蒙"/>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp"
+                    android:src="@mipmap/pay_phone"/>
+                <TextView
+                    android:id="@+id/service_pay_phone"
+                    android:layout_width="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginLeft="8dp"
+                    android:textSize="@dimen/second_font"
+                    android:textColor="#5F5D5D"
+                    android:layout_marginRight="7dp"
+                    android:layout_height="wrap_content"
+                    android:text="1237918273"/>
+            </LinearLayout>
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="@color/bottom_div"/>
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:layout_marginTop="10dp"
+                android:background="@color/bottom_div"/>
+
+            <LinearLayout
+                android:id="@+id/servicepay_lin"
+                android:layout_width="match_parent"
+                android:paddingLeft="15dp"
+                android:paddingRight="22dp"
+                android:paddingTop="10dp"
+                android:clickable="true"
+                android:background="@drawable/item_bg"
+                android:gravity="center_vertical"
+                android:paddingBottom="10dp"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/second_font"
+                    android:textColor="#5F5D5D"
+                    android:layout_weight="1"
+                    android:text="服务清单"/>
+
+               <TextView
+                   android:id="@+id/servicepay_num"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:textSize="@dimen/thrid_font"
+                   android:textColor="#5F5D5D"
+                   android:layout_marginLeft="15dp"
+                   android:text="共2项服务"
+                   />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:src="@mipmap/main_go"/>
+            </LinearLayout>
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="@color/bottom_div"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="5dp"
+                android:paddingLeft="21dp"
+                android:paddingRight="21dp"
+                android:paddingTop="5dp"
+                android:text="请选择支付方式"
+                android:textColor="#5F5D5D"
+                android:textSize="@dimen/thrid_font" />
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="@color/bottom_div" />
+
+            <LinearLayout
+                android:id="@+id/servicepay_wallet"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/write"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingLeft="22dp"
+                android:clickable="true"
+                android:paddingRight="22dp"
+                android:paddingTop="18dp">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/pay_wallet" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp"
+                    android:layout_weight="1"
+                    android:text="我的钱包"
+                    android:textColor="#5F5D5D"
+                    android:textSize="@dimen/second_font" />
+
+                <CheckBox
+                    android:id="@+id/servicepay_wallet_cb"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:button="@drawable/pay_cb"
+                    android:clickable="false"
+                    android:enabled="false"
+                    android:focusable="false" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/servicepay_zhifubao"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/write"
+                android:clickable="true"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingLeft="22dp"
+                android:paddingRight="22dp"
+                android:paddingTop="12dp">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/pay_zhifubao" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp"
+                    android:layout_weight="1"
+                    android:text="支付宝"
+                    android:textColor="#5F5D5D"
+                    android:textSize="@dimen/second_font" />
+
+                <CheckBox
+                    android:id="@+id/servicepay_zhifubao_cb"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:button="@drawable/pay_cb"
+                    android:clickable="false"
+                    android:enabled="false"
+                    android:focusable="false" />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/servicepay_weixin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/write"
+                android:clickable="true"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingLeft="22dp"
+                android:paddingRight="22dp"
+                android:paddingTop="12dp">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/pay_weixin" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp"
+                    android:layout_weight="1"
+                    android:text="微信"
+                    android:textColor="#5F5D5D"
+                    android:textSize="@dimen/second_font" />
+
+                <CheckBox
+                    android:id="@+id/servicepay_weixin_cb"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:button="@drawable/pay_cb"
+                    android:clickable="false"
+                    android:enabled="false"
+                    android:focusable="false" />
+            </LinearLayout>
+
+
+
+            <LinearLayout
+                android:id="@+id/servicepay_yinlian"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/write"
+                android:clickable="true"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingLeft="22dp"
+                android:paddingRight="22dp"
+                android:paddingBottom="18dp"
+                android:paddingTop="12dp">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/pay_yinlian" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp"
+                    android:layout_weight="1"
+                    android:text="银联"
+                    android:textColor="#5F5D5D"
+                    android:textSize="@dimen/second_font" />
+
+                <CheckBox
+                    android:id="@+id/servicepay_yinlian_cb"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:button="@drawable/pay_cb"
+                    android:clickable="false"
+                    android:enabled="false"
+                    android:focusable="false" />
+            </LinearLayout>
+
+
+
+        </LinearLayout>
+
+
+    </ScrollView>
+
+    </RelativeLayout>
+
+</LinearLayout>
