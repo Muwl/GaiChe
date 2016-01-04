@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:background="@color/activity_bg"
+    android:layout_height="match_parent">
+
+    <include
+        android:id="@+id/earning_title"
+        layout="@layout/activity_title"/>
+
+    <LinearLayout
+        android:id="@+id/earning_marginlin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/earning_btn"
+        android:gravity="center_vertical"
+        android:layout_marginTop="10dp"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:paddingTop="10dp"
+        android:orientation="horizontal"
+        android:paddingBottom="10dp"
+        android:clickable="true"
+        >
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/earnings_image"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/write"
+            android:textSize="@dimen/second_font"
+            android:layout_marginLeft="10dp"
+            android:text="商业保证金"/>
+
+        <TextView
+            android:id="@+id/earning_margin"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:textColor="@color/write"
+            android:textSize="@dimen/first_font"
+            android:layout_marginLeft="30dp"
+            android:text="￥1003.50"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/earnings_go"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/earning_mlin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/earning_btn"
+        android:gravity="center_vertical"
+        android:layout_marginTop="15dp"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:paddingTop="10dp"
+        android:orientation="horizontal"
+        android:paddingBottom="10dp"
+        android:clickable="true"
+        >
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/earnings_image"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/write"
+            android:textSize="@dimen/second_font"
+            android:layout_marginLeft="10dp"
+            android:text="M值收益\u2000\u3000"/>
+
+        <TextView
+            android:id="@+id/earning_m"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:textColor="@color/write"
+            android:textSize="@dimen/first_font"
+            android:layout_marginLeft="30dp"
+            android:text="￥4.00"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/earnings_go"/>
+    </LinearLayout>
+
+
+</LinearLayout>
