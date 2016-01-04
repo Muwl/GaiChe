@@ -53,6 +53,7 @@
     </LinearLayout>
 
     <ImageView
+        android:layerType="software"
         android:layout_width="match_parent"
         android:layout_height="2dp"
         android:layout_marginTop="2dp"
@@ -62,6 +63,7 @@
     <com.gaicheyunxiu.gaiche.view.MyListView
         android:id="@+id/shoporder_item_listview"
         android:layout_width="match_parent"
+        android:layerType="software"
         android:divider="@drawable/dashed_lin"
         android:dividerHeight="3px"
         android:layout_height="wrap_content"/>
@@ -69,6 +71,7 @@
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="3px"
+        android:layerType="software"
         android:background="@drawable/dashed_lin"
         />
 
@@ -86,6 +89,7 @@
         android:id="@+id/shoporder_item_div"
         android:layout_width="match_parent"
         android:layout_height="5dp"
+        android:layerType="software"
         android:background="@drawable/dashed_lin"
         />
 

@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    xmlns:hedgehog="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/activity_bg"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include
+        android:id="@+id/service_evalute_title"
+        layout="@layout/activity_title"/>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/service_evalute_store"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:textColor="#ED753A"
+                android:textSize="@dimen/second_font"
+                android:text="小宝典维修点"/>
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="3px"
+                android:layerType="software"
+                android:background="@drawable/dashed_lin"
+                />
+
+            <TextView
+                android:id="@+id/service_evalute_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:textColor="#5F5D5D"
+                android:textSize="@dimen/second_font"
+                android:text="1、更换机油及机油滤清器"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="服务态度评分："
+                    android:textColor="#5F5D5D"
+                    android:textSize="@dimen/second_font" />
+
+                <com.gaicheyunxiu.gaiche.view.RatingBar
+                    android:id="@+id/service_evalute_bar1"
+                    style="@style/foodRatingBar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:clickable="true"
+                    android:rating="5"
+                    hedgehog:starEmpty="@mipmap/ratbar_normal"
+                    hedgehog:starFill="@mipmap/ratbar_checked"
+                    hedgehog:starImageSize="25dp"/>
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="技术水平评分："
+                    android:textColor="#5F5D5D"
+                    android:textSize="@dimen/second_font" />
+
+                <com.gaicheyunxiu.gaiche.view.RatingBar
+                    android:id="@+id/service_evalute_bar2"
+                    style="@style/foodRatingBar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:clickable="true"
+                    android:rating="5"
+                    hedgehog:starEmpty="@mipmap/ratbar_normal"
+                    hedgehog:starFill="@mipmap/ratbar_checked"
+                    hedgehog:starImageSize="25dp"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="店内环境评分："
+                    android:textColor="#5F5D5D"
+                    android:textSize="@dimen/second_font" />
+
+                <com.gaicheyunxiu.gaiche.view.RatingBar
+                    android:id="@+id/service_evalute_bar3"
+                    style="@style/foodRatingBar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:clickable="true"
+                    android:rating="5"
+                    hedgehog:starEmpty="@mipmap/ratbar_normal"
+                    hedgehog:starFill="@mipmap/ratbar_checked"
+                    hedgehog:starImageSize="25dp"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="收费标准评分："
+                    android:textColor="#5F5D5D"
+                    android:textSize="@dimen/second_font" />
+
+                <com.gaicheyunxiu.gaiche.view.RatingBar
+                    android:id="@+id/service_evalute_bar4"
+                    style="@style/foodRatingBar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:clickable="true"
+                    android:rating="5"
+                    hedgehog:starEmpty="@mipmap/ratbar_normal"
+                    hedgehog:starFill="@mipmap/ratbar_checked"
+                    hedgehog:starImageSize="25dp"/>
+            </LinearLayout>
+
+
+
+            <EditText
+                android:id="@+id/service_evaluate_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:background="@drawable/evaluate_text_bg"
+                android:gravity="top"
+                android:hint="请输入您的评价"
+                android:lines="5"
+                android:padding="10dp"
+                android:textColor="#5F5D5D"
+                android:textColorHint="#8B8B8C"
+                android:textSize="@dimen/second_font" />
+
+            <CheckBox
+                android:id="@+id/service_evaluate_cb"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:button="@null"
+                android:checked="true"
+                android:drawableLeft="@drawable/evaluate_cb"
+                android:drawablePadding="10dp"
+                android:text="匿名评价"
+                android:textColor="#5F5D5D"
+                android:textSize="@dimen/second_font" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="总体评价："
+                    android:textColor="#5F5D5D"
+                    android:textSize="@dimen/second_font" />
+
+                <com.gaicheyunxiu.gaiche.view.RatingBar
+                    android:id="@+id/service_evaluate_bar"
+                    style="@style/foodRatingBar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:padding="0dp"
+                    android:clickable="true"
+                    android:rating="5"
+                    hedgehog:starEmpty="@mipmap/ratbar_normal"
+                    hedgehog:starFill="@mipmap/ratbar_checked"
+                    hedgehog:starImageSize="25dp"></com.gaicheyunxiu.gaiche.view.RatingBar>
+            </LinearLayout>
+
+
+            <TextView
+                android:id="@+id/service_evaluate_ok"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/write"
+                android:layout_marginTop="30dp"
+                android:background="@drawable/submit_bg_btn"
+                android:textSize="@dimen/first_font"
+                android:text="完成"
+                android:clickable="true"
+                android:padding="12dp"
+                android:layout_marginLeft="13dp"
+                android:layout_marginRight="13dp"
+                android:layout_marginBottom="20dp"
+                android:gravity="center"/>
+
+        </LinearLayout>
+    </ScrollView>
+
+
+</LinearLayout>

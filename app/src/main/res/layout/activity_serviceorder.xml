@@ -6,18 +6,18 @@
     android:layout_height="match_parent">
 
     <include
-        android:id="@+id/shoporder_back"
+        android:id="@+id/serviceorder_title"
         layout="@layout/activity_title"/>
 
     <RadioGroup
-        android:id="@+id/shoporder_group"
+        android:id="@+id/serviceorder_group"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/activity_bg"
         android:orientation="horizontal">
 
         <RadioButton
-            android:id="@+id/shoporder_all"
+            android:id="@+id/serviceorder_all"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -38,13 +38,13 @@
             android:background="@color/bottom_div"/>
 
         <RadioButton
-            android:id="@+id/shoporder_paying"
+            android:id="@+id/serviceorder_paying"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:textSize="@dimen/first_font"
             android:textColor="@color/bottom_text_bn"
-            android:text="待支付"
+            android:text="待付款"
             android:background="@drawable/rb_bg"
             android:button="@null"
             android:gravity="center"
@@ -60,13 +60,13 @@
 
 
         <RadioButton
-            android:id="@+id/shoporder_receiving"
+            android:id="@+id/serviceorder_use"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:textSize="@dimen/first_font"
             android:textColor="@color/bottom_text_bn"
-            android:text="待收货"
+            android:text="未使用"
             android:background="@drawable/rb_bg"
             android:button="@null"
             android:gravity="center"
@@ -81,7 +81,7 @@
             android:background="@color/bottom_div"/>
 
         <RadioButton
-            android:id="@+id/shoporder_evaluating"
+            android:id="@+id/serviceorder_evaluating"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -101,7 +101,7 @@
         android:background="@color/activity_bg"/>
 
     <ListView
-        android:id="@+id/shoporder_list"
+        android:id="@+id/serviceorder_list"
         android:layerType="software"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

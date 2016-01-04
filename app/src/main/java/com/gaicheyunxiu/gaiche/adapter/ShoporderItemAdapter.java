@@ -9,7 +9,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.gaicheyunxiu.gaiche.R;
+import com.gaicheyunxiu.gaiche.activity.AfterSaleActivity;
 import com.gaicheyunxiu.gaiche.activity.OrderEvaluteAvtivity;
+import com.gaicheyunxiu.gaiche.activity.ReqrefundActivity;
 
 /**
  * Created by Administrator on 2015/12/29.
@@ -63,6 +65,13 @@ public class ShoporderItemAdapter  extends BaseAdapter{
             @Override
             public void onClick(View v) {
                 Intent intent=new Intent(context, OrderEvaluteAvtivity.class);
+                context.startActivity(intent);
+            }
+        });
+        holder.graybtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(context, AfterSaleActivity.class);
                 context.startActivity(intent);
             }
         });
