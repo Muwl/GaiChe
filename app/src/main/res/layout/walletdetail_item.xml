@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/item_bg"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:paddingBottom="8dp"
+    android:paddingLeft="15dp"
+    android:paddingRight="15dp"
+    android:paddingTop="10dp">
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/walletdetail_state"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="充值"
+            android:textColor="#332C2B"
+            android:textSize="@dimen/second_font" />
+
+        <TextView
+            android:id="@+id/walletdetail_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="2015-12-13 23:50:30"
+            android:layout_marginTop="6dp"
+            android:textColor="#5F5D5D"
+            android:textSize="@dimen/thrid_font" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/walletdetail_money"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/first_font"
+        android:textColor="#EF8641"
+        android:text="+100.00"/>
+
+
+</LinearLayout>

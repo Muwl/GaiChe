@@ -1,5 +1,6 @@
 package com.gaicheyunxiu.gaiche.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -55,6 +56,8 @@ public class WalletActivity extends BaseActivity implements View.OnClickListener
                 finish();
                 break;
             case R.id.title_service:
+                Intent intent=new Intent(WalletActivity.this,WalletdetailActivity.class);
+                startActivity(intent);
                 break;
             case R.id.wallet_recharge:
                 break;
