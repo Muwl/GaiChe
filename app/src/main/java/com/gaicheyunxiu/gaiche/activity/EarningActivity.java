@@ -1,5 +1,6 @@
 package com.gaicheyunxiu.gaiche.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -55,6 +56,8 @@ public class EarningActivity extends BaseActivity implements View.OnClickListene
                 finish();
                 break;
             case R.id.earning_marginlin:
+                Intent intent=new Intent(EarningActivity.this,MarginActivity.class);
+                startActivity(intent);
 
                 break;
             case R.id.earning_mlin:

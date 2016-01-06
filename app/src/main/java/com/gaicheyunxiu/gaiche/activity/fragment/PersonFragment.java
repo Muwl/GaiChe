@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.gaicheyunxiu.gaiche.R;
 import com.gaicheyunxiu.gaiche.activity.CartActivity;
 import com.gaicheyunxiu.gaiche.activity.EarningActivity;
+import com.gaicheyunxiu.gaiche.activity.MywalletActivity;
 import com.gaicheyunxiu.gaiche.activity.PersonDataActivity;
 import com.gaicheyunxiu.gaiche.activity.ServiceOrderActivity;
 import com.gaicheyunxiu.gaiche.activity.ShopOrderActivity;
@@ -152,7 +153,8 @@ public class PersonFragment extends Fragment implements View.OnClickListener{
                 break;
 
             case R.id.person_money:
-
+                Intent intent6=new Intent(getActivity(),  MywalletActivity.class);
+                startActivity(intent6);
                 break;
 
             case R.id.person_message:

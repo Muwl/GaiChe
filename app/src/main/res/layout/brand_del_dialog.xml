@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/transparent"
+    android:orientation="vertical"
+    android:padding="0dp" >
+
+    <TextView
+        android:id="@+id/brand_del_ok"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="7dp"
+        android:background="@drawable/address_dialog_bg"
+        android:clickable="true"
+        android:gravity="center"
+        android:paddingBottom="15dp"
+        android:paddingLeft="0dp"
+        android:paddingRight="0dp"
+        android:paddingTop="15dp"
+        android:text="删除银行卡"
+        android:textColor="#EF8641"
+        android:textSize="@dimen/second_font" />
+
+
+    <TextView
+        android:id="@+id/brand_del_cancel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/address_dialog_bg"
+        android:clickable="true"
+        android:gravity="center"
+        android:paddingBottom="15dp"
+        android:paddingLeft="0dp"
+        android:paddingRight="0dp"
+        android:paddingTop="15dp"
+        android:text="取消"
+        android:textColor="#EF8641"
+        android:textSize="@dimen/second_font" />
+
+</LinearLayout>

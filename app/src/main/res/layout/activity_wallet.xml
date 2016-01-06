@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:background="@color/activity_bg"
+    android:layout_width="match_parent"
+    android:gravity="center_horizontal"
+    android:layout_height="match_parent">
+
+    <include
+        android:id="@+id/wallet_title"
+        layout="@layout/activity_title"/>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@mipmap/wallet_image"
+        android:layout_marginTop="20dp"/>
+
+    <TextView
+        android:id="@+id/wallet_money"
+        android:layout_width="wrap_content"
+        android:textColor="#EF8641"
+        android:textSize="@dimen/first_font"
+        android:layout_marginTop="20dp"
+        android:text="￥200.2"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/wallet_recharge"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="25dp"
+        android:layout_marginTop="25dp"
+        android:textColor="@color/write"
+        android:textSize="@dimen/first_font"
+        android:paddingTop="15dp"
+        android:paddingBottom="15dp"
+        android:gravity="center"
+        android:clickable="true"
+        android:text="充值"
+        android:background="@drawable/wallet_deposit_btn"
+        android:layout_marginRight="25dp"/>
+    <TextView
+        android:id="@+id/wallet_deposit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="25dp"
+        android:layout_marginTop="10dp"
+        android:textColor="@color/write"
+        android:textSize="@dimen/first_font"
+        android:gravity="center"
+        android:clickable="true"
+        android:paddingTop="15dp"
+        android:paddingBottom="15dp"
+        android:text="提现"
+        android:background="@drawable/wallet_recharge_btn"
+        android:layout_marginRight="25dp"/>
+</LinearLayout>

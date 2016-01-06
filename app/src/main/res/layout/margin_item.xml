@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:background="@color/write"
+    android:layout_height="match_parent">
+
+
+    <TextView
+        android:id="@+id/margin_item_text"
+        android:layout_width="match_parent"
+        android:gravity="center"
+        android:textColor="#332C2B"
+        android:textSize="@dimen/second_font"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:text="4565445"
+        android:singleLine="true"
+        android:layout_height="match_parent" />
+</LinearLayout>

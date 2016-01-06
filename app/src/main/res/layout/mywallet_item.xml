@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:paddingLeft="15dp"
+    android:paddingRight="15dp"
+    android:paddingTop="10dp"
+    android:paddingBottom="10dp"
+    android:background="@drawable/item_bg"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@mipmap/gray_cricle"/>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/mywallet_item_brandname"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textColor="#566892"
+            android:text="建设银行"
+            android:textSize="@dimen/second_font"/>
+
+        <TextView
+            android:id="@+id/mywallet_item_brandstype"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="储蓄卡"
+            android:textColor="#566892"
+            android:textSize="@dimen/second_font" />
+
+        <TextView
+            android:id="@+id/mywallet_item_brandno"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/first_font"
+            android:textColor="#5F5D5D"
+            android:text="**** **** **** 8867"
+            android:layout_marginTop="10dp"/>
+
+
+    </LinearLayout>
+
+
+
+</LinearLayout>
