@@ -84,7 +84,8 @@ public class MywalletActivity  extends BaseActivity implements View.OnClickListe
                 finish();
                 break;
             case R.id.mywallet_addbrandlin:
-
+                Intent intent1=new Intent(MywalletActivity.this,AddbrandcheckActivity.class);
+                startActivity(intent1);
 
                 break;
             case R.id.mywallet_wallet:

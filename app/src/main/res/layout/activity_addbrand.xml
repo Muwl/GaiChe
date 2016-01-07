@@ -1,0 +1,308 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:background="@color/activity_bg"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include
+        android:id="@+id/addbrand_title"
+        layout="@layout/activity_title"/>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:textColor="#757475"
+            android:textSize="@dimen/second_font"
+            android:text="绑定银行卡必须是储蓄卡，便于提现"/>
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:layout_marginTop="5dp"
+                android:background="@color/bottom_div"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/write"
+                android:padding="10dp"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="卡类型\u3000"
+                    android:textSize="@dimen/second_font"
+                    android:textColor="#332C2B"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/second_font"
+                    android:textColor="#566892"
+                    android:text="储蓄卡"
+                    android:layout_marginLeft="15dp"/>
+
+            </LinearLayout>
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="@color/bottom_div"/>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/write"
+                android:padding="10dp"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="发卡银行"
+                    android:textSize="@dimen/second_font"
+                    android:textColor="#332C2B"/>
+
+                <EditText
+                    android:id="@+id/addbrand_brandname"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/second_font"
+                    android:textColor="#332C2B"
+                    android:background="@null"
+                    android:hint="请输入银行卡开户网点全称"
+                    android:layout_marginLeft="15dp"/>
+
+            </LinearLayout>
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="@color/bottom_div"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/write"
+                android:padding="10dp"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="发卡卡号"
+                    android:textSize="@dimen/second_font"
+                    android:textColor="#332C2B"/>
+
+                <EditText
+                    android:id="@+id/addbrand_brandno"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/second_font"
+                    android:textColor="#332C2B"
+                    android:background="@null"
+                    android:hint="请输入卡号"
+                    android:layout_marginLeft="15dp"/>
+
+            </LinearLayout>
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="@color/bottom_div"/>
+
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:textColor="#757475"
+                android:textSize="@dimen/second_font"
+                android:text="请填写银行卡预留信息"/>
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:layout_marginTop="5dp"
+                android:background="@color/bottom_div"/>
+
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/write"
+                android:padding="10dp"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="姓名\u3000\u3000"
+                    android:textSize="@dimen/second_font"
+                    android:textColor="#332C2B"/>
+
+                <EditText
+                    android:id="@+id/addbrand_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/second_font"
+                    android:textColor="#332C2B"
+                    android:background="@null"
+                    android:hint="请输入持卡人姓名"
+                    android:layout_marginLeft="15dp"/>
+
+            </LinearLayout>
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="@color/bottom_div"/>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/write"
+                android:padding="10dp"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="证件类型"
+                    android:textSize="@dimen/second_font"
+                    android:textColor="#332C2B"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/second_font"
+                    android:textColor="#566892"
+                    android:text="身份证"
+                    android:layout_marginLeft="15dp"/>
+
+            </LinearLayout>
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="@color/bottom_div"/>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/write"
+                android:padding="10dp"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="证件号\u3000"
+                    android:textSize="@dimen/second_font"
+                    android:textColor="#332C2B"/>
+
+                <EditText
+                    android:id="@+id/addbrand_certno"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/second_font"
+                    android:textColor="#332C2B"
+                    android:background="@null"
+                    android:hint="请输入证件号"
+                    android:layout_marginLeft="15dp"/>
+
+            </LinearLayout>
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="@color/bottom_div"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/write"
+                android:padding="10dp"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="手机号\u3000"
+                    android:textSize="@dimen/second_font"
+                    android:textColor="#332C2B"/>
+
+                <EditText
+                    android:id="@+id/addbrand_phone"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/second_font"
+                    android:textColor="#332C2B"
+                    android:background="@null"
+                    android:hint="请输入银行预留手机号"
+                    android:layout_marginLeft="15dp"/>
+
+            </LinearLayout>
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="@color/bottom_div"/>
+
+            <CheckBox
+                android:id="@+id/addbrand_cb"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="15dp"
+                android:button="@null"
+                android:drawablePadding="8dp"
+                android:checked="true"
+                android:text="同意《用户协议》"
+                android:textSize="@dimen/second_font"
+                android:textColor="#5F5D5D"
+                android:drawableLeft="@drawable/pay_cb"/>
+
+
+            <TextView
+                android:id="@+id/addbrand_ok"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="25dp"
+                android:textColor="@color/write"
+                android:background="@drawable/dialog_ok_btn"
+                android:paddingTop="12dp"
+                android:paddingBottom="12dp"
+                android:gravity="center"
+                android:layout_marginBottom="20dp"
+                android:clickable="true"
+                android:textSize="@dimen/first_font"
+                android:text="提交"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"/>
+
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

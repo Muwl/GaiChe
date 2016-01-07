@@ -61,6 +61,8 @@ public class EarningActivity extends BaseActivity implements View.OnClickListene
 
                 break;
             case R.id.earning_mlin:
+                Intent intent2=new Intent(EarningActivity.this,MincomeActivity.class);
+                startActivity(intent2);
 
                 break;
         }

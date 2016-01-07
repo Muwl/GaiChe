@@ -44,6 +44,7 @@ public class WalletActivity extends BaseActivity implements View.OnClickListener
         back.setOnClickListener(this);
         title.setText("钱包");
         detail.setText("钱包明细");
+        detail.setOnClickListener(this);
         detail.setVisibility(View.VISIBLE);
         recharge.setOnClickListener(this);
         deposit.setOnClickListener(this);
@@ -60,8 +61,12 @@ public class WalletActivity extends BaseActivity implements View.OnClickListener
                 startActivity(intent);
                 break;
             case R.id.wallet_recharge:
+                Intent intent1=new Intent(WalletActivity.this,RechargeActivity.class);
+                startActivity(intent1);
                 break;
             case R.id.wallet_deposit:
+                Intent intent2=new Intent(WalletActivity.this,DepositActivity.class);
+                startActivity(intent2);
                 break;
         }
     }

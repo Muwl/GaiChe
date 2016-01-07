@@ -2,15 +2,19 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.gaicheyunxiu.gaiche">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.CAMERA" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-        <uses-permission android:name="android.permission.RECORD_AUDIO" />
-        <uses-permission android:name="android.permission.CAMERA" />
+
+
         <activity android:name=".activity.WelcomeActivity"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait"
@@ -158,6 +162,12 @@
             android:windowSoftInputMode="adjustUnspecified|stateHidden|adjustResize" >
         </activity>
         <activity
+            android:name=".activity.MincomeActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden|adjustResize" >
+        </activity>
+        <activity
             android:name=".activity.DepwalletActivity"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait"
@@ -177,6 +187,37 @@
         </activity>
         <activity
             android:name=".activity.WalletdetailActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden|adjustResize" >
+        </activity>
+        <activity
+            android:name=".activity.RechargeActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden|adjustResize" >
+        </activity>
+        <activity
+            android:name=".activity.RechargeSucActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden|adjustResize" >
+        </activity>
+        <activity
+            android:name=".activity.DepositActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden|adjustResize" >
+        </activity>
+        <activity
+            android:name=".activity.AddbrandcheckActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden|adjustResize" >
+        </activity>
+
+        <activity
+            android:name=".activity.AddbrandActivity"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustUnspecified|stateHidden|adjustResize" >

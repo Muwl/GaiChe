@@ -19,7 +19,11 @@ import com.gaicheyunxiu.gaiche.activity.MywalletActivity;
 import com.gaicheyunxiu.gaiche.activity.PersonDataActivity;
 import com.gaicheyunxiu.gaiche.activity.ServiceOrderActivity;
 import com.gaicheyunxiu.gaiche.activity.ShopOrderActivity;
+import com.gaicheyunxiu.gaiche.utils.ChangeCharset;
 import com.gaicheyunxiu.gaiche.view.RoundAngleImageView;
+import com.lidroid.xutils.BitmapUtils;
+
+import java.io.UnsupportedEncodingException;
 
 
 /**
@@ -93,6 +97,7 @@ public class PersonFragment extends Fragment implements View.OnClickListener{
         title.setText("我的");
         return view;
 
+
     }
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
@@ -112,7 +117,6 @@ public class PersonFragment extends Fragment implements View.OnClickListener{
         logisticsView.setOnClickListener(this);
         crowdorderView.setOnClickListener(this);
         settingView.setOnClickListener(this);
-
     }
 
     @Override

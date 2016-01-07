@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:background="@color/activity_bg"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include
+        android:id="@+id/recharge_title"
+        layout="@layout/activity_title"/>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="@color/bottom_div"
+                android:layout_marginTop="10dp"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="22dp"
+                android:paddingTop="10dp"
+                android:background="@color/write"
+                android:paddingBottom="10dp"
+                android:paddingRight="22dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#000000"
+                    android:textSize="@dimen/second_font"
+                    android:text="金额 （元）"/>
+
+                <EditText
+                    android:id="@+id/recharge_money"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/second_font"
+                    android:textColor="#332C2B"
+                    android:hint="请输入金额"
+                    android:background="@null"
+                    android:layout_marginLeft="15dp"
+                    android:inputType="number"/>
+            </LinearLayout>
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="5dp"
+                android:paddingLeft="21dp"
+                android:paddingRight="21dp"
+                android:paddingTop="25dp"
+                android:text="请选择支付方式"
+                android:textColor="#5F5D5D"
+                android:textSize="@dimen/thrid_font" />
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="@color/bottom_div" />
+
+
+
+            <LinearLayout
+                android:id="@+id/recharge_zhifubao"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/write"
+                android:clickable="true"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingLeft="22dp"
+                android:paddingRight="22dp"
+                android:paddingTop="12dp">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/pay_zhifubao" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp"
+                    android:layout_weight="1"
+                    android:text="支付宝"
+                    android:textColor="#5F5D5D"
+                    android:textSize="@dimen/second_font" />
+
+                <CheckBox
+                    android:id="@+id/recharge_zhifubao_cb"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:button="@drawable/pay_cb"
+                    android:clickable="false"
+                    android:enabled="false"
+                    android:focusable="false" />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/recharge_weixin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/write"
+                android:clickable="true"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingLeft="22dp"
+                android:paddingRight="22dp"
+                android:paddingTop="12dp">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/pay_weixin" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp"
+                    android:layout_weight="1"
+                    android:text="微信"
+                    android:textColor="#5F5D5D"
+                    android:textSize="@dimen/second_font" />
+
+                <CheckBox
+                    android:id="@+id/recharge_weixin_cb"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:button="@drawable/pay_cb"
+                    android:clickable="false"
+                    android:enabled="false"
+                    android:focusable="false" />
+            </LinearLayout>
+
+
+
+            <LinearLayout
+                android:id="@+id/recharge_yinlian"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/write"
+                android:clickable="true"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingLeft="22dp"
+                android:paddingRight="22dp"
+                android:paddingBottom="18dp"
+                android:paddingTop="12dp">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/pay_yinlian" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp"
+                    android:layout_weight="1"
+                    android:text="银联"
+                    android:textColor="#5F5D5D"
+                    android:textSize="@dimen/second_font" />
+
+                <CheckBox
+                    android:id="@+id/recharge_yinlian_cb"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:button="@drawable/pay_cb"
+                    android:clickable="false"
+                    android:enabled="false"
+                    android:focusable="false" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/recharge_ok"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:textColor="@color/write"
+                android:background="@drawable/dialog_ok_btn"
+                android:paddingTop="12dp"
+                android:paddingBottom="12dp"
+                android:gravity="center"
+                android:layout_marginBottom="20dp"
+                android:clickable="true"
+                android:textSize="@dimen/first_font"
+                android:text="提交"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"/>
+        </LinearLayout>
+    </ScrollView>
+
+
+
+
+
+</LinearLayout>

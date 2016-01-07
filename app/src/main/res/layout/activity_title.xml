@@ -57,7 +57,7 @@
         android:gravity="center"
         android:paddingRight="13dp"
         android:text="客服"
-        android:textColor="@color/title_text"
+        android:textColor="@color/title_text_btn"
         android:textSize="@dimen/first_font"
         android:visibility="gone" />
 
