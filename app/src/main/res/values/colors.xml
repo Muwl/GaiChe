@@ -19,5 +19,6 @@
     <color name="green_div">#bfecbf</color>
     <color name="earning_normal">#0f9b45</color>
     <color name="earning_press">#0b7333</color>
+    <color name="ptime_lin">#ababab</color>
 
 </resources>

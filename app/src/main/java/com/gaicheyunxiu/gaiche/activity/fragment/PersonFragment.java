@@ -15,9 +15,11 @@ import android.widget.TextView;
 import com.gaicheyunxiu.gaiche.R;
 import com.gaicheyunxiu.gaiche.activity.CartActivity;
 import com.gaicheyunxiu.gaiche.activity.EarningActivity;
+import com.gaicheyunxiu.gaiche.activity.MaintainActivity;
 import com.gaicheyunxiu.gaiche.activity.MywalletActivity;
 import com.gaicheyunxiu.gaiche.activity.PersonDataActivity;
 import com.gaicheyunxiu.gaiche.activity.ServiceOrderActivity;
+import com.gaicheyunxiu.gaiche.activity.ShipaddressActivity;
 import com.gaicheyunxiu.gaiche.activity.ShopOrderActivity;
 import com.gaicheyunxiu.gaiche.utils.ChangeCharset;
 import com.gaicheyunxiu.gaiche.view.RoundAngleImageView;
@@ -166,6 +168,8 @@ public class PersonFragment extends Fragment implements View.OnClickListener{
                 break;
 
             case R.id.person_address:
+                Intent intent8=new Intent(getActivity(), ShipaddressActivity.class);
+                startActivity(intent8);
 
                 break;
 
@@ -174,6 +178,8 @@ public class PersonFragment extends Fragment implements View.OnClickListener{
                 break;
 
             case R.id.person_maintain:
+                Intent intent9=new Intent(getActivity(), MaintainActivity.class);
+                startActivity(intent9);
 
                 break;
 

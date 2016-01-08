@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:gravity="center_vertical"
+    android:background="@drawable/item_bg"
+    android:layout_width="match_parent"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp"
+    android:paddingTop="8dp"
+    android:paddingBottom="8dp"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/maintain_item_image"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:src="@color/item_press"/>
+
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:layout_marginLeft="10dp"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/maintain_item_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/second_font"
+            android:textColor="#474443"
+            android:text="奥迪A3 1.8T 1999年（进口）"/>
+
+        <TextView
+            android:id="@+id/maintain_item_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/second_font"
+            android:layout_marginTop="10dp"
+            android:textColor="#474443"
+            android:text="消息消息消息消息消息"/>
+
+
+    </LinearLayout>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+         android:layout_marginLeft="5dp"
+        android:src="@mipmap/main_go"/>
+
+
+</LinearLayout>
