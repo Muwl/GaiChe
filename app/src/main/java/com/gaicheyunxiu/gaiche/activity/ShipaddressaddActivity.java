@@ -1,12 +1,15 @@
 package com.gaicheyunxiu.gaiche.activity;
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.gaicheyunxiu.gaiche.R;
+import com.gaicheyunxiu.gaiche.dialog.AreaDialog;
 
 /**
  * Created by Mu on 2016/1/8.
@@ -33,6 +36,13 @@ public class ShipaddressaddActivity extends BaseActivity implements View.OnClick
     private EditText telphone;
 
     private EditText code;
+
+    private Handler handler=new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,7 +82,7 @@ public class ShipaddressaddActivity extends BaseActivity implements View.OnClick
                 break;
 
             case R.id.shipaddress_add_arealin:
-
+                AreaDialog dialog=new AreaDialog(ShipaddressaddActivity.this,handler);
                 break;
         }
     }

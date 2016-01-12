@@ -20,5 +20,6 @@
     <color name="earning_normal">#0f9b45</color>
     <color name="earning_press">#0b7333</color>
     <color name="ptime_lin">#ababab</color>
+    <color name="province_line_border">#C7C7C7</color>
 
 </resources>
