@@ -59,7 +59,6 @@ public class HomeFragment extends Fragment {
         width= DensityUtil.getScreenWidth(getActivity());
         adapter=new FHomeGrallryAdapter(getActivity(),width);
         gallery1.setAdapter(adapter);
-
         int m = DensityUtil.dip2px(getActivity(), 3);
         for (int i = 0; i <3; i++) {
             ImageView image = (ImageView) LayoutInflater.from(getActivity())
