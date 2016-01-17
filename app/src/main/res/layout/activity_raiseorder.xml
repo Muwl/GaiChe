@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:background="@color/write"
+    android:layout_height="match_parent">
+
+    <include
+        android:id="@+id/raiseorder_title"
+        layout="@layout/activity_title"/>
+
+    <RadioGroup
+        android:id="@+id/raiseorder_group"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/activity_bg"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/raiseorder_all"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textSize="@dimen/first_font"
+            android:textColor="@color/bottom_text_bn"
+            android:text="全部"
+            android:background="@drawable/rb_bg"
+            android:button="@null"
+            android:gravity="center"
+            android:paddingTop="12dp"
+            android:paddingBottom="12dp"/>
+
+        <ImageView
+            android:layout_width="1px"
+            android:layout_height="match_parent"
+            android:layout_marginTop="3dp"
+            android:layout_marginBottom="3dp"
+            android:background="@color/bottom_div"/>
+
+        <RadioButton
+            android:id="@+id/raiseorder_paying"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textSize="@dimen/first_font"
+            android:textColor="@color/bottom_text_bn"
+            android:text="待付款"
+            android:background="@drawable/rb_bg"
+            android:button="@null"
+            android:gravity="center"
+            android:paddingTop="12dp"
+            android:paddingBottom="12dp"/>
+
+        <ImageView
+            android:layout_width="1px"
+            android:layout_height="match_parent"
+            android:layout_marginTop="3dp"
+            android:layout_marginBottom="3dp"
+            android:background="@color/bottom_div"/>
+
+
+        <RadioButton
+            android:id="@+id/raiseorder_state"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textSize="@dimen/first_font"
+            android:textColor="@color/bottom_text_bn"
+            android:text="成功/失败"
+            android:background="@drawable/rb_bg"
+            android:button="@null"
+            android:gravity="center"
+            android:paddingTop="12dp"
+            android:paddingBottom="12dp"/>
+
+        <ImageView
+            android:layout_width="1px"
+            android:layout_height="match_parent"
+            android:layout_marginTop="3dp"
+            android:layout_marginBottom="3dp"
+            android:background="@color/bottom_div"/>
+
+        <RadioButton
+            android:id="@+id/raiseorder_evaluating"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textSize="@dimen/first_font"
+            android:textColor="@color/bottom_text_bn"
+            android:text="待评价"
+            android:background="@drawable/rb_bg"
+            android:button="@null"
+            android:gravity="center"
+            android:paddingTop="12dp"
+            android:paddingBottom="12dp"/>
+    </RadioGroup>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/activity_bg"/>
+
+    <ListView
+        android:id="@+id/raiseorder_list"
+        android:layerType="software"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:divider="@drawable/dashed_lin"
+        android:dividerHeight="3px"
+        android:scrollbars="none"/>
+
+
+</LinearLayout>

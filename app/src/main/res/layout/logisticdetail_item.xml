@@ -1,0 +1,78 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/write"
+    android:orientation="horizontal" >
+
+    <LinearLayout
+        android:layout_width="32dip"
+        android:layout_height="match_parent"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <View
+            android:id="@+id/logisticdetail_item_line"
+            android:layout_width="1px"
+            android:layout_height="15dip"
+            android:background="#CDCDCD" />
+
+        <ImageView
+            android:id="@+id/logisticdetail_item_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="2dip"
+            android:src="@mipmap/logistic_normal" />
+
+        <View
+            android:id="@+id/logisticdetail_item_bottom_line"
+            android:layout_width="1px"
+            android:layout_height="fill_parent"
+            android:background="#CDCDCD" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="left"
+        android:orientation="vertical"
+        android:paddingTop="12dip" >
+
+        <TextView
+            android:id="@+id/logisticdetail_item_info"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="12dip"
+            android:text="【北京市】快件已到达北京分拨中心"
+            android:textColor="#858383"
+            android:textSize="@dimen/second_font" />
+
+        <TextView
+            android:id="@+id/logisticdetail_item_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dip"
+            android:textColor="#858383"
+            android:text="2012-11-10 23:17:49"
+            android:textSize="@dimen/second_font" />
+
+        <LinearLayout
+            android:id="@+id/logisticdetail_itemll_bottom_line"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dip"
+            android:orientation="vertical" >
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="#CFD0D0" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="#FDFEFE" />
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

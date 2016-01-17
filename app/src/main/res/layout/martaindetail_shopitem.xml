@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/item_bg"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="10dp">
+
+        <ImageView
+            android:id="@+id/martaindetail_shopitem_image"
+            android:layout_width="101dp"
+            android:layout_height="101dp"
+            android:scaleType="centerCrop"
+            android:src="@color/activity_bg" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="4dp"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/martaindetail_shopitem_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="【奥迪A6 1.8L 车大灯总成】汽车制动系统股份有限公司"
+                    android:textColor="#5F5D5D"
+                    android:textSize="@dimen/second_font" />
+
+                <TextView
+                    android:id="@+id/martaindetail_shopitem_num"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@+id/martaindetail_shopitem_name"
+                    android:layout_alignParentRight="true"
+                    android:text="x1"
+                    android:textColor="#5F5D5D"
+                    android:textSize="@dimen/second_font" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp">
+
+                <TextView
+                    android:id="@+id/martaindetail_shopitem_money"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="￥100.00元"
+                    android:textColor="#ED753A"
+                    android:textSize="@dimen/first_font" />
+
+                <TextView
+                    android:id="@+id/martaindetail_shopitem_m"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:text="1.00M"
+                    android:textColor="#ED753A"
+                    android:textSize="@dimen/first_font" />
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/martaindetail_shopitem_volume"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="8dp"
+                android:gravity="right"
+                android:text="2015年11月9日08点55分45秒"
+                android:textColor="#5F5D5D"
+                android:textSize="@dimen/second_font" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

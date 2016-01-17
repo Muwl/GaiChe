@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:background="@drawable/item_bg"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:gravity="center_vertical"
+        android:layout_height="wrap_content"
+        android:padding="10dp">
+        <TextView
+            android:id="@+id/martaindetail_serviceitem_name"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:textColor="#5F5D5D"
+            android:textSize="@dimen/thrid_font"
+            android:text="1.更换机油及机油滤清器"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/martaindetail_serviceitem_money"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#5F5D5D"
+            android:textSize="@dimen/thrid_font"
+            android:layout_marginLeft="10dp"
+            android:text="￥100.00元\u3000\u30001.00M"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:gravity="center_vertical"
+        android:layout_height="wrap_content"
+        android:paddingLeft="10dp"
+        android:layout_marginBottom="10dp"
+        android:paddingRight="10dp">
+
+        <ImageView
+            android:id="@+id/martaindetail_serviceitem_circle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/circle_gray"/>
+        <TextView
+            android:id="@+id/martaindetail_serviceitem_bm"
+            android:layout_width="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:textColor="#5F5D5D"
+            android:textSize="@dimen/thrid_font"
+            android:text="服务编码"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/martaindetail_serviceitem_no"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textColor="#A1A1A1"
+            android:textSize="@dimen/first_font"
+            android:layout_marginLeft="10dp"
+            android:text="123456"/>
+
+        <TextView
+            android:id="@+id/martaindetail_serviceitem_state"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#A1A1A1"
+            android:textSize="@dimen/second_font"
+            android:layout_marginLeft="10dp"
+            android:text="未使用"/>
+
+    </LinearLayout>
+</LinearLayout>

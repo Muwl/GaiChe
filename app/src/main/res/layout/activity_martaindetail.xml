@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:background="@color/write"
+    android:layout_height="match_parent">
+
+    <include
+        android:id="@+id/martaindetial_title"
+        layout="@layout/activity_title"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:background="@color/activity_bg"
+        android:paddingTop="12dp"
+        android:paddingBottom="12dp"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/martaindetial_car"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:drawablePadding="8dp"
+            android:textSize="@dimen/second_font"
+            android:textColor="#5F5D5D"
+            android:drawableLeft="@mipmap/maintain_image"
+            android:text="奥迪A6 1.8L 2004年生产"/>
+    </RelativeLayout>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/bottom_div"/>
+
+    <RadioGroup
+        android:id="@+id/martaindetial_group"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <RadioButton
+            android:id="@+id/martaindetial_good"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textColor="@color/martain_rb_text"
+            android:textSize="@dimen/first_font"
+            android:text="商品"
+            android:layout_weight="1"
+            android:paddingTop="12dp"
+            android:button="@null"
+            android:background="@drawable/martain_rb"
+            android:paddingBottom="12dp"
+            android:gravity="center"/>
+
+        <RadioButton
+            android:id="@+id/martaindetial_service"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textColor="@color/martain_rb_text"
+            android:textSize="@dimen/first_font"
+            android:text="服务"
+            android:layout_weight="1"
+            android:paddingTop="12dp"
+            android:button="@null"
+            android:background="@drawable/martain_rb"
+            android:paddingBottom="12dp"
+            android:gravity="center"/>
+    </RadioGroup>
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/bottom_div"/>
+    <ListView
+        android:id="@+id/martaindetial_list"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:scrollbars="none"
+        android:divider="@drawable/dashed_lin"
+        android:dividerHeight="3px"
+        android:layout_weight="1"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="#ed753a"
+            android:gravity="center"
+            android:paddingBottom="15dp"
+            android:paddingTop="15dp"
+            android:text="合计"
+            android:textColor="@color/write"
+            android:textSize="@dimen/first_font" />
+
+        <ImageView
+            android:layout_width="1px"
+            android:layout_height="match_parent"
+            android:background="#b6b0ae" />
+
+        <TextView
+            android:id="@+id/martaindetial_money"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            android:background="#ed753a"
+            android:gravity="center"
+            android:paddingBottom="15dp"
+            android:paddingTop="15dp"
+            android:text="1003.50"
+            android:textColor="@color/write"
+            android:textSize="@dimen/second_font" />
+
+    </LinearLayout>
+
+
+</LinearLayout>

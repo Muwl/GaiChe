@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:background="@color/activity_bg"
+    android:layout_height="match_parent">
+
+    <include
+        android:id="@+id/logistic_title"
+        layout="@layout/activity_title"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:background="@color/write"
+        android:paddingTop="12dp"
+        android:paddingBottom="12dp"
+        >
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/logistic_image"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/logistic_state"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#5F5D5D"
+                android:textSize="@dimen/first_font"
+                android:text="物流状态 包裹发往调拨中心"/>
+
+            <TextView
+                android:id="@+id/logisticdetail_no"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#858383"
+                android:layout_marginTop="8dp"
+                android:textSize="@dimen/thrid_font"
+                android:text="运单号:720042394109"/>
+            <TextView
+                android:id="@+id/logisticdetail_source"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#858383"
+                android:textSize="@dimen/thrid_font"
+                android:text="信息来源:全峰快递"/>
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/bottom_div"/>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_marginTop="10dp"
+        android:background="@color/bottom_div"/>
+
+    <ListView
+        android:id="@+id/logisticdetail_list"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/write"
+        android:cacheColorHint="@android:color/transparent"
+        android:divider="@null"
+        android:dividerHeight="0dip"
+        android:listSelector="@drawable/list_item_selector"
+        android:paddingBottom="2dip"
+        android:scrollbars="none" />
+
+
+</LinearLayout>
