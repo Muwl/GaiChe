@@ -1,8 +1,10 @@
 package com.gaicheyunxiu.gaiche.activity;
 
+import android.content.Intent;
 import android.media.Image;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -40,6 +42,14 @@ public class MaintainActivity extends BaseActivity implements View.OnClickListen
         back.setOnClickListener(this);
         title.setText("保养档案");
         listView.setAdapter(adapter);
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Intent intent=new Intent(MaintainActivity.this,MartaindetailActivity.class);
+                startActivity(intent);
+            }
+        });
 
     }
 

@@ -21,4 +21,6 @@
     <color name="earning_press">#0b7333</color>
     <color name="ptime_lin">#ababab</color>
     <color name="province_line_border">#C7C7C7</color>
+    <color name="logistic_cur">#4FCA81</color>
+    <color name="logistic_nor">#858383</color>
 </resources>

@@ -25,7 +25,7 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/shoporder_item_no"
+                android:id="@+id/logistic_item_no"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="订单号：1273198"
@@ -43,7 +43,7 @@
         android:layerType="software" />
 
     <com.gaicheyunxiu.gaiche.view.MyListView
-        android:id="@+id/shoporder_item_listview"
+        android:id="@+id/logistic_item_listview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:divider="@drawable/dashed_lin"
