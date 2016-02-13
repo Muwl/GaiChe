@@ -21,6 +21,7 @@ import com.gaicheyunxiu.gaiche.activity.MywalletActivity;
 import com.gaicheyunxiu.gaiche.activity.PersonDataActivity;
 import com.gaicheyunxiu.gaiche.activity.RaiseOrderActivity;
 import com.gaicheyunxiu.gaiche.activity.ServiceOrderActivity;
+import com.gaicheyunxiu.gaiche.activity.SettingActivity;
 import com.gaicheyunxiu.gaiche.activity.ShipaddressActivity;
 import com.gaicheyunxiu.gaiche.activity.ShopOrderActivity;
 import com.gaicheyunxiu.gaiche.utils.ChangeCharset;
@@ -197,6 +198,8 @@ public class PersonFragment extends Fragment implements View.OnClickListener{
                 break;
 
             case R.id.person_setting:
+                Intent intent12=new Intent(getActivity(), SettingActivity.class);
+                startActivity(intent12);
 
                 break;
 
