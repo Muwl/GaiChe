@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.gaicheyunxiu.gaiche.R;
 import com.gaicheyunxiu.gaiche.activity.CarbrandActivity;
+import com.gaicheyunxiu.gaiche.activity.QRScanActivity;
 import com.gaicheyunxiu.gaiche.adapter.FHomeGrallryAdapter;
 import com.gaicheyunxiu.gaiche.utils.DensityUtil;
 import com.gaicheyunxiu.gaiche.view.MyGallery;
@@ -65,6 +66,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
         adapter=new FHomeGrallryAdapter(getActivity(),width);
         gallery1.setAdapter(adapter);
         carLin.setOnClickListener(this);
+        code.setOnClickListener(this);
         int m = DensityUtil.dip2px(getActivity(), 3);
         for (int i = 0; i <3; i++) {
             ImageView image = (ImageView) LayoutInflater.from(getActivity())
@@ -101,9 +103,13 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case R.id.main_carlin:
-                Intent intent=new Intent(getActivity(), CarbrandActivity.class);
+            case R.id.title_code:
+                Intent intent=new Intent(getActivity(), QRScanActivity.class);
                 startActivity(intent);
+                break;
+            case R.id.main_carlin:
+                Intent intent2=new Intent(getActivity(), CarbrandActivity.class);
+                startActivity(intent2);
                 break;
         }
     }

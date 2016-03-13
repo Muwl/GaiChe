@@ -38,10 +38,20 @@
         android:background="@color/green_div"/>
 
     <TextView
+        android:id="@+id/dialog_pay_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#332C2B"
+        android:layout_marginTop="8dp"
+        android:visibility="gone"
+        android:textSize="@dimen/second_font"
+        android:text="向小拇指门店支付"/>
+
+    <TextView
         android:id="@+id/dialog_pay_money"
         android:layout_width="match_parent"
         android:gravity="center_horizontal"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="10dp"
         android:layout_marginBottom="15dp"
         android:textColor="#332C2B"
         android:textSize="22sp"

@@ -60,7 +60,7 @@ public class RaiseOrderActivity extends BaseActivity implements View.OnClickList
         back.setOnClickListener(this);
         adapter=new RaiseOrderAdapter(this);
         listView.setAdapter(adapter);
-        group.check(R.id.shoporder_all);
+        group.check(R.id.raiseorder_all);
     }
 
 

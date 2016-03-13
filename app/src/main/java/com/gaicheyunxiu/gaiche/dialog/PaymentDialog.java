@@ -29,6 +29,7 @@ public class PaymentDialog extends Dialog implements
 	private ImageView close;
 	private TextView money;
 	private EditText pwd;
+	private TextView name;
 	private TextView forgetpwd;
 	private TextView ok;
 
@@ -48,6 +49,7 @@ public class PaymentDialog extends Dialog implements
 		money= (TextView) findViewById(R.id.dialog_pay_money);
 		pwd= (EditText) findViewById(R.id.dialog_pay_pwd);
 		forgetpwd= (TextView) findViewById(R.id.dialog_forget_pwd);
+		name= (TextView) findViewById(R.id.dialog_pay_name);
 		ok= (TextView) findViewById(R.id.dialog_pay_ok);
 		ok.setOnClickListener(this);
 		close.setOnClickListener(this);

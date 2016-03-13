@@ -27,6 +27,7 @@
             android:background="@drawable/rb_bg"
             android:button="@null"
             android:gravity="center"
+            android:singleLine="true"
             android:paddingTop="12dp"
             android:paddingBottom="12dp"/>
 
@@ -45,6 +46,7 @@
             android:textSize="@dimen/second_font"
             android:textColor="@color/bottom_text_bn"
             android:text="待付款"
+            android:singleLine="true"
             android:background="@drawable/rb_bg"
             android:button="@null"
             android:gravity="center"
@@ -67,6 +69,7 @@
             android:textSize="@dimen/second_font"
             android:textColor="@color/bottom_text_bn"
             android:text="成功/失败"
+            android:singleLine="true"
             android:background="@drawable/rb_bg"
             android:button="@null"
             android:gravity="center"
@@ -86,6 +89,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:textSize="@dimen/second_font"
+            android:singleLine="true"
             android:textColor="@color/bottom_text_bn"
             android:text="待评价"
             android:background="@drawable/rb_bg"
