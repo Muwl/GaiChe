@@ -1,83 +1,88 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
     android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:background="@color/write"
-    android:layout_height="match_parent">
+    android:orientation="vertical">
 
     <include
         android:id="@+id/martaindetial_title"
-        layout="@layout/activity_title"/>
+        layout="@layout/activity_title" />
 
     <RelativeLayout
         android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:background="@color/activity_bg"
-        android:paddingTop="12dp"
         android:paddingBottom="12dp"
-        android:layout_height="wrap_content">
+        android:paddingTop="12dp">
+
         <TextView
             android:id="@+id/martaindetial_car"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:gravity="center"
-            android:drawablePadding="8dp"
-            android:textSize="@dimen/second_font"
-            android:textColor="#5F5D5D"
             android:drawableLeft="@mipmap/maintain_image"
-            android:text="奥迪A6 1.8L 2004年生产"/>
+            android:drawablePadding="8dp"
+            android:gravity="center"
+            android:text="奥迪A6 1.8L 2004年生产"
+            android:textColor="#5F5D5D"
+            android:textSize="@dimen/second_font" />
     </RelativeLayout>
 
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="1px"
-        android:background="@color/bottom_div"/>
+        android:background="@color/bottom_div" />
 
     <RadioGroup
         android:id="@+id/martaindetial_group"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
+
         <RadioButton
             android:id="@+id/martaindetial_good"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:textColor="@color/martain_rb_text"
-            android:textSize="@dimen/first_font"
-            android:text="商品"
             android:layout_weight="1"
-            android:paddingTop="12dp"
-            android:button="@null"
             android:background="@drawable/martain_rb"
+            android:button="@null"
+            android:gravity="center"
             android:paddingBottom="12dp"
-            android:gravity="center"/>
+            android:paddingTop="12dp"
+            android:text="商品"
+            android:textColor="@color/martain_rb_text"
+            android:textSize="@dimen/first_font" />
 
         <RadioButton
             android:id="@+id/martaindetial_service"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:textColor="@color/martain_rb_text"
-            android:textSize="@dimen/first_font"
-            android:text="服务"
             android:layout_weight="1"
-            android:paddingTop="12dp"
-            android:button="@null"
             android:background="@drawable/martain_rb"
+            android:button="@null"
+            android:gravity="center"
             android:paddingBottom="12dp"
-            android:gravity="center"/>
+            android:paddingTop="12dp"
+            android:text="服务"
+            android:textColor="@color/martain_rb_text"
+            android:textSize="@dimen/first_font" />
     </RadioGroup>
+
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="1px"
-        android:background="@color/bottom_div"/>
+        android:background="@color/bottom_div" />
+
     <ListView
         android:id="@+id/martaindetial_list"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:scrollbars="none"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
         android:divider="@drawable/dashed_lin"
         android:dividerHeight="3px"
-        android:layout_weight="1"/>
+        android:scrollbars="none" />
+
 
     <LinearLayout
         android:layout_width="match_parent"

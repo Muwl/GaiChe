@@ -72,7 +72,7 @@
             </RelativeLayout>
 
             <TextView
-                android:id="@+id/martaindetail_shopitem_volume"
+                android:id="@+id/martaindetail_shopitem_time"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
