@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/write"
+    android:gravity="center_vertical"
+    android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/catalog"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_weight="1.0"
+        android:background="#eaeaea"
+        android:paddingBottom="5dip"
+        android:paddingLeft="15dp"
+        android:paddingTop="5dip"
+        android:text="A"
+        android:textColor="#3c3c3e"
+        android:textSize="@dimen/second_font" />
+
+    <ImageView
+        android:id="@+id/index_lin"
+        android:layout_width="match_parent"
+        android:background="#ffc600"
+        android:visibility="gone"
+        android:layout_height="1dp"/>
+
+    <LinearLayout
+        android:id="@+id/carbrand_item_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/item_bg"
+        android:gravity="center_vertical"
+        android:clickable="true"
+        android:orientation="horizontal"
+        android:paddingBottom="7dp"
+        android:paddingLeft="15dp"
+        android:paddingTop="7dp" >
+
+        <ImageView
+            android:id="@+id/index_image"
+            android:layout_width="34dp"
+            android:layout_height="34dp"
+            android:src="@color/activity_bg" />
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1.0"
+            android:gravity="center_vertical"
+            android:paddingLeft="15dp"
+            android:text="hhhh"
+            android:textColor="#3c3c3e"
+            android:textSize="@dimen/second_font" />
+    </LinearLayout>
+
+</LinearLayout>

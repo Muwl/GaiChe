@@ -1,6 +1,5 @@
 package com.gaicheyunxiu.gaiche.activity;
 
-import android.media.Image;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -8,39 +7,40 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.gaicheyunxiu.gaiche.R;
-import com.gaicheyunxiu.gaiche.adapter.MaintainAdapter;
+import com.gaicheyunxiu.gaiche.adapter.LogisticAdapter;
 
 /**
- * Created by Mu on 2016/1/8.
- * 保养档案页面
+ * Created by Mu on 2016/1/18.
+ * 物流列表页面
  */
-public class MaintainActivity extends BaseActivity implements View.OnClickListener{
-
-    private ImageView back;
+public class LogisticActivity extends BaseActivity implements View.OnClickListener{
 
     private TextView title;
 
+    private ImageView back;
+
     private ListView listView;
 
-    private MaintainAdapter adapter;
+    private LogisticAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_maintain);
+        setContentView(R.layout.activity_logistics);
         initView();
     }
 
     private void initView() {
-        back= (ImageView) findViewById(R.id.title_back);
+
         title= (TextView) findViewById(R.id.title_text);
-        listView= (ListView) findViewById(R.id.maintain_list);
-        adapter=new MaintainAdapter(this);
+        back= (ImageView) findViewById(R.id.title_back);
+        listView= (ListView) findViewById(R.id.logistic_list);
 
+        title.setText("查看物流");
         back.setOnClickListener(this);
-        title.setText("保养档案");
-        listView.setAdapter(adapter);
 
+        adapter=new LogisticAdapter(this);
+        listView.setAdapter(adapter);
     }
 
     @Override
@@ -50,5 +50,6 @@ public class MaintainActivity extends BaseActivity implements View.OnClickListen
                 finish();
                 break;
         }
+
     }
 }

@@ -1,5 +1,6 @@
 package com.gaicheyunxiu.gaiche.activity.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -12,6 +13,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.gaicheyunxiu.gaiche.R;
+import com.gaicheyunxiu.gaiche.activity.CarbrandActivity;
 import com.gaicheyunxiu.gaiche.adapter.FHomeGrallryAdapter;
 import com.gaicheyunxiu.gaiche.utils.DensityUtil;
 import com.gaicheyunxiu.gaiche.view.MyGallery;
@@ -20,7 +22,7 @@ import com.gaicheyunxiu.gaiche.view.MyGallery;
 /**
  * Created by Administrator on 2015/12/19.
  */
-public class HomeFragment extends Fragment {
+public class HomeFragment extends Fragment implements View.OnClickListener{
 
     private ImageView code;
 
@@ -29,6 +31,8 @@ public class HomeFragment extends Fragment {
     private TextView title;
 
     private MyGallery gallery1;
+
+    private View carLin;
 
     private FHomeGrallryAdapter adapter;
 
@@ -44,6 +48,7 @@ public class HomeFragment extends Fragment {
         message= (ImageView) view.findViewById(R.id.title_message);
         title= (TextView) view.findViewById(R.id.title_text);
         gallery1= (MyGallery) view.findViewById(R.id.home_grally);
+        carLin=view.findViewById(R.id.main_carlin);
         lin = (LinearLayout) view.findViewById(R.id.home_lin);
         code.setVisibility(View.VISIBLE);
         message.setVisibility(View.VISIBLE);
@@ -59,6 +64,7 @@ public class HomeFragment extends Fragment {
         width= DensityUtil.getScreenWidth(getActivity());
         adapter=new FHomeGrallryAdapter(getActivity(),width);
         gallery1.setAdapter(adapter);
+        carLin.setOnClickListener(this);
         int m = DensityUtil.dip2px(getActivity(), 3);
         for (int i = 0; i <3; i++) {
             ImageView image = (ImageView) LayoutInflater.from(getActivity())
@@ -90,5 +96,15 @@ public class HomeFragment extends Fragment {
             }
         });
 
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.main_carlin:
+                Intent intent=new Intent(getActivity(), CarbrandActivity.class);
+                startActivity(intent);
+                break;
+        }
     }
 }

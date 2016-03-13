@@ -1,0 +1,88 @@
+package com.gaicheyunxiu.gaiche.activity;
+
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import com.gaicheyunxiu.gaiche.R;
+
+/**
+ * Created by Administrator on 2016/2/11.
+ * 设置页面
+ */
+public class SettingActivity extends BaseActivity implements View.OnClickListener{
+
+    private TextView title;
+
+    private ImageView back;
+
+    private View freeback;
+
+    private View share;
+
+    private TextView clear;
+
+    private View about;
+
+    private View logout;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_setting);
+        initView();
+    }
+
+    private void initView() {
+        back= (ImageView) findViewById(R.id.title_back);
+        title= (TextView) findViewById(R.id.title_text);
+        freeback=findViewById(R.id.setting_freeback);
+        share=findViewById(R.id.setting_share);
+        clear= (TextView) findViewById(R.id.setting_catch);
+        about=findViewById(R.id.setting_about);
+        logout=findViewById(R.id.setting_logout);
+
+        back.setOnClickListener(this);
+        title.setText("设置");
+        back.setOnClickListener(this);
+        freeback.setOnClickListener(this);
+        share.setOnClickListener(this);
+        clear.setOnClickListener(this);
+        about.setOnClickListener(this);
+        logout.setOnClickListener(this);
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.title_back:
+                finish();
+                break;
+
+            case R.id.setting_freeback:
+                Intent intent=new Intent(SettingActivity.this,FreebackActivity.class);
+                startActivity(intent);
+                break;
+
+            case R.id.setting_share:
+                Intent intent1=new Intent(SettingActivity.this,ShareActivity.class);
+                startActivity(intent1);
+
+                break;
+
+            case R.id.setting_catch:
+
+                break;
+
+            case R.id.setting_about:
+                Intent intent2=new Intent(SettingActivity.this,AboutActivity.class);
+                startActivity(intent2);
+                break;
+
+            case R.id.setting_logout:
+                break;
+        }
+    }
+}

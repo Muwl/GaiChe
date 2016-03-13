@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:background="@color/activity_bg"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include
+        android:id="@+id/freeback_title"
+        layout="@layout/activity_title"/>
+
+    <EditText
+        android:id="@+id/freeback_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="#5F5D5D"
+        android:textSize="@dimen/second_font"
+        android:lines="6"
+        android:background="@color/write"
+        android:padding="12dp"
+        android:gravity="top"
+        android:hint="请输入内容"
+        />
+
+    <TextView
+        android:id="@+id/freeback_ok"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/write"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/submit_bg_btn"
+        android:textSize="@dimen/first_font"
+        android:text="提交"
+        android:padding="12dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:gravity="center"/>
+
+</LinearLayout>

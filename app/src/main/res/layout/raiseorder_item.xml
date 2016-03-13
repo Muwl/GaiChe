@@ -200,7 +200,7 @@
             android:textSize="@dimen/thrid_font" />
 
         <TextView
-            android:id="@+id/shoporder_item_orangebtn"
+            android:id="@+id/raiseorder_item_orangebtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"

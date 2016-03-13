@@ -15,10 +15,13 @@ import android.widget.TextView;
 import com.gaicheyunxiu.gaiche.R;
 import com.gaicheyunxiu.gaiche.activity.CartActivity;
 import com.gaicheyunxiu.gaiche.activity.EarningActivity;
+import com.gaicheyunxiu.gaiche.activity.LogisticActivity;
 import com.gaicheyunxiu.gaiche.activity.MaintainActivity;
 import com.gaicheyunxiu.gaiche.activity.MywalletActivity;
 import com.gaicheyunxiu.gaiche.activity.PersonDataActivity;
+import com.gaicheyunxiu.gaiche.activity.RaiseOrderActivity;
 import com.gaicheyunxiu.gaiche.activity.ServiceOrderActivity;
+import com.gaicheyunxiu.gaiche.activity.SettingActivity;
 import com.gaicheyunxiu.gaiche.activity.ShipaddressActivity;
 import com.gaicheyunxiu.gaiche.activity.ShopOrderActivity;
 import com.gaicheyunxiu.gaiche.utils.ChangeCharset;
@@ -184,14 +187,19 @@ public class PersonFragment extends Fragment implements View.OnClickListener{
                 break;
 
             case R.id.person_logistics:
+                Intent intent10=new Intent(getActivity(), LogisticActivity.class);
+                startActivity(intent10);
 
                 break;
 
             case R.id.person_crowdorder:
-
+                Intent intent11=new Intent(getActivity(), RaiseOrderActivity.class);
+                startActivity(intent11);
                 break;
 
             case R.id.person_setting:
+                Intent intent12=new Intent(getActivity(), SettingActivity.class);
+                startActivity(intent12);
 
                 break;
 

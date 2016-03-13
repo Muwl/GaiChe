@@ -1,53 +1,54 @@
 package com.gaicheyunxiu.gaiche.activity;
 
-import android.media.Image;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.gaicheyunxiu.gaiche.R;
-import com.gaicheyunxiu.gaiche.adapter.MaintainAdapter;
 
 /**
- * Created by Mu on 2016/1/8.
- * 保养档案页面
+ * Created by Administrator on 2016/2/11.
  */
-public class MaintainActivity extends BaseActivity implements View.OnClickListener{
-
-    private ImageView back;
+public class FreebackActivity extends BaseActivity implements View.OnClickListener {
 
     private TextView title;
 
-    private ListView listView;
+    private ImageView back;
 
-    private MaintainAdapter adapter;
+    private EditText content;
+
+    private TextView ok;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_maintain);
+        setContentView(R.layout.activity_freeback);
         initView();
     }
 
     private void initView() {
         back= (ImageView) findViewById(R.id.title_back);
         title= (TextView) findViewById(R.id.title_text);
-        listView= (ListView) findViewById(R.id.maintain_list);
-        adapter=new MaintainAdapter(this);
+        content= (EditText) findViewById(R.id.freeback_content);
+        ok= (TextView) findViewById(R.id.freeback_ok);
 
         back.setOnClickListener(this);
-        title.setText("保养档案");
-        listView.setAdapter(adapter);
+        title.setText("意见反馈");
+        ok.setOnClickListener(this);
+
 
     }
 
     @Override
-    public void onClick(View view) {
-        switch (view.getId()) {
+    public void onClick(View v) {
+        switch (v.getId()){
             case R.id.title_back:
                 finish();
+                break;
+
+            case R.id.freeback_ok:
                 break;
         }
     }
