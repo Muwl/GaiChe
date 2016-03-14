@@ -1,6 +1,7 @@
 package com.gaicheyunxiu.gaiche.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -9,13 +10,15 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import com.gaicheyunxiu.gaiche.R;
+import com.gaicheyunxiu.gaiche.activity.PartActivity;
 import com.gaicheyunxiu.gaiche.utils.DensityUtil;
+import com.mining.app.zxing.decoding.Intents;
 
 /**
  * Created by Administrator on 2015/12/20.
  * 主页功能适配器
  */
-public class FHomeGrallryAdapter extends BaseAdapter {
+public class FHomeGrallryAdapter extends BaseAdapter implements View.OnClickListener{
     private Context context;
     private int width;
     private int eachWidth;
@@ -65,6 +68,7 @@ public class FHomeGrallryAdapter extends BaseAdapter {
             ask.setLayoutParams(new LinearLayout.LayoutParams(eachWidth,eachWidth));
             tire.setLayoutParams(new LinearLayout.LayoutParams(eachWidth,eachWidth));
 
+            parts.setOnClickListener(this);
         }else if(position==1){
             convertView=View.inflate(context, R.layout.fhome_page2,null);
             View root=convertView.findViewById(R.id.home_parts2_root);
@@ -86,6 +90,9 @@ public class FHomeGrallryAdapter extends BaseAdapter {
             battery.setLayoutParams(new LinearLayout.LayoutParams(eachWidth,eachWidth));
             headlamp.setLayoutParams(new LinearLayout.LayoutParams(eachWidth,eachWidth));
             sparkplug.setLayoutParams(new LinearLayout.LayoutParams(eachWidth,eachWidth));
+
+
+
         }else{
             convertView=View.inflate(context, R.layout.fhome_page3,null);
             View root=convertView.findViewById(R.id.home_parts3_root);
@@ -109,5 +116,15 @@ public class FHomeGrallryAdapter extends BaseAdapter {
             exhaust.setLayoutParams(new LinearLayout.LayoutParams(eachWidth,eachWidth));
         }
         return convertView;
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.home_parts:
+                Intent intent=new Intent(context, PartActivity.class);
+                context.startActivity(intent);
+                break;
+        }
     }
 }

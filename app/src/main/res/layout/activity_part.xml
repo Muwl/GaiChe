@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:background="@color/activity_bg"
+    android:layout_height="match_parent">
+
+
+    <include
+        android:id="@+id/part_title"
+        layout="@layout/activity_title"/>
+
+
+    <LinearLayout
+        android:id="@+id/part_carlin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/item_bg"
+        android:clickable="true"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="10dp">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/main_car" />
+
+        <TextView
+            android:id="@+id/part_carbrand"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_weight="1"
+            android:text="添加我的爱车"
+            android:textColor="#5F5D5D"
+            android:textSize="@dimen/second_font" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/main_go" />
+    </LinearLayout>
+
+
+    <RadioGroup
+        android:id="@+id/part_rb"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/write"
+        android:layout_marginTop="8dp"
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
+
+        <RadioButton
+            android:id="@+id/part_default"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textColor="@color/store_text_rb"
+            android:textSize="@dimen/second_font"
+            android:gravity="center"
+            android:paddingTop="10dp"
+            android:button="@null"
+            android:paddingBottom="10dp"
+            android:text="默认"
+            />
+
+        <ImageView
+            android:layout_width="1px"
+            android:layout_height="match_parent"
+            android:background="@color/bottom_div"/>
+        <RadioButton
+            android:id="@+id/part_moods"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:textColor="@color/store_text_rb"
+            android:textSize="@dimen/second_font"
+            android:paddingTop="10dp"
+            android:button="@null"
+            android:paddingBottom="10dp"
+            android:text="人气"
+            />
+        <ImageView
+            android:layout_width="1px"
+            android:layout_height="match_parent"
+            android:background="@color/bottom_div"/>
+        <RadioButton
+            android:id="@+id/part_technology"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:textColor="@color/store_text_rb"
+            android:textSize="@dimen/second_font"
+            android:button="@null"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:text="技术"
+            />
+        <ImageView
+            android:layout_width="1px"
+            android:layout_height="match_parent"
+            android:background="@color/bottom_div"/>
+        <RadioButton
+            android:id="@+id/part_price"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textColor="@color/store_text_rb"
+            android:textSize="@dimen/second_font"
+            android:paddingTop="10dp"
+            android:button="@null"
+            android:gravity="center"
+            android:paddingBottom="10dp"
+            android:text="价格"
+            />
+    </RadioGroup>
+
+    <ListView
+        android:id="@+id/part_lisview"
+        android:layout_width="match_parent"
+        android:layout_marginTop="8dp"
+        android:scrollbars="none"
+        android:layout_height="match_parent"/>
+
+</LinearLayout>
