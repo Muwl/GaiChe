@@ -95,6 +95,7 @@
                     android:layout_weight="1">
 
                     <ImageView
+                        android:id="@+id/home_shop"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:src="@mipmap/home_shop"/>
@@ -108,6 +109,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1">
                     <ImageView
+                        android:id="@+id/home_shop2"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:src="@mipmap/home_shop"/>

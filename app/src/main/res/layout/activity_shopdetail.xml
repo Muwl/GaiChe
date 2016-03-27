@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:hedgehog="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:background="@color/activity_bg"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/write"
+    android:orientation="vertical">
 
     <include
         android:id="@+id/shopdetail_title"
-        layout="@layout/activity_title"/>
+        layout="@layout/activity_title" />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -21,23 +21,21 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            >
-            <!--<ImageView-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="310dp"-->
-                <!--android:background="@color/activity_bg"/>-->
+            android:orientation="vertical">
+            <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="310dp"
+            android:background="@color/activity_bg"/>
 
             <TextView
                 android:layout_width="match_parent"
-                android:layout_marginTop="10dp"
-                android:layout_marginLeft="12dp"
-                android:textColor="#333333"
-                android:layout_marginRight="8dp"
-                android:textSize="@dimen/first_font"
-                android:text="奥迪A6 1.8L 车大灯总成  PHILIPS 12V边做钱照登超值系列H7"
                 android:layout_height="wrap_content"
-                />
+                android:layout_marginLeft="12dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginTop="10dp"
+                android:text="奥迪A6 1.8L 车大灯总成  PHILIPS 12V边做钱照登超值系列H7"
+                android:textColor="#333333"
+                android:textSize="@dimen/first_font" />
 
 
             <LinearLayout
@@ -59,66 +57,66 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
+                    android:clickable="true"
                     android:gravity="center"
                     android:padding="0dp"
-                    android:clickable="true"
                     android:rating="5"
                     hedgehog:starEmpty="@mipmap/ratbar_normal"
                     hedgehog:starFill="@mipmap/ratbar_checked"
-                    hedgehog:starImageSize="25dp"></com.gaicheyunxiu.gaiche.view.RatingBar>
+                    hedgehog:starImageSize="18dp"/>
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
                 android:layout_marginLeft="12dp"
-                >
+                android:orientation="horizontal">
+
                 <TextView
                     android:id="@+id/part_item_money"
                     android:layout_width="wrap_content"
-                    android:textColor="#ED753A"
+                    android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:textSize="@dimen/first_font"
                     android:text="￥100.00元"
-                    android:layout_height="wrap_content" />
+                    android:textColor="#ED753A"
+                    android:textSize="@dimen/first_font" />
 
                 <TextView
                     android:id="@+id/part_item_m"
                     android:layout_width="wrap_content"
-                    android:textColor="#ED753A"
-                    android:layout_weight="2"
-                    android:textSize="@dimen/first_font"
+                    android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
+                    android:layout_weight="2"
                     android:text="1.00M"
-                    android:layout_height="wrap_content" />
+                    android:textColor="#ED753A"
+                    android:textSize="@dimen/first_font" />
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:orientation="horizontal"
                 android:layout_marginLeft="12dp"
-                >
+                android:layout_marginTop="8dp"
+                android:orientation="horizontal">
+
                 <TextView
                     android:id="@+id/part_item_oldmoney"
                     android:layout_width="wrap_content"
-                    android:textColor="#5F5D5D"
+                    android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:textSize="@dimen/second_font"
                     android:text="￥180.00"
-                    android:layout_height="wrap_content" />
+                    android:textColor="#5F5D5D"
+                    android:textSize="@dimen/second_font" />
 
                 <TextView
                     android:id="@+id/part_item_volume"
                     android:layout_width="wrap_content"
-                    android:textColor="#5F5D5D"
-                    android:textSize="@dimen/second_font"
+                    android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
-                    android:text="销量：100件"
                     android:layout_weight="2"
-                    android:layout_height="wrap_content" />
+                    android:text="销量：100件"
+                    android:textColor="#5F5D5D"
+                    android:textSize="@dimen/second_font" />
 
 
             </LinearLayout>
@@ -127,143 +125,247 @@
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="1px"
-                android:background="@color/ptime_lin"
-                android:layout_marginTop="10dp"/>
+                android:layout_marginTop="10dp"
+                android:background="@color/ptime_lin" />
 
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginTop="8dp"
                 android:layout_marginRight="12dp"
-                android:gravity="center_vertical">
+                android:layout_marginTop="8dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:textSize="@dimen/first_font"
                     android:layout_marginLeft="12dp"
-                    android:text="购买数量"/>
+                    android:layout_weight="1"
+                    android:text="购买数量"
+                    android:textSize="@dimen/first_font" />
 
-                    <ImageView
-                        android:id="@+id/cart_item_item_incream"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/num_incream_btn"/>
+                <ImageView
+                    android:id="@+id/cart_item_item_incream"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/num_incream_btn" />
 
-                    <EditText
-                        android:id="@+id/cart_item_item_num"
-                        android:layout_width="50dp"
-                        android:layout_height="match_parent"
-                        android:background="@mipmap/num_input"
-                        android:gravity="center"
-                        android:text="1"
-                        android:textColor="#332C2B"
-                        android:textSize="@dimen/second_font"
-                        />
-                    <ImageView
-                        android:id="@+id/cart_item_item_add"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:clickable="true"
-                        android:src="@drawable/num_add_btn"/>
+                <EditText
+                    android:id="@+id/cart_item_item_num"
+                    android:layout_width="50dp"
+                    android:layout_height="match_parent"
+                    android:background="@mipmap/num_input"
+                    android:gravity="center"
+                    android:text="1"
+                    android:textColor="#332C2B"
+                    android:textSize="@dimen/second_font" />
+
+                <ImageView
+                    android:id="@+id/cart_item_item_add"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:clickable="true"
+                    android:src="@drawable/num_add_btn" />
             </LinearLayout>
 
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="1px"
-                android:background="@color/ptime_lin"
-                android:layout_marginTop="8dp"/>
+                android:layout_marginTop="8dp"
+                android:background="@color/ptime_lin" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="@dimen/first_font"
-                android:textColor="#5F5D5D"
-                android:text="商品介绍"
+                android:background="@drawable/item_bg"
+                android:drawableRight="@mipmap/main_go"
+                android:paddingBottom="8dp"
                 android:paddingLeft="12dp"
                 android:paddingRight="12dp"
                 android:paddingTop="8dp"
-                android:paddingBottom="8dp"
-                android:drawableRight="@mipmap/main_go"
-                android:background="@drawable/item_bg"
-                />
+                android:text="商品介绍"
+                android:textColor="#5F5D5D"
+                android:textSize="@dimen/first_font" />
 
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="1px"
-                android:background="@color/ptime_lin"/>
+                android:background="@color/ptime_lin" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="12dp"
                 android:layout_marginTop="10dp"
-                android:textSize="@dimen/first_font"
+                android:text="产品参数"
                 android:textColor="#ED753A"
-                android:text="产品参数"/>
+                android:textSize="@dimen/first_font" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="12dp"
+                android:layout_marginTop="6dp"
+                android:text="商品编码：1223244"
+                android:textColor="#8B8B8C"
+                android:textSize="@dimen/second_font" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="12dp"
+                android:layout_marginTop="3dp"
+                android:text="商品品牌：王者"
+                android:textColor="#8B8B8C"
+                android:textSize="@dimen/second_font" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="12dp"
+                android:layout_marginTop="3dp"
+                android:text="规格型号：SN-EP401"
+                android:textColor="#8B8B8C"
+                android:textSize="@dimen/second_font" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="12dp"
+                android:layout_marginTop="3dp"
+                android:text="购买单位：个"
+                android:textColor="#8B8B8C"
+                android:textSize="@dimen/second_font" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="12dp"
+                android:layout_marginTop="3dp"
+                android:text="级别：SN"
+                android:textColor="#8B8B8C"
+                android:textSize="@dimen/second_font" />
 
 
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:layout_marginTop="8dp"
+                android:background="@color/ptime_lin" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="12dp"
+                android:layout_marginTop="8dp"
+                android:text="售后服务"
+                android:textColor="#ED753A"
+                android:textSize="@dimen/first_font" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="12dp"
+                android:layout_marginTop="8dp"
+                android:text="原厂配件，绝对正品/n7天五天见退货"
+                android:textColor="#8B8B8C"
+                android:textSize="@dimen/second_font" />
+
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:layout_marginTop="8dp"
+                android:background="@color/ptime_lin" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="12dp"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp"
+                android:text="用户评论（644）"
+                android:textColor="#ED753A"
+                android:textSize="@dimen/first_font" />
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="@color/ptime_lin" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="12dp"
+                android:layout_marginTop="8dp"
+                android:text="商品综合满意度：4.9分，共644条"
+                android:textColor="#8B8B8C"
+                android:textSize="@dimen/second_font" />
+
+            <com.gaicheyunxiu.gaiche.view.MyListView
+                android:id="@+id/shopdetail_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scrollbars="none"></com.gaicheyunxiu.gaiche.view.MyListView>
         </LinearLayout>
+
 
     </ScrollView>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:background="##EEEEEF"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
-        android:gravity="center_vertical">
+        android:paddingBottom="8dp"
+        android:paddingTop="8dp"
+        android:background="#EEEEEF"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
 
         <TextView
             android:id="@+id/shopdetail_service"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="@dimen/second_font"
+            android:layout_marginLeft="20dp"
             android:drawableTop="@mipmap/service"
             android:text="客服"
-            android:layout_marginLeft="20dp"
-            />
+            android:textSize="@dimen/second_font" />
 
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"/>
+            android:layout_weight="1" />
 
         <TextView
             android:id="@+id/shopdetail_addcart"
             android:layout_width="wrap_content"
-            android:background="@drawable/add_cart_bg"
             android:layout_height="wrap_content"
-            android:text="加入购物车"
+            android:background="@drawable/add_cart_bg"
             android:drawableLeft="@mipmap/add_cart"
             android:drawablePadding="3dp"
-            android:paddingTop="10dp"
-            android:paddingBottom="10dp"
+            android:paddingBottom="6dp"
             android:paddingLeft="8dp"
             android:paddingRight="8dp"
-            android:textSize="@dimen/first_font"
-            android:textColor="@color/write"/>
+            android:paddingTop="6dp"
+            android:text="加入购物车"
+            android:textColor="@color/write"
+            android:textSize="@dimen/second_font" />
 
         <TextView
             android:id="@+id/shopdetail_buy"
             android:layout_width="wrap_content"
-            android:background="@drawable/add_cart_bg"
             android:layout_height="wrap_content"
-            android:text="立即购买"
-            android:drawableLeft="@mipmap/buy"
-            android:drawablePadding="3dp"
-            android:paddingTop="10dp"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
-            android:paddingBottom="10dp"
+            android:background="@drawable/add_cart_bg"
+            android:drawableLeft="@mipmap/buy"
+            android:drawablePadding="3dp"
+            android:paddingBottom="6dp"
             android:paddingLeft="13dp"
             android:paddingRight="13dp"
-            android:textSize="@dimen/first_font"
-            android:textColor="@color/write"/>
+            android:paddingTop="6dp"
+            android:text="立即购买"
+            android:textColor="@color/write"
+            android:textSize="@dimen/second_font" />
     </LinearLayout>
 </LinearLayout>

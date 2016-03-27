@@ -10,6 +10,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import com.gaicheyunxiu.gaiche.R;
+import com.gaicheyunxiu.gaiche.activity.FcialActivity;
 import com.gaicheyunxiu.gaiche.activity.PartActivity;
 import com.gaicheyunxiu.gaiche.utils.DensityUtil;
 import com.mining.app.zxing.decoding.Intents;
@@ -124,6 +125,10 @@ public class FHomeGrallryAdapter extends BaseAdapter implements View.OnClickList
             case R.id.home_parts:
                 Intent intent=new Intent(context, PartActivity.class);
                 context.startActivity(intent);
+                break;
+            case R.id.home_beauty:
+                Intent intent2=new Intent(context, FcialActivity.class);
+                context.startActivity(intent2);
                 break;
         }
     }

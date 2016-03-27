@@ -8,12 +8,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.gaicheyunxiu.gaiche.R;
 import com.gaicheyunxiu.gaiche.activity.CarbrandActivity;
+import com.gaicheyunxiu.gaiche.activity.CrowdFundActivity;
 import com.gaicheyunxiu.gaiche.activity.QRScanActivity;
 import com.gaicheyunxiu.gaiche.adapter.FHomeGrallryAdapter;
 import com.gaicheyunxiu.gaiche.utils.DensityUtil;
@@ -41,6 +43,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
 
     private LinearLayout lin = null;
 
+    private ImageView shop;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -50,6 +54,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
         title= (TextView) view.findViewById(R.id.title_text);
         gallery1= (MyGallery) view.findViewById(R.id.home_grally);
         carLin=view.findViewById(R.id.main_carlin);
+        shop= (ImageView) view.findViewById(R.id.home_shop);
         lin = (LinearLayout) view.findViewById(R.id.home_lin);
         code.setVisibility(View.VISIBLE);
         message.setVisibility(View.VISIBLE);
@@ -67,6 +72,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
         gallery1.setAdapter(adapter);
         carLin.setOnClickListener(this);
         code.setOnClickListener(this);
+        shop.setOnClickListener(this);
         int m = DensityUtil.dip2px(getActivity(), 3);
         for (int i = 0; i <3; i++) {
             ImageView image = (ImageView) LayoutInflater.from(getActivity())
@@ -110,6 +116,11 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
             case R.id.main_carlin:
                 Intent intent2=new Intent(getActivity(), CarbrandActivity.class);
                 startActivity(intent2);
+                break;
+
+            case R.id.home_shop:
+                Intent intent3=new Intent(getActivity(), CrowdFundActivity.class);
+                startActivity(intent3);
                 break;
         }
     }

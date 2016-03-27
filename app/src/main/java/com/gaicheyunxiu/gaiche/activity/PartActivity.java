@@ -1,8 +1,10 @@
 package com.gaicheyunxiu.gaiche.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RadioButton;
@@ -60,8 +62,24 @@ public class PartActivity  extends BaseActivity implements View.OnClickListener{
         volume= (RadioButton) findViewById(R.id.part_technology);
         brand= (RadioButton) findViewById(R.id.part_price);
         listView= (ListView) findViewById(R.id.part_lisview);
+        back.setOnClickListener(this);
         adapter=new PartsAdapter(this);
         listView.setAdapter(adapter);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(PartActivity.this, ShopDetailActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        brand.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(PartActivity.this,BrandActivity.class);
+                startActivity(intent);
+            }
+        });
         group.check(R.id.part_default);
 
     }

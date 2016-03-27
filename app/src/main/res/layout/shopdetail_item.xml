@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:hedgehog="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:background="@drawable/item_bg"
+    android:layout_width="match_parent"
+    android:paddingLeft="12dp"
+    android:paddingRight="12dp"
+    android:paddingTop="8dp"
+    android:paddingBottom="8dp"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
+
+        <com.gaicheyunxiu.gaiche.view.RoundAngleImageView
+            android:id="@+id/shopdetail_item_icon"
+            android:layout_width="47dp"
+            android:layout_height="47dp"
+            android:scaleType="centerCrop"
+            android:src="@mipmap/person_icon"
+            app:roundHeight="7dp"
+            app:roundWidth="7dp" />
+
+        <TextView
+            android:id="@+id/shopdetail_item_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#5F5D5D"
+            android:layout_weight="1"
+            android:layout_marginLeft="8dp"
+            android:textSize="@dimen/second_font"
+            android:text="GC123123"/>
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#5F5D5D"
+            android:text="评价："
+            android:textSize="@dimen/thrid_font"/>
+
+            <com.gaicheyunxiu.gaiche.view.RatingBar
+                android:id="@+id/shopdetail_item_bar"
+                style="@style/foodRatingBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:clickable="true"
+                android:gravity="center"
+                android:padding="0dp"
+                android:rating="5"
+                hedgehog:starEmpty="@mipmap/ratbar_normal"
+                hedgehog:starFill="@mipmap/ratbar_checked"
+                hedgehog:starImageSize="18dp"/>
+    </LinearLayout>
+
+
+    <TextView
+        android:id="@+id/shopdetail_item_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="#5F5D5D"
+        android:textSize="@dimen/second_font"
+        android:text="好东西，值得购买，还没有发现什么大缺点呢。"/>
+
+
+</LinearLayout>

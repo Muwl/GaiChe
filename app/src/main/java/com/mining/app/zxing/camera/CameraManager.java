@@ -129,12 +129,6 @@ public final class CameraManager {
       }
       configManager.setDesiredCameraParameters(camera);
 
-      //FIXME
- //     SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-      //是否使用前灯
-//      if (prefs.getBoolean(PreferencesActivity.KEY_FRONT_LIGHT, false)) {
-//        FlashlightManager.enableFlashlight();
-//      }
       FlashlightManager.enableFlashlight();
     }
   }
