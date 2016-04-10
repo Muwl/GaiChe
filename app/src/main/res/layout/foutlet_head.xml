@@ -1,0 +1,354 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:background="@color/activity_bg"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:id="@+id/foutlet_carlin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/item_bg"
+        android:clickable="true"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="10dp">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/main_car" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:src="@mipmap/main_add" />
+
+        <TextView
+            android:id="@+id/foutlet_carbrand"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
+            android:layout_weight="1"
+            android:text="添加我的爱车"
+            android:textColor="#5F5D5D"
+            android:textSize="@dimen/second_font" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/main_go" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="10dp"
+        android:gravity="center_vertical">
+
+        <TextView
+            android:id="@+id/foutlet_pay"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableTop="@mipmap/outlet_pay"
+            android:textSize="@dimen/second_font"
+            android:textColor="#332C2B"
+            android:drawablePadding="5dp"
+            android:text="扫描支付"
+            android:paddingTop="8dp"
+            android:clickable="true"
+            android:paddingBottom="8dp"
+            android:paddingLeft="6dp"
+            android:paddingRight="6dp"
+            android:background="@drawable/outlet_pay_bg"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:background="@drawable/outlet_pay_bg"
+            android:layout_marginLeft="10dp">
+
+            <TextView
+                android:id="@+id/foutlet_address"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:drawableLeft="@mipmap/outlet_locate"
+                android:text="山东省日照市东港区五莲路"
+                android:textColor="#332C2B"
+                android:paddingLeft="15dp"
+                android:paddingRight="10dp"
+                android:drawablePadding="10dp"
+                android:layout_weight="3"/>
+
+            <ImageView
+                android:layout_width="1px"
+                android:layout_height="match_parent"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:background="#332C2B"/>
+
+            <TextView
+                android:id="@+id/foutlet_nearbay"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:drawableLeft="@mipmap/outlet_near"
+                android:text="附近门店"
+                android:textColor="#332C2B"
+                android:paddingLeft="15dp"
+                android:paddingRight="10dp"
+                android:layout_weight="2"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/bottom_div"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@color/write">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:layout_marginTop="8dp"
+            android:layout_marginLeft="10dp"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:layout_width="5dp"
+                android:layout_height="match_parent"
+                android:background="@color/outlet_reat"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#332C2B"
+                android:layout_marginLeft="2dp"
+                android:textSize="@dimen/second_font"
+                android:text="按照服务项目查找"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="10dp">
+
+            <TextView
+                android:id="@+id/foutlet_maintain"
+                android:clickable="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawablePadding="5dp"
+                android:drawableTop="@mipmap/outlet_maintain"
+                android:layout_weight="1"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:textColor="#5F5D5D"
+                android:gravity="center"
+                android:textSize="@dimen/second_font"
+                android:text="保养档案"/>
+
+            <TextView
+                android:id="@+id/foutlet_carwash"
+                android:clickable="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawablePadding="5dp"
+                android:drawableTop="@mipmap/outlet_carwash"
+                android:layout_weight="1"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:textColor="#5F5D5D"
+                android:gravity="center"
+                android:textSize="@dimen/second_font"
+                android:text="普通洗车"/>
+
+
+            <TextView
+                android:id="@+id/foutlet_bendks"
+                android:clickable="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawablePadding="5dp"
+                android:drawableTop="@mipmap/outlet_bendks"
+                android:layout_weight="1"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:textColor="#5F5D5D"
+                android:gravity="center"
+                android:textSize="@dimen/second_font"
+                android:text="贴膜"/>
+
+            <TextView
+                android:id="@+id/foutlet_spray"
+                android:clickable="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawablePadding="5dp"
+                android:drawableTop="@mipmap/outlet_spray"
+                android:layout_weight="1"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:textColor="#5F5D5D"
+                android:gravity="center"
+                android:textSize="@dimen/second_font"
+                android:text="钣金喷漆"/>
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingBottom="10dp"
+            android:layout_marginTop="10dp">
+
+            <TextView
+                android:id="@+id/foutlet_buffing"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawablePadding="5dp"
+                android:drawableTop="@mipmap/outlet_buffing"
+                android:layout_weight="1"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:textColor="#5F5D5D"
+                android:clickable="true"
+                android:gravity="center"
+                android:textSize="@dimen/second_font"
+                android:text="抛光封釉"/>
+
+            <TextView
+                android:id="@+id/foutlet_tyre"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawablePadding="5dp"
+                android:drawableTop="@mipmap/outlet_tyre"
+                android:layout_weight="1"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:clickable="true"
+                android:textColor="#5F5D5D"
+                android:gravity="center"
+                android:textSize="@dimen/second_font"
+                android:text="轮胎"/>
+
+
+            <TextView
+                android:id="@+id/foutlet_battery"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawablePadding="5dp"
+                android:drawableTop="@mipmap/outlet_battery"
+                android:layout_weight="1"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:clickable="true"
+                android:textColor="#5F5D5D"
+                android:gravity="center"
+                android:textSize="@dimen/second_font"
+                android:text="蓄电池"/>
+
+            <TextView
+                android:id="@+id/foutlet_more"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawablePadding="5dp"
+                android:drawableTop="@mipmap/outlet_more"
+                android:layout_weight="1"
+                android:layout_marginLeft="10dp"
+                android:clickable="true"
+                android:layout_marginRight="10dp"
+                android:textColor="#5F5D5D"
+                android:gravity="center"
+                android:textSize="@dimen/second_font"
+                android:text="更多"/>
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:background="@color/bottom_div"
+        android:layout_height="1px" />
+
+    <LinearLayout
+        android:id="@+id/foutlet_serchlin"
+        android:layout_width="match_parent"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:clickable="true"
+        android:layout_marginTop="2dp"
+        android:gravity="center_vertical"
+        android:layout_marginBottom="2dp"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:background="@drawable/outlet_serch"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/store_serch"/>
+
+        <TextView
+
+            android:layout_width="match_parent"
+            android:background="@color/write"
+            android:textColor="#5F5D5D"
+            android:gravity="center"
+            android:textSize="@dimen/second_font"
+            android:text="请输入你要查询的门站"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/bottom_div"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/write"
+        android:paddingBottom="8dp"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:layout_marginTop="8dp"
+            android:layout_marginLeft="10dp"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:layout_width="5dp"
+                android:layout_height="match_parent"
+                android:background="@color/outlet_reat"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#332C2B"
+                android:layout_marginLeft="2dp"
+                android:textSize="@dimen/second_font"
+                android:text="您附近的热门门店"/>
+        </LinearLayout>
+        </LinearLayout>
+
+</LinearLayout>

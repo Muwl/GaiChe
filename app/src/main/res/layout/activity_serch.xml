@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:background="@color/activity_bg"
+    android:layout_height="match_parent">
+
+    <include
+        android:id="@+id/serch_title"
+        layout="@layout/activity_title"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="@drawable/serch_bg"
+        android:layout_margin="10dp">
+
+        <ImageView
+            android:id="@+id/serch_serch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="10dp"
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp"
+            android:layout_centerVertical="true"
+            android:paddingRight="10dp"
+            android:src="@mipmap/store_serch"/>
+
+
+        <ImageView
+            android:id="@+id/serch_cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="10dp"
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:paddingRight="10dp"
+            android:src="@mipmap/input_cancel"/>
+
+        <EditText
+            android:id="@+id/serch_text"
+            android:layout_toLeftOf="@id/serch_cancel"
+            android:layout_toRightOf="@id/serch_serch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/write"
+            android:textColor="#5F5D5D"
+            android:layout_centerVertical="true"
+            android:textSize="@dimen/second_font"
+            android:paddingTop="12dp"
+            android:paddingBottom="12dp"/>
+
+
+
+    </RelativeLayout>
+
+    <ListView
+        android:id="@+id/serch_listview"
+        android:layout_width="match_parent"
+        android:scrollbars="none"
+        android:layout_height="wrap_content"/>
+
+</LinearLayout>

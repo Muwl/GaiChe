@@ -1,14 +1,110 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
     android:background="@color/activity_bg"
     android:layout_height="match_parent">
     <include
-        android:id="@+id/home_title"
+        android:id="@+id/fstore_title"
         layout="@layout/activity_title"/>
 
-    <TextView
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/fstore_carlin"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="2"/>
+        android:background="@drawable/item_bg"
+        android:clickable="true"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="10dp">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/main_car" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:src="@mipmap/main_add" />
+
+        <TextView
+            android:id="@+id/fstore_carbrand"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
+            android:layout_weight="1"
+            android:text="添加我的爱车"
+            android:textColor="#5F5D5D"
+            android:textSize="@dimen/second_font" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/main_go" />
+    </LinearLayout>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/bottom_div"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:background="@color/write">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:background="@drawable/store_serch_bg"
+            android:gravity="center_vertical"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/fstore_serch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="10dp"
+                android:paddingTop="6dp"
+                android:paddingBottom="6dp"
+                android:paddingRight="8dp"
+                android:src="@mipmap/store_serch"/>
+
+            <EditText
+                android:id="@+id/fstore_serchtext"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/transparent"
+                android:textSize="@dimen/thrid_font"
+                android:paddingTop="5dp"
+                android:singleLine="true"
+                android:paddingBottom="5dp"
+                android:paddingRight="12dp"
+                android:textColor="#424242"
+                android:textColorHint="#5f5d5d"
+                android:hint="请输入您要查询的 商品名称/产品型号/品牌....."
+                />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/bottom_div"/>
+
+
+    <ExpandableListView
+        android:id="@+id/fstore_listview"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" />
+
+
+
+
+
 </LinearLayout>

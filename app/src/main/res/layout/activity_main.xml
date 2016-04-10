@@ -81,7 +81,7 @@
                 android:paddingLeft="0dp"
                 android:paddingRight="0dp"
                 android:paddingTop="4dp"
-                android:text="商城"
+                android:text="门店"
                 android:textColor="@color/bottom_text_bn"
                 android:textSize="@dimen/thrid_font" />
 

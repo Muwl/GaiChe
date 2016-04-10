@@ -23,6 +23,7 @@
     <color name="province_line_border">#C7C7C7</color>
     <color name="logistic_cur">#4FCA81</color>
     <color name="logistic_nor">#858383</color>
+    <color name="outlet_reat">#00A2E9</color>
 
     <color name="result_view">#b0000000</color>
     <color name="viewfinder_mask">#60000000</color>
