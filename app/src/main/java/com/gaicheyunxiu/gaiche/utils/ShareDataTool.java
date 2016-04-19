@@ -11,5 +11,20 @@ import android.content.SharedPreferences.Editor;
  */
 public class ShareDataTool {
 
+    public static boolean SaveInfo(Context context, String token) {
+        SharedPreferences sp = context.getSharedPreferences("sp",
+                Context.MODE_PRIVATE);
+        Editor e = sp.edit();
+        e.putString("token", token);
+        return e.commit();
+    }
+
+    public static String getToken(Context context) {
+
+        return context.getSharedPreferences("sp", Context.MODE_PRIVATE)
+
+                .getString("token", "");
+    }
+
 
 }

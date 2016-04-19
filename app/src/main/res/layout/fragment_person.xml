@@ -526,9 +526,9 @@
                 android:clickable="true"
                 android:paddingLeft="20dp"
                 android:paddingRight="20dp"
-                android:paddingTop="5dp"
-                android:paddingBottom="5dp"
                 >
+                <!-- android:paddingTop="5dp"
+                android:paddingBottom="5dp"-->
 
                 <ImageView
                     android:id="@+id/person_askimage"
@@ -537,6 +537,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="10dp"
+                    android:visibility="gone"
                     android:src="@mipmap/person_ask"/>
 
 
@@ -550,6 +551,7 @@
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="10dp"
                     android:textSize="@dimen/first_font"
+                    android:visibility="gone"
                     android:text="车问"
                     android:layout_marginLeft="35dp"
                     />
@@ -574,6 +576,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_alignParentRight="true"
+                    android:visibility="gone"
                     android:src="@mipmap/main_go"/>
             </RelativeLayout>
             <ImageView

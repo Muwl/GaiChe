@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.gaicheyunxiu.gaiche.R;
 import com.gaicheyunxiu.gaiche.activity.CartActivity;
 import com.gaicheyunxiu.gaiche.activity.EarningActivity;
+import com.gaicheyunxiu.gaiche.activity.LoginActivity;
 import com.gaicheyunxiu.gaiche.activity.LogisticActivity;
 import com.gaicheyunxiu.gaiche.activity.MaintainActivity;
 import com.gaicheyunxiu.gaiche.activity.MywalletActivity;
@@ -25,6 +26,8 @@ import com.gaicheyunxiu.gaiche.activity.SettingActivity;
 import com.gaicheyunxiu.gaiche.activity.ShipaddressActivity;
 import com.gaicheyunxiu.gaiche.activity.ShopOrderActivity;
 import com.gaicheyunxiu.gaiche.utils.ChangeCharset;
+import com.gaicheyunxiu.gaiche.utils.ShareDataTool;
+import com.gaicheyunxiu.gaiche.utils.ToosUtils;
 import com.gaicheyunxiu.gaiche.view.RoundAngleImageView;
 import com.lidroid.xutils.BitmapUtils;
 
@@ -133,8 +136,14 @@ public class PersonFragment extends Fragment implements View.OnClickListener{
                 break;
 
             case R.id.person_data:
-                Intent intent=new Intent(getActivity(), PersonDataActivity.class);
-                startActivity(intent);
+                if(ToosUtils.isStringEmpty(ShareDataTool.getToken(getActivity()))){
+                    Intent intent=new Intent(getActivity(), LoginActivity.class);
+                    startActivity(intent);
+                }else{
+                    Intent intent=new Intent(getActivity(), PersonDataActivity.class);
+                    startActivity(intent);
+                }
+
 
                 break;
 
