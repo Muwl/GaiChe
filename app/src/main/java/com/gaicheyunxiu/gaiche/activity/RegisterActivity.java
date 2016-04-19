@@ -1,5 +1,6 @@
 package com.gaicheyunxiu.gaiche.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.view.View;
@@ -9,9 +10,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.gaicheyunxiu.gaiche.R;
+import com.gaicheyunxiu.gaiche.model.RegisterState;
 import com.gaicheyunxiu.gaiche.model.ReturnState;
 import com.gaicheyunxiu.gaiche.utils.Constant;
 import com.gaicheyunxiu.gaiche.utils.LogManager;
+import com.gaicheyunxiu.gaiche.utils.ShareDataTool;
 import com.gaicheyunxiu.gaiche.utils.ToastUtils;
 import com.gaicheyunxiu.gaiche.utils.ToosUtils;
 import com.google.gson.Gson;
@@ -245,18 +248,11 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                             ReturnState state = gson.fromJson(arg0.result,
                                     ReturnState.class);
                             if (Constant.RETURN_OK.equals(state.msg)) {
-                                String temp = ToosUtils
-                                        .getEncryptto((String) state.result);
-//                                RegisterEntity entity = gson.fromJson(temp,
-//                                        RegisterEntity.class);
-//                                ShareDataTool.SaveInfo(RegisterActivity.this,
-//                                        entity.token, entity.userId,
-//                                        entity.imUsername, entity.imPassword);
-//                                ShareDataTool
-//                                        .SaveFlag(RegisterActivity.this, 0);
-//
-//                                loginHX(entity.imUsername, entity.imPassword);
-
+                                RegisterState registerState=gson.fromJson(arg0.result,RegisterState.class);
+                                ShareDataTool.SaveInfo(RegisterActivity.this,registerState.result);
+                                Intent intent=new Intent();
+                                setResult(RESULT_OK,intent);
+                                finish();
                             } else {
                                 ToastUtils.displayShortToast(
                                         RegisterActivity.this,

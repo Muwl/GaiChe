@@ -14,7 +14,8 @@ import com.gaicheyunxiu.gaiche.R;
  * Created by Administrator on 2016/4/19.
  */
 public class LoginActivity extends BaseActivity implements View.OnClickListener {
-
+    private static final int FORGETPWD_RETURN=111;
+    private static final int REGISTER_RETURN=112;
     private ImageView back;
     private TextView title;
     private EditText phoneView;
@@ -61,13 +62,25 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 break;
             case R.id.login_forgetpwd:
                 Intent intent=new Intent(LoginActivity.this,LoginPwdActivity.class);
-                startActivity(intent);
+                startActivityForResult(intent,FORGETPWD_RETURN);
                 break;
 
             case R.id.login_register:
                 Intent intent2=new Intent(LoginActivity.this,RegisterActivity.class);
-                startActivity(intent2);
+                startActivityForResult(intent2,REGISTER_RETURN);
                 break;
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode!=RESULT_OK){
+            return;
+        }
+        if (requestCode==FORGETPWD_RETURN || requestCode==REGISTER_RETURN){
+            Intent intent=new Intent();
+            setResult(RESULT_OK,intent);
+            finish();
         }
     }
 }

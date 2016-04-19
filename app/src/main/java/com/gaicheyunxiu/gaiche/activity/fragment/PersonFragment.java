@@ -2,6 +2,7 @@
 
 package com.gaicheyunxiu.gaiche.activity.fragment;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -25,10 +26,12 @@ import com.gaicheyunxiu.gaiche.activity.ServiceOrderActivity;
 import com.gaicheyunxiu.gaiche.activity.SettingActivity;
 import com.gaicheyunxiu.gaiche.activity.ShipaddressActivity;
 import com.gaicheyunxiu.gaiche.activity.ShopOrderActivity;
+import com.gaicheyunxiu.gaiche.model.RegiterEntity;
 import com.gaicheyunxiu.gaiche.utils.ChangeCharset;
 import com.gaicheyunxiu.gaiche.utils.ShareDataTool;
 import com.gaicheyunxiu.gaiche.utils.ToosUtils;
 import com.gaicheyunxiu.gaiche.view.RoundAngleImageView;
+import com.google.gson.FieldAttributes;
 import com.lidroid.xutils.BitmapUtils;
 
 import java.io.UnsupportedEncodingException;
@@ -38,6 +41,8 @@ import java.io.UnsupportedEncodingException;
  * Created by Administrator on 2015/12/19.
  */
 public class PersonFragment extends Fragment implements View.OnClickListener{
+
+    private static final int LOGIN_RETURN=100;
 
     private RoundAngleImageView icon;
 
@@ -76,6 +81,8 @@ public class PersonFragment extends Fragment implements View.OnClickListener{
     private View crowdorderView;
 
     private View settingView;
+
+    private BitmapUtils bitmapUtils;
 
 
     @Nullable
@@ -125,6 +132,7 @@ public class PersonFragment extends Fragment implements View.OnClickListener{
         logisticsView.setOnClickListener(this);
         crowdorderView.setOnClickListener(this);
         settingView.setOnClickListener(this);
+        bitmapUtils=new BitmapUtils(getActivity());
     }
 
     @Override
@@ -138,7 +146,7 @@ public class PersonFragment extends Fragment implements View.OnClickListener{
             case R.id.person_data:
                 if(ToosUtils.isStringEmpty(ShareDataTool.getToken(getActivity()))){
                     Intent intent=new Intent(getActivity(), LoginActivity.class);
-                    startActivity(intent);
+                    startActivityForResult(intent, LOGIN_RETURN);
                 }else{
                     Intent intent=new Intent(getActivity(), PersonDataActivity.class);
                     startActivity(intent);
@@ -213,7 +221,21 @@ public class PersonFragment extends Fragment implements View.OnClickListener{
                 break;
 
         }
+    }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode!= Activity.RESULT_OK){
+            return;
+        }
+        if (requestCode==LOGIN_RETURN){
+            reFushPersonInfo();
+        }
+    }
+
+    public void reFushPersonInfo(){
+        RegiterEntity regiterEntity=new RegiterEntity();
+        bitmapUtils.display(icon,regiterEntity.icon);
 
     }
 }
