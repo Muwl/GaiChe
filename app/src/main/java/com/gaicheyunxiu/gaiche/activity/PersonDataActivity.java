@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.gaicheyunxiu.gaiche.R;
 import com.gaicheyunxiu.gaiche.dialog.PhotoDialog;
+import com.gaicheyunxiu.gaiche.model.PersonDataEntity;
 import com.gaicheyunxiu.gaiche.model.PersonDynamicEntity;
 import com.gaicheyunxiu.gaiche.model.ReturnState;
 import com.gaicheyunxiu.gaiche.utils.Constant;
@@ -23,6 +24,7 @@ import com.gaicheyunxiu.gaiche.utils.ToastUtils;
 import com.gaicheyunxiu.gaiche.utils.ToosUtils;
 import com.gaicheyunxiu.gaiche.view.CircleImageView;
 import com.google.gson.Gson;
+import com.lidroid.xutils.BitmapUtils;
 import com.lidroid.xutils.HttpUtils;
 import com.lidroid.xutils.exception.HttpException;
 import com.lidroid.xutils.http.RequestParams;
@@ -40,6 +42,9 @@ import static com.gaicheyunxiu.gaiche.R.id.persondata_nameview;
  * 我的资料
  */
 public class PersonDataActivity extends BaseActivity implements View.OnClickListener{
+
+    public static  final  int NAME_RESULT=5556;
+    public static  final  int PHONE_RESULT=5557;
 
     private ImageView back;
 
@@ -77,8 +82,13 @@ public class PersonDataActivity extends BaseActivity implements View.OnClickList
 
     private Bitmap bitmap = null;
 
+    private BitmapUtils bitmapUtils;
+
     private View gv;
+
     private View pro;
+
+
 
 
     private Handler handler = new Handler() {
@@ -119,6 +129,7 @@ public class PersonDataActivity extends BaseActivity implements View.OnClickList
     }
 
     private void initView() {
+        bitmapUtils=new BitmapUtils(this);
         back= (ImageView) findViewById(R.id.title_back);
         title= (TextView) findViewById(R.id.title_text);
         icon= (CircleImageView) findViewById(R.id.persondata_icon);
@@ -141,6 +152,7 @@ public class PersonDataActivity extends BaseActivity implements View.OnClickList
         phoneView.setOnClickListener(this);
         emailView.setOnClickListener(this);
         passwordView.setOnClickListener(this);
+        getUserInfo();
     }
 
 
@@ -151,6 +163,15 @@ public class PersonDataActivity extends BaseActivity implements View.OnClickList
         if (resultCode == RESULT_OK) {
 
             switch (requestCode) {
+                case NAME_RESULT:
+                    String userName=data.getStringExtra("name");
+                    name.setText(userName);
+                    break;
+                case PHONE_RESULT:
+                    String phoneStr=data.getStringExtra("phone");
+                    name.setText(phoneStr);
+                    break;
+
                 case CONTENT_WITH_DATA:
                     if (data != null) {
                         // 得到图片的全路径
@@ -171,7 +192,23 @@ public class PersonDataActivity extends BaseActivity implements View.OnClickList
                     break;
                 case PHOTO_PICKED_WITH_DATA:
                     bitmap = data.getParcelableExtra("data");
-                    icon.setImageBitmap(bitmap);
+                    if (bitmap != null) {
+                        File file = null;
+                        if (Environment.getExternalStorageState().equals(
+                                android.os.Environment.MEDIA_MOUNTED)) {
+
+                            file = ToosUtils.saveImage2SD(
+                                    Environment.getExternalStorageDirectory() + "/gaiche/"
+                                            + String.valueOf(System.currentTimeMillis())
+                                            + ".JPEG", bitmap);
+                            UpdateUserInfo(file);
+                        } else {
+                            ToastUtils.displayShortToast(PersonDataActivity.this,
+                                    "无SD卡,无法上传图片");
+                            return;
+                        }
+
+                    }
                     break;
             }
 
@@ -188,7 +225,8 @@ public class PersonDataActivity extends BaseActivity implements View.OnClickList
                 break;
             case R.id.persondata_nameview:
                 Intent intent=new Intent(PersonDataActivity.this,PersonnameActivity.class);
-                startActivity(intent);
+                intent.putExtra("name",ToosUtils.getTextContent(name));
+                startActivityForResult(intent,NAME_RESULT);
                 break;
             case R.id.persondata_iconview:
                 PhotoDialog dialog=new PhotoDialog(PersonDataActivity.this,handler);
@@ -196,8 +234,8 @@ public class PersonDataActivity extends BaseActivity implements View.OnClickList
                 break;
             case R.id.persondata_phoneview:
                 Intent intent2=new Intent(PersonDataActivity.this,UpdatePhoneActivity.class);
-                startActivity(intent2);
-
+                intent2.putExtra("phone",ToosUtils.getTextContent(phone));
+                startActivityForResult(intent2, PHONE_RESULT);
                 break;
             case R.id.persondata_emailview:
                 Intent intent3=new Intent(PersonDataActivity.this,PersonemailActivity.class);
@@ -266,6 +304,69 @@ public class PersonDataActivity extends BaseActivity implements View.OnClickList
 
             @Override
             public void onSuccess(ResponseInfo<String> arg0) {
+                pro.setVisibility(View.GONE);
+                try {
+                    Gson gson = new Gson();
+                    ReturnState state = gson.fromJson(arg0.result,
+                            ReturnState.class);
+                    if (Constant.RETURN_OK.equals(state.msg)) {
+                        gv.setVisibility(View.GONE);
+                        LogManager.LogShow("-----", arg0.result,
+                                LogManager.ERROR);
+                        PersonDataEntity personDataEntity = gson.fromJson(arg0.result, PersonDataEntity.class);
+                        setValue(personDataEntity.result);
+
+                    } else if (Constant.TOKEN_ERR.equals(state.msg)) {
+                        ToastUtils.displayShortToast(PersonDataActivity.this,
+                                "验证错误，请重新登录");
+                        ToosUtils.goReLogin(PersonDataActivity.this);
+                    } else {
+                        ToastUtils.displayShortToast(PersonDataActivity.this,
+                                (String) state.result);
+                    }
+                } catch (Exception e) {
+                    ToastUtils.displaySendFailureToast(PersonDataActivity.this);
+                }
+
+            }
+        });
+    }
+
+    private void setValue(PersonDataEntity.PersonData personData){
+        bitmapUtils.display(icon,personData.icon);
+        no.setText(personData.gcCode);
+        name.setText(personData.nickname);
+        phone.setText(personData.mobile);
+        email.setText(personData.email);
+
+    }
+
+
+    /**
+     * 修改个人信息
+     */
+    private void UpdateUserInfo(final File file) {
+        RequestParams rp = new RequestParams();
+        rp.addBodyParameter("sign", ShareDataTool.getToken(this));
+        rp.addBodyParameter("icon", file);
+        HttpUtils utils = new HttpUtils();
+        utils.configTimeout(20000);
+        utils.send(HttpRequest.HttpMethod.POST, Constant.ROOT_PATH
+                + "user/update", rp, new RequestCallBack<String>() {
+            @Override
+            public void onStart() {
+                pro.setVisibility(View.VISIBLE);
+                super.onStart();
+            }
+
+            @Override
+            public void onFailure(HttpException arg0, String arg1) {
+                pro.setVisibility(View.GONE);
+                ToastUtils.displayFailureToast(PersonDataActivity.this);
+            }
+
+            @Override
+            public void onSuccess(ResponseInfo<String> arg0) {
                 try {
                     Gson gson = new Gson();
                     ReturnState state = gson.fromJson(arg0.result,
@@ -273,20 +374,17 @@ public class PersonDataActivity extends BaseActivity implements View.OnClickList
                     if (Constant.RETURN_OK.equals(state.msg)) {
                         LogManager.LogShow("-----", arg0.result,
                                 LogManager.ERROR);
-                        PersonDynamicEntity dynamicEntity = gson.fromJson(arg0.result,
-                                PersonDynamicEntity.class);
-                        setvalue(dynamicEntity.result);
-
+                        bitmapUtils.display(icon,file.getAbsolutePath());
                     } else if (Constant.TOKEN_ERR.equals(state.msg)) {
-                        ToastUtils.displayShortToast(getActivity(),
+                        ToastUtils.displayShortToast(PersonDataActivity.this,
                                 "验证错误，请重新登录");
-                        ToosUtils.goReLogin(getActivity());
+                        ToosUtils.goReLogin(PersonDataActivity.this);
                     } else {
-                        ToastUtils.displayShortToast(getActivity(),
+                        ToastUtils.displayShortToast(PersonDataActivity.this,
                                 (String) state.result);
                     }
                 } catch (Exception e) {
-                    ToastUtils.displaySendFailureToast(getActivity());
+                    ToastUtils.displaySendFailureToast(PersonDataActivity.this);
                 }
 
             }

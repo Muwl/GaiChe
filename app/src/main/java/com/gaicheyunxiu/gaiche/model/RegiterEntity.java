@@ -9,6 +9,7 @@ public class RegiterEntity implements Serializable{
     public String loginState;
     public String mobile;
     public String token;
+    public String nickname;
     public String userId;
     public String imUsername;
     public String imPassword;

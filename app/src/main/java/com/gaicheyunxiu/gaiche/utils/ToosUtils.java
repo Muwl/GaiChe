@@ -2,11 +2,17 @@ package com.gaicheyunxiu.gaiche.utils;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Environment;
 import android.widget.TextView;
 
 import com.gaicheyunxiu.gaiche.activity.LoginActivity;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -93,6 +99,59 @@ public class ToosUtils {
 		ShareDataTool.SaveInfo(context,null);
 		context.startActivity(intent);
 	}
+
+
+
+	public static File createFile(String path) {
+		File file = new File(path);
+		File dir = new File(file.getParent());
+		if (!dir.exists()) {
+			try {
+				// 按照指定的路径创建文件夹
+				dir.mkdirs();
+			} catch (Exception e) {
+				e.printStackTrace();
+				// TODO: handle exception
+			}
+		}
+		if (!file.exists()) {
+			try {
+				// 在指定的文件夹中创建文件
+				file.createNewFile();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+
+		return file;
+
+	}
+
+
+	public static File saveImage2SD(String filePath, Bitmap bitmap) {
+		try {
+			File saveFile = null;
+
+			if (bitmap != null) {
+				saveFile = createFile(filePath);
+			}
+			FileOutputStream fos = new FileOutputStream(filePath);
+			ByteArrayOutputStream stream = new ByteArrayOutputStream();
+			bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+			byte[] bytes = stream.toByteArray();
+			fos.write(bytes);
+			fos.close();
+			return saveFile;
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		return null;
+
+	}
+
 
 
 }

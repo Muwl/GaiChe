@@ -11,16 +11,14 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:orientation="horizontal"
-        android:gravity="center_vertical"
         android:background="@color/write"
         android:layout_marginTop="10dp"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent">
 
         <ImageView
             android:id="@+id/personname_cancel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
             android:paddingRight="20dp"
             android:paddingLeft="10dp"
             android:paddingTop="10dp"
@@ -39,8 +37,14 @@
             android:background="@null"
             android:layout_toLeftOf="@+id/personname_cancel"
             android:text="未设置"
-            android:layout_centerVertical="true"
             android:paddingBottom="10dp"
+            />
+
+
+        <include
+            android:id="@+id/personname_pro"
+            layout="@layout/pro"
+            android:visibility="gone"
             />
 
     </RelativeLayout>

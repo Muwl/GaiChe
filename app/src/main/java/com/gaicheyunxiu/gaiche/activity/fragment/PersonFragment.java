@@ -253,6 +253,7 @@ public class PersonFragment extends Fragment implements View.OnClickListener{
             bitmapUtils.display(icon, regiterEntity.icon);
             RegiterEntity entity=ShareDataTool.getRegiterEntity(getActivity());
             no.setText(entity.gcCode);
+            name.setText(entity.nickname);
 
         }
     }
