@@ -9,6 +9,20 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.gaicheyunxiu.gaiche.R;
+import com.gaicheyunxiu.gaiche.model.RegisterState;
+import com.gaicheyunxiu.gaiche.model.ReturnState;
+import com.gaicheyunxiu.gaiche.utils.Constant;
+import com.gaicheyunxiu.gaiche.utils.LogManager;
+import com.gaicheyunxiu.gaiche.utils.ShareDataTool;
+import com.gaicheyunxiu.gaiche.utils.ToastUtils;
+import com.gaicheyunxiu.gaiche.utils.ToosUtils;
+import com.google.gson.Gson;
+import com.lidroid.xutils.HttpUtils;
+import com.lidroid.xutils.exception.HttpException;
+import com.lidroid.xutils.http.RequestParams;
+import com.lidroid.xutils.http.ResponseInfo;
+import com.lidroid.xutils.http.callback.RequestCallBack;
+import com.lidroid.xutils.http.client.HttpRequest;
 
 /**
  * Created by Administrator on 2016/4/19.
@@ -62,12 +76,17 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 break;
             case R.id.login_forgetpwd:
                 Intent intent=new Intent(LoginActivity.this,LoginPwdActivity.class);
-                startActivityForResult(intent,FORGETPWD_RETURN);
+                startActivityForResult(intent, FORGETPWD_RETURN);
                 break;
 
             case R.id.login_register:
                 Intent intent2=new Intent(LoginActivity.this,RegisterActivity.class);
                 startActivityForResult(intent2,REGISTER_RETURN);
+                break;
+            case R.id.login_ok:
+                if (checkInput()){
+                    sendLog();
+                }
                 break;
         }
     }
@@ -82,5 +101,84 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
             setResult(RESULT_OK,intent);
             finish();
         }
+    }
+
+    /**
+     * 注册输入
+     *
+     * @return
+     */
+    private boolean checkInput() {
+        if (ToosUtils.isTextEmpty(phoneView)) {
+            ToastUtils.displayShortToast(this, "手机号不能为空！");
+            return false;
+        }
+        if (!ToosUtils.MatchPhone(ToosUtils.getTextContent(phoneView))) {
+            ToastUtils.displayShortToast(this, "输入的手机号格式错误！");
+            return false;
+        }
+        if (ToosUtils.isTextEmpty(pwdView)) {
+            ToastUtils.displayShortToast(this, "密码不能为空！");
+            return false;
+        }
+        if (!ToosUtils.checkPwd(ToosUtils.getTextContent(pwdView))) {
+            ToastUtils.displayShortToast(this, "密码不能少于6位！");
+            return false;
+        }
+        return true;
+
+    }
+
+    /**
+     * 联网注册
+     */
+    private void sendLog() {
+        RequestParams rp = new RequestParams();
+        rp.addBodyParameter("username", ToosUtils.getTextContent(phoneView));
+        rp.addBodyParameter("password",ToosUtils.getTextContent(pwdView));
+        HttpUtils utils = new HttpUtils();
+        utils.configTimeout(20000);
+        utils.send(HttpRequest.HttpMethod.POST, Constant.ROOT_PATH + "user/login",
+                rp, new RequestCallBack<String>() {
+                    @Override
+                    public void onStart() {
+                        pro.setVisibility(View.VISIBLE);
+                        super.onStart();
+                    }
+
+                    @Override
+                    public void onFailure(HttpException arg0, String arg1) {
+                        pro.setVisibility(View.GONE);
+                        ToastUtils.displayFailureToast(LoginActivity.this);
+                    }
+
+                    @Override
+                    public void onSuccess(ResponseInfo<String> arg0) {
+                        pro.setVisibility(View.GONE);
+                        try {
+                            Gson gson = new Gson();
+                            LogManager.LogShow("----", arg0.result,
+                                    LogManager.ERROR);
+                            ReturnState state = gson.fromJson(arg0.result,
+                                    ReturnState.class);
+                            if (Constant.RETURN_OK.equals(state.msg)) {
+                                RegisterState registerState=gson.fromJson(arg0.result,RegisterState.class);
+                                ShareDataTool.SaveInfo(LoginActivity.this, registerState.result);
+                                Intent intent=new Intent();
+                                setResult(RESULT_OK,intent);
+                                finish();
+                            } else {
+                                ToastUtils.displayShortToast(
+                                        LoginActivity.this,
+                                        (String) state.result);
+                            }
+                        } catch (Exception e) {
+                            ToastUtils
+                                    .displaySendFailureToast(LoginActivity.this);
+                        }
+
+                    }
+                });
+
     }
 }

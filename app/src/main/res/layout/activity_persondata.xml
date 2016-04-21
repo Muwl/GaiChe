@@ -4,7 +4,13 @@
     android:background="@color/activity_bg"
     android:layout_height="match_parent">
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
     <ScrollView
+        android:id="@+id/persondata_gv"
+        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fillViewport="true">
@@ -254,7 +260,14 @@
         </LinearLayout>
 
     </ScrollView>
+        <include
+            android:id="@+id/persondata_pro"
+            layout="@layout/pro"
+            android:visibility="gone"
+            />
 
+
+    </RelativeLayout>
 
 
 </LinearLayout>

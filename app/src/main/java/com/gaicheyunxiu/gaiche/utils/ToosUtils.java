@@ -1,7 +1,11 @@
 package com.gaicheyunxiu.gaiche.utils;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Environment;
 import android.widget.TextView;
+
+import com.gaicheyunxiu.gaiche.activity.LoginActivity;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -82,6 +86,12 @@ public class ToosUtils {
 	public static String getEncryptto(String str) {
 		BlowfishECB bf = new BlowfishECB("xg!$@gcp1*30y%#c");
 		return bf.decrypt(str);
+	}
+
+	public static void goReLogin(Context context) {
+		Intent intent = new Intent(context, LoginActivity.class);
+		ShareDataTool.SaveInfo(context,null);
+		context.startActivity(intent);
 	}
 
 

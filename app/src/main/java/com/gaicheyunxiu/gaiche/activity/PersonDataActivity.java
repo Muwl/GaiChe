@@ -14,9 +14,21 @@ import android.widget.TextView;
 
 import com.gaicheyunxiu.gaiche.R;
 import com.gaicheyunxiu.gaiche.dialog.PhotoDialog;
+import com.gaicheyunxiu.gaiche.model.PersonDynamicEntity;
+import com.gaicheyunxiu.gaiche.model.ReturnState;
+import com.gaicheyunxiu.gaiche.utils.Constant;
+import com.gaicheyunxiu.gaiche.utils.LogManager;
+import com.gaicheyunxiu.gaiche.utils.ShareDataTool;
 import com.gaicheyunxiu.gaiche.utils.ToastUtils;
 import com.gaicheyunxiu.gaiche.utils.ToosUtils;
 import com.gaicheyunxiu.gaiche.view.CircleImageView;
+import com.google.gson.Gson;
+import com.lidroid.xutils.HttpUtils;
+import com.lidroid.xutils.exception.HttpException;
+import com.lidroid.xutils.http.RequestParams;
+import com.lidroid.xutils.http.ResponseInfo;
+import com.lidroid.xutils.http.callback.RequestCallBack;
+import com.lidroid.xutils.http.client.HttpRequest;
 
 
 import java.io.File;
@@ -64,6 +76,9 @@ public class PersonDataActivity extends BaseActivity implements View.OnClickList
     private static final String PHOTO_FILE_NAME = "temp_photo.jpg";
 
     private Bitmap bitmap = null;
+
+    private View gv;
+    private View pro;
 
 
     private Handler handler = new Handler() {
@@ -116,6 +131,8 @@ public class PersonDataActivity extends BaseActivity implements View.OnClickList
         email= (TextView) findViewById(R.id.persondata_email);
         emailView=findViewById(R.id.persondata_emailview);
         passwordView=findViewById(R.id.persondata_passwordview);
+        pro=findViewById(R.id.persondata_pro);
+        gv=findViewById(R.id.persondata_gv);
 
         back.setOnClickListener(this);
         title.setText("个人信息");
@@ -219,5 +236,60 @@ public class PersonDataActivity extends BaseActivity implements View.OnClickList
         intent.putExtra("noFaceDetection", true);// 取消人脸识别
         intent.putExtra("return-data", true);// true:不返回uri，false：返回uri
         startActivityForResult(intent, PHOTO_PICKED_WITH_DATA);
+    }
+
+
+
+    /**
+     * 获取我的动态数
+     */
+    private void getUserInfo() {
+        RequestParams rp = new RequestParams();
+        rp.addBodyParameter("sign", ShareDataTool.getToken(this));
+        HttpUtils utils = new HttpUtils();
+        utils.configTimeout(20000);
+        utils.send(HttpRequest.HttpMethod.POST, Constant.ROOT_PATH
+                + "user/findUserInfo", rp, new RequestCallBack<String>() {
+            @Override
+            public void onStart() {
+                pro.setVisibility(View.VISIBLE);
+                gv.setVisibility(View.GONE);
+                super.onStart();
+            }
+
+            @Override
+            public void onFailure(HttpException arg0, String arg1) {
+                pro.setVisibility(View.GONE);
+                gv.setVisibility(View.GONE);
+                ToastUtils.displayFailureToast(PersonDataActivity.this);
+            }
+
+            @Override
+            public void onSuccess(ResponseInfo<String> arg0) {
+                try {
+                    Gson gson = new Gson();
+                    ReturnState state = gson.fromJson(arg0.result,
+                            ReturnState.class);
+                    if (Constant.RETURN_OK.equals(state.msg)) {
+                        LogManager.LogShow("-----", arg0.result,
+                                LogManager.ERROR);
+                        PersonDynamicEntity dynamicEntity = gson.fromJson(arg0.result,
+                                PersonDynamicEntity.class);
+                        setvalue(dynamicEntity.result);
+
+                    } else if (Constant.TOKEN_ERR.equals(state.msg)) {
+                        ToastUtils.displayShortToast(getActivity(),
+                                "验证错误，请重新登录");
+                        ToosUtils.goReLogin(getActivity());
+                    } else {
+                        ToastUtils.displayShortToast(getActivity(),
+                                (String) state.result);
+                    }
+                } catch (Exception e) {
+                    ToastUtils.displaySendFailureToast(getActivity());
+                }
+
+            }
+        });
     }
 }

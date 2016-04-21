@@ -3,6 +3,7 @@ package com.gaicheyunxiu.gaiche.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -160,9 +161,9 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
             return ;
         }
         RequestParams rp = new RequestParams();
-        JsonObject jsonObject = new JsonObject();
-        jsonObject.addProperty("phone", ToosUtils.getTextContent(phoneView));
+        rp.addBodyParameter("mobile", ToosUtils.getTextContent(phoneView));
         HttpUtils utils = new HttpUtils();
+     // HttpUtils  LogManager.LogShow("-----", Constant.ROOT_PATH + "sms/sendAuthCode?phone="+ ToosUtils.getTextContent(phoneView), LogManager.ERROR);
         utils.configTimeout(20000);
         utils.send(HttpRequest.HttpMethod.POST, Constant.ROOT_PATH + "sms/sendAuthCode", rp,
                 new RequestCallBack<String>() {

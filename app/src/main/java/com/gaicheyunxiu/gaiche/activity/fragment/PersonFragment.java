@@ -26,13 +26,25 @@ import com.gaicheyunxiu.gaiche.activity.ServiceOrderActivity;
 import com.gaicheyunxiu.gaiche.activity.SettingActivity;
 import com.gaicheyunxiu.gaiche.activity.ShipaddressActivity;
 import com.gaicheyunxiu.gaiche.activity.ShopOrderActivity;
+import com.gaicheyunxiu.gaiche.model.PersonDynamicEntity;
 import com.gaicheyunxiu.gaiche.model.RegiterEntity;
+import com.gaicheyunxiu.gaiche.model.ReturnState;
 import com.gaicheyunxiu.gaiche.utils.ChangeCharset;
+import com.gaicheyunxiu.gaiche.utils.Constant;
+import com.gaicheyunxiu.gaiche.utils.LogManager;
 import com.gaicheyunxiu.gaiche.utils.ShareDataTool;
+import com.gaicheyunxiu.gaiche.utils.ToastUtils;
 import com.gaicheyunxiu.gaiche.utils.ToosUtils;
 import com.gaicheyunxiu.gaiche.view.RoundAngleImageView;
 import com.google.gson.FieldAttributes;
+import com.google.gson.Gson;
 import com.lidroid.xutils.BitmapUtils;
+import com.lidroid.xutils.HttpUtils;
+import com.lidroid.xutils.exception.HttpException;
+import com.lidroid.xutils.http.RequestParams;
+import com.lidroid.xutils.http.ResponseInfo;
+import com.lidroid.xutils.http.callback.RequestCallBack;
+import com.lidroid.xutils.http.client.HttpRequest;
 
 import java.io.UnsupportedEncodingException;
 
@@ -133,6 +145,8 @@ public class PersonFragment extends Fragment implements View.OnClickListener{
         crowdorderView.setOnClickListener(this);
         settingView.setOnClickListener(this);
         bitmapUtils=new BitmapUtils(getActivity());
+        reFushPersonInfo();
+        getDynamic();
     }
 
     @Override
@@ -234,8 +248,73 @@ public class PersonFragment extends Fragment implements View.OnClickListener{
     }
 
     public void reFushPersonInfo(){
-        RegiterEntity regiterEntity=new RegiterEntity();
-        bitmapUtils.display(icon,regiterEntity.icon);
+        RegiterEntity regiterEntity=ShareDataTool.getRegiterEntity(getActivity());
+        if (regiterEntity!=null){
+            bitmapUtils.display(icon, regiterEntity.icon);
+            RegiterEntity entity=ShareDataTool.getRegiterEntity(getActivity());
+            no.setText(entity.gcCode);
 
+        }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        getDynamic();
+    }
+
+    /**
+     * 获取我的动态数
+     */
+    private void getDynamic() {
+        if (ToosUtils.isStringEmpty(ShareDataTool.getToken(getActivity()))){
+            return;
+        }
+        RequestParams rp = new RequestParams();
+        rp.addBodyParameter("sign", ShareDataTool.getToken(getActivity()));
+        HttpUtils utils = new HttpUtils();
+        utils.configTimeout(20000);
+        utils.send(HttpRequest.HttpMethod.POST, Constant.ROOT_PATH
+                + "user/findUserDynamic", rp, new RequestCallBack<String>() {
+            @Override
+            public void onStart() {
+                super.onStart();
+            }
+
+            @Override
+            public void onFailure(HttpException arg0, String arg1) {
+            }
+
+            @Override
+            public void onSuccess(ResponseInfo<String> arg0) {
+                try {
+                    Gson gson = new Gson();
+                    ReturnState state = gson.fromJson(arg0.result,
+                            ReturnState.class);
+                    if (Constant.RETURN_OK.equals(state.msg)) {
+                        LogManager.LogShow("-----", arg0.result,
+                                LogManager.ERROR);
+                        PersonDynamicEntity dynamicEntity = gson.fromJson(arg0.result,
+                                PersonDynamicEntity.class);
+                        setvalue(dynamicEntity.result);
+
+                    } else if (Constant.TOKEN_ERR.equals(state.msg)) {
+                        ToastUtils.displayShortToast(getActivity(),
+                                "验证错误，请重新登录");
+                        ToosUtils.goReLogin(getActivity());
+                    } else {
+                        ToastUtils.displayShortToast(getActivity(),
+                                (String) state.result);
+                    }
+                } catch (Exception e) {
+                    ToastUtils.displaySendFailureToast(getActivity());
+                }
+
+            }
+        });
+    }
+
+    private void setvalue(PersonDynamicEntity.ResultBean resultBean){
+        balance.setText("余额：￥"+resultBean.balance);
     }
 }

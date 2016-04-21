@@ -17,14 +17,26 @@ public class ShareDataTool {
         SharedPreferences sp = context.getSharedPreferences("sp",
                 Context.MODE_PRIVATE);
         Editor e = sp.edit();
-        e.putString("token", regiterEntity.token);
-        e.putString("userId", regiterEntity.userId);
-        e.putString("imUsername", regiterEntity.imUsername);
-        e.putString("imPassword", regiterEntity.imPassword);
-        e.putString("loginState", regiterEntity.loginState);
-        e.putString("gcCode", regiterEntity.gcCode);
-        e.putString("mobile", regiterEntity.mobile);
-        e.putString("icon", regiterEntity.icon);
+        if (regiterEntity!=null){
+            e.putString("token", regiterEntity.token);
+            e.putString("userId", regiterEntity.userId);
+            e.putString("imUsername", regiterEntity.imUsername);
+            e.putString("imPassword", regiterEntity.imPassword);
+            e.putString("loginState", regiterEntity.loginState);
+            e.putString("gcCode", regiterEntity.gcCode);
+            e.putString("mobile", regiterEntity.mobile);
+            e.putString("icon", regiterEntity.icon);
+        }else{
+            e.putString("token", "");
+            e.putString("userId","");
+            e.putString("imUsername","");
+            e.putString("imPassword", "");
+            e.putString("loginState", "");
+            e.putString("gcCode", "");
+            e.putString("mobile","");
+            e.putString("icon", "");
+        }
+
         return e.commit();
     }
 
