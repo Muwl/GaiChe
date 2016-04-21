@@ -124,6 +124,7 @@ public class PersonnameActivity extends BaseActivity implements View.OnClickList
 
             @Override
             public void onSuccess(ResponseInfo<String> arg0) {
+                pro.setVisibility(View.GONE);
                 try {
                     Gson gson = new Gson();
                     ReturnState state = gson.fromJson(arg0.result,
@@ -131,9 +132,10 @@ public class PersonnameActivity extends BaseActivity implements View.OnClickList
                     if (Constant.RETURN_OK.equals(state.msg)) {
                         LogManager.LogShow("-----", arg0.result,
                                 LogManager.ERROR);
+                        ToastUtils.displayShortToast(PersonnameActivity.this, "保存成功");
                         Intent intent=new Intent();
                         intent.putExtra("name",ToosUtils.getTextContent(name));
-                        setResult(RESULT_OK,intent);
+                        setResult(RESULT_OK, intent);
                         finish();
                     } else if (Constant.TOKEN_ERR.equals(state.msg)) {
                         ToastUtils.displayShortToast(PersonnameActivity.this,

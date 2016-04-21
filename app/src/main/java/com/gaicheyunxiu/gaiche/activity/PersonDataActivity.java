@@ -45,6 +45,7 @@ public class PersonDataActivity extends BaseActivity implements View.OnClickList
 
     public static  final  int NAME_RESULT=5556;
     public static  final  int PHONE_RESULT=5557;
+    public static  final  int EMAIL_RESULT=5558;
 
     private ImageView back;
 
@@ -239,7 +240,8 @@ public class PersonDataActivity extends BaseActivity implements View.OnClickList
                 break;
             case R.id.persondata_emailview:
                 Intent intent3=new Intent(PersonDataActivity.this,PersonemailActivity.class);
-                startActivity(intent3);
+                intent3.putExtra("emial", ToosUtils.getTextContent(phone));
+                startActivityForResult(intent3, EMAIL_RESULT);
                 break;
             case R.id.persondata_passwordview:
                 Intent intent4=new Intent(PersonDataActivity.this,PasswordActivity.class);
@@ -310,7 +312,7 @@ public class PersonDataActivity extends BaseActivity implements View.OnClickList
                     ReturnState state = gson.fromJson(arg0.result,
                             ReturnState.class);
                     if (Constant.RETURN_OK.equals(state.msg)) {
-                        gv.setVisibility(View.GONE);
+                        gv.setVisibility(View.VISIBLE);
                         LogManager.LogShow("-----", arg0.result,
                                 LogManager.ERROR);
                         PersonDataEntity personDataEntity = gson.fromJson(arg0.result, PersonDataEntity.class);
@@ -368,12 +370,14 @@ public class PersonDataActivity extends BaseActivity implements View.OnClickList
             @Override
             public void onSuccess(ResponseInfo<String> arg0) {
                 try {
+                    pro.setVisibility(View.GONE);
                     Gson gson = new Gson();
                     ReturnState state = gson.fromJson(arg0.result,
                             ReturnState.class);
                     if (Constant.RETURN_OK.equals(state.msg)) {
                         LogManager.LogShow("-----", arg0.result,
                                 LogManager.ERROR);
+                        ToastUtils.displayShortToast(PersonDataActivity.this,"保存成功");
                         bitmapUtils.display(icon,file.getAbsolutePath());
                     } else if (Constant.TOKEN_ERR.equals(state.msg)) {
                         ToastUtils.displayShortToast(PersonDataActivity.this,

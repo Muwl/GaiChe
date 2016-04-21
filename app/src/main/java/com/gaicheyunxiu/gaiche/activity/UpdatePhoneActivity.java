@@ -339,6 +339,7 @@ public class UpdatePhoneActivity extends  BaseActivity implements View.OnClickLi
 
             @Override
             public void onSuccess(ResponseInfo<String> arg0) {
+                pro.setVisibility(View.GONE);
                 try {
                     Gson gson = new Gson();
                     ReturnState state = gson.fromJson(arg0.result,
@@ -346,6 +347,7 @@ public class UpdatePhoneActivity extends  BaseActivity implements View.OnClickLi
                     if (Constant.RETURN_OK.equals(state.msg)) {
                         LogManager.LogShow("-----", arg0.result,
                                 LogManager.ERROR);
+                        ToastUtils.displayShortToast(UpdatePhoneActivity.this, "保存成功");
                         Intent intent=new Intent();
                         intent.putExtra("phone",ToosUtils.getTextContent(newPhone));
                         setResult(RESULT_OK,intent);

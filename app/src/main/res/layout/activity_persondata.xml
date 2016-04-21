@@ -4,6 +4,10 @@
     android:background="@color/activity_bg"
     android:layout_height="match_parent">
 
+    <include
+        android:id="@+id/persondata_title"
+        layout="@layout/activity_title"/>
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -19,9 +23,7 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <include
-                android:id="@+id/persondata_title"
-                layout="@layout/activity_title"/>
+
 
             <RelativeLayout
                 android:id="@+id/persondata_iconview"
