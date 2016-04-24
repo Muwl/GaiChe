@@ -8,6 +8,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.gaicheyunxiu.gaiche.R;
+import com.gaicheyunxiu.gaiche.model.SeriesModel;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Administrator on 2016/2/11.
@@ -16,14 +21,43 @@ import com.gaicheyunxiu.gaiche.R;
 public class SeriesAdapter extends BaseAdapter {
 
     private Context context;
+    private Map<String,List<String>> listMap;
+    private List<SeriesModel> models;
+    List<String> glist;
+    List<String> jlist;
 
-    public SeriesAdapter(Context context) {
+    public SeriesAdapter(Context context, Map<String,List<String>> listMap) {
         this.context = context;
+        this.listMap=listMap;
+        glist=listMap.get("0");
+       jlist=listMap.get("1");
+        if (glist==null){
+            glist=new ArrayList<>();
+        }
+
+        if (jlist==null){
+            jlist=new ArrayList<>();
+        }
+        models=new ArrayList<>();
+        for (int i=0;i<glist.size();i++){
+            SeriesModel seriesModel=new SeriesModel();
+            seriesModel.key="0";
+            seriesModel.seriesval=glist.get(i);
+            models.add(seriesModel);
+        }
+
+        for (int i=0;i<jlist.size();i++){
+            SeriesModel seriesModel=new SeriesModel();
+            seriesModel.key="1";
+            seriesModel.seriesval=jlist.get(i);
+            models.add(seriesModel);
+        }
     }
 
     @Override
     public int getCount() {
-        return 4;
+
+        return models.size();
     }
 
     @Override
@@ -49,7 +83,17 @@ public class SeriesAdapter extends BaseAdapter {
         }else{
             holder= (ViewHolder) convertView.getTag();
         }
+        if ("0".equals(models.get(position).key)){
+            holder.tip.setText("国内");
+        }else {
+            holder.tip.setText("国外");
+        }
 
+
+        if (position==0){
+            holder.tip.setVisibility(View.VISIBLE);
+
+        }
         return convertView;
     }
 

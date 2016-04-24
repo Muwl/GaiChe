@@ -15,12 +15,14 @@ import com.gaicheyunxiu.gaiche.adapter.SeriesAdapter;
 import com.gaicheyunxiu.gaiche.model.CarBrandEntity;
 import com.gaicheyunxiu.gaiche.model.CarBrandState;
 import com.gaicheyunxiu.gaiche.model.ReturnState;
+import com.gaicheyunxiu.gaiche.model.SeriesEntity;
 import com.gaicheyunxiu.gaiche.utils.Constant;
 import com.gaicheyunxiu.gaiche.utils.LogManager;
 import com.gaicheyunxiu.gaiche.utils.ToastUtils;
 import com.gaicheyunxiu.gaiche.utils.ToosUtils;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import com.google.gson.reflect.TypeToken;
 import com.lidroid.xutils.HttpUtils;
 import com.lidroid.xutils.exception.HttpException;
 import com.lidroid.xutils.http.RequestParams;
@@ -31,6 +33,8 @@ import com.lidroid.xutils.http.client.HttpRequest;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Administrator on 2016/2/11.
@@ -131,6 +135,7 @@ public class SeriesActivity extends BaseActivity implements View.OnClickListener
                     if (Constant.RETURN_OK.equals(state.msg)) {
                         LogManager.LogShow("-----", arg0.result,
                                 LogManager.ERROR);
+                        SeriesEntity entity=gson.fromJson(arg0.result,SeriesEntity.class);
 
                     } else if (Constant.TOKEN_ERR.equals(state.msg)) {
                         ToastUtils.displayShortToast(SeriesActivity.this,

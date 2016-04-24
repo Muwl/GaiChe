@@ -154,7 +154,7 @@ public class ShipaddressaddActivity extends BaseActivity implements View.OnClick
                     if (Constant.RETURN_OK.equals(state.msg)) {
                         LogManager.LogShow("-----", arg0.result,
                                 LogManager.ERROR);
-                        ToastUtils.displayShortToast(ShipaddressaddActivity.this, "修改成功");
+                        ToastUtils.displayShortToast(ShipaddressaddActivity.this, "添加成功");
                         finish();
                     } else if (Constant.TOKEN_ERR.equals(state.msg)) {
                         ToastUtils.displayShortToast(ShipaddressaddActivity.this,
