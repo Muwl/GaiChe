@@ -20,6 +20,7 @@ public class ShareDataTool {
         if (regiterEntity!=null){
             e.putString("token", regiterEntity.token);
             e.putString("userId", regiterEntity.userId);
+            e.putString("phone", regiterEntity.phone);
             e.putString("imUsername", regiterEntity.imUsername);
             e.putString("imPassword", regiterEntity.imPassword);
             e.putString("loginState", regiterEntity.loginState);
@@ -58,7 +59,8 @@ public class ShareDataTool {
         regiterEntity.gcCode= context.getSharedPreferences("sp", Context.MODE_PRIVATE).getString("gcCode", "");
         regiterEntity.mobile= context.getSharedPreferences("sp", Context.MODE_PRIVATE).getString("mobile", "");
         regiterEntity.icon= context.getSharedPreferences("sp", Context.MODE_PRIVATE).getString("icon", "");
-        regiterEntity.icon= context.getSharedPreferences("sp", Context.MODE_PRIVATE).getString("nickname", "");
+        regiterEntity.nickname= context.getSharedPreferences("sp", Context.MODE_PRIVATE).getString("nickname", "");
+        regiterEntity.phone= context.getSharedPreferences("sp", Context.MODE_PRIVATE).getString("phone", "");
         return regiterEntity;
     }
 

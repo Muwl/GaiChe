@@ -5,6 +5,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.res.AssetManager;
 import android.os.Handler;
+import android.os.Message;
 import android.util.DisplayMetrics;
 import android.view.Gravity;
 import android.view.View;
@@ -26,6 +27,7 @@ import com.gaicheyunxiu.gaiche.utils.XmlParserHandler;
 import com.gaicheyunxiu.gaiche.view.widget.OnWheelChangedListener;
 import com.gaicheyunxiu.gaiche.view.widget.WheelView;
 import com.gaicheyunxiu.gaiche.view.widget.adapters.ArrayWheelAdapter;
+import com.google.gson.FieldAttributes;
 
 import java.io.InputStream;
 import java.util.HashMap;
@@ -52,6 +54,9 @@ public class AreaDialog implements OnClickListener,OnWheelChangedListener {
 	private WheelView mViewProvince;
 	private WheelView mViewCity;
 	private WheelView mViewDistrict;
+
+	public static final String SUB="---";
+	public static final int OK_ADDRESS=8009;
 	/**
 	 * 所有省
 	 */
@@ -168,6 +173,11 @@ public class AreaDialog implements OnClickListener,OnWheelChangedListener {
 	public void onClick(View v) {
 		switch (v.getId()) {
 			case R.id.area_dialog_ok:
+				String stemp=mCurrentProviceName+SUB+mCurrentCityName+SUB+mCurrentDistrictName;
+				Message message=new Message();
+				message.what=OK_ADDRESS;
+				message.obj=stemp;
+				mhandler.sendMessage(message);
 				d.dismiss();
 				break;
 			case R.id.area_dialog_cancel:
@@ -184,8 +194,12 @@ public class AreaDialog implements OnClickListener,OnWheelChangedListener {
 		// TODO Auto-generated method stub
 		if (wheel == mViewProvince) {
 			updateCities();
+			mCurrentDistrictName = mDistrictDatasMap.get(mCurrentCityName)[newValue];
+			mCurrentZipCode = mZipcodeDatasMap.get(mCurrentDistrictName);
 		} else if (wheel == mViewCity) {
 			updateAreas();
+			mCurrentDistrictName = mDistrictDatasMap.get(mCurrentCityName)[newValue];
+			mCurrentZipCode = mZipcodeDatasMap.get(mCurrentDistrictName);
 		} else if (wheel == mViewDistrict) {
 			mCurrentDistrictName = mDistrictDatasMap.get(mCurrentCityName)[newValue];
 			mCurrentZipCode = mZipcodeDatasMap.get(mCurrentDistrictName);

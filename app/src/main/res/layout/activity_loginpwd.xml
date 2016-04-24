@@ -4,6 +4,11 @@
     android:background="@color/write"
     android:layout_height="match_parent">
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
     <ScrollView
         android:layout_width="match_parent"
         android:scrollbars="none"
@@ -43,7 +48,6 @@
                 android:paddingBottom="5dp"
                 android:textColor="#332C2B"
                 android:textSize="@dimen/first_font"
-                android:text="188****3367"
                 />
 
             <ImageView
@@ -84,6 +88,7 @@
                 <EditText
                     android:id="@+id/loginpwd_code"
                     android:layout_toRightOf="@id/loginpwd_image2"
+                    android:layout_toLeftOf="@+id/loginpwd_getcode"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingLeft="15dp"
@@ -205,6 +210,11 @@
 
     </ScrollView>
 
-
+        <include
+            android:id="@+id/loginpwd_pro"
+            layout="@layout/pro"
+            android:visibility="gone"
+            />
+    </RelativeLayout>
 
 </LinearLayout>

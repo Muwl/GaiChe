@@ -9,6 +9,11 @@
         android:id="@+id/shipaddress_add_title"
         layout="@layout/activity_title" />
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -241,4 +246,11 @@
 
     </ScrollView>
 
+        <include
+            android:id="@+id/shipaddress_add_pro"
+            layout="@layout/pro"
+            android:visibility="gone"
+            />
+
+    </RelativeLayout>
 </LinearLayout>

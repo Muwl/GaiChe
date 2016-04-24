@@ -49,8 +49,7 @@
                         android:paddingRight="15dp"
                         android:paddingBottom="5dp"
                         android:textColor="#332C2B"
-                        android:textSize="@dimen/first_font"
-                        android:text="188****3367" />
+                        android:textSize="@dimen/first_font"/>
 
                     <ImageView
                         android:layout_width="match_parent"
@@ -136,8 +135,7 @@
                         android:paddingBottom="5dp"
                         android:textColor="#332C2B"
                         android:background="@null"
-                        android:textSize="@dimen/first_font"
-                        android:text="188****3367" />
+                        android:textSize="@dimen/first_font" />
 
                     <ImageView
                         android:layout_width="match_parent"

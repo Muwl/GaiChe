@@ -6,6 +6,7 @@ import java.io.Serializable;
  * Created by Administrator on 2016/4/20.
  */
 public class RegiterEntity implements Serializable{
+    public String phone;
     public String loginState;
     public String mobile;
     public String token;

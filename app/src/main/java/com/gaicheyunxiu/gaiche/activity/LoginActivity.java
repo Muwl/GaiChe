@@ -163,6 +163,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                                     ReturnState.class);
                             if (Constant.RETURN_OK.equals(state.msg)) {
                                 RegisterState registerState=gson.fromJson(arg0.result,RegisterState.class);
+                                registerState.result.phone=ToosUtils.getTextContent(phoneView);
                                 ShareDataTool.SaveInfo(LoginActivity.this, registerState.result);
                                 Intent intent=new Intent();
                                 setResult(RESULT_OK,intent);
