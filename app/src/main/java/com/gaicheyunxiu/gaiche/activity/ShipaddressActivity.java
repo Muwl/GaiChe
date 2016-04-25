@@ -128,11 +128,17 @@ public class ShipaddressActivity extends BaseActivity implements View.OnClickLis
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode!=RESULT_OK){
-            return;
-        }
-
-        if (requestCode==ADDRESS_ADD){
-
+            List<AddressVo> addressVos=adapter.getDatas();
+            AddressVo addressVo= (AddressVo) data.getSerializableExtra("entity");
+            for (int i=0;i<addressVos.size();i++){
+                if (addressVos.get(i).getId().equals(addressVo.getId())){
+                    addressVos.set(i, addressVo);
+                    adapter.notifyDataSetChanged();
+                    return;
+                }
+            }
+            addressVos.add(addressVo);
+            adapter.notifyDataSetChanged();
         }
 
     }
