@@ -1,6 +1,8 @@
 package com.gaicheyunxiu.gaiche.adapter;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.nfc.tech.IsoDep;
 import android.os.Handler;
 import android.view.View;
@@ -10,6 +12,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.gaicheyunxiu.gaiche.R;
+import com.gaicheyunxiu.gaiche.activity.ShipaddressActivity;
+import com.gaicheyunxiu.gaiche.activity.ShipaddressaddActivity;
 import com.gaicheyunxiu.gaiche.dialog.CustomeDialog;
 import com.gaicheyunxiu.gaiche.model.AddressVo;
 import com.gaicheyunxiu.gaiche.model.BaseDataAdapter;
@@ -31,7 +35,7 @@ public class ShipaddressAdapter extends BaseDataAdapter<AddressVo> {
     @Override
     public View getView(final int position, View convertView, ViewGroup viewGroup) {
         ViewHolder holder=null;
-        List<AddressVo> data = getDatas();
+        final List<AddressVo> data = getDatas();
         if (holder==null){
             convertView=View.inflate(context, R.layout.shipaddress_item,null);
             holder=new ViewHolder();
@@ -59,7 +63,9 @@ public class ShipaddressAdapter extends BaseDataAdapter<AddressVo> {
         holder.edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent intent = new Intent(context, ShipaddressaddActivity.class);
+                intent.putExtra("entity",data.get(position));
+                ((Activity)context).startActivityForResult(intent, ShipaddressActivity.ADDRESS_ADD);
             }
         });
         return convertView;

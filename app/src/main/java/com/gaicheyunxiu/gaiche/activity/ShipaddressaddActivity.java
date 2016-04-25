@@ -1,5 +1,6 @@
 package com.gaicheyunxiu.gaiche.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -10,6 +11,8 @@ import android.widget.TextView;
 
 import com.gaicheyunxiu.gaiche.R;
 import com.gaicheyunxiu.gaiche.dialog.AreaDialog;
+import com.gaicheyunxiu.gaiche.model.AddAdressState;
+import com.gaicheyunxiu.gaiche.model.AddressVo;
 import com.gaicheyunxiu.gaiche.model.ReturnState;
 import com.gaicheyunxiu.gaiche.utils.Constant;
 import com.gaicheyunxiu.gaiche.utils.LogManager;
@@ -55,6 +58,8 @@ public class ShipaddressaddActivity extends BaseActivity implements View.OnClick
 
     private String[] addressStrs=null;
 
+    private AddressVo addressVo;
+
     private Handler handler=new Handler(){
         @Override
         public void handleMessage(Message msg) {
@@ -76,6 +81,7 @@ public class ShipaddressaddActivity extends BaseActivity implements View.OnClick
     }
 
     private void initView() {
+        addressVo= (AddressVo) getIntent().getSerializableExtra("entity");
         back= (ImageView) findViewById(R.id.title_back);
         title= (TextView) findViewById(R.id.title_text);
         com= (TextView) findViewById(R.id.title_service);
@@ -94,6 +100,14 @@ public class ShipaddressaddActivity extends BaseActivity implements View.OnClick
         com.setText("完成");
         com.setOnClickListener(this);
         arealin.setOnClickListener(this);
+        if (addressVo!=null){
+            title.setText("修改收货地址");
+            name.setText(addressVo.getName());
+            phone.setText(addressVo.getMobile());
+            area.setText(addressVo.getProvince()+"/"+addressVo.getCity()+"/"+addressVo.getDistrict());
+            address.setText(addressVo.getAddress());
+            telphone.setText(addressVo.getPhone());
+        }
     }
 
     @Override
@@ -143,6 +157,9 @@ public class ShipaddressaddActivity extends BaseActivity implements View.OnClick
         RequestParams rp = new RequestParams();
         rp.addBodyParameter("sign", ShareDataTool.getToken(this));
         JsonObject jsonObject=new JsonObject();
+        if (addressVo!=null){
+            jsonObject.addProperty("id",addressVo.getId());
+        }
         jsonObject.addProperty("userId", ShareDataTool.getRegiterEntity(this).userId);
         jsonObject.addProperty("name", ToosUtils.getTextContent(name));
         jsonObject.addProperty("mobile", ToosUtils.getTextContent(phone));
@@ -180,6 +197,11 @@ public class ShipaddressaddActivity extends BaseActivity implements View.OnClick
                         LogManager.LogShow("-----", arg0.result,
                                 LogManager.ERROR);
                         ToastUtils.displayShortToast(ShipaddressaddActivity.this, "添加成功");
+                        AddAdressState addAdressState=gson.fromJson(arg0.result,
+                                AddAdressState.class);
+                        Intent intent=new Intent();
+                        intent.putExtra("entity",addAdressState.result);
+                        setResult(RESULT_OK,intent);
                         finish();
                     } else if (Constant.TOKEN_ERR.equals(state.msg)) {
                         ToastUtils.displayShortToast(ShipaddressaddActivity.this,

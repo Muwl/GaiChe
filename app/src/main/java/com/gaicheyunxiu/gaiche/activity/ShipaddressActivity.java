@@ -54,6 +54,9 @@ public class ShipaddressActivity extends BaseActivity implements View.OnClickLis
 
     private View pro;
 
+    public static final int ADDRESS_ADD=1665;
+    private static final int ADDRESS_EDIT=1666;
+
     private Handler handler=new Handler(){
         @Override
         public void handleMessage(Message msg) {
@@ -117,9 +120,21 @@ public class ShipaddressActivity extends BaseActivity implements View.OnClickLis
                 break;
             case R.id.title_service:
                 Intent intent = new Intent(ShipaddressActivity.this, ShipaddressaddActivity.class);
-                startActivity(intent);
+                startActivityForResult(intent, ADDRESS_ADD);
                 break;
         }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode!=RESULT_OK){
+            return;
+        }
+
+        if (requestCode==ADDRESS_ADD){
+
+        }
+
     }
 
     /**

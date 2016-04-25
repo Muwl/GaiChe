@@ -1,10 +1,12 @@
 package com.gaicheyunxiu.gaiche.model;
 
+import java.io.Serializable;
+
 /**
  * Created by Administrator on 2016/4/25.
  * 地址实体
  */
-public class AddressVo {
+public class AddressVo implements Serializable{
    private  String id;
     private String userId;
     private String name;
