@@ -91,6 +91,15 @@ public class CarbrandActivity extends BaseActivity  implements View.OnClickListe
 
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode==RESULT_OK){
+            setResult(RESULT_OK,data);
+            finish();
+        }
+
+    }
 
     /**
      * 查询所有品牌

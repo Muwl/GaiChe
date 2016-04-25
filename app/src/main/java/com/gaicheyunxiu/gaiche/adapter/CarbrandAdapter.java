@@ -1,5 +1,6 @@
 package com.gaicheyunxiu.gaiche.adapter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -90,7 +91,7 @@ public class CarbrandAdapter extends BaseAdapter implements SectionIndexer {
             public void onClick(View v) {
                 Intent intent=new Intent(context,SeriesActivity.class);
                 intent.putExtra("brand",entities.get(position));
-                context.startActivity(intent);
+                ((Activity)context).startActivityForResult(intent,1004);
             }
         });
 

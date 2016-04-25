@@ -194,12 +194,12 @@ public class AreaDialog implements OnClickListener,OnWheelChangedListener {
 		// TODO Auto-generated method stub
 		if (wheel == mViewProvince) {
 			updateCities();
-			mCurrentDistrictName = mDistrictDatasMap.get(mCurrentCityName)[newValue];
-			mCurrentZipCode = mZipcodeDatasMap.get(mCurrentDistrictName);
+//			mCurrentDistrictName = mDistrictDatasMap.get(mCurrentCityName)[newValue];
+//			mCurrentZipCode = mZipcodeDatasMap.get(mCurrentDistrictName);
 		} else if (wheel == mViewCity) {
 			updateAreas();
-			mCurrentDistrictName = mDistrictDatasMap.get(mCurrentCityName)[newValue];
-			mCurrentZipCode = mZipcodeDatasMap.get(mCurrentDistrictName);
+//			mCurrentDistrictName = mDistrictDatasMap.get(mCurrentCityName)[newValue];
+//			mCurrentZipCode = mZipcodeDatasMap.get(mCurrentDistrictName);
 		} else if (wheel == mViewDistrict) {
 			mCurrentDistrictName = mDistrictDatasMap.get(mCurrentCityName)[newValue];
 			mCurrentZipCode = mZipcodeDatasMap.get(mCurrentDistrictName);

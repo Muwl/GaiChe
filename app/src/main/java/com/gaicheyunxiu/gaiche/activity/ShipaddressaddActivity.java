@@ -92,6 +92,7 @@ public class ShipaddressaddActivity extends BaseActivity implements View.OnClick
         title.setText("新增收货地址");
         com.setVisibility(View.VISIBLE);
         com.setText("完成");
+        com.setOnClickListener(this);
         arealin.setOnClickListener(this);
     }
 
@@ -103,7 +104,9 @@ public class ShipaddressaddActivity extends BaseActivity implements View.OnClick
                 break;
 
             case R.id.title_service:
-                addAddress();
+                if (checkBox()){
+                    addAddress();
+                }
                 break;
 
             case R.id.shipaddress_add_arealin:
@@ -112,22 +115,44 @@ public class ShipaddressaddActivity extends BaseActivity implements View.OnClick
         }
     }
 
+    private boolean checkBox(){
+        if (ToosUtils.isTextEmpty(name)){
+            ToastUtils.displayShortToast(this,"姓名不能空！");
+            return false;
+        }
+        if (ToosUtils.isTextEmpty(phone)){
+            ToastUtils.displayShortToast(this,"手机号码不能空！");
+            return false;
+        }
+        if (ToosUtils.isTextEmpty(area)){
+            ToastUtils.displayShortToast(this,"区域不能空！");
+            return false;
+        }
+        if (ToosUtils.isTextEmpty(address)){
+            ToastUtils.displayShortToast(this,"详情地址不能空！");
+            return false;
+        }
+        return true;
+    }
+
 
     /**
      * 新增收货地址
      */
     private void addAddress() {
         RequestParams rp = new RequestParams();
-        rp.addBodyParameter("token", ShareDataTool.getToken(this));
+        rp.addBodyParameter("sign", ShareDataTool.getToken(this));
         JsonObject jsonObject=new JsonObject();
         jsonObject.addProperty("userId", ShareDataTool.getRegiterEntity(this).userId);
-        rp.addBodyParameter("name", ToosUtils.getTextContent(name));
-        rp.addBodyParameter("mobile", ToosUtils.getTextContent(phone));
-        rp.addBodyParameter("phone", ToosUtils.getTextContent(telphone));
-        rp.addBodyParameter("address", ToosUtils.getTextContent(address));
-        rp.addBodyParameter("province", addressStrs[0]);
-        rp.addBodyParameter("city", addressStrs[1]);
-        rp.addBodyParameter("district", addressStrs[2]);
+        jsonObject.addProperty("name", ToosUtils.getTextContent(name));
+        jsonObject.addProperty("mobile", ToosUtils.getTextContent(phone));
+        jsonObject.addProperty("phone", ToosUtils.getTextContent(telphone));
+        jsonObject.addProperty("address", ToosUtils.getTextContent(address));
+        jsonObject.addProperty("province", addressStrs[0]);
+        jsonObject.addProperty("city", addressStrs[1]);
+        jsonObject.addProperty("district", addressStrs[2]);
+        rp.addBodyParameter("addressStr", jsonObject.toString());
+        LogManager.LogShow("-----",Constant.ROOT_PATH + "address/save?token="+ShareDataTool.getToken(this)+"&addressStr="+jsonObject.toString(),LogManager.ERROR);
         HttpUtils utils = new HttpUtils();
         utils.configTimeout(20000);
         utils.send(HttpRequest.HttpMethod.POST, Constant.ROOT_PATH

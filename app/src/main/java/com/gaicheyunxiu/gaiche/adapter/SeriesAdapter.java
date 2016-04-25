@@ -29,8 +29,9 @@ public class SeriesAdapter extends BaseAdapter {
     public SeriesAdapter(Context context, Map<String,List<String>> listMap) {
         this.context = context;
         this.listMap=listMap;
+
         glist=listMap.get("0");
-       jlist=listMap.get("1");
+        jlist=listMap.get("1");
         if (glist==null){
             glist=new ArrayList<>();
         }
@@ -56,18 +57,17 @@ public class SeriesAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-
         return models.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return null;
+        return models.get(position);
     }
 
     @Override
     public long getItemId(int position) {
-        return 0;
+        return position;
     }
 
     @Override
@@ -88,12 +88,16 @@ public class SeriesAdapter extends BaseAdapter {
         }else {
             holder.tip.setText("国外");
         }
-
-
         if (position==0){
             holder.tip.setVisibility(View.VISIBLE);
-
+        }else if(position>0 && position+1<=glist.size()){
+            holder.tip.setVisibility(View.GONE);
+        }else  if(position==glist.size()){
+            holder.tip.setVisibility(View.VISIBLE);
+        }else if(position>glist.size()){
+            holder.tip.setVisibility(View.GONE);
         }
+        holder.content.setText(models.get(position).seriesval);
         return convertView;
     }
 

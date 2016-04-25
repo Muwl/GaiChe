@@ -14,8 +14,10 @@ import com.gaicheyunxiu.gaiche.adapter.CarbrandAdapter;
 import com.gaicheyunxiu.gaiche.adapter.SeriesAdapter;
 import com.gaicheyunxiu.gaiche.model.CarBrandEntity;
 import com.gaicheyunxiu.gaiche.model.CarBrandState;
+import com.gaicheyunxiu.gaiche.model.CarTypeEntity;
 import com.gaicheyunxiu.gaiche.model.ReturnState;
 import com.gaicheyunxiu.gaiche.model.SeriesEntity;
+import com.gaicheyunxiu.gaiche.model.SeriesModel;
 import com.gaicheyunxiu.gaiche.utils.Constant;
 import com.gaicheyunxiu.gaiche.utils.LogManager;
 import com.gaicheyunxiu.gaiche.utils.ToastUtils;
@@ -70,20 +72,34 @@ public class SeriesActivity extends BaseActivity implements View.OnClickListener
         brand= (TextView) findViewById(R.id.series_brand);
         listView= (ListView) findViewById(R.id.series_list);
         pro= findViewById(R.id.series_pro);
-
+        brand.setText(brandEntity.name);
         title.setText("设置车型");
         back.setOnClickListener(this);
-        adapter=new SeriesAdapter(this);
-        listView.setAdapter(adapter);
         findType();
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(SeriesActivity.this, VolumeActivity.class);
-                startActivity(intent);
+                CarTypeEntity entity = new CarTypeEntity();
+                entity.carBrandName = brandEntity.name;
+                SeriesModel model = (SeriesModel) adapter.getItem(position);
+                entity.productionPlace = model.key;
+                entity.type = model.seriesval;
+                intent.putExtra("entity", entity);
+                startActivityForResult(intent,1005);
             }
         });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode==RESULT_OK){
+            setResult(RESULT_OK,data);
+            finish();
+        }
+
     }
 
     @Override
@@ -125,7 +141,7 @@ public class SeriesActivity extends BaseActivity implements View.OnClickListener
             @Override
             public void onSuccess(ResponseInfo<String> arg0) {
                 pro.setVisibility(View.GONE);
-                LogManager.LogShow("-----", arg0.result,
+                LogManager.LogShow("-----", arg0.result+"=====",
                         LogManager.ERROR);
 
                 try {
@@ -136,7 +152,8 @@ public class SeriesActivity extends BaseActivity implements View.OnClickListener
                         LogManager.LogShow("-----", arg0.result,
                                 LogManager.ERROR);
                         SeriesEntity entity=gson.fromJson(arg0.result,SeriesEntity.class);
-
+                        adapter=new SeriesAdapter(SeriesActivity.this,entity.result);
+                        listView.setAdapter(adapter);
                     } else if (Constant.TOKEN_ERR.equals(state.msg)) {
                         ToastUtils.displayShortToast(SeriesActivity.this,
                                 "验证错误，请重新登录");

@@ -1,5 +1,6 @@
 package com.gaicheyunxiu.gaiche.activity.fragment;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -18,6 +19,7 @@ import com.gaicheyunxiu.gaiche.activity.CarbrandActivity;
 import com.gaicheyunxiu.gaiche.activity.CrowdFundActivity;
 import com.gaicheyunxiu.gaiche.activity.QRScanActivity;
 import com.gaicheyunxiu.gaiche.adapter.FHomeGrallryAdapter;
+import com.gaicheyunxiu.gaiche.model.CarTypeEntity;
 import com.gaicheyunxiu.gaiche.utils.DensityUtil;
 import com.gaicheyunxiu.gaiche.view.MyGallery;
 
@@ -115,7 +117,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
                 break;
             case R.id.main_carlin:
                 Intent intent2=new Intent(getActivity(), CarbrandActivity.class);
-                startActivity(intent2);
+                startActivityForResult(intent2, 1224);
                 break;
 
             case R.id.home_shop:
@@ -123,5 +125,14 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
                 startActivity(intent3);
                 break;
         }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode==1224 && resultCode== Activity.RESULT_OK){
+            CarTypeEntity entity= (CarTypeEntity) data.getSerializableExtra("entity");
+        }
+
     }
 }
