@@ -8,6 +8,10 @@
     <include
         android:id="@+id/brand_title"
         layout="@layout/activity_title"/>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
 
     <ListView
         android:id="@+id/brand_list"
@@ -15,5 +19,11 @@
         android:layout_height="wrap_content"
         android:scrollbars="none"
         ></ListView>
+        <include
+            android:id="@+id/brand_pro"
+            layout="@layout/pro"
+            android:visibility="gone"
+            />
 
+    </RelativeLayout>
 </LinearLayout>

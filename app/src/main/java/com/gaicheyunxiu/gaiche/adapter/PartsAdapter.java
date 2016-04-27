@@ -1,6 +1,7 @@
 package com.gaicheyunxiu.gaiche.adapter;
 
 import android.content.Context;
+import android.graphics.Paint;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -8,7 +9,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.gaicheyunxiu.gaiche.R;
+import com.gaicheyunxiu.gaiche.model.CommodityEntity;
 import com.lidroid.xutils.BitmapUtils;
+
+import java.util.List;
 
 /**
  * Created by Administrator on 2016/3/14.
@@ -18,15 +22,17 @@ public class PartsAdapter extends BaseAdapter {
 
     private Context context;
     private BitmapUtils bitmapUtils;
+    private List<CommodityEntity> entities;
 
-    public PartsAdapter(Context context) {
+    public PartsAdapter(Context context,List<CommodityEntity> entities) {
         this.context = context;
+        this.entities=entities;
         bitmapUtils=new BitmapUtils(context);
     }
 
     @Override
     public int getCount() {
-        return 8;
+        return entities.size();
     }
 
     @Override
@@ -55,6 +61,14 @@ public class PartsAdapter extends BaseAdapter {
         }else{
             holder= (ViewHolder) convertView.getTag();
         }
+
+        bitmapUtils.display(holder.imageView,entities.get(position).briefImage);
+        holder.name.setText(entities.get(position).name);
+        holder.newPrice.setText("￥"+entities.get(position).presentPrice+"元");
+        holder.oldPrice.setText("￥"+entities.get(position).originalPrice+"元");
+        holder.m.setText(entities.get(position).mValue+"M");
+        holder.volume.setText("月销"+entities.get(position).sales+"笔");
+        holder.oldPrice.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG ); //中间横线
         return convertView;
     }
     class ViewHolder{

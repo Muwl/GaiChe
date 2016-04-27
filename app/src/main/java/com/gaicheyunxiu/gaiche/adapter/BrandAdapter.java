@@ -8,6 +8,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.gaicheyunxiu.gaiche.R;
+import com.gaicheyunxiu.gaiche.model.BrandEntity;
+
+import java.util.List;
 
 import static com.gaicheyunxiu.gaiche.R.id.brand_item_name;
 
@@ -17,14 +20,16 @@ import static com.gaicheyunxiu.gaiche.R.id.brand_item_name;
 public class BrandAdapter extends BaseAdapter {
 
     private Context context;
+    public List<BrandEntity> entities;
 
-    public BrandAdapter(Context context) {
+    public BrandAdapter(Context context,List<BrandEntity> entities) {
         this.context = context;
+        this.entities=entities;
     }
 
     @Override
     public int getCount() {
-        return 5;
+        return entities.size();
     }
 
     @Override
@@ -48,6 +53,13 @@ public class BrandAdapter extends BaseAdapter {
             convertView.setTag(holder);
         }else{
             holder= (ViewHolder) convertView.getTag();
+        }
+
+        holder.name.setText(entities.get(position).name);
+        if (entities.get(position).isSel){
+            holder.image.setVisibility(View.VISIBLE);
+        }else{
+            holder.image.setVisibility(View.GONE);
         }
         return convertView;
     }

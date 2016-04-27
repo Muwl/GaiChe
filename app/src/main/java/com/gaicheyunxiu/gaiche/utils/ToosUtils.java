@@ -3,6 +3,7 @@ package com.gaicheyunxiu.gaiche.utils;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Environment;
 import android.widget.TextView;
 
@@ -53,6 +54,12 @@ public class ToosUtils {
 		} else {
 			return true;
 		}
+	}
+
+	public static void openUrl(Context context,String temp){
+		Uri uri = Uri.parse(temp);
+		Intent  intent = new  Intent(Intent.ACTION_VIEW, uri);
+		context.startActivity(intent);
 	}
 
 	public static boolean MatchPhone(String name) {
