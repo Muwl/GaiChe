@@ -10,6 +10,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.gaicheyunxiu.gaiche.R;
+import com.gaicheyunxiu.gaiche.model.ShopEntity;
+
+import java.util.List;
 
 /**
  * Created by Administrator on 2016/4/4.
@@ -17,6 +20,7 @@ import com.gaicheyunxiu.gaiche.R;
 public class FStoreAdapter extends BaseExpandableListAdapter {
 
     private Context context;
+
 
     public FStoreAdapter(Context context) {
         this.context = context;

@@ -5,6 +5,7 @@ import android.media.Image;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +16,11 @@ import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.TextView;
 
+import com.baidu.location.BDLocation;
+import com.baidu.location.BDLocationListener;
+import com.baidu.location.LocationClient;
+import com.baidu.location.LocationClientOption;
+import com.baidu.location.Poi;
 import com.gaicheyunxiu.gaiche.R;
 import com.gaicheyunxiu.gaiche.activity.PartActivity;
 import com.gaicheyunxiu.gaiche.activity.SerchActivity;
@@ -24,6 +30,8 @@ import com.handmark.pulltorefresh.library.PullToRefreshExpandableListView;
 import com.mining.app.zxing.decoding.Intents;
 
 import org.w3c.dom.ls.LSException;
+
+import java.util.List;
 
 /**
  * Created by Administrator on 2015/12/19.
@@ -46,6 +54,8 @@ public class StoreFragment extends Fragment implements View.OnClickListener{
     private ExpandableListView listView;
 
     private FStoreAdapter adapter;
+
+
 
     @Nullable
     @Override
@@ -80,13 +90,12 @@ public class StoreFragment extends Fragment implements View.OnClickListener{
         listView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
             @Override
             public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
-                Intent intent=new Intent(getActivity(), PartActivity.class);
+                Intent intent = new Intent(getActivity(), PartActivity.class);
                 startActivity(intent);
 //                LogManager.LogShow("----","----"+groupPosition+"==="+childPosition+"==",LogManager.ERROR);
                 return true;
             }
         });
-
     }
 
     @Override
@@ -98,4 +107,6 @@ public class StoreFragment extends Fragment implements View.OnClickListener{
                 break;
         }
     }
+
+
 }

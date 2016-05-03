@@ -14,6 +14,7 @@ import android.widget.ImageView.ScaleType;
 import com.gaicheyunxiu.gaiche.R;
 import com.gaicheyunxiu.gaiche.activity.PartActivity;
 import com.gaicheyunxiu.gaiche.model.AdEntity;
+import com.gaicheyunxiu.gaiche.utils.Constant;
 import com.gaicheyunxiu.gaiche.utils.ToosUtils;
 import com.lidroid.xutils.BitmapUtils;
 
@@ -66,7 +67,7 @@ public class GalleryAdapter extends BaseAdapter {
 			@Override
 			public void onClick(View v) {
 				if ("1".equals(images.get(position % images.size()).type)) {
-//					ToosUtils.openUrl(context,);
+					ToosUtils.openUrl(context, Constant.ROOT_PATH+"advertisement/getContent?id="+images.get(position % images.size()).id);
 				} else {
 					Intent intent=new Intent(context, PartActivity.class);
 					intent.putExtra("id",images.get(position % images.size()).id);

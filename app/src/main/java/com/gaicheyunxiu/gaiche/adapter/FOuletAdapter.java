@@ -12,7 +12,11 @@ import android.widget.TextView;
 
 import com.gaicheyunxiu.gaiche.R;
 import com.gaicheyunxiu.gaiche.activity.SerchActivity;
+import com.gaicheyunxiu.gaiche.model.ShopEntity;
 import com.gaicheyunxiu.gaiche.view.RatingBar;
+import com.lidroid.xutils.BitmapUtils;
+
+import java.util.List;
 
 /**
  * Created by Mu on 2015/12/24.
@@ -21,20 +25,23 @@ import com.gaicheyunxiu.gaiche.view.RatingBar;
 public class FOuletAdapter extends BaseAdapter {
 
     private Context context;
-
+    private List<ShopEntity> shopEntities;
     private int width;
     private int type0 = 1;
     private int type1 = 2;
+    private BitmapUtils bitmapUtils;
 
-    public FOuletAdapter(Context context, int width) {
+    public FOuletAdapter(Context context, int width,List<ShopEntity> shopEntities) {
         this.context = context;
         this.width = width;
+        this.shopEntities=shopEntities;
+        bitmapUtils=new BitmapUtils(context);
 
     }
 
     @Override
     public int getCount() {
-        return 8;
+        return shopEntities.size()+1;
     }
 
     @Override
@@ -61,7 +68,6 @@ public class FOuletAdapter extends BaseAdapter {
         ViewHolder holder = null;
         ViewHolder1 holder1 = null;
         int type = getItemViewType(position);
-
         if (type == type0) {
             convertView = null;
             if (convertView == null
@@ -116,6 +122,13 @@ public class FOuletAdapter extends BaseAdapter {
                 }
             });
         }else{
+            bitmapUtils.display(holder.imageView, shopEntities.get(position - 1).icon);
+            holder.name.setText(shopEntities.get(position - 1).name);
+            holder.num.setText(shopEntities.get(position - 1).evaluateAmount + "条");
+            holder.money.setText(shopEntities.get(position-1).sumPrice+"元");
+            holder.m.setText(shopEntities.get(position-1).sumMvalue+"M");
+            holder.address.setText(shopEntities.get(position-1).district);
+            holder.distance.setText(shopEntities.get(position-1).distance+"km");
             holder.bar.setLayoutParams(new LinearLayout.LayoutParams((int) (0.30 * width), (int) (0.045 * width)));
         }
 
