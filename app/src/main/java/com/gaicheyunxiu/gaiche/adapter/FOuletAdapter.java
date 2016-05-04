@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.gaicheyunxiu.gaiche.R;
 import com.gaicheyunxiu.gaiche.activity.SerchActivity;
+import com.gaicheyunxiu.gaiche.model.OuletHeadEntity;
 import com.gaicheyunxiu.gaiche.model.ShopEntity;
 import com.gaicheyunxiu.gaiche.view.RatingBar;
 import com.lidroid.xutils.BitmapUtils;
@@ -30,10 +31,12 @@ public class FOuletAdapter extends BaseAdapter {
     private int type0 = 1;
     private int type1 = 2;
     private BitmapUtils bitmapUtils;
+    private OuletHeadEntity entity;
 
-    public FOuletAdapter(Context context, int width,List<ShopEntity> shopEntities) {
+    public FOuletAdapter(Context context, int width,List<ShopEntity> shopEntities,OuletHeadEntity entity) {
         this.context = context;
         this.width = width;
+        this.entity=entity;
         this.shopEntities=shopEntities;
         bitmapUtils=new BitmapUtils(context);
 
@@ -114,6 +117,7 @@ public class FOuletAdapter extends BaseAdapter {
             }
         }
         if (type == type0) {
+            holder1.address.setText(entity.address);
             holder1.serch.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

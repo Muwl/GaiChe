@@ -61,7 +61,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:gravity="center_horizontal"
-                    android:text="养修"
+                    android:text="雨刮片"
                     android:textColor="#5F5D5D"
                     android:textSize="@dimen/four_font" />
             </LinearLayout>

@@ -12,7 +12,7 @@ import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
 
 import com.gaicheyunxiu.gaiche.R;
-import com.gaicheyunxiu.gaiche.activity.PartActivity;
+import com.gaicheyunxiu.gaiche.activity.ShopListActivity;
 import com.gaicheyunxiu.gaiche.model.AdEntity;
 import com.gaicheyunxiu.gaiche.utils.Constant;
 import com.gaicheyunxiu.gaiche.utils.ToosUtils;
@@ -69,8 +69,9 @@ public class GalleryAdapter extends BaseAdapter {
 				if ("1".equals(images.get(position % images.size()).type)) {
 					ToosUtils.openUrl(context, Constant.ROOT_PATH+"advertisement/getContent?id="+images.get(position % images.size()).id);
 				} else {
-					Intent intent=new Intent(context, PartActivity.class);
+					Intent intent=new Intent(context, ShopListActivity.class);
 					intent.putExtra("id",images.get(position % images.size()).id);
+					intent.putExtra("comeFlag",1);
 					context.startActivity(intent);
 				}
 			}

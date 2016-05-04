@@ -35,7 +35,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/four_font"
-                android:text="配件"
+                android:text="名牌配件"
                 android:layout_marginTop="10dp"
                 android:textColor="#5F5D5D"/>
         </LinearLayout>

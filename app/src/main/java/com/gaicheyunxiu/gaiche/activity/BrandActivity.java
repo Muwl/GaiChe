@@ -51,6 +51,11 @@ public class BrandActivity extends BaseActivity implements View.OnClickListener 
 
     private String brandName;
 
+
+    private int comeFlag;//1 代表广告 2 代表热门列表
+
+    private String type;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,7 +64,12 @@ public class BrandActivity extends BaseActivity implements View.OnClickListener 
     }
 
     private void initView() {
-        id=getIntent().getStringExtra("id");
+        comeFlag= getIntent().getIntExtra("comeFlag", 0);
+        if (comeFlag==1){
+            id=getIntent().getStringExtra("id");
+        }else if(comeFlag==2){
+            type=getIntent().getStringExtra("type");
+        }
         brandName=getIntent().getStringExtra("name");
         entities=new ArrayList<>();
         back= (ImageView) findViewById(R.id.title_back);
@@ -110,10 +120,18 @@ public class BrandActivity extends BaseActivity implements View.OnClickListener 
     private void getBrands() {
         RequestParams rp = new RequestParams();
         HttpUtils utils = new HttpUtils();
-        rp.addBodyParameter("id",id);
+        String url="advertisement/getBrands";
+        if (comeFlag==1){
+            rp.addBodyParameter("id", id);
+            url="advertisement/getBrands";
+        }else if (comeFlag==2){
+            rp.addBodyParameter("type", type);
+            rp.addBodyParameter("carTypeId", "");
+            url="popularProject/findPopProjBrands";
+        }
         utils.configTimeout(20000);
         utils.send(HttpRequest.HttpMethod.POST, Constant.ROOT_PATH
-                + "advertisement/getBrands", rp, new RequestCallBack<String>() {
+                + url, rp, new RequestCallBack<String>() {
             @Override
             public void onStart() {
                 super.onStart();
