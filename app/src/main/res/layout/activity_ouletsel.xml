@@ -42,6 +42,9 @@
             android:layout_weight="1"
             android:gravity="center"
             android:textColor="@color/store_text_rb"
+            android:paddingLeft="6dp"
+            android:paddingRight="6dp"
+            android:drawableRight="@mipmap/sort_nor"
             android:textSize="@dimen/second_font"
             android:paddingTop="10dp"
             android:button="@null"
@@ -58,6 +61,9 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
+            android:paddingLeft="6dp"
+            android:paddingRight="6dp"
+            android:drawableRight="@mipmap/sort_nor"
             android:textColor="@color/store_text_rb"
             android:textSize="@dimen/second_font"
             android:button="@null"
@@ -78,6 +84,9 @@
             android:textSize="@dimen/second_font"
             android:paddingTop="10dp"
             android:button="@null"
+            android:drawableRight="@mipmap/sort_nor"
+            android:paddingLeft="6dp"
+            android:paddingRight="6dp"
             android:gravity="center"
             android:paddingBottom="10dp"
             android:text="价格"
@@ -89,11 +98,26 @@
         android:layout_height="1px"
         android:background="@color/bottom_div"/>
 
-    <ListView
-        android:id="@+id/ouletsel_list"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scrollbars="none"></ListView>
+        android:layout_height="match_parent">
 
+        <com.handmark.pulltorefresh.library.PullToRefreshListView
+            android:id="@+id/ouletsel_list"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:cacheColorHint="#00000000"
+            android:fadingEdge="none"
+            android:fastScrollEnabled="false"
+            android:scrollbars="none"
+            android:footerDividersEnabled="false"
+            android:headerDividersEnabled="false"
+            android:smoothScrollbar="true" />
 
+        <include
+            android:id="@+id/ouletsel_pro"
+            layout="@layout/pro"
+            android:visibility="gone"
+            />
+</RelativeLayout>
 </LinearLayout>

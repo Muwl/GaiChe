@@ -96,14 +96,22 @@
         android:layout_width="match_parent"
         android:layout_height="1px"
         android:background="@color/bottom_div"/>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
 
 
     <ExpandableListView
         android:id="@+id/fstore_listview"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent" />
-
-
+        <include
+            android:id="@+id/fstore_pro"
+            layout="@layout/pro"
+            android:visibility="gone"
+            />
+    </RelativeLayout>
 
 
 

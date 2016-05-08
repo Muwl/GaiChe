@@ -59,10 +59,10 @@ public class OutletFragment extends Fragment implements View.OnClickListener{
 
     private View pro;
 
-    private BDLocation bdLocation = null;
+
 
     private OuletHeadEntity headEntity;
-
+    private BDLocation bdLocation = null;
     public LocationClient mLocationClient = null;
     public BDLocationListener myListener = new MyLocationListener();
 

@@ -75,9 +75,11 @@ public class ShopListActivity extends BaseActivity implements View.OnClickListen
 
     private String sort;
 
+    private String type;
+
     private int comeFlag;//1 代表广告 2 代表热门列表
 
-    private String type;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

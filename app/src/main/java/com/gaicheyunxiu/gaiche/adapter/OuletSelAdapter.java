@@ -10,7 +10,11 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.gaicheyunxiu.gaiche.R;
+import com.gaicheyunxiu.gaiche.model.OutSelEntity;
 import com.gaicheyunxiu.gaiche.view.RatingBar;
+import com.lidroid.xutils.BitmapUtils;
+
+import java.util.List;
 
 /**
  * Created by Mu on 2015/12/24.
@@ -19,28 +23,30 @@ import com.gaicheyunxiu.gaiche.view.RatingBar;
 public class OuletSelAdapter extends BaseAdapter {
 
     private Context context;
-
+    private List<OutSelEntity> entities;
     private int width;
+    private BitmapUtils bitmapUtils;
 
-    public OuletSelAdapter(Context context,int width) {
+    public OuletSelAdapter(Context context,List<OutSelEntity> entities,int width) {
         this.context = context;
         this.width=width;
-
+        this.entities=entities;
+        bitmapUtils=new BitmapUtils(context);
     }
 
     @Override
     public int getCount() {
-        return 3;
+        return entities.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return null;
+        return entities.get(position);
     }
 
     @Override
     public long getItemId(int position) {
-        return 0;
+        return position;
     }
 
     @Override
@@ -63,7 +69,15 @@ public class OuletSelAdapter extends BaseAdapter {
             holder= (ViewHolder) convertView.getTag();
         }
 
-        holder.bar.setLayoutParams(new LinearLayout.LayoutParams((int)(0.30*width),(int)(0.045*width)));
+        bitmapUtils.display(holder.imageView,entities.get(position).icon);
+        holder.name.setText(entities.get(position).name);
+        holder.bar.setStar(Float.valueOf(entities.get(position).score));
+        holder.bar.setLayoutParams(new LinearLayout.LayoutParams((int) (0.30 * width), (int) (0.045 * width)));
+        holder.num.setText(entities.get(position).evaluateAmount + "条");
+        holder.money.setText(entities.get(position).sumPrice+"元");
+        holder.m.setText(entities.get(position).sumMvalue+"M");
+        holder.address.setText(entities.get(position).district);
+        holder.distance.setText(entities.get(position).distance+"km");
         return convertView;
     }
     class ViewHolder{

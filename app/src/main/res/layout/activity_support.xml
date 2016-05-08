@@ -6,7 +6,7 @@
     android:layout_height="match_parent">
 
     <include
-        android:id="@+id/facical_title"
+        android:id="@+id/fsupport_title"
         layout="@layout/activity_title"/>
 
     <RelativeLayout
@@ -15,11 +15,11 @@
         android:layout_weight="1">
 
         <ListView
-            android:id="@+id/facical_listview"
+            android:id="@+id/fsupport_listview"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
         <include
-            android:id="@+id/facical_pro"
+            android:id="@+id/fsupport_pro"
             layout="@layout/pro"
             android:visibility="gone"
             />
@@ -28,7 +28,7 @@
 
 
     <TextView
-        android:id="@+id/facical_ok"
+        android:id="@+id/fsupport_ok"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColor="@color/write"

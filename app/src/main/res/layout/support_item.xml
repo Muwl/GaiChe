@@ -14,8 +14,8 @@
         android:gravity="center_vertical">
 
         <TextView
-            android:id="@+id/facial_item_name"
-            android:layout_width="wrap_content"
+            android:id="@+id/support_item_name"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:textColor="#5f5d5d"
             android:layout_weight="1"
@@ -23,13 +23,24 @@
             android:text="1:普通洗车"
             android:padding="8dp"/>
 
+        <TextView
+            android:id="@+id/support_item_cycle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#5f5d5d"
+            android:textSize="@dimen/second_font"
+            android:text="1:普通洗车"
+            android:padding="8dp"/>
+
+
 
         <CheckBox
-            android:id="@+id/facial_item_cb"
+            android:id="@+id/support_item_cb"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_marginRight="10dp"
+            android:layout_marginLeft="8dp"
             android:layout_centerVertical="true"
             android:button="@drawable/store_rb"/>
     </LinearLayout>
@@ -40,7 +51,7 @@
         android:background="@color/bottom_div"/>
 
     <TextView
-        android:id="@+id/facial_item_content"
+        android:id="@+id/support_item_content"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="#5f5d5d"

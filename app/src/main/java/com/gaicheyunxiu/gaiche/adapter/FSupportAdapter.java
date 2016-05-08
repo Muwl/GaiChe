@@ -6,10 +6,10 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.gaicheyunxiu.gaiche.R;
-import com.gaicheyunxiu.gaiche.model.ButyServiceEntity;
 import com.gaicheyunxiu.gaiche.model.SupportEntity;
 
 import java.util.List;
@@ -17,13 +17,14 @@ import java.util.List;
 /**
  * Created by Administrator on 2016/3/27.
  */
-public class FacialAdapter extends BaseAdapter {
+public class FSupportAdapter extends BaseAdapter {
 
     private Context context;
-    private List<ButyServiceEntity> entities;
-    public FacialAdapter(Context context,List<ButyServiceEntity> entities) {
+    private List<SupportEntity> entities;
+
+    public FSupportAdapter(Context context,List<SupportEntity> entities) {
         this.context = context;
-        this.entities = entities;
+        this.entities=entities;
     }
 
     @Override
@@ -46,15 +47,17 @@ public class FacialAdapter extends BaseAdapter {
         ViewHolder holder=null;
         if (convertView==null){
             holder=new ViewHolder();
-            convertView=View.inflate(context, R.layout.facial_item,null);
-            holder.name= (TextView) convertView.findViewById(R.id.facial_item_name);
-            holder.checkBox= (CheckBox) convertView.findViewById(R.id.facial_item_cb);
-            holder.content= (TextView) convertView.findViewById(R.id.facial_item_content);
+            convertView=View.inflate(context, R.layout.support_item,null);
+            holder.name= (TextView) convertView.findViewById(R.id.support_item_name);
+            holder.cycle= (TextView) convertView.findViewById(R.id.support_item_cycle);
+            holder.checkBox= (CheckBox) convertView.findViewById(R.id.support_item_cb);
+            holder.content= (TextView) convertView.findViewById(R.id.support_item_content);
             convertView.setTag(holder);
         }else{
             holder=new ViewHolder();
         }
         holder.name.setText(entities.get(position).name);
+        holder.cycle.setText(entities.get(position).cycle);
         holder.checkBox.setChecked(entities.get(position).isSelect);
         holder.content.setText(entities.get(position).remarks);
 
@@ -69,6 +72,7 @@ public class FacialAdapter extends BaseAdapter {
     }
     class ViewHolder{
         public TextView name;
+        public TextView cycle;
         public CheckBox checkBox;
         public TextView content;
     }

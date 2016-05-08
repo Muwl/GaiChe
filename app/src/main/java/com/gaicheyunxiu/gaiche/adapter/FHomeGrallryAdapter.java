@@ -10,6 +10,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import com.gaicheyunxiu.gaiche.R;
+import com.gaicheyunxiu.gaiche.activity.FSupportActivity;
 import com.gaicheyunxiu.gaiche.activity.FcialActivity;
 import com.gaicheyunxiu.gaiche.activity.ShopListActivity;
 import com.gaicheyunxiu.gaiche.utils.DensityUtil;
@@ -286,6 +287,10 @@ public class FHomeGrallryAdapter extends BaseAdapter implements View.OnClickList
             case R.id.home_beauty:
                 Intent intent2=new Intent(context, FcialActivity.class);
                 context.startActivity(intent2);
+                break;
+            case R.id.home_support:
+                Intent intent22=new Intent(context, FSupportActivity.class);
+                context.startActivity(intent22);
                 break;
         }
     }
