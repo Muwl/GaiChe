@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * Created by Administrator on 2016/5/8.
  */
-public class ShopTypeState implements Serializable {
+public class ShopTypeChildState implements Serializable {
     public String msg;
-    public List<ShopTypeEntity> result;
+    public List<ShopTypeChildEntity> result;
 }

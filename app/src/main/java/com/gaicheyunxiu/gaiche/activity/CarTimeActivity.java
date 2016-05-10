@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.gaicheyunxiu.gaiche.R;
 import com.gaicheyunxiu.gaiche.adapter.SeriesAdapter;
 import com.gaicheyunxiu.gaiche.adapter.VolumeAdapter;
+import com.gaicheyunxiu.gaiche.model.CarTimeEntity;
 import com.gaicheyunxiu.gaiche.model.CarTypeEntity;
 import com.gaicheyunxiu.gaiche.model.ReturnState;
 import com.gaicheyunxiu.gaiche.model.SeriesEntity;
@@ -72,11 +73,12 @@ public class CarTimeActivity extends BaseActivity implements View.OnClickListene
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent=new Intent();
-                typeEntity.productionDate= (String) adapter.getItem(position);
-                intent.putExtra("car",typeEntity);
-                setResult(RESULT_OK,intent);
-                finish();
+                Intent intent = new Intent();
+                typeEntity.productionDate = (String) adapter.getItem(position);
+                findTypeId();
+//                intent.putExtra("car", typeEntity);
+//                setResult(RESULT_OK, intent);
+//                finish();
             }
         });
         findType();
@@ -137,6 +139,113 @@ public class CarTimeActivity extends BaseActivity implements View.OnClickListene
                         }
                         adapter=new VolumeAdapter(CarTimeActivity.this,datas);
                         listView.setAdapter(adapter);
+                    } else if (Constant.TOKEN_ERR.equals(state.msg)) {
+                        ToastUtils.displayShortToast(CarTimeActivity.this,
+                                "验证错误，请重新登录");
+                        ToosUtils.goReLogin(CarTimeActivity.this);
+                    } else {
+                        ToastUtils.displayShortToast(CarTimeActivity.this,
+                                (String) state.result);
+                    }
+                } catch (Exception e) {
+                    ToastUtils.displaySendFailureToast(CarTimeActivity.this);
+                }
+
+            }
+        });
+    }
+
+
+    /**
+     * 查询所有品牌
+     */
+    private void findTypeId() {
+        RequestParams rp = new RequestParams();
+        HttpUtils utils = new HttpUtils();
+        rp.addBodyParameter("carTypeSearchStr", new Gson().toJson(typeEntity));
+        utils.configTimeout(20000);
+        utils.send(HttpRequest.HttpMethod.POST, Constant.ROOT_PATH
+                + "carType/find", rp, new RequestCallBack<String>() {
+            @Override
+            public void onStart() {
+                pro.setVisibility(View.VISIBLE);
+                super.onStart();
+            }
+
+            @Override
+            public void onFailure(HttpException arg0, String arg1) {
+                pro.setVisibility(View.GONE);
+                ToastUtils.displayFailureToast(CarTimeActivity.this);
+            }
+
+            @Override
+            public void onSuccess(ResponseInfo<String> arg0) {
+                pro.setVisibility(View.GONE);
+                LogManager.LogShow("-----", arg0.result + "=====",
+                        LogManager.ERROR);
+
+                try {
+                    Gson gson = new Gson();
+                    ReturnState state = gson.fromJson(arg0.result,
+                            ReturnState.class);
+                    if (Constant.RETURN_OK.equals(state.msg)) {
+                        LogManager.LogShow("-----", arg0.result,
+                                LogManager.ERROR);
+                        CarTimeEntity carTimeEntity=gson.fromJson(arg0.result,CarTimeEntity.class);
+
+                    } else if (Constant.TOKEN_ERR.equals(state.msg)) {
+                        ToastUtils.displayShortToast(CarTimeActivity.this,
+                                "验证错误，请重新登录");
+                        ToosUtils.goReLogin(CarTimeActivity.this);
+                    } else {
+                        ToastUtils.displayShortToast(CarTimeActivity.this,
+                                (String) state.result);
+                    }
+                } catch (Exception e) {
+                    ToastUtils.displaySendFailureToast(CarTimeActivity.this);
+                }
+
+            }
+        });
+    }
+
+    /**
+     * 保存/修改我的爱车
+     */
+    private void saveCar() {
+        RequestParams rp = new RequestParams();
+        HttpUtils utils = new HttpUtils();
+        rp.addBodyParameter("carTypeSearchStr", new Gson().toJson(typeEntity));
+        utils.configTimeout(20000);
+        utils.send(HttpRequest.HttpMethod.POST, Constant.ROOT_PATH
+                + "carType/find", rp, new RequestCallBack<String>() {
+            @Override
+            public void onStart() {
+                pro.setVisibility(View.VISIBLE);
+                super.onStart();
+            }
+
+            @Override
+            public void onFailure(HttpException arg0, String arg1) {
+                pro.setVisibility(View.GONE);
+                ToastUtils.displayFailureToast(CarTimeActivity.this);
+            }
+
+            @Override
+            public void onSuccess(ResponseInfo<String> arg0) {
+                pro.setVisibility(View.GONE);
+                LogManager.LogShow("-----", arg0.result + "=====",
+                        LogManager.ERROR);
+
+                try {
+                    Gson gson = new Gson();
+                    ReturnState state = gson.fromJson(arg0.result,
+                            ReturnState.class);
+                    if (Constant.RETURN_OK.equals(state.msg)) {
+                        LogManager.LogShow("-----", arg0.result,
+                                LogManager.ERROR);
+                        CarTimeEntity carTimeEntity=gson.fromJson(arg0.result,CarTimeEntity.class);
+
                     } else if (Constant.TOKEN_ERR.equals(state.msg)) {
                         ToastUtils.displayShortToast(CarTimeActivity.this,
                                 "验证错误，请重新登录");

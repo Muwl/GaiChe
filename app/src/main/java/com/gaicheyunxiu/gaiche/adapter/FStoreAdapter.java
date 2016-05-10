@@ -11,6 +11,8 @@ import android.widget.TextView;
 
 import com.gaicheyunxiu.gaiche.R;
 import com.gaicheyunxiu.gaiche.model.ShopEntity;
+import com.gaicheyunxiu.gaiche.model.ShopTypeEntity;
+import com.lidroid.xutils.BitmapUtils;
 
 import java.util.List;
 
@@ -20,10 +22,13 @@ import java.util.List;
 public class FStoreAdapter extends BaseExpandableListAdapter {
 
     private Context context;
+    private List<ShopTypeEntity> entities;
+    private BitmapUtils bitmapUtils;
 
-
-    public FStoreAdapter(Context context) {
+    public FStoreAdapter(Context context,List<ShopTypeEntity> entities) {
         this.context = context;
+        this.entities=entities;
+        bitmapUtils=new BitmapUtils(context);
     }
 
     @Override
@@ -38,12 +43,17 @@ public class FStoreAdapter extends BaseExpandableListAdapter {
 
     @Override
     public int getGroupCount() {
-        return 10;
+        return entities.size();
     }
 
     @Override
     public int getChildrenCount(int groupPosition) {
-        return 4;
+        if (entities.get(groupPosition).childEntities!=null){
+            return  entities.get(groupPosition).childEntities.size();
+        }else{
+            return 0;
+        }
+
     }
 
     @Override
@@ -83,6 +93,9 @@ public class FStoreAdapter extends BaseExpandableListAdapter {
         }else{
             holder= (ViewGroupHolder) convertView.getTag();
         }
+
+        holder.name.setText(entities.get(groupPosition).name);
+        bitmapUtils.display(holder.icon,entities.get(groupPosition).image);
         return convertView;
     }
 
@@ -97,6 +110,7 @@ public class FStoreAdapter extends BaseExpandableListAdapter {
         }else {
             holder= (ViewChildHolder) convertView.getTag();
         }
+        holder.name.setText(entities.get(groupPosition).childEntities.get(childPosition).name);
         return convertView;
     }
 

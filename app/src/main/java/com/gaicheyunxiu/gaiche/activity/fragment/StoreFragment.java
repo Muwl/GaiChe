@@ -18,6 +18,9 @@ import com.gaicheyunxiu.gaiche.adapter.FOuletAdapter;
 import com.gaicheyunxiu.gaiche.adapter.FStoreAdapter;
 import com.gaicheyunxiu.gaiche.model.ReturnState;
 import com.gaicheyunxiu.gaiche.model.ShopState;
+import com.gaicheyunxiu.gaiche.model.ShopTypeChildState;
+import com.gaicheyunxiu.gaiche.model.ShopTypeEntity;
+import com.gaicheyunxiu.gaiche.model.ShopTypeState;
 import com.gaicheyunxiu.gaiche.utils.Constant;
 import com.gaicheyunxiu.gaiche.utils.DensityUtil;
 import com.gaicheyunxiu.gaiche.utils.LogManager;
@@ -30,6 +33,8 @@ import com.lidroid.xutils.http.RequestParams;
 import com.lidroid.xutils.http.ResponseInfo;
 import com.lidroid.xutils.http.callback.RequestCallBack;
 import com.lidroid.xutils.http.client.HttpRequest;
+
+import java.util.List;
 
 /**
  * Created by Administrator on 2015/12/19.
@@ -54,7 +59,7 @@ public class StoreFragment extends Fragment implements View.OnClickListener{
 
     private FStoreAdapter adapter;
 
-
+    private List<ShopTypeEntity> entities;
 
     @Nullable
     @Override
@@ -76,8 +81,7 @@ public class StoreFragment extends Fragment implements View.OnClickListener{
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        adapter=new FStoreAdapter(getActivity());
-        listView.setAdapter(adapter);
+
         serchText.setOnClickListener(this);
 
 //        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -87,15 +91,18 @@ public class StoreFragment extends Fragment implements View.OnClickListener{
 //            }
 //        });
 
+        listView.setGroupIndicator(null);
+
         listView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
             @Override
             public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
                 Intent intent = new Intent(getActivity(), ShopListActivity.class);
                 startActivity(intent);
-//                LogManager.LogShow("----","----"+groupPosition+"==="+childPosition+"==",LogManager.ERROR);
+
                 return true;
             }
         });
+        getShopType("-1",0);
     }
 
     @Override
@@ -111,11 +118,11 @@ public class StoreFragment extends Fragment implements View.OnClickListener{
     /**
      * 查询所有商品分类
      */
-    private void getShopType(String parentId) {
+    private void getShopType(final String parentId, final int position) {
         RequestParams rp = new RequestParams();
         HttpUtils utils = new HttpUtils();
         utils.configTimeout(20000);
-        rp.addBodyParameter("parentId", "1");
+        rp.addBodyParameter("parentId", parentId);
         utils.send(HttpRequest.HttpMethod.POST, Constant.ROOT_PATH
                 + "commodityType/find", rp, new RequestCallBack<String>() {
             @Override
@@ -141,10 +148,17 @@ public class StoreFragment extends Fragment implements View.OnClickListener{
                     if (Constant.RETURN_OK.equals(state.msg)) {
                         LogManager.LogShow("-----++++", arg0.result,
                                 LogManager.ERROR);
-                        ShopState shopState=gson.fromJson(arg0.result,ShopState.class);
-//                        entities=shopState.result;
-//                        adapter=new FOuletAdapter(getActivity(), DensityUtil.getScreenWidth(getActivity()),entities,headEntity);
-                        listView.setAdapter(adapter);
+                        if ("-1".equals(parentId)){
+                            ShopTypeState typeState=gson.fromJson(arg0.result,ShopTypeState.class);
+                            entities=typeState.result;
+                            adapter=new FStoreAdapter(getActivity(),entities);
+                            listView.setAdapter(adapter);
+                        }else{
+                            ShopTypeChildState typeState=gson.fromJson(arg0.result,ShopTypeChildState.class);
+                            entities.get(position).childEntities=typeState.result;
+                            adapter.notifyDataSetChanged();
+                        }
+
                     } else if (Constant.TOKEN_ERR.equals(state.msg)) {
                         ToastUtils.displayShortToast(getActivity(),
                                 "验证错误，请重新登录");
