@@ -13,10 +13,14 @@ import com.gaicheyunxiu.gaiche.adapter.SeriesAdapter;
 import com.gaicheyunxiu.gaiche.adapter.VolumeAdapter;
 import com.gaicheyunxiu.gaiche.model.CarTimeEntity;
 import com.gaicheyunxiu.gaiche.model.CarTypeEntity;
+import com.gaicheyunxiu.gaiche.model.MyCarEntity;
+import com.gaicheyunxiu.gaiche.model.MyCarState;
 import com.gaicheyunxiu.gaiche.model.ReturnState;
 import com.gaicheyunxiu.gaiche.model.SeriesEntity;
 import com.gaicheyunxiu.gaiche.utils.Constant;
 import com.gaicheyunxiu.gaiche.utils.LogManager;
+import com.gaicheyunxiu.gaiche.utils.MyApplication;
+import com.gaicheyunxiu.gaiche.utils.ShareDataTool;
 import com.gaicheyunxiu.gaiche.utils.ToastUtils;
 import com.gaicheyunxiu.gaiche.utils.ToosUtils;
 import com.google.gson.Gson;
@@ -27,6 +31,7 @@ import com.lidroid.xutils.http.ResponseInfo;
 import com.lidroid.xutils.http.callback.RequestCallBack;
 import com.lidroid.xutils.http.client.HttpRequest;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -76,9 +81,6 @@ public class CarTimeActivity extends BaseActivity implements View.OnClickListene
                 Intent intent = new Intent();
                 typeEntity.productionDate = (String) adapter.getItem(position);
                 findTypeId();
-//                intent.putExtra("car", typeEntity);
-//                setResult(RESULT_OK, intent);
-//                finish();
             }
         });
         findType();
@@ -192,7 +194,7 @@ public class CarTimeActivity extends BaseActivity implements View.OnClickListene
                         LogManager.LogShow("-----", arg0.result,
                                 LogManager.ERROR);
                         CarTimeEntity carTimeEntity=gson.fromJson(arg0.result,CarTimeEntity.class);
-
+                        saveCar(carTimeEntity.result.get(0));
                     } else if (Constant.TOKEN_ERR.equals(state.msg)) {
                         ToastUtils.displayShortToast(CarTimeActivity.this,
                                 "验证错误，请重新登录");
@@ -212,13 +214,18 @@ public class CarTimeActivity extends BaseActivity implements View.OnClickListene
     /**
      * 保存/修改我的爱车
      */
-    private void saveCar() {
+    private void saveCar(final String id) {
         RequestParams rp = new RequestParams();
         HttpUtils utils = new HttpUtils();
-        rp.addBodyParameter("carTypeSearchStr", new Gson().toJson(typeEntity));
+        rp.addBodyParameter("sign", ShareDataTool.getToken(this));
+        rp.addBodyParameter("carBrand", typeEntity.carBrandName);
+        rp.addBodyParameter("productionPlace", typeEntity.productionPlace);
+        rp.addBodyParameter("type", typeEntity.type);
+        rp.addBodyParameter("displacement", typeEntity.displacement);
+        rp.addBodyParameter("productionDate", typeEntity.productionDate);
         utils.configTimeout(20000);
         utils.send(HttpRequest.HttpMethod.POST, Constant.ROOT_PATH
-                + "carType/find", rp, new RequestCallBack<String>() {
+                + "myCar/save", rp, new RequestCallBack<String>() {
             @Override
             public void onStart() {
                 pro.setVisibility(View.VISIBLE);
@@ -244,8 +251,19 @@ public class CarTimeActivity extends BaseActivity implements View.OnClickListene
                     if (Constant.RETURN_OK.equals(state.msg)) {
                         LogManager.LogShow("-----", arg0.result,
                                 LogManager.ERROR);
-                        CarTimeEntity carTimeEntity=gson.fromJson(arg0.result,CarTimeEntity.class);
-
+                        MyCarEntity myCarEntity=new MyCarEntity();
+                        myCarEntity.carBrandId=typeEntity.carBrandid;
+                        myCarEntity.carTypeId=id;
+                        myCarEntity.carBrandName=typeEntity.carBrandName;
+                        myCarEntity.carBrandLogo=typeEntity.carBrandLogo;
+                        myCarEntity.productionPlace=typeEntity.productionPlace;
+                        myCarEntity.type=typeEntity.type;
+                        myCarEntity.displacement=typeEntity.displacement;
+                        myCarEntity.productionDate=typeEntity.productionDate;
+                        ((MyApplication)getApplication()).setCarEntity(myCarEntity);
+                        Intent intent=new Intent();
+                        setResult(RESULT_OK,intent);
+                        finish();
                     } else if (Constant.TOKEN_ERR.equals(state.msg)) {
                         ToastUtils.displayShortToast(CarTimeActivity.this,
                                 "验证错误，请重新登录");

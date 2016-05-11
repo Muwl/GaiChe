@@ -1,8 +1,11 @@
 package com.gaicheyunxiu.gaiche.activity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageView;
@@ -15,14 +18,18 @@ import com.gaicheyunxiu.gaiche.R;
 import com.gaicheyunxiu.gaiche.adapter.PartsAdapter;
 import com.gaicheyunxiu.gaiche.model.CommodityEntity;
 import com.gaicheyunxiu.gaiche.model.CommodityState;
+import com.gaicheyunxiu.gaiche.model.MyCarEntity;
 import com.gaicheyunxiu.gaiche.model.ReturnState;
 import com.gaicheyunxiu.gaiche.utils.Constant;
+import com.gaicheyunxiu.gaiche.utils.HttpPostUtils;
 import com.gaicheyunxiu.gaiche.utils.LogManager;
+import com.gaicheyunxiu.gaiche.utils.MyApplication;
 import com.gaicheyunxiu.gaiche.utils.ToastUtils;
 import com.gaicheyunxiu.gaiche.utils.ToosUtils;
 import com.google.gson.Gson;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
+import com.lidroid.xutils.BitmapUtils;
 import com.lidroid.xutils.HttpUtils;
 import com.lidroid.xutils.exception.HttpException;
 import com.lidroid.xutils.http.RequestParams;
@@ -46,6 +53,12 @@ public class ShopListActivity extends BaseActivity implements View.OnClickListen
     private TextView car;
 
     private View carLin;
+
+    private ImageView carImage;
+
+    private ImageView carAddImage;
+
+    private TextView carName;
 
     private RadioGroup group;
 
@@ -77,7 +90,28 @@ public class ShopListActivity extends BaseActivity implements View.OnClickListen
 
     private String type;
 
-    private int comeFlag;//1 代表广告 2 代表热门列表
+    private int comeFlag;//1 代表广告 2 代表热门列表 3从商城直接进去商品列表
+
+    private String category;//商品类别
+
+    private BitmapUtils bitmapUtils;
+
+    private String cattype;//类型类型
+
+    private Handler handler = new Handler() {
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case HttpPostUtils.FIND_MYCAR:
+                    MyCarEntity carEntity=MyApplication.getInstance().getCarEntity();
+                    if (carEntity!=null){
+                        bitmapUtils.display(carImage,carEntity.carBrandLogo);
+                        carAddImage.setVisibility(View.GONE);
+                        carName.setText(carEntity.carBrandName+carEntity.displacement+carEntity.productionDate);
+                    }
+                    break;
+            }
+        };
+    };
 
 
     @Override
@@ -93,13 +127,19 @@ public class ShopListActivity extends BaseActivity implements View.OnClickListen
             id=getIntent().getStringExtra("id");
         }else if(comeFlag==2){
             type=getIntent().getStringExtra("type");
+        }else if(comeFlag==3){
+            category=getIntent().getStringExtra("category");
+            cattype=getIntent().getStringExtra("cattype");
         }
-
+        bitmapUtils=new BitmapUtils(this);
         commodityEntityList=new ArrayList<>();
         back= (ImageView) findViewById(R.id.title_back);
         title= (TextView) findViewById(R.id.title_text);
         car= (TextView) findViewById(R.id.part_carbrand);
         carLin=findViewById(R.id.part_carlin);
+        carImage= (ImageView) findViewById(R.id.part_carimage);
+        carAddImage= (ImageView) findViewById(R.id.part_caraddimage);
+        carName= (TextView) findViewById(R.id.part_carbrand);
         group= (RadioGroup) findViewById(R.id.part_rb);
         defaultrb= (RadioButton) findViewById(R.id.part_default);
         pricerb= (RadioButton) findViewById(R.id.part_moods);
@@ -118,6 +158,8 @@ public class ShopListActivity extends BaseActivity implements View.OnClickListen
             }
         });
 
+        group.check(R.id.part_default);
+
         group.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
@@ -129,16 +171,20 @@ public class ShopListActivity extends BaseActivity implements View.OnClickListen
         });
         pricerb.setOnClickListener(this);
         volume.setOnClickListener(this);
+        carLin.setOnClickListener(this);
         brand.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(ShopListActivity.this, BrandActivity.class);
-                if (comeFlag==1){
-                    intent.putExtra("comeFlag",1);
+                if (comeFlag == 1) {
+                    intent.putExtra("comeFlag", 1);
                     intent.putExtra("id", id);
-                }else if (comeFlag==2){
-                    intent.putExtra("type",type);
-                    intent.putExtra("comeFlag",2);
+                } else if (comeFlag == 2) {
+                    intent.putExtra("type", type);
+                    intent.putExtra("comeFlag", 2);
+                }else if(comeFlag==3){
+                    intent.putExtra("category", category);
+                    intent.putExtra("comeFlag", 3);
                 }
 
                 if (!ToosUtils.isStringEmpty(brandName)) {
@@ -147,7 +193,7 @@ public class ShopListActivity extends BaseActivity implements View.OnClickListen
                 startActivityForResult(intent, 1116);
             }
         });
-        group.check(R.id.part_default);
+
 
         title.setText("商品列表");
 
@@ -166,8 +212,21 @@ public class ShopListActivity extends BaseActivity implements View.OnClickListen
 
         });
         sort="0";
-//        getAdShop(1);
+        getAdShop(1);
 
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        MyCarEntity carEntity= MyApplication.getInstance().getCarEntity();
+        if (carEntity!=null){
+            bitmapUtils.display(carImage,carEntity.carBrandLogo);
+            carAddImage.setVisibility(View.GONE);
+            carName.setText(carEntity.carBrandName+carEntity.displacement+carEntity.productionDate);
+        }else{
+            HttpPostUtils.getMyCar(this, handler);
+        }
     }
 
     @Override
@@ -179,6 +238,16 @@ public class ShopListActivity extends BaseActivity implements View.OnClickListen
             brandName=data.getStringExtra("brandName");
             getAdShop(1);
         }
+
+        if (requestCode==1224 && resultCode== Activity.RESULT_OK){
+            MyCarEntity carEntity= MyApplication.getInstance().getCarEntity();
+            if (carEntity!=null){
+                bitmapUtils.display(carImage,carEntity.carBrandLogo);
+                carAddImage.setVisibility(View.GONE);
+                carName.setText(carEntity.carBrandName+carEntity.type+carEntity.displacement+carEntity.productionDate);
+            }
+            LogManager.LogShow("----------**&&", carEntity.toString(), LogManager.ERROR);
+        }
     }
 
     @Override
@@ -187,6 +256,15 @@ public class ShopListActivity extends BaseActivity implements View.OnClickListen
             case R.id.title_back:
                 finish();
                 break;
+
+            case R.id.part_carlin:
+                MyCarEntity carEntity= MyApplication.getInstance().getCarEntity();
+                if (carEntity==null){
+                    Intent intent2=new Intent(ShopListActivity.this, CarbrandActivity.class);
+                    startActivityForResult(intent2, 1224);
+                }else{
+
+                }
 
             case R.id.part_technology:
                 if ("11".equals(sort)){
@@ -255,22 +333,59 @@ public class ShopListActivity extends BaseActivity implements View.OnClickListen
         RequestParams rp = new RequestParams();
         HttpUtils utils = new HttpUtils();
         utils.configTimeout(20000);
-        rp.addBodyParameter("sort", sort);
-        if (ToosUtils.isStringEmpty(brandName)){
-            rp.addBodyParameter("brand","全部");
-        }else{
-            rp.addBodyParameter("brand",brandName);
-        }
-        rp.addBodyParameter("pageNo", pageNo + "");
         String url="advertisement/detail";
+        String sortWay="";
+        if (comeFlag==3){
+            switch (sort){
+                case "11":
+                    sortWay="4";
+                    break;
+                case "12":
+                    sortWay="5";
+                    break;
+                case "21":
+                    sortWay="2";
+                    break;
+                case "22":
+                    sortWay="3";
+                    break;
+            }
+            if (!ToosUtils.isStringEmpty(sort)){
+                rp.addBodyParameter("sortWay", sort);
+            }
+            rp.addBodyParameter("type", cattype);
+            MyCarEntity carEntity= MyApplication.getInstance().getCarEntity();
+            if (carEntity!=null) {
+                rp.addBodyParameter("carTypeId", carEntity.carTypeId);
+            }
+            rp.addBodyParameter("category", category);
 
-        if (comeFlag==1){
-            rp.addBodyParameter("id", id);
-            url="advertisement/detail";
-        }else if (comeFlag==2){
-            rp.addBodyParameter("type", type);
-            rp.addBodyParameter("carTypeId", "");
-            url="popularProject/findPopProjCommodity";
+            if (ToosUtils.isStringEmpty(brandName)){
+                rp.addBodyParameter("brand","全部");
+            }else{
+                rp.addBodyParameter("brand",brandName);
+            }
+            rp.addBodyParameter("pageNum", pageNo + "");
+            url="commodity/find";
+        }else{
+            rp.addBodyParameter("sort", sort);
+            if (ToosUtils.isStringEmpty(brandName)){
+                rp.addBodyParameter("brand","全部");
+            }else{
+                rp.addBodyParameter("brand",brandName);
+            }
+            rp.addBodyParameter("pageNo", pageNo + "");
+            if (comeFlag==1){
+                rp.addBodyParameter("id", id);
+                url="advertisement/detail";
+            }else if (comeFlag==2){
+                rp.addBodyParameter("type", type);
+                MyCarEntity carEntity= MyApplication.getInstance().getCarEntity();
+                if (carEntity!=null) {
+                    rp.addBodyParameter("carTypeId", carEntity.carTypeId);
+                }
+                url="popularProject/findPopProjCommodity";
+            }
         }
 
 

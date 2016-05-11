@@ -25,16 +25,20 @@ import com.gaicheyunxiu.gaiche.adapter.GalleryAdapter;
 import com.gaicheyunxiu.gaiche.model.AdEntity;
 import com.gaicheyunxiu.gaiche.model.AdState;
 import com.gaicheyunxiu.gaiche.model.CarTypeEntity;
+import com.gaicheyunxiu.gaiche.model.MyCarEntity;
 import com.gaicheyunxiu.gaiche.model.PersonDynamicEntity;
 import com.gaicheyunxiu.gaiche.model.ReturnState;
 import com.gaicheyunxiu.gaiche.utils.Constant;
 import com.gaicheyunxiu.gaiche.utils.DensityUtil;
+import com.gaicheyunxiu.gaiche.utils.HttpPostUtils;
 import com.gaicheyunxiu.gaiche.utils.LogManager;
+import com.gaicheyunxiu.gaiche.utils.MyApplication;
 import com.gaicheyunxiu.gaiche.utils.ShareDataTool;
 import com.gaicheyunxiu.gaiche.utils.ToastUtils;
 import com.gaicheyunxiu.gaiche.utils.ToosUtils;
 import com.gaicheyunxiu.gaiche.view.MyGallery;
 import com.google.gson.Gson;
+import com.lidroid.xutils.BitmapUtils;
 import com.lidroid.xutils.HttpUtils;
 import com.lidroid.xutils.exception.HttpException;
 import com.lidroid.xutils.http.RequestParams;
@@ -62,6 +66,12 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
 
     private View carLin;
 
+    private ImageView carImage;
+
+    private ImageView carAddImage;
+
+    private TextView carName;
+
     private FHomeGrallryAdapter adapter;
 
     private  int width;
@@ -84,6 +94,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
 
     private int screenWidth = 0;
 
+    private BitmapUtils bitmapUtils;
+
     private Handler handler = new Handler() {
         public void handleMessage(Message msg) {
             switch (msg.what) {
@@ -94,6 +106,14 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
                         gallery.setSelection(gallery.getFirstVisiblePosition() + 2);
                     }
                     break;
+                case HttpPostUtils.FIND_MYCAR:
+                    MyCarEntity carEntity=MyApplication.getInstance().getCarEntity();
+                    if (carEntity!=null){
+                        bitmapUtils.display(carImage,carEntity.carBrandLogo);
+                        carAddImage.setVisibility(View.GONE);
+                        carName.setText(carEntity.carBrandName+carEntity.displacement+carEntity.productionDate);
+                    }
+                    break;
             }
         };
     };
@@ -102,10 +122,14 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view=inflater.inflate(R.layout.fragment_home,container,false);
         code= (ImageView) view.findViewById(R.id.title_code);
+
         message= (ImageView) view.findViewById(R.id.title_message);
         title= (TextView) view.findViewById(R.id.title_text);
         gallery1= (MyGallery) view.findViewById(R.id.home_grally);
         carLin=view.findViewById(R.id.main_carlin);
+        carImage= (ImageView) view.findViewById(R.id.main_carimage);
+        carAddImage= (ImageView) view.findViewById(R.id.main_caraddimage);
+        carName= (TextView) view.findViewById(R.id.main_carbrand);
         shop= (ImageView) view.findViewById(R.id.home_shop);
         lin = (LinearLayout) view.findViewById(R.id.home_lin);
         gallery = (MyGallery) view.findViewById(R.id.gallery);
@@ -123,6 +147,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
         super.onActivityCreated(savedInstanceState);
         width= DensityUtil.getScreenWidth(getActivity());
         adapter=new FHomeGrallryAdapter(getActivity(),width);
+        bitmapUtils=new BitmapUtils(getActivity());
         gallery1.setAdapter(adapter);
         carLin.setOnClickListener(this);
         code.setOnClickListener(this);
@@ -163,6 +188,19 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        MyCarEntity carEntity=MyApplication.getInstance().getCarEntity();
+        if (carEntity!=null){
+            bitmapUtils.display(carImage,carEntity.carBrandLogo);
+            carAddImage.setVisibility(View.GONE);
+            carName.setText(carEntity.carBrandName+carEntity.displacement+carEntity.productionDate);
+        }else{
+            HttpPostUtils.getMyCar(getActivity(), handler);
+        }
+    }
+
+    @Override
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.title_code:
@@ -170,8 +208,14 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
                 startActivity(intent);
                 break;
             case R.id.main_carlin:
-                Intent intent2=new Intent(getActivity(), CarbrandActivity.class);
-                startActivityForResult(intent2, 1224);
+                MyCarEntity carEntity= MyApplication.getInstance().getCarEntity();
+                if (carEntity==null){
+                    Intent intent2=new Intent(getActivity(), CarbrandActivity.class);
+                    startActivityForResult(intent2, 1224);
+                }else{
+
+                }
+
                 break;
 
             case R.id.home_shop:
@@ -185,10 +229,19 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode==1224 && resultCode== Activity.RESULT_OK){
-            CarTypeEntity entity= (CarTypeEntity) data.getSerializableExtra("entity");
+            MyCarEntity carEntity= MyApplication.getInstance().getCarEntity();
+            if (carEntity!=null){
+                bitmapUtils.display(carImage,carEntity.carBrandLogo);
+                carAddImage.setVisibility(View.GONE);
+                carName.setText(carEntity.carBrandName+carEntity.type+carEntity.displacement+carEntity.productionDate);
+            }
+            LogManager.LogShow("----------**&&",carEntity.toString(),LogManager.ERROR);
         }
 
     }
+
+
+
 
 
     /**

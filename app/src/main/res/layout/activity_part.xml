@@ -22,16 +22,25 @@
         android:padding="10dp">
 
         <ImageView
+            android:id="@+id/part_carimage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@mipmap/main_car" />
+
+
+        <ImageView
+            android:id="@+id/part_caraddimage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:src="@mipmap/main_add" />
 
         <TextView
             android:id="@+id/part_carbrand"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginRight="10dp"
-            android:layout_marginLeft="10dp"
             android:layout_weight="1"
             android:text="添加我的爱车"
             android:textColor="#5F5D5D"

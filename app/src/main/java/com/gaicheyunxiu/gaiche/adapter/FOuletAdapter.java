@@ -2,6 +2,7 @@ package com.gaicheyunxiu.gaiche.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Handler;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -12,8 +13,11 @@ import android.widget.TextView;
 
 import com.gaicheyunxiu.gaiche.R;
 import com.gaicheyunxiu.gaiche.activity.SerchActivity;
+import com.gaicheyunxiu.gaiche.model.MyCarEntity;
 import com.gaicheyunxiu.gaiche.model.OuletHeadEntity;
 import com.gaicheyunxiu.gaiche.model.ShopEntity;
+import com.gaicheyunxiu.gaiche.utils.HttpPostUtils;
+import com.gaicheyunxiu.gaiche.utils.MyApplication;
 import com.gaicheyunxiu.gaiche.view.RatingBar;
 import com.lidroid.xutils.BitmapUtils;
 
@@ -32,10 +36,12 @@ public class FOuletAdapter extends BaseAdapter {
     private int type1 = 2;
     private BitmapUtils bitmapUtils;
     private OuletHeadEntity entity;
+    private Handler handler;
 
-    public FOuletAdapter(Context context, int width,List<ShopEntity> shopEntities,OuletHeadEntity entity) {
+    public FOuletAdapter(Context context, int width,List<ShopEntity> shopEntities,OuletHeadEntity entity,Handler handler) {
         this.context = context;
         this.width = width;
+        this.handler=handler;
         this.entity=entity;
         this.shopEntities=shopEntities;
         bitmapUtils=new BitmapUtils(context);
@@ -80,6 +86,9 @@ public class FOuletAdapter extends BaseAdapter {
                         null);
                 holder1 = new ViewHolder1();
                 holder1.brandlin = convertView.findViewById(R.id.foutlet_carlin);
+                holder1.carImage= (ImageView) convertView.findViewById(R.id.foutlet_carimage);
+                holder1.carAddImage= (ImageView) convertView.findViewById(R.id.foutlet_caraddimage);
+                holder1.carName= (TextView) convertView.findViewById(R.id.foutlet_carbrand);
                 holder1.brandtext = (TextView) convertView.findViewById(R.id.foutlet_carbrand);
                 holder1.payCode = (TextView) convertView.findViewById(R.id.foutlet_pay);
                 holder1.address = (TextView) convertView.findViewById(R.id.foutlet_address);
@@ -125,6 +134,15 @@ public class FOuletAdapter extends BaseAdapter {
                     context.startActivity(intent);
                 }
             });
+
+            MyCarEntity carEntity= MyApplication.getInstance().getCarEntity();
+            if (carEntity!=null){
+                bitmapUtils.display(holder1.carImage,carEntity.carBrandLogo);
+                holder1.carAddImage.setVisibility(View.GONE);
+                holder1.carName.setText(carEntity.carBrandName+carEntity.displacement+carEntity.productionDate);
+            }else{
+                HttpPostUtils.getMyCar(context, handler);
+            }
         }else{
             bitmapUtils.display(holder.imageView, shopEntities.get(position - 1).icon);
             holder.name.setText(shopEntities.get(position - 1).name);
@@ -141,6 +159,9 @@ public class FOuletAdapter extends BaseAdapter {
 
     class ViewHolder1 {
         public View brandlin;
+        public ImageView carImage;
+        public ImageView carAddImage;
+        public TextView carName;
         public TextView brandtext;
         public TextView payCode;
         public TextView address;

@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.gaicheyunxiu.gaiche.R;
 import com.gaicheyunxiu.gaiche.adapter.BrandAdapter;
 import com.gaicheyunxiu.gaiche.model.AdState;
+import com.gaicheyunxiu.gaiche.model.BrandCatyState;
 import com.gaicheyunxiu.gaiche.model.BrandEntity;
 import com.gaicheyunxiu.gaiche.model.BrandState;
 import com.gaicheyunxiu.gaiche.model.ReturnState;
@@ -51,10 +52,11 @@ public class BrandActivity extends BaseActivity implements View.OnClickListener 
 
     private String brandName;
 
-
     private int comeFlag;//1 代表广告 2 代表热门列表
 
     private String type;
+
+    private String category;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,6 +71,8 @@ public class BrandActivity extends BaseActivity implements View.OnClickListener 
             id=getIntent().getStringExtra("id");
         }else if(comeFlag==2){
             type=getIntent().getStringExtra("type");
+        }else if(comeFlag==3){
+            category=getIntent().getStringExtra("category");
         }
         brandName=getIntent().getStringExtra("name");
         entities=new ArrayList<>();
@@ -128,7 +132,12 @@ public class BrandActivity extends BaseActivity implements View.OnClickListener 
             rp.addBodyParameter("type", type);
             rp.addBodyParameter("carTypeId", "");
             url="popularProject/findPopProjBrands";
+        }else if (comeFlag==3){
+            rp.addBodyParameter("category", category);
+            url="commodity/getBrandByCategory";
         }
+        LogManager.LogShow("-----", Constant.ROOT_PATH + url+"?category="+category,
+                LogManager.ERROR);
         utils.configTimeout(20000);
         utils.send(HttpRequest.HttpMethod.POST, Constant.ROOT_PATH
                 + url, rp, new RequestCallBack<String>() {
@@ -154,13 +163,27 @@ public class BrandActivity extends BaseActivity implements View.OnClickListener 
                     if (Constant.RETURN_OK.equals(state.msg)) {
                         LogManager.LogShow("-----", arg0.result,
                                 LogManager.ERROR);
-                        BrandState brandState=gson.fromJson(arg0.result,BrandState.class);
-                        for (int i=0;i<brandState.result.size();i++){
-                            if (!ToosUtils.isStringEmpty(brandName) && brandName.equals(brandState.result.get(i).name)){
-                                brandState.result.get(i).isSel=true;
+                        if (comeFlag!=3){
+                            BrandState brandState=gson.fromJson(arg0.result,BrandState.class);
+                            for (int i=0;i<brandState.result.size();i++){
+                                if (!ToosUtils.isStringEmpty(brandName) && brandName.equals(brandState.result.get(i).name)){
+                                    brandState.result.get(i).isSel=true;
+                                }
+                                entities.add(brandState.result.get(i));
                             }
-                            entities.add(brandState.result.get(i));
+                        }else{
+                            BrandCatyState brandCatyState=gson.fromJson(arg0.result,BrandCatyState.class);
+                            for (int i=0;i<brandCatyState.result.size();i++){
+                                BrandEntity entity=new BrandEntity();
+                                entity.name=brandCatyState.result.get(i);
+                                if (!ToosUtils.isStringEmpty(brandName) && brandName.equals(brandCatyState.result.get(i))){
+                                    entity.isSel=true;
+                                }
+                                entities.add(entity);
+                            }
+
                         }
+
                         adapter.notifyDataSetChanged();
 
                     } else if (Constant.TOKEN_ERR.equals(state.msg)) {

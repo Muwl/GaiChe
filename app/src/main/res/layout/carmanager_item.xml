@@ -35,11 +35,16 @@
 
     </LinearLayout>
 
-    <ImageView
+
+    <CheckBox
+        android:id="@+id/carmanager_item_cb"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-         android:layout_marginLeft="5dp"
-        android:src="@mipmap/main_go"/>
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="10dp"
+        android:layout_marginRight="12dp"
+        android:layout_centerVertical="true"
+        android:button="@drawable/store_rb"/>
 
 
 </LinearLayout>

@@ -28,11 +28,13 @@
                 android:padding="10dp">
 
                 <ImageView
+                    android:id="@+id/main_carimage"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@mipmap/main_car" />
 
                 <ImageView
+                    android:id="@+id/main_caraddimage"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="8dp"

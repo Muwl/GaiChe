@@ -83,6 +83,8 @@ public class SeriesActivity extends BaseActivity implements View.OnClickListener
                 Intent intent = new Intent(SeriesActivity.this, VolumeActivity.class);
                 CarTypeEntity entity = new CarTypeEntity();
                 entity.carBrandName = brandEntity.name;
+                entity.carBrandLogo = brandEntity.logo;
+                entity.carBrandid = brandEntity.id;
                 SeriesModel model = (SeriesModel) adapter.getItem(position);
                 entity.productionPlace = model.key;
                 entity.type = model.seriesval;

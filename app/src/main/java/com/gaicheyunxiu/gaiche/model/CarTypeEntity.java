@@ -7,6 +7,8 @@ import java.io.Serializable;
  */
 public class CarTypeEntity implements Serializable {
     public String carBrandName;
+    public String carBrandLogo;
+    public String carBrandid;
     public String productionPlace;
     public String type;
     public String displacement;

@@ -1,7 +1,10 @@
 package com.gaicheyunxiu.gaiche.activity.fragment;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -12,10 +15,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.gaicheyunxiu.gaiche.R;
+import com.gaicheyunxiu.gaiche.activity.CarbrandActivity;
 import com.gaicheyunxiu.gaiche.activity.ShopListActivity;
 import com.gaicheyunxiu.gaiche.activity.SerchActivity;
 import com.gaicheyunxiu.gaiche.adapter.FOuletAdapter;
 import com.gaicheyunxiu.gaiche.adapter.FStoreAdapter;
+import com.gaicheyunxiu.gaiche.model.MyCarEntity;
 import com.gaicheyunxiu.gaiche.model.ReturnState;
 import com.gaicheyunxiu.gaiche.model.ShopState;
 import com.gaicheyunxiu.gaiche.model.ShopTypeChildState;
@@ -23,10 +28,13 @@ import com.gaicheyunxiu.gaiche.model.ShopTypeEntity;
 import com.gaicheyunxiu.gaiche.model.ShopTypeState;
 import com.gaicheyunxiu.gaiche.utils.Constant;
 import com.gaicheyunxiu.gaiche.utils.DensityUtil;
+import com.gaicheyunxiu.gaiche.utils.HttpPostUtils;
 import com.gaicheyunxiu.gaiche.utils.LogManager;
+import com.gaicheyunxiu.gaiche.utils.MyApplication;
 import com.gaicheyunxiu.gaiche.utils.ToastUtils;
 import com.gaicheyunxiu.gaiche.utils.ToosUtils;
 import com.google.gson.Gson;
+import com.lidroid.xutils.BitmapUtils;
 import com.lidroid.xutils.HttpUtils;
 import com.lidroid.xutils.exception.HttpException;
 import com.lidroid.xutils.http.RequestParams;
@@ -45,6 +53,12 @@ public class StoreFragment extends Fragment implements View.OnClickListener{
 
     private View brandlin;
 
+    private ImageView carImage;
+
+    private ImageView carAddImage;
+
+    private TextView carName;
+
     private ImageView brandImage;
 
     private TextView brandText;
@@ -61,6 +75,24 @@ public class StoreFragment extends Fragment implements View.OnClickListener{
 
     private List<ShopTypeEntity> entities;
 
+    private BitmapUtils bitmapUtils;
+
+
+    private Handler handler = new Handler() {
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case HttpPostUtils.FIND_MYCAR:
+                    MyCarEntity carEntity=MyApplication.getInstance().getCarEntity();
+                    if (carEntity!=null){
+                        bitmapUtils.display(carImage,carEntity.carBrandLogo);
+                        carAddImage.setVisibility(View.GONE);
+                        carName.setText(carEntity.carBrandName+carEntity.displacement+carEntity.productionDate);
+                    }
+                    break;
+            }
+        };
+    };
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -68,6 +100,9 @@ public class StoreFragment extends Fragment implements View.OnClickListener{
         title= (TextView) view.findViewById(R.id.title_text);
         view.findViewById(R.id.title_back).setVisibility(View.GONE);
         brandlin=view.findViewById(R.id.fstore_carlin);
+        carImage= (ImageView) view.findViewById(R.id.fstore_carimage);
+        carAddImage= (ImageView) view.findViewById(R.id.fstore_caraddimage);
+        carName= (TextView) view.findViewById(R.id.fstore_carbrand);
         brandText= (TextView) view.findViewById(R.id.fstore_carbrand);
         serch= (ImageView) view.findViewById(R.id.fstore_serch);
         serchText= (TextView) view.findViewById(R.id.fstore_serchtext);
@@ -80,29 +115,46 @@ public class StoreFragment extends Fragment implements View.OnClickListener{
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-
-
+        bitmapUtils=new BitmapUtils(getActivity());
         serchText.setOnClickListener(this);
-
-//        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-////                LogManager.LogShow("----","----"+position,LogManager.ERROR);
-//            }
-//        });
-
+        brandlin.setOnClickListener(this);
         listView.setGroupIndicator(null);
+        listView.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
+            @Override
+            public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
+                if (entities.get(groupPosition).childEntities==null){
+                    getShopType(entities.get(groupPosition).id,groupPosition);
+                    return true;
+                }
+                return false;
+            }
+        });
 
         listView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
             @Override
             public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
                 Intent intent = new Intent(getActivity(), ShopListActivity.class);
+                intent.putExtra("category",entities.get(groupPosition).name);
+                intent.putExtra("cattype",entities.get(groupPosition).childEntities.get(childPosition).name);
+                intent.putExtra("comeFlag",3);
                 startActivity(intent);
-
                 return true;
             }
         });
-        getShopType("-1",0);
+        getShopType("-1", 0);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        MyCarEntity carEntity=MyApplication.getInstance().getCarEntity();
+        if (carEntity!=null){
+            bitmapUtils.display(carImage,carEntity.carBrandLogo);
+            carAddImage.setVisibility(View.GONE);
+            carName.setText(carEntity.carBrandName+carEntity.displacement+carEntity.productionDate);
+        }else{
+            HttpPostUtils.getMyCar(getActivity(), handler);
+        }
     }
 
     @Override
@@ -112,9 +164,34 @@ public class StoreFragment extends Fragment implements View.OnClickListener{
                 Intent intent=new Intent(getActivity(), SerchActivity.class);
                 startActivity(intent);
                 break;
+
+            case R.id.fstore_carlin:
+                MyCarEntity carEntity= MyApplication.getInstance().getCarEntity();
+                if (carEntity==null){
+                    Intent intent2=new Intent(getActivity(), CarbrandActivity.class);
+                    startActivityForResult(intent2, 1224);
+                }else{
+
+                }
+
+                break;
         }
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode==1224 && resultCode== Activity.RESULT_OK){
+            MyCarEntity carEntity= MyApplication.getInstance().getCarEntity();
+            if (carEntity!=null){
+                bitmapUtils.display(carImage,carEntity.carBrandLogo);
+                carAddImage.setVisibility(View.GONE);
+                carName.setText(carEntity.carBrandName+carEntity.type+carEntity.displacement+carEntity.productionDate);
+            }
+            LogManager.LogShow("----------**&&",carEntity.toString(),LogManager.ERROR);
+        }
+
+    }
     /**
      * 查询所有商品分类
      */
@@ -156,6 +233,7 @@ public class StoreFragment extends Fragment implements View.OnClickListener{
                         }else{
                             ShopTypeChildState typeState=gson.fromJson(arg0.result,ShopTypeChildState.class);
                             entities.get(position).childEntities=typeState.result;
+                            listView.expandGroup(position);
                             adapter.notifyDataSetChanged();
                         }
 
