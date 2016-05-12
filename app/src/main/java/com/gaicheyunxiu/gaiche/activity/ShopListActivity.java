@@ -90,13 +90,19 @@ public class ShopListActivity extends BaseActivity implements View.OnClickListen
 
     private String type;
 
-    private int comeFlag;//1 代表广告 2 代表热门列表 3从商城直接进去商品列表
+    private int comeFlag;//1 代表广告 2 代表热门列表 3从商城直接进去商品列表 4从搜索列表进去的
 
     private String category;//商品类别
 
     private BitmapUtils bitmapUtils;
 
     private String cattype;//类型类型
+
+    private View serchView;
+
+    private TextView serchText;
+
+    private String keywords;
 
     private Handler handler = new Handler() {
         public void handleMessage(Message msg) {
@@ -119,6 +125,13 @@ public class ShopListActivity extends BaseActivity implements View.OnClickListen
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_part);
         initView();
+        if (comeFlag==4){
+            serchView.setVisibility(View.VISIBLE);
+            carLin.setVisibility(View.GONE);
+        }else{
+            serchView.setVisibility(View.GONE);
+            carLin.setVisibility(View.VISIBLE);
+        }
     }
 
     private void initView() {
@@ -130,6 +143,8 @@ public class ShopListActivity extends BaseActivity implements View.OnClickListen
         }else if(comeFlag==3){
             category=getIntent().getStringExtra("category");
             cattype=getIntent().getStringExtra("cattype");
+        }else if(comeFlag==4){
+            keywords=getIntent().getStringExtra("keywords");
         }
         bitmapUtils=new BitmapUtils(this);
         commodityEntityList=new ArrayList<>();
@@ -147,6 +162,10 @@ public class ShopListActivity extends BaseActivity implements View.OnClickListen
         brand= (TextView) findViewById(R.id.part_price);
         listView= (PullToRefreshListView) findViewById(R.id.part_lisview);
         pro=  findViewById(R.id.part_pro);
+        serchView=  findViewById(R.id.part_serchview);
+        serchText= (TextView) findViewById(R.id.part_serchtext);
+
+        serchView.setOnClickListener(this);
         back.setOnClickListener(this);
         adapter=new PartsAdapter(this,commodityEntityList);
         listView.setAdapter(adapter);
@@ -154,6 +173,7 @@ public class ShopListActivity extends BaseActivity implements View.OnClickListen
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(ShopListActivity.this, ShopDetailActivity.class);
+                intent.putExtra("id",commodityEntityList.get(position).id);
                 startActivity(intent);
             }
         });
@@ -266,6 +286,9 @@ public class ShopListActivity extends BaseActivity implements View.OnClickListen
 
                 }
 
+            case R.id.part_serchview:
+                    Intent intent2=new Intent(ShopListActivity.this, SerchActivity.class);
+                    startActivity(intent2);
             case R.id.part_technology:
                 if ("11".equals(sort)){
                     sort="12";
@@ -335,26 +358,27 @@ public class ShopListActivity extends BaseActivity implements View.OnClickListen
         utils.configTimeout(20000);
         String url="advertisement/detail";
         String sortWay="";
+        switch (sort){
+            case "11":
+                sortWay="4";
+                break;
+            case "12":
+                sortWay="5";
+                break;
+            case "21":
+                sortWay="2";
+                break;
+            case "22":
+                sortWay="3";
+                break;
+        }
+        MyCarEntity carEntity= MyApplication.getInstance().getCarEntity();
         if (comeFlag==3){
-            switch (sort){
-                case "11":
-                    sortWay="4";
-                    break;
-                case "12":
-                    sortWay="5";
-                    break;
-                case "21":
-                    sortWay="2";
-                    break;
-                case "22":
-                    sortWay="3";
-                    break;
-            }
             if (!ToosUtils.isStringEmpty(sort)){
                 rp.addBodyParameter("sortWay", sort);
             }
             rp.addBodyParameter("type", cattype);
-            MyCarEntity carEntity= MyApplication.getInstance().getCarEntity();
+
             if (carEntity!=null) {
                 rp.addBodyParameter("carTypeId", carEntity.carTypeId);
             }
@@ -367,11 +391,21 @@ public class ShopListActivity extends BaseActivity implements View.OnClickListen
             }
             rp.addBodyParameter("pageNum", pageNo + "");
             url="commodity/find";
+        }else if(comeFlag==4){
+            if (carEntity!=null) {
+                rp.addBodyParameter("carTypeId", carEntity.carTypeId);
+            }
+            rp.addBodyParameter("search", keywords);
+            if (!ToosUtils.isStringEmpty(sort)){
+                rp.addBodyParameter("sortWay", sort);
+            }
+            rp.addBodyParameter("pageNum", pageNo + "");
+            url="commodity/findByLike";
         }else{
             rp.addBodyParameter("sort", sort);
             if (ToosUtils.isStringEmpty(brandName)){
                 rp.addBodyParameter("brand","全部");
-            }else{
+            } else {
                 rp.addBodyParameter("brand",brandName);
             }
             rp.addBodyParameter("pageNo", pageNo + "");
@@ -380,7 +414,6 @@ public class ShopListActivity extends BaseActivity implements View.OnClickListen
                 url="advertisement/detail";
             }else if (comeFlag==2){
                 rp.addBodyParameter("type", type);
-                MyCarEntity carEntity= MyApplication.getInstance().getCarEntity();
                 if (carEntity!=null) {
                     rp.addBodyParameter("carTypeId", carEntity.carTypeId);
                 }

@@ -117,12 +117,12 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
             }
         };
     };
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view=inflater.inflate(R.layout.fragment_home,container,false);
         code= (ImageView) view.findViewById(R.id.title_code);
-
         message= (ImageView) view.findViewById(R.id.title_message);
         title= (TextView) view.findViewById(R.id.title_text);
         gallery1= (MyGallery) view.findViewById(R.id.home_grally);

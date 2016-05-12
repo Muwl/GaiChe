@@ -9,15 +9,22 @@
         android:id="@+id/serch_title"
         layout="@layout/activity_title"/>
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
+
+    <RelativeLayout
+        android:layout_width="0dp"
+        android:layout_weight="1"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:background="@drawable/serch_bg"
         android:layout_margin="10dp">
 
         <ImageView
-            android:id="@+id/serch_serch"
+            android:id="@+id/serch_serch1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingLeft="10dp"
@@ -43,7 +50,7 @@
         <EditText
             android:id="@+id/serch_text"
             android:layout_toLeftOf="@id/serch_cancel"
-            android:layout_toRightOf="@id/serch_serch"
+            android:layout_toRightOf="@id/serch_serch1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@color/write"
@@ -56,11 +63,37 @@
 
 
     </RelativeLayout>
+        <TextView
+            android:id="@+id/serch_serch"
+            android:text="搜索"
+            android:background="@drawable/serch_btn"
+            android:textSize="@dimen/second_font"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:gravity="center"
+            android:clickable="true"
+            android:textColor="#ED753A"
+            android:layout_margin="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent" />
 
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
     <ListView
         android:id="@+id/serch_listview"
         android:layout_width="match_parent"
         android:scrollbars="none"
         android:layout_height="wrap_content"/>
+
+        <include
+            android:id="@+id/serch_pro"
+            layout="@layout/pro"
+            android:visibility="gone"
+            />
+
+    </RelativeLayout>
 
 </LinearLayout>

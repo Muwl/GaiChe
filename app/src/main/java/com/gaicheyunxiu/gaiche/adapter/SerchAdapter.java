@@ -8,30 +8,34 @@ import android.widget.TextView;
 
 import com.gaicheyunxiu.gaiche.R;
 
+import java.util.List;
+
 /**
  * Created by Administrator on 2016/4/4.
  */
 public class SerchAdapter extends BaseAdapter {
 
     private Context context;
+    private List<String> strings;
 
-    public SerchAdapter(Context context) {
+    public SerchAdapter(Context context,List<String> strings) {
         this.context = context;
+        this.strings=strings;
     }
 
     @Override
     public int getCount() {
-        return 8;
+        return strings.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return null;
+        return strings.get(position);
     }
 
     @Override
     public long getItemId(int position) {
-        return 0;
+        return position;
     }
 
     @Override
@@ -45,6 +49,7 @@ public class SerchAdapter extends BaseAdapter {
         }else{
             holder= (ViewHolder) convertView.getTag();
         }
+        holder.name.setText(strings.get(position));
         return convertView;
     }
     class ViewHolder{

@@ -115,11 +115,11 @@ public class RatingBar extends LinearLayout {
      * @param starCount
      */
 
-    public void setStar(float starCount) {
+    public void setStar(double starCount) {
 
         //浮点数的整数部分
         int fint = (int) starCount;
-        BigDecimal b1 = new BigDecimal(Float.toString(starCount));
+        BigDecimal b1 = new BigDecimal(Double.toString(starCount));
         BigDecimal b2 = new BigDecimal(Integer.toString(fint));
         //浮点数的小数部分
         float fPoint = b1.subtract(b2).floatValue();

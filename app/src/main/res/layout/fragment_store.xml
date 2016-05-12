@@ -76,7 +76,7 @@
                 android:paddingRight="8dp"
                 android:src="@mipmap/store_serch"/>
 
-            <EditText
+            <TextView
                 android:id="@+id/fstore_serchtext"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
