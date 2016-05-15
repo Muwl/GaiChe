@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.gaicheyunxiu.gaiche.R;
 import com.gaicheyunxiu.gaiche.activity.SerchActivity;
+import com.gaicheyunxiu.gaiche.activity.fragment.OutletFragment;
 import com.gaicheyunxiu.gaiche.model.MyCarEntity;
 import com.gaicheyunxiu.gaiche.model.OuletHeadEntity;
 import com.gaicheyunxiu.gaiche.model.ShopEntity;
@@ -143,6 +144,62 @@ public class FOuletAdapter extends BaseAdapter {
             }else{
                 HttpPostUtils.getMyCar(context, handler);
             }
+
+            holder1.nearbay.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    handler.sendEmptyMessage(OutletFragment.NEAR_OULET);
+                }
+            });
+            holder1.maintainView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    handler.sendEmptyMessage(1446);
+                }
+            });
+            holder1.carwashView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    handler.sendEmptyMessage(1447);
+                }
+            });
+            holder1.bendksView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    handler.sendEmptyMessage(1448);
+                }
+            });
+            holder1.sprayView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    handler.sendEmptyMessage(1449);
+                }
+            });
+            holder1.buffingView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    handler.sendEmptyMessage(1450);
+                }
+            });
+            holder1.tyreView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    handler.sendEmptyMessage(1451);
+                }
+            });
+            holder1.batteryView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    handler.sendEmptyMessage(1452);
+                }
+            });
+            holder1.moreView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    handler.sendEmptyMessage(1453);
+                }
+            });
+
         }else{
             bitmapUtils.display(holder.imageView, shopEntities.get(position - 1).icon);
             holder.name.setText(shopEntities.get(position - 1).name);

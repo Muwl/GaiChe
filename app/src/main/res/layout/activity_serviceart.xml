@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/activity_bg"
+    android:orientation="vertical">
+
+    <include
+        android:id="@+id/serviceart_title"
+        layout="@layout/activity_title" />
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_marginTop="5dp"
+        android:background="@color/bottom_div" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+        <ScrollView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            android:fillViewport="true"
+            android:scrollbars="none">
+
+            <RadioGroup
+                android:id="@+id/serviceart_group"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <RadioButton
+                    android:id="@+id/serviceart_byrb"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/art_rb"
+                    android:button="@null"
+                    android:padding="8dp"
+                    android:singleLine="true"
+                    android:text="保养人工费"
+                    android:textColor="#5F5D5D"
+                    android:textSize="@dimen/second_font" />
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:background="@color/bottom_div" />
+
+                <RadioButton
+                    android:id="@+id/serviceart_xchrb"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/art_rb"
+                    android:button="@null"
+                    android:padding="8dp"
+                    android:singleLine="true"
+                    android:text="洗车服务"
+                    android:textColor="#5F5D5D"
+                    android:textSize="@dimen/second_font" />
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:background="@color/bottom_div" />
+
+                <RadioButton
+                    android:id="@+id/serviceart_mrrb"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/art_rb"
+                    android:button="@null"
+                    android:padding="8dp"
+                    android:singleLine="true"
+                    android:text="汽车美容"
+                    android:textColor="#5F5D5D"
+                    android:textSize="@dimen/second_font" />
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:background="@color/bottom_div" />
+
+                <RadioButton
+                    android:id="@+id/serviceart_pqrb"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/art_rb"
+                    android:button="@null"
+                    android:padding="8dp"
+                    android:singleLine="true"
+                    android:text="汽车喷漆"
+                    android:textColor="#5F5D5D"
+                    android:textSize="@dimen/second_font" />
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:background="@color/bottom_div" />
+
+                <RadioButton
+                    android:id="@+id/serviceart_ltrb"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/art_rb"
+                    android:button="@null"
+                    android:padding="8dp"
+                    android:singleLine="true"
+                    android:text="轮胎服务"
+                    android:textColor="#5F5D5D"
+                    android:textSize="@dimen/second_font" />
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:background="@color/bottom_div" />
+
+                <RadioButton
+                    android:id="@+id/serviceart_zhrb"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/art_rb"
+                    android:button="@null"
+                    android:padding="8dp"
+                    android:singleLine="true"
+                    android:text="汽车装潢"
+                    android:textColor="#5F5D5D"
+                    android:textSize="@dimen/second_font" />
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:background="@color/bottom_div" />
+
+                <RadioButton
+                    android:id="@+id/serviceart_gzrb"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/art_rb"
+                    android:button="@null"
+                    android:padding="8dp"
+                    android:singleLine="true"
+                    android:text="汽车改造"
+                    android:textColor="#5F5D5D"
+                    android:textSize="@dimen/second_font" />
+
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:background="@color/bottom_div" />
+
+                <RadioButton
+                    android:id="@+id/serviceart_qitarb"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/art_rb"
+                    android:button="@null"
+                    android:padding="8dp"
+                    android:singleLine="true"
+                    android:text="其他汽车服务"
+                    android:textColor="#5F5D5D"
+                    android:textSize="@dimen/second_font" />
+
+
+            </RadioGroup>
+
+        </ScrollView>
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@color/write"
+            android:layout_weight="3">
+
+            <ListView
+                android:id="@+id/serviceart_list"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scrollbars="none" />
+
+            <include
+                android:id="@+id/serviceart_pro"
+                layout="@layout/pro"
+                android:visibility="gone" />
+
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+
+</LinearLayout>

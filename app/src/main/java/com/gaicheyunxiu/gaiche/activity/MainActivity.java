@@ -12,6 +12,9 @@ import com.gaicheyunxiu.gaiche.activity.fragment.HomeFragment;
 import com.gaicheyunxiu.gaiche.activity.fragment.OutletFragment;
 import com.gaicheyunxiu.gaiche.activity.fragment.PersonFragment;
 import com.gaicheyunxiu.gaiche.activity.fragment.StoreFragment;
+import com.gaicheyunxiu.gaiche.utils.FileTool;
+
+import java.io.IOException;
 
 
 public class MainActivity extends BaseActivity {
@@ -35,6 +38,11 @@ public class MainActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        try {
+            FileTool.copyAssetFileToDatabase(this, "city.db","city.db");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         fMgr = getSupportFragmentManager();
         initFragment();
         home= (RadioButton) findViewById(R.id.main_bottom_home);

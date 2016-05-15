@@ -22,11 +22,16 @@ import com.gaicheyunxiu.gaiche.activity.CrowdFundActivity;
 import com.gaicheyunxiu.gaiche.activity.QRScanActivity;
 import com.gaicheyunxiu.gaiche.adapter.FHomeGrallryAdapter;
 import com.gaicheyunxiu.gaiche.adapter.GalleryAdapter;
+import com.gaicheyunxiu.gaiche.adapter.PartsAdapter;
 import com.gaicheyunxiu.gaiche.model.AdEntity;
 import com.gaicheyunxiu.gaiche.model.AdState;
 import com.gaicheyunxiu.gaiche.model.CarTypeEntity;
+import com.gaicheyunxiu.gaiche.model.CommodityEntity;
+import com.gaicheyunxiu.gaiche.model.CommodityState;
 import com.gaicheyunxiu.gaiche.model.MyCarEntity;
 import com.gaicheyunxiu.gaiche.model.PersonDynamicEntity;
+import com.gaicheyunxiu.gaiche.model.PopularCateEntity;
+import com.gaicheyunxiu.gaiche.model.PopularCateState;
 import com.gaicheyunxiu.gaiche.model.ReturnState;
 import com.gaicheyunxiu.gaiche.utils.Constant;
 import com.gaicheyunxiu.gaiche.utils.DensityUtil;
@@ -37,6 +42,7 @@ import com.gaicheyunxiu.gaiche.utils.ShareDataTool;
 import com.gaicheyunxiu.gaiche.utils.ToastUtils;
 import com.gaicheyunxiu.gaiche.utils.ToosUtils;
 import com.gaicheyunxiu.gaiche.view.MyGallery;
+import com.gaicheyunxiu.gaiche.view.MyListView;
 import com.google.gson.Gson;
 import com.lidroid.xutils.BitmapUtils;
 import com.lidroid.xutils.HttpUtils;
@@ -46,6 +52,7 @@ import com.lidroid.xutils.http.ResponseInfo;
 import com.lidroid.xutils.http.callback.RequestCallBack;
 import com.lidroid.xutils.http.client.HttpRequest;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -96,6 +103,23 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
 
     private BitmapUtils bitmapUtils;
 
+    private List<CommodityEntity> commodityEntities;
+
+    private PartsAdapter partsAdapter;
+
+    private View typeView;
+
+    private ImageView hotshop1View;
+
+    private ImageView hotshop2View;
+
+    private ImageView hotshop3View;
+
+    private ImageView hotshop4View;
+
+    private MyListView mylistView;
+
+
     private Handler handler = new Handler() {
         public void handleMessage(Message msg) {
             switch (msg.what) {
@@ -134,6 +158,12 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
         lin = (LinearLayout) view.findViewById(R.id.home_lin);
         gallery = (MyGallery) view.findViewById(R.id.gallery);
         galllin = (LinearLayout) view.findViewById(R.id.lin);
+        typeView =  view.findViewById(R.id.home_type);
+        hotshop1View = (ImageView) view.findViewById(R.id.home_hotshop1);
+        hotshop2View = (ImageView) view.findViewById(R.id.home_hotshop2);
+        hotshop3View = (ImageView) view.findViewById(R.id.home_hotshop3);
+        hotshop4View = (ImageView) view.findViewById(R.id.home_hotshop4);
+        mylistView = (MyListView) view.findViewById(R.id.home_mylist);
         code.setVisibility(View.VISIBLE);
         message.setVisibility(View.VISIBLE);
         view.findViewById(R.id.title_back).setVisibility(View.GONE);
@@ -146,9 +176,12 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         width= DensityUtil.getScreenWidth(getActivity());
+        commodityEntities=new ArrayList<>();
         adapter=new FHomeGrallryAdapter(getActivity(),width);
+        partsAdapter=new PartsAdapter(getActivity(),commodityEntities);
         bitmapUtils=new BitmapUtils(getActivity());
         gallery1.setAdapter(adapter);
+        mylistView.setAdapter(partsAdapter);
         carLin.setOnClickListener(this);
         code.setOnClickListener(this);
         shop.setOnClickListener(this);
@@ -184,6 +217,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
         });
 
         getAd();
+        getHotSale();
+        getpopularShop();
 
     }
 
@@ -337,4 +372,140 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
         };
         timer.schedule(task, 1000, 3000);
     }
+
+    /**
+     * 查询10款热销商品
+     */
+    private void getHotSale() {
+        RequestParams rp = new RequestParams();
+        HttpUtils utils = new HttpUtils();
+        utils.configTimeout(20000);
+       MyCarEntity carEntity= MyApplication.getInstance().getCarEntity();
+        if (carEntity!=null){
+            rp.addBodyParameter("carTypeId",carEntity.carTypeId);
+        }
+        if (!ToosUtils.isStringEmpty(ShareDataTool.getToken(getActivity()))){
+            rp.addBodyParameter("sign",ShareDataTool.getToken(getActivity()));
+        }
+
+        LogManager.LogShow("*********", Constant.ROOT_PATH
+                        + "commodity/hotsales",
+                LogManager.ERROR);
+        utils.send(HttpRequest.HttpMethod.POST, Constant.ROOT_PATH
+                + "commodity/hotsales", rp, new RequestCallBack<String>() {
+            @Override
+            public void onStart() {
+                super.onStart();
+            }
+
+            @Override
+            public void onFailure(HttpException arg0, String arg1) {
+//                ToastUtils.displayFailureToast(getActivity());
+            }
+
+            @Override
+            public void onSuccess(ResponseInfo<String> arg0) {
+                try {
+                    Gson gson = new Gson();
+                    ReturnState state = gson.fromJson(arg0.result,
+                            ReturnState.class);
+                    if (Constant.RETURN_OK.equals(state.msg)) {
+                        LogManager.LogShow("11111111111-----", arg0.result,
+                                LogManager.ERROR);
+                        CommodityState commodityState = gson.fromJson(arg0.result, CommodityState.class);
+                        if (commodityState.result != null && commodityState.result.size() > 0) {
+                            for (int i = 0; i < commodityState.result.size(); i++) {
+                                commodityEntities.add(commodityState.result.get(i));
+                            }
+                            partsAdapter.notifyDataSetChanged();
+                        }
+                    } else if (Constant.TOKEN_ERR.equals(state.msg)) {
+                        ToastUtils.displayShortToast(getActivity(),
+                                "验证错误，请重新登录");
+                        ToosUtils.goReLogin(getActivity());
+                    } else {
+                        ToastUtils.displayShortToast(getActivity(),
+                                (String) state.result);
+                    }
+                } catch (Exception e) {
+                    ToastUtils.displaySendFailureToast(getActivity());
+                }
+
+            }
+        });
+    }
+
+
+    /**
+     * 查询热门商品分类，用于APP首页，商城下方的版块。
+     */
+    private void getpopularShop() {
+        RequestParams rp = new RequestParams();
+        HttpUtils utils = new HttpUtils();
+        utils.configTimeout(20000);
+        LogManager.LogShow("*********", Constant.ROOT_PATH
+                        + "popularCategories/query",
+                LogManager.ERROR);
+        utils.send(HttpRequest.HttpMethod.POST, Constant.ROOT_PATH
+                + "popularCategories/query", rp, new RequestCallBack<String>() {
+            @Override
+            public void onStart() {
+                super.onStart();
+            }
+
+            @Override
+            public void onFailure(HttpException arg0, String arg1) {
+//                ToastUtils.displayFailureToast(getActivity());
+            }
+
+            @Override
+            public void onSuccess(ResponseInfo<String> arg0) {
+                try {
+                    Gson gson = new Gson();
+                    ReturnState state = gson.fromJson(arg0.result,
+                            ReturnState.class);
+                    LogManager.LogShow("2222222222-----", arg0.result,
+                            LogManager.ERROR);
+                    if (Constant.RETURN_OK.equals(state.msg)) {
+                        PopularCateState popularCateState=gson.fromJson(arg0.result, PopularCateState.class);
+                        List<PopularCateEntity> popularCateEntities=popularCateState.result;
+                        setPopValue(popularCateEntities);
+                    } else if (Constant.TOKEN_ERR.equals(state.msg)) {
+                        ToastUtils.displayShortToast(getActivity(),
+                                "验证错误，请重新登录");
+                        ToosUtils.goReLogin(getActivity());
+                    } else {
+                        ToastUtils.displayShortToast(getActivity(),
+                                (String) state.result);
+                    }
+                } catch (Exception e) {
+                    ToastUtils.displaySendFailureToast(getActivity());
+                }
+
+            }
+        });
+    }
+
+    private void setPopValue(List<PopularCateEntity> popularCateEntities){
+        if (popularCateEntities==null || popularCateEntities.size()==0){
+            return;
+        }
+        for (int i=0;i<popularCateEntities.size();i++){
+            switch (popularCateEntities.get(i).plateNo){
+                case "1":
+                    bitmapUtils.display(hotshop1View,popularCateEntities.get(i).image);
+                    break;
+                case "2":
+                    bitmapUtils.display(hotshop2View,popularCateEntities.get(i).image);
+                    break;
+                case "3":
+                    bitmapUtils.display(hotshop3View,popularCateEntities.get(i).image);
+                    break;
+                case "4":
+                    bitmapUtils.display(hotshop4View,popularCateEntities.get(i).image);
+                    break;
+            }
+        }
+    }
+
 }

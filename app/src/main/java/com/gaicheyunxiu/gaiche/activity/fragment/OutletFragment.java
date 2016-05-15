@@ -21,7 +21,9 @@ import com.baidu.location.LocationClientOption;
 import com.baidu.location.Poi;
 import com.baidu.mapapi.SDKInitializer;
 import com.gaicheyunxiu.gaiche.R;
+import com.gaicheyunxiu.gaiche.activity.OultSelActivity;
 import com.gaicheyunxiu.gaiche.activity.SerchActivity;
+import com.gaicheyunxiu.gaiche.activity.ServiceArtActivity;
 import com.gaicheyunxiu.gaiche.adapter.FOuletAdapter;
 import com.gaicheyunxiu.gaiche.model.AdState;
 import com.gaicheyunxiu.gaiche.model.MyCarEntity;
@@ -29,6 +31,8 @@ import com.gaicheyunxiu.gaiche.model.OuletHeadEntity;
 import com.gaicheyunxiu.gaiche.model.ReturnState;
 import com.gaicheyunxiu.gaiche.model.ShopEntity;
 import com.gaicheyunxiu.gaiche.model.ShopState;
+import com.gaicheyunxiu.gaiche.utils.CityDBUtils;
+import com.gaicheyunxiu.gaiche.utils.CityEntity;
 import com.gaicheyunxiu.gaiche.utils.Constant;
 import com.gaicheyunxiu.gaiche.utils.DensityUtil;
 import com.gaicheyunxiu.gaiche.utils.HttpPostUtils;
@@ -53,15 +57,28 @@ import java.util.List;
  */
 public class OutletFragment extends Fragment implements View.OnClickListener{
 
+    public static  final int NEAR_OULET=1226;
+    public static  final String BAOYANG_FLAG="f857fcd1926147609002a8d7e4049460";
+    public static  final String XICHE_FLAG="337c6822d3374b3aa9c46781b05e40f6";
+    public static  final String TIEMO_FLAG="16eca404d7b34acd8259f1c48a975d40";
+    public static  final String BANJIN_FLAG="21bfc5aee10642abb327a09bcb51737f";
+    public static  final String PAOGUANG_FLAG="6e106bce138b4b829a8151045c3aa883";
+    public static  final String LUOTAI_FLAG="9452b8cb8183456e81200de33782fc62";
+    public static  final String SILUN_FLAG="5ec60ac49579412fb77d3602b353f366";
+
     private TextView title;
 
     private View map;
+
+    private TextView cityView;
 
     private ListView listView;
 
     private FOuletAdapter adapter;
 
     private List<ShopEntity> entities;
+
+    private CityEntity cityEntity;
 
     private View pro;
     private OuletHeadEntity headEntity;
@@ -75,6 +92,67 @@ public class OutletFragment extends Fragment implements View.OnClickListener{
                 case HttpPostUtils.FIND_MYCAR:
                     adapter.notifyDataSetChanged();
                     break;
+                case NEAR_OULET:
+                    if (cityEntity==null){
+                        return;
+                    }
+                    Intent intent=new Intent(getActivity(), OultSelActivity.class);
+                    intent.putExtra("flag",2);
+                    intent.putExtra("city", cityEntity);
+                    startActivity(intent);
+                    break;
+                case 1446:
+                    Intent intent2=new Intent(getActivity(), OultSelActivity.class);
+                    intent2.putExtra("flag",3);
+                    intent2.putExtra("serviceId",BAOYANG_FLAG);
+                    startActivity(intent2);
+                    break;
+                case 1447:
+                    Intent intent3=new Intent(getActivity(), OultSelActivity.class);
+                    intent3.putExtra("flag",3);
+                    intent3.putExtra("serviceId",XICHE_FLAG);
+                    startActivity(intent3);
+                    break;
+                case 1448:
+                    Intent intent4=new Intent(getActivity(), OultSelActivity.class);
+                    intent4.putExtra("flag",3);
+                    intent4.putExtra("serviceId",TIEMO_FLAG);
+                    startActivity(intent4);
+                    break;
+                case 1449:
+                    Intent intent5=new Intent(getActivity(), OultSelActivity.class);
+                    intent5.putExtra("flag",3);
+                    intent5.putExtra("serviceId",BANJIN_FLAG);
+                    startActivity(intent5);
+                    break;
+                case 1450:
+                    Intent intent6=new Intent(getActivity(), OultSelActivity.class);
+                    intent6.putExtra("flag",3);
+                    intent6.putExtra("serviceId",PAOGUANG_FLAG);
+                    startActivity(intent6);
+                    break;
+                case 1451:
+                    Intent intent7=new Intent(getActivity(), OultSelActivity.class);
+                    intent7.putExtra("flag",3);
+                    intent7.putExtra("serviceId",LUOTAI_FLAG);
+                    startActivity(intent7);
+                    break;
+                case 1452:
+                    Intent intent8=new Intent(getActivity(), OultSelActivity.class);
+                    intent8.putExtra("flag",3);
+                    intent8.putExtra("serviceId",SILUN_FLAG);
+                    startActivity(intent8);
+                    break;
+                case 1453:
+                    Intent intent9=new Intent(getActivity(), ServiceArtActivity.class);
+                    startActivity(intent9);
+                    break;
+
+
+
+
+
+
             }
         };
     };
@@ -86,6 +164,7 @@ public class OutletFragment extends Fragment implements View.OnClickListener{
         title= (TextView) view.findViewById(R.id.title_text);
         view.findViewById(R.id.title_back).setVisibility(View.GONE);
         map=view.findViewById(R.id.title_map);
+        cityView= (TextView) view.findViewById(R.id.title_city);
         pro=view.findViewById(R.id.foutlet_pro);
         listView= (ListView) view.findViewById(R.id.foutlet_listview);
         title.setText("门店");
@@ -138,6 +217,11 @@ public class OutletFragment extends Fragment implements View.OnClickListener{
 
                 bdLocation = location;
                 headEntity.address=location.getAddrStr();
+                String city=location.getCity();
+                cityEntity= CityDBUtils.getCityIdFromName(getActivity(),city);
+                cityEntity.locallongitude=location.getLongitude();
+                cityEntity.locallatitude=location.getLatitude();
+                cityView.setText(city);
                 getHotShops();
                 mLocationClient.stop();
             }

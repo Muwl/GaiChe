@@ -232,7 +232,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="12dp"
                     android:layout_marginTop="6dp"
-                    android:text="商品编码：1223244"
                     android:textColor="#8B8B8C"
                     android:textSize="@dimen/second_font" />
 

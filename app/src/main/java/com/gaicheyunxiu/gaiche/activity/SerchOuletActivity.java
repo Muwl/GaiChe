@@ -3,16 +3,16 @@ package com.gaicheyunxiu.gaiche.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.gaicheyunxiu.gaiche.R;
-import com.gaicheyunxiu.gaiche.adapter.FSupportAdapter;
-import com.gaicheyunxiu.gaiche.adapter.FacialAdapter;
+import com.gaicheyunxiu.gaiche.adapter.SerchAdapter;
 import com.gaicheyunxiu.gaiche.model.ReturnState;
-import com.gaicheyunxiu.gaiche.model.SupportEntity;
-import com.gaicheyunxiu.gaiche.model.SupportState;
+import com.gaicheyunxiu.gaiche.model.SerchState;
 import com.gaicheyunxiu.gaiche.utils.Constant;
 import com.gaicheyunxiu.gaiche.utils.LogManager;
 import com.gaicheyunxiu.gaiche.utils.ToastUtils;
@@ -29,46 +29,62 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Administrator on 2016/3/27.
- * 养修项目
+ * Created by Administrator on 2016/4/4.
+ * 搜索门店页面
  */
-public class FSupportActivity extends BaseActivity  implements View.OnClickListener{
+public class SerchOuletActivity extends BaseActivity implements View.OnClickListener {
 
     private TextView title;
 
     private ImageView back;
 
+    private EditText textView;
+
+    private TextView serch;
+
+    private ImageView cancel;
+
     private ListView listView;
 
-    private TextView ok;
+    private SerchAdapter adapter;
 
     private View pro;
 
-    private FSupportAdapter adapter;
+    List<String> strings;
 
-    private List<SupportEntity> entities;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_support);
+        setContentView(R.layout.activity_serch);
         initView();
     }
 
     private void initView() {
         title= (TextView) findViewById(R.id.title_text);
         back= (ImageView) findViewById(R.id.title_back);
-        listView= (ListView) findViewById(R.id.fsupport_listview);
-        ok= (TextView) findViewById(R.id.fsupport_ok);
-        pro= findViewById(R.id.fsupport_pro);
-
-        entities=new ArrayList<>();
-        ok.setOnClickListener(this);
-        back.setOnClickListener(this);
-        title.setText("养修");
-        adapter=new FSupportAdapter(this,entities);
+        textView= (EditText) findViewById(R.id.serch_text);
+        serch= (TextView) findViewById(R.id.serch_serch);
+        cancel= (ImageView) findViewById(R.id.serch_cancel);
+        listView= (ListView) findViewById(R.id.serch_listview);
+        pro= findViewById(R.id.serch_pro);
+        strings=new ArrayList<>();
+        adapter=new SerchAdapter(this,strings);
         listView.setAdapter(adapter);
-        getSupport();
+        title.setText("搜索");
+        back.setOnClickListener(this);
+        serch.setOnClickListener(this);
+        cancel.setOnClickListener(this);
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent=new Intent(SerchOuletActivity.this,OultSelActivity.class);
+                intent.putExtra("flag",4);
+                intent.putExtra("keywords",strings.get(position));
+                startActivity(intent);
+            }
+        });
     }
 
     @Override
@@ -77,37 +93,26 @@ public class FSupportActivity extends BaseActivity  implements View.OnClickListe
             case R.id.title_back:
                 finish();
                 break;
-
-            case R.id.fsupport_ok:
-                StringBuffer id=new StringBuffer();
-                for (int i=0;i<entities.size();i++){
-                    if (entities.get(i).isSelect){
-                        id.append(entities.get(i).id);
-                    }
-                }
-
-                if (ToosUtils.isStringEmpty(id.toString())){
-                    ToastUtils.displayShortToast(FSupportActivity.this,"请选择养修项目！");
-                    return;
-                }
-                Intent intent=new Intent(FSupportActivity.this,ShopListActivity.class);
-                intent.putExtra("comeFlag",5);
-                intent.putExtra("id",id.toString());
-                startActivity(intent);
+            case R.id.serch_serch:
+                getShopKeyWords(ToosUtils.getTextContent(textView));
+                break;
+            case R.id.serch_cancel:
+                textView.setText("");
                 break;
         }
     }
 
 
     /**
-     * 查询所有品牌
+     * 根据商品id查询商品详情
      */
-    private void getSupport() {
+    private void getShopKeyWords(String keyword) {
         RequestParams rp = new RequestParams();
         HttpUtils utils = new HttpUtils();
+        rp.addBodyParameter("keyword", keyword);
         utils.configTimeout(20000);
         utils.send(HttpRequest.HttpMethod.POST, Constant.ROOT_PATH
-                + "maintenance/findMaintenance", rp, new RequestCallBack<String>() {
+                + "shop/findKeyword", rp, new RequestCallBack<String>() {
             @Override
             public void onStart() {
                 pro.setVisibility(View.VISIBLE);
@@ -117,34 +122,34 @@ public class FSupportActivity extends BaseActivity  implements View.OnClickListe
             @Override
             public void onFailure(HttpException arg0, String arg1) {
                 pro.setVisibility(View.GONE);
-                ToastUtils.displayFailureToast(FSupportActivity.this);
+                ToastUtils.displayFailureToast(SerchOuletActivity.this);
             }
 
             @Override
             public void onSuccess(ResponseInfo<String> arg0) {
                 pro.setVisibility(View.GONE);
+                LogManager.LogShow("-----", arg0.result + "=====",
+                        LogManager.ERROR);
                 try {
                     Gson gson = new Gson();
                     ReturnState state = gson.fromJson(arg0.result,
                             ReturnState.class);
                     if (Constant.RETURN_OK.equals(state.msg)) {
-                        LogManager.LogShow("-----", arg0.result,
-                                LogManager.ERROR);
-                        SupportState supportState=gson.fromJson(arg0.result,SupportState.class);
-                        for (int i=0;i<supportState.result.size();i++){
-                            entities.add(supportState.result.get(i));
+                        SerchState serchState=gson.fromJson(arg0.result,SerchState.class);
+                        for (int i=0;i<serchState.result.size();i++){
+                            strings.add(serchState.result.get(i));
                         }
                         adapter.notifyDataSetChanged();
                     } else if (Constant.TOKEN_ERR.equals(state.msg)) {
-                        ToastUtils.displayShortToast(FSupportActivity.this,
+                        ToastUtils.displayShortToast(SerchOuletActivity.this,
                                 "验证错误，请重新登录");
-                        ToosUtils.goReLogin(FSupportActivity.this);
+                        ToosUtils.goReLogin(SerchOuletActivity.this);
                     } else {
-                        ToastUtils.displayShortToast(FSupportActivity.this,
+                        ToastUtils.displayShortToast(SerchOuletActivity.this,
                                 (String) state.result);
                     }
                 } catch (Exception e) {
-                    ToastUtils.displaySendFailureToast(FSupportActivity.this);
+                    ToastUtils.displaySendFailureToast(SerchOuletActivity.this);
                 }
 
             }

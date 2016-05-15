@@ -64,7 +64,10 @@ public class FSupportAdapter extends BaseAdapter {
         holder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                entities.get(position).isSelect=isChecked;
+                if (buttonView.isPressed()){
+                    entities.get(position).isSelect=isChecked;
+                }
+
             }
         });
 

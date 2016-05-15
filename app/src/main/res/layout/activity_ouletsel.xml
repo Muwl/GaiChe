@@ -93,6 +93,30 @@
         />
     </RadioGroup>
 
+
+    <LinearLayout
+        android:id="@+id/ouletsel_serchview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:clickable="true"
+        android:visibility="gone"
+        android:background="@drawable/serch_bg"
+        android:gravity="center">
+        <TextView
+            android:id="@+id/ouletsel_serchtext"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="8dp"
+            android:drawablePadding="10dp"
+            android:textColor="#5F5D5D"
+            android:drawableLeft="@mipmap/store_serch"
+            android:textSize="@dimen/second_font"
+            />
+
+    </LinearLayout>
+
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="1px"

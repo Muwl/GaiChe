@@ -24,6 +24,7 @@ import com.gaicheyunxiu.gaiche.utils.Constant;
 import com.gaicheyunxiu.gaiche.utils.HttpPostUtils;
 import com.gaicheyunxiu.gaiche.utils.LogManager;
 import com.gaicheyunxiu.gaiche.utils.MyApplication;
+import com.gaicheyunxiu.gaiche.utils.ShareDataTool;
 import com.gaicheyunxiu.gaiche.utils.ToastUtils;
 import com.gaicheyunxiu.gaiche.utils.ToosUtils;
 import com.google.gson.Gson;
@@ -90,7 +91,7 @@ public class ShopListActivity extends BaseActivity implements View.OnClickListen
 
     private String type;
 
-    private int comeFlag;//1 代表广告 2 代表热门列表 3从商城直接进去商品列表 4从搜索列表进去的
+    private int comeFlag;//1 代表广告 2 代表热门列表 3从商城直接进去商品列表 4从搜索列表进去的 5从养修页面进入
 
     private String category;//商品类别
 
@@ -103,6 +104,8 @@ public class ShopListActivity extends BaseActivity implements View.OnClickListen
     private TextView serchText;
 
     private String keywords;
+
+    private String supportIds;
 
     private Handler handler = new Handler() {
         public void handleMessage(Message msg) {
@@ -145,6 +148,8 @@ public class ShopListActivity extends BaseActivity implements View.OnClickListen
             cattype=getIntent().getStringExtra("cattype");
         }else if(comeFlag==4){
             keywords=getIntent().getStringExtra("keywords");
+        }else if(comeFlag==5){
+            supportIds=getIntent().getStringExtra("id");
         }
         bitmapUtils=new BitmapUtils(this);
         commodityEntityList=new ArrayList<>();
@@ -205,6 +210,9 @@ public class ShopListActivity extends BaseActivity implements View.OnClickListen
                 }else if(comeFlag==3){
                     intent.putExtra("category", category);
                     intent.putExtra("comeFlag", 3);
+                }else if(comeFlag==5){
+                    intent.putExtra("comeFlag",5);
+                    intent.putExtra("ids",supportIds);
                 }
 
                 if (!ToosUtils.isStringEmpty(brandName)) {
@@ -418,10 +426,19 @@ public class ShopListActivity extends BaseActivity implements View.OnClickListen
                     rp.addBodyParameter("carTypeId", carEntity.carTypeId);
                 }
                 url="popularProject/findPopProjCommodity";
+            }else if(comeFlag==5){
+                if (carEntity!=null) {
+                    rp.addBodyParameter("carTypeId", carEntity.carTypeId);
+                }
+                rp.addBodyParameter("ids", supportIds);
+                url="maintenance/findAllMaceComm";
             }
+
         }
 
-
+        if (!ToosUtils.isStringEmpty(ShareDataTool.getToken(this))){
+            rp.addBodyParameter("sign",ShareDataTool.getToken(this));
+        }
         utils.send(HttpRequest.HttpMethod.POST, Constant.ROOT_PATH
                 + url, rp, new RequestCallBack<String>() {
             @Override

@@ -15,16 +15,22 @@ import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
 import com.gaicheyunxiu.gaiche.R;
+import com.gaicheyunxiu.gaiche.activity.fragment.OutletFragment;
 import com.gaicheyunxiu.gaiche.adapter.OuletSelAdapter;
+import com.gaicheyunxiu.gaiche.model.CarTypeEntity;
 import com.gaicheyunxiu.gaiche.model.CommodityState;
+import com.gaicheyunxiu.gaiche.model.MyCarEntity;
 import com.gaicheyunxiu.gaiche.model.OueSelState;
 import com.gaicheyunxiu.gaiche.model.OuletHeadEntity;
 import com.gaicheyunxiu.gaiche.model.OutSelEntity;
 import com.gaicheyunxiu.gaiche.model.ReturnState;
+import com.gaicheyunxiu.gaiche.utils.CityDBUtils;
+import com.gaicheyunxiu.gaiche.utils.CityEntity;
 import com.gaicheyunxiu.gaiche.utils.Constant;
 import com.gaicheyunxiu.gaiche.utils.DensityUtil;
 import com.gaicheyunxiu.gaiche.utils.LocalUtils;
 import com.gaicheyunxiu.gaiche.utils.LogManager;
+import com.gaicheyunxiu.gaiche.utils.MyApplication;
 import com.gaicheyunxiu.gaiche.utils.ToastUtils;
 import com.gaicheyunxiu.gaiche.utils.ToosUtils;
 import com.google.gson.Gson;
@@ -49,6 +55,8 @@ public class OultSelActivity extends BaseActivity implements View.OnClickListene
     private ImageView back;
 
     private TextView title;
+
+    private TextView titleMap;
 
     private View map;
 
@@ -80,9 +88,19 @@ public class OultSelActivity extends BaseActivity implements View.OnClickListene
 
     private View pro;
 
-    private int flag;//0代表首页进去 1代表从美容进入
+    private int flag;//0代表首页进去 1代表从美容进入 //2附近门店// 3服务项目  //4搜索门店
 
     private BDLocation bdLocation = null;
+
+    private CityEntity cityEntity;
+
+    private String serviceId;
+
+    private String keyword;
+
+    private View serchView;
+
+    private TextView serchText;
 
     private Handler handler = new Handler() {
         @Override
@@ -90,6 +108,11 @@ public class OultSelActivity extends BaseActivity implements View.OnClickListene
             switch (msg.what) {
                 case LocalUtils.LOCAT_OK:
                     bdLocation = (BDLocation) msg.obj;
+                    String city=bdLocation.getCity();
+                    titleMap.setText(city);
+                    cityEntity= CityDBUtils.getCityIdFromName(OultSelActivity.this, city);
+                    cityEntity.locallongitude=bdLocation.getLongitude();
+                    cityEntity.locallatitude=bdLocation.getLatitude();
                     getOulet(1);
                     break;
             }
@@ -103,27 +126,37 @@ public class OultSelActivity extends BaseActivity implements View.OnClickListene
         setContentView(R.layout.activity_ouletsel);
         width = DensityUtil.getScreenWidth(this);
         initView();
+
+        if (flag==4){
+            serchView.setVisibility(View.VISIBLE);
+            group.setVisibility(View.GONE);
+
+        }else{
+            serchView.setVisibility(View.GONE);
+            group.setVisibility(View.VISIBLE);
+        }
     }
 
     private void initView() {
         flag = getIntent().getIntExtra("flag", 0);
-        if (flag == 1) {
-            serviceIds = getIntent().getStringExtra("ids");
-        }
         back = (ImageView) findViewById(R.id.title_back);
         title = (TextView) findViewById(R.id.title_text);
+        titleMap = (TextView) findViewById(R.id.title_city);
         map = findViewById(R.id.title_map);
+        title.setText("选择门店");
         group = (RadioGroup) findViewById(R.id.ouletsel_rb);
         rdefault = (RadioButton) findViewById(R.id.ouletsel_default);
         moods = (RadioButton) findViewById(R.id.ouletsel_moods);
         technology = (RadioButton) findViewById(R.id.ouletsel_technology);
         price = (RadioButton) findViewById(R.id.ouletsel_price);
         listView = (PullToRefreshListView) findViewById(R.id.ouletsel_list);
+        serchView=  findViewById(R.id.ouletsel_serchview);
+        serchText= (TextView) findViewById(R.id.ouletsel_serchtext);
         pro = findViewById(R.id.ouletsel_pro);
 
         back.setOnClickListener(this);
         entities = new ArrayList<>();
-        title.setText("选择门店");
+
         map.setVisibility(View.VISIBLE);
         map.setOnClickListener(this);
         adapter = new OuletSelAdapter(this, entities, width);
@@ -134,10 +167,52 @@ public class OultSelActivity extends BaseActivity implements View.OnClickListene
         technology.setOnClickListener(this);
         price.setOnClickListener(this);
         sort = "0";
-        LocalUtils localUtils = new LocalUtils(this, handler);
-        localUtils.startLocation();
 
 
+
+        if (flag == 1) {
+            LocalUtils localUtils = new LocalUtils(this, handler);
+            serviceIds = getIntent().getStringExtra("ids");
+            localUtils.startLocation();
+        }else if(flag==2){
+            cityEntity= (CityEntity) getIntent().getSerializableExtra("city");
+            title.setText("附近门店");
+            price.setVisibility(View.GONE);
+            titleMap.setText(cityEntity.name);
+            getOulet(1);
+        }else if(flag==4){
+            keyword=getIntent().getStringExtra("keywords");
+            LocalUtils localUtils = new LocalUtils(this, handler);
+            serchText.setText(keyword);
+            localUtils.startLocation();
+        }else if(flag==3){
+            LocalUtils localUtils = new LocalUtils(this, handler);
+            serviceId=getIntent().getStringExtra("serviceId");
+            localUtils.startLocation();
+            switch (serviceId){
+                case   OutletFragment.BAOYANG_FLAG:
+                    title.setText("保养安装");
+                    break;
+                case   OutletFragment.XICHE_FLAG:
+                    title.setText("普通洗车");
+                    break;
+                case   OutletFragment.TIEMO_FLAG:
+                    title.setText("贴膜");
+                    break;
+                case   OutletFragment.BANJIN_FLAG:
+                    title.setText("钣金喷漆");
+                    break;
+                case   OutletFragment.PAOGUANG_FLAG:
+                    title.setText("抛光封釉");
+                    break;
+                case   OutletFragment.LUOTAI_FLAG:
+                    title.setText("轮胎修补");
+                    break;
+                case   OutletFragment.SILUN_FLAG:
+                    title.setText("四轮定位");
+                    break;
+            }
+        }
         group.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
@@ -266,19 +341,51 @@ public class OultSelActivity extends BaseActivity implements View.OnClickListene
         RequestParams rp = new RequestParams();
         HttpUtils utils = new HttpUtils();
         utils.configTimeout(20000);
-        rp.addBodyParameter("sort", sort);
-        rp.addBodyParameter("carTypeId", "1");
-        rp.addBodyParameter("pageNo", pageNo + "");
-        rp.addBodyParameter("longitude", String.valueOf(bdLocation.getLongitude()));
-        rp.addBodyParameter("latitude", String.valueOf(bdLocation.getLatitude()));
+        MyCarEntity myCarEntity= MyApplication.getInstance().getCarEntity();
         String url = "service/shop";
         if (flag == 1) {
+            rp.addBodyParameter("sort", sort);
+            if (myCarEntity!=null){
+                rp.addBodyParameter("carTypeId", myCarEntity.carTypeId);
+            }
+            rp.addBodyParameter("pageNo", pageNo + "");
+            rp.addBodyParameter("longitude", String.valueOf(bdLocation.getLongitude()));
+            rp.addBodyParameter("latitude", String.valueOf(bdLocation.getLatitude()));
             rp.addBodyParameter("serviceIds", serviceIds);
-            LogManager.LogShow("-----", serviceIds,
-                    LogManager.ERROR);
+            LogManager.LogShow("-----", serviceIds, LogManager.ERROR);
             url = "service/shop";
+        }else if (flag==2){
+            rp.addBodyParameter("longitude",String.valueOf(cityEntity.locallongitude));
+            rp.addBodyParameter("latitude", String.valueOf(cityEntity.locallatitude));
+            rp.addBodyParameter("cityId", cityEntity.id);
+            if (myCarEntity!=null){
+                rp.addBodyParameter("carTypeId", myCarEntity.carTypeId);
+            }
+            rp.addBodyParameter("pageNo", pageNo+"");
+            url = "shop/nearShop";
+        }else if(flag==3){
+            rp.addBodyParameter("longitude", String.valueOf(bdLocation.getLongitude()));
+            rp.addBodyParameter("latitude", String.valueOf(bdLocation.getLatitude()));
+            rp.addBodyParameter("serviceId", serviceId);
+            rp.addBodyParameter("pageNo", pageNo + "");
+            if (myCarEntity!=null){
+                rp.addBodyParameter("carTypeId", myCarEntity.carTypeId);
+            }
+            rp.addBodyParameter("cityId", cityEntity.id);
+            url = "shop/findByService";
+        }else if (flag==4){
+            rp.addBodyParameter("longitude", String.valueOf(bdLocation.getLongitude()));
+            rp.addBodyParameter("keyword", keyword);
+            rp.addBodyParameter("latitude", String.valueOf(bdLocation.getLatitude()));
+            rp.addBodyParameter("pageNo", pageNo + "");
+            if (myCarEntity!=null){
+                rp.addBodyParameter("carTypeId", myCarEntity.carTypeId);
+            }
+            rp.addBodyParameter("cityId", cityEntity.id);
+            url = "shop/search";
         }
-
+        LogManager.LogShow("-----", Constant.ROOT_PATH + url+"?longitude="+String.valueOf(bdLocation.getLongitude())+"&latitude="+ String.valueOf(bdLocation.getLatitude())+"&",
+                LogManager.ERROR);
         utils.send(HttpRequest.HttpMethod.POST, Constant.ROOT_PATH
                 + url, rp, new RequestCallBack<String>() {
             @Override

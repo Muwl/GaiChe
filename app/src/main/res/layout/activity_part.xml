@@ -67,7 +67,6 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:padding="8dp"
-            android:text="安慰"
             android:drawablePadding="10dp"
             android:textColor="#5F5D5D"
             android:drawableLeft="@mipmap/store_serch"

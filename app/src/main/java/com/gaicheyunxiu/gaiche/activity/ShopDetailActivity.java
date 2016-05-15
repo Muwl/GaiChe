@@ -256,7 +256,7 @@ public class ShopDetailActivity extends BaseActivity implements View.OnClickList
         HttpUtils utils = new HttpUtils();
         rp.addBodyParameter("commodityId", id);
         utils.configTimeout(20000);
-        LogManager.LogShow("-----", Constant.ROOT_PATH + "commodityEvaluation/findByCommodityId" + id,
+        LogManager.LogShow("-----", Constant.ROOT_PATH + "commodityEvaluation/findByCommodityId?commodityId=" + id,
                 LogManager.ERROR);
         utils.send(HttpRequest.HttpMethod.POST, Constant.ROOT_PATH
                 + "commodityEvaluation/findByCommodityId", rp, new RequestCallBack<String>() {

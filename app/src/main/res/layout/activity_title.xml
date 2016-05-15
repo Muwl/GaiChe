@@ -80,11 +80,13 @@
             android:clickable="true"
             />
         <TextView
+            android:id="@+id/title_city"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_alignParentRight="true"
             android:gravity="center"
-            android:text="北京"
+            android:text=""
+            android:maxLength="2"
             android:textColor="@color/title_text"
             android:layout_marginRight="10dp"
             android:layout_marginTop="10dp"

@@ -14,9 +14,11 @@ import com.gaicheyunxiu.gaiche.model.AdState;
 import com.gaicheyunxiu.gaiche.model.BrandCatyState;
 import com.gaicheyunxiu.gaiche.model.BrandEntity;
 import com.gaicheyunxiu.gaiche.model.BrandState;
+import com.gaicheyunxiu.gaiche.model.MyCarEntity;
 import com.gaicheyunxiu.gaiche.model.ReturnState;
 import com.gaicheyunxiu.gaiche.utils.Constant;
 import com.gaicheyunxiu.gaiche.utils.LogManager;
+import com.gaicheyunxiu.gaiche.utils.MyApplication;
 import com.gaicheyunxiu.gaiche.utils.ToastUtils;
 import com.gaicheyunxiu.gaiche.utils.ToosUtils;
 import com.google.gson.Gson;
@@ -52,11 +54,13 @@ public class BrandActivity extends BaseActivity implements View.OnClickListener 
 
     private String brandName;
 
-    private int comeFlag;//1 代表广告 2 代表热门列表
+    private int comeFlag;//1 代表广告 2 代表热门列表 5代表养修品牌
 
     private String type;
 
     private String category;
+
+    private String supportIds;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,6 +77,8 @@ public class BrandActivity extends BaseActivity implements View.OnClickListener 
             type=getIntent().getStringExtra("type");
         }else if(comeFlag==3){
             category=getIntent().getStringExtra("category");
+        }else if(comeFlag==5){
+            supportIds=getIntent().getStringExtra("ids");
         }
         brandName=getIntent().getStringExtra("name");
         entities=new ArrayList<>();
@@ -125,16 +131,26 @@ public class BrandActivity extends BaseActivity implements View.OnClickListener 
         RequestParams rp = new RequestParams();
         HttpUtils utils = new HttpUtils();
         String url="advertisement/getBrands";
+        MyCarEntity carEntity= MyApplication.getInstance().getCarEntity();
         if (comeFlag==1){
             rp.addBodyParameter("id", id);
             url="advertisement/getBrands";
         }else if (comeFlag==2){
             rp.addBodyParameter("type", type);
-            rp.addBodyParameter("carTypeId", "");
+            if (carEntity!=null){
+                rp.addBodyParameter("carTypeId", carEntity.carTypeId);
+            }
+
             url="popularProject/findPopProjBrands";
         }else if (comeFlag==3){
             rp.addBodyParameter("category", category);
             url="commodity/getBrandByCategory";
+        }else if(comeFlag==5){
+            if (carEntity!=null){
+                rp.addBodyParameter("carTypeId", carEntity.carTypeId);
+            }
+            rp.addBodyParameter("ids", supportIds);
+            url="maintenance/findBrands";
         }
         LogManager.LogShow("-----", Constant.ROOT_PATH + url+"?category="+category,
                 LogManager.ERROR);
