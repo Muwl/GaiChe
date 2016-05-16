@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -22,6 +23,7 @@ import com.baidu.location.Poi;
 import com.baidu.mapapi.SDKInitializer;
 import com.gaicheyunxiu.gaiche.R;
 import com.gaicheyunxiu.gaiche.activity.OultSelActivity;
+import com.gaicheyunxiu.gaiche.activity.OutletDetailActivity;
 import com.gaicheyunxiu.gaiche.activity.SerchActivity;
 import com.gaicheyunxiu.gaiche.activity.ServiceArtActivity;
 import com.gaicheyunxiu.gaiche.adapter.FOuletAdapter;
@@ -55,16 +57,16 @@ import java.util.List;
 /**
  * Created by Administrator on 2015/12/19.
  */
-public class OutletFragment extends Fragment implements View.OnClickListener{
+public class OutletFragment extends Fragment implements View.OnClickListener {
 
-    public static  final int NEAR_OULET=1226;
-    public static  final String BAOYANG_FLAG="f857fcd1926147609002a8d7e4049460";
-    public static  final String XICHE_FLAG="337c6822d3374b3aa9c46781b05e40f6";
-    public static  final String TIEMO_FLAG="16eca404d7b34acd8259f1c48a975d40";
-    public static  final String BANJIN_FLAG="21bfc5aee10642abb327a09bcb51737f";
-    public static  final String PAOGUANG_FLAG="6e106bce138b4b829a8151045c3aa883";
-    public static  final String LUOTAI_FLAG="9452b8cb8183456e81200de33782fc62";
-    public static  final String SILUN_FLAG="5ec60ac49579412fb77d3602b353f366";
+    public static final int NEAR_OULET = 1226;
+    public static final String BAOYANG_FLAG = "f857fcd1926147609002a8d7e4049460";
+    public static final String XICHE_FLAG = "337c6822d3374b3aa9c46781b05e40f6";
+    public static final String TIEMO_FLAG = "16eca404d7b34acd8259f1c48a975d40";
+    public static final String BANJIN_FLAG = "21bfc5aee10642abb327a09bcb51737f";
+    public static final String PAOGUANG_FLAG = "6e106bce138b4b829a8151045c3aa883";
+    public static final String LUOTAI_FLAG = "9452b8cb8183456e81200de33782fc62";
+    public static final String SILUN_FLAG = "5ec60ac49579412fb77d3602b353f366";
 
     private TextView title;
 
@@ -93,80 +95,78 @@ public class OutletFragment extends Fragment implements View.OnClickListener{
                     adapter.notifyDataSetChanged();
                     break;
                 case NEAR_OULET:
-                    if (cityEntity==null){
+                    if (cityEntity == null) {
                         return;
                     }
-                    Intent intent=new Intent(getActivity(), OultSelActivity.class);
-                    intent.putExtra("flag",2);
+                    Intent intent = new Intent(getActivity(), OultSelActivity.class);
+                    intent.putExtra("flag", 2);
                     intent.putExtra("city", cityEntity);
                     startActivity(intent);
                     break;
                 case 1446:
-                    Intent intent2=new Intent(getActivity(), OultSelActivity.class);
-                    intent2.putExtra("flag",3);
-                    intent2.putExtra("serviceId",BAOYANG_FLAG);
+                    Intent intent2 = new Intent(getActivity(), OultSelActivity.class);
+                    intent2.putExtra("flag", 3);
+                    intent2.putExtra("serviceId", BAOYANG_FLAG);
                     startActivity(intent2);
                     break;
                 case 1447:
-                    Intent intent3=new Intent(getActivity(), OultSelActivity.class);
-                    intent3.putExtra("flag",3);
-                    intent3.putExtra("serviceId",XICHE_FLAG);
+                    Intent intent3 = new Intent(getActivity(), OultSelActivity.class);
+                    intent3.putExtra("flag", 3);
+                    intent3.putExtra("serviceId", XICHE_FLAG);
                     startActivity(intent3);
                     break;
                 case 1448:
-                    Intent intent4=new Intent(getActivity(), OultSelActivity.class);
-                    intent4.putExtra("flag",3);
-                    intent4.putExtra("serviceId",TIEMO_FLAG);
+                    Intent intent4 = new Intent(getActivity(), OultSelActivity.class);
+                    intent4.putExtra("flag", 3);
+                    intent4.putExtra("serviceId", TIEMO_FLAG);
                     startActivity(intent4);
                     break;
                 case 1449:
-                    Intent intent5=new Intent(getActivity(), OultSelActivity.class);
-                    intent5.putExtra("flag",3);
-                    intent5.putExtra("serviceId",BANJIN_FLAG);
+                    Intent intent5 = new Intent(getActivity(), OultSelActivity.class);
+                    intent5.putExtra("flag", 3);
+                    intent5.putExtra("serviceId", BANJIN_FLAG);
                     startActivity(intent5);
                     break;
                 case 1450:
-                    Intent intent6=new Intent(getActivity(), OultSelActivity.class);
-                    intent6.putExtra("flag",3);
-                    intent6.putExtra("serviceId",PAOGUANG_FLAG);
+                    Intent intent6 = new Intent(getActivity(), OultSelActivity.class);
+                    intent6.putExtra("flag", 3);
+                    intent6.putExtra("serviceId", PAOGUANG_FLAG);
                     startActivity(intent6);
                     break;
                 case 1451:
-                    Intent intent7=new Intent(getActivity(), OultSelActivity.class);
-                    intent7.putExtra("flag",3);
-                    intent7.putExtra("serviceId",LUOTAI_FLAG);
+                    Intent intent7 = new Intent(getActivity(), OultSelActivity.class);
+                    intent7.putExtra("flag", 3);
+                    intent7.putExtra("serviceId", LUOTAI_FLAG);
                     startActivity(intent7);
                     break;
                 case 1452:
-                    Intent intent8=new Intent(getActivity(), OultSelActivity.class);
-                    intent8.putExtra("flag",3);
-                    intent8.putExtra("serviceId",SILUN_FLAG);
+                    Intent intent8 = new Intent(getActivity(), OultSelActivity.class);
+                    intent8.putExtra("flag", 3);
+                    intent8.putExtra("serviceId", SILUN_FLAG);
                     startActivity(intent8);
                     break;
                 case 1453:
-                    Intent intent9=new Intent(getActivity(), ServiceArtActivity.class);
+                    Intent intent9 = new Intent(getActivity(), ServiceArtActivity.class);
                     startActivity(intent9);
                     break;
 
 
-
-
-
-
             }
-        };
+        }
+
+        ;
     };
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view=inflater.inflate(R.layout.fragment_outlet,container,false);
-        title= (TextView) view.findViewById(R.id.title_text);
+        View view = inflater.inflate(R.layout.fragment_outlet, container, false);
+        title = (TextView) view.findViewById(R.id.title_text);
         view.findViewById(R.id.title_back).setVisibility(View.GONE);
-        map=view.findViewById(R.id.title_map);
-        cityView= (TextView) view.findViewById(R.id.title_city);
-        pro=view.findViewById(R.id.foutlet_pro);
-        listView= (ListView) view.findViewById(R.id.foutlet_listview);
+        map = view.findViewById(R.id.title_map);
+        cityView = (TextView) view.findViewById(R.id.title_city);
+        pro = view.findViewById(R.id.foutlet_pro);
+        listView = (ListView) view.findViewById(R.id.foutlet_listview);
         title.setText("门店");
         return view;
 
@@ -175,28 +175,40 @@ public class OutletFragment extends Fragment implements View.OnClickListener{
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        headEntity=new OuletHeadEntity();
+        headEntity = new OuletHeadEntity();
         map.setVisibility(View.VISIBLE);
         mLocationClient = new LocationClient(getActivity().getApplicationContext());     //声明LocationClient类
         mLocationClient.registerLocationListener(myListener);    //注册监听函数
         initLocation();
         mLocationClient.start();
 
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                LogManager.LogShow("--------------", "00000000000000000000000", LogManager.ERROR);
+                if (position > 0) {
+                    Intent intent = new Intent(getActivity(), OutletDetailActivity.class);
+                    intent.putExtra("shopId",entities.get(position-1).id);
+                    startActivity(intent);
+                }
+            }
+        });
+
     }
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
 
         }
     }
 
-    private void initLocation(){
+    private void initLocation() {
         LocationClientOption option = new LocationClientOption();
         option.setLocationMode(LocationClientOption.LocationMode.Hight_Accuracy
         );//可选，默认高精度，设置定位模式，高精度，低功耗，仅设备
         option.setCoorType("bd09ll");//可选，默认gcj02，设置返回的定位结果坐标系
-        int span=1000;
+        int span = 1000;
         option.setScanSpan(span);//可选，默认0，即仅定位一次，设置发起定位请求的间隔需要大于等于1000ms才是有效的
         option.setIsNeedAddress(true);//可选，设置是否需要地址信息，默认不需要
         option.setOpenGps(true);//可选，默认false,设置是否使用gps
@@ -213,14 +225,14 @@ public class OutletFragment extends Fragment implements View.OnClickListener{
 
         @Override
         public void onReceiveLocation(BDLocation location) {
-            if (location!=null){
+            if (location != null) {
 
                 bdLocation = location;
-                headEntity.address=location.getAddrStr();
-                String city=location.getCity();
-                cityEntity= CityDBUtils.getCityIdFromName(getActivity(),city);
-                cityEntity.locallongitude=location.getLongitude();
-                cityEntity.locallatitude=location.getLatitude();
+                headEntity.address = location.getAddrStr();
+                String city = location.getCity();
+                cityEntity = CityDBUtils.getCityIdFromName(getActivity(), city);
+                cityEntity.locallongitude = location.getLongitude();
+                cityEntity.locallatitude = location.getLatitude();
                 cityView.setText(city);
                 getHotShops();
                 mLocationClient.stop();
@@ -243,12 +255,12 @@ public class OutletFragment extends Fragment implements View.OnClickListener{
         RequestParams rp = new RequestParams();
         HttpUtils utils = new HttpUtils();
         utils.configTimeout(20000);
-        MyCarEntity carEntity=MyApplication.getInstance().getCarEntity();
-        if (carEntity!=null){
-            rp.addBodyParameter("carTypeId",carEntity.carTypeId);
+        MyCarEntity carEntity = MyApplication.getInstance().getCarEntity();
+        if (carEntity != null) {
+            rp.addBodyParameter("carTypeId", carEntity.carTypeId);
         }
-        rp.addBodyParameter("longitude",String.valueOf(bdLocation.getLongitude()));
-        rp.addBodyParameter("latitude",String.valueOf(bdLocation.getLongitude()));
+        rp.addBodyParameter("longitude", String.valueOf(bdLocation.getLongitude()));
+        rp.addBodyParameter("latitude", String.valueOf(bdLocation.getLongitude()));
         utils.send(HttpRequest.HttpMethod.POST, Constant.ROOT_PATH
                 + "shop/hotShops", rp, new RequestCallBack<String>() {
             @Override
@@ -274,9 +286,9 @@ public class OutletFragment extends Fragment implements View.OnClickListener{
                     if (Constant.RETURN_OK.equals(state.msg)) {
                         LogManager.LogShow("-----++++", arg0.result,
                                 LogManager.ERROR);
-                        ShopState shopState=gson.fromJson(arg0.result,ShopState.class);
-                        entities=shopState.result;
-                        adapter=new FOuletAdapter(getActivity(), DensityUtil.getScreenWidth(getActivity()),entities,headEntity,handler);
+                        ShopState shopState = gson.fromJson(arg0.result, ShopState.class);
+                        entities = shopState.result;
+                        adapter = new FOuletAdapter(getActivity(), DensityUtil.getScreenWidth(getActivity()), entities, headEntity, handler);
                         listView.setAdapter(adapter);
                     } else if (Constant.TOKEN_ERR.equals(state.msg)) {
                         ToastUtils.displayShortToast(getActivity(),
@@ -291,5 +303,6 @@ public class OutletFragment extends Fragment implements View.OnClickListener{
                 }
 
             }
-        });}
+        });
+    }
 }

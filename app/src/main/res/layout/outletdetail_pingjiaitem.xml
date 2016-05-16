@@ -7,7 +7,7 @@
     android:gravity="center_vertical"
     android:orientation="vertical">
 
-    <LinearLayout xmlns:hedgehog="http://schemas.android.com/apk/res-auto"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/item_bg"
@@ -57,7 +57,8 @@
                 android:id="@+id/outletdetail_pjitem_bar"
                 style="@style/foodRatingBar"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="28dp"
+                android:gravity="center"
                 android:layout_marginTop="5dp"
                 android:clickable="true"
                 android:rating="5"

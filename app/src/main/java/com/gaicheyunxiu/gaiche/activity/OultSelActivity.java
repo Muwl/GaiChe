@@ -182,8 +182,8 @@ public class OultSelActivity extends BaseActivity implements View.OnClickListene
             getOulet(1);
         }else if(flag==4){
             keyword=getIntent().getStringExtra("keywords");
-            LocalUtils localUtils = new LocalUtils(this, handler);
             serchText.setText(keyword);
+            LocalUtils localUtils = new LocalUtils(this, handler);
             localUtils.startLocation();
         }else if(flag==3){
             LocalUtils localUtils = new LocalUtils(this, handler);

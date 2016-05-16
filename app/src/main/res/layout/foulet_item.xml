@@ -16,7 +16,7 @@
         android:src="@color/bottom_div"
         />
 
-    <CheckBox
+    <ImageView
         android:id="@+id/foutlet_item_go"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -24,7 +24,7 @@
         android:layout_marginBottom="10dp"
         android:layout_marginRight="12dp"
         android:layout_centerVertical="true"
-        android:button="@mipmap/main_go"/>
+        android:src="@mipmap/main_go"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -66,6 +66,9 @@
                 hedgehog:starEmpty="@mipmap/ratbar_normal"
                 hedgehog:starFill="@mipmap/ratbar_checked"
                 android:layout_gravity="center"
+                android:focusable="false"
+                android:isIndicator="false"
+                hedgehog:clickable="false"
                 hedgehog:starImageSize="18dp"
                 android:id="@+id/foutlet_item_bar">
             </com.gaicheyunxiu.gaiche.view.RatingBar>
