@@ -384,8 +384,6 @@ public class OultSelActivity extends BaseActivity implements View.OnClickListene
             rp.addBodyParameter("cityId", cityEntity.id);
             url = "shop/search";
         }
-        LogManager.LogShow("-----", Constant.ROOT_PATH + url+"?longitude="+String.valueOf(bdLocation.getLongitude())+"&latitude="+ String.valueOf(bdLocation.getLatitude())+"&",
-                LogManager.ERROR);
         utils.send(HttpRequest.HttpMethod.POST, Constant.ROOT_PATH
                 + url, rp, new RequestCallBack<String>() {
             @Override

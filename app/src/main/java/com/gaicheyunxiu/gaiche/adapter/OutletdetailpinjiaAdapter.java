@@ -8,8 +8,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.gaicheyunxiu.gaiche.R;
+import com.gaicheyunxiu.gaiche.model.ShopEvaluationEntity;
+import com.gaicheyunxiu.gaiche.model.ShopServiceEntity;
 import com.gaicheyunxiu.gaiche.view.RatingBar;
 import com.lidroid.xutils.BitmapUtils;
+
+import java.util.List;
 
 /**
  * Created by Administrator on 2016/5/16.
@@ -18,24 +22,26 @@ public class OutletdetailpinjiaAdapter extends BaseAdapter{
 
     private Context context;
     private BitmapUtils bitmapUtils;
-    public OutletdetailpinjiaAdapter(Context context) {
+    private List<ShopEvaluationEntity> entities;
+    public OutletdetailpinjiaAdapter(Context context,List<ShopEvaluationEntity> entities) {
         this.context = context;
         bitmapUtils=new BitmapUtils(context);
+        this.entities=entities;
     }
 
     @Override
     public int getCount() {
-        return 4;
+        return entities.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return null;
+        return entities.get(position);
     }
 
     @Override
     public long getItemId(int position) {
-        return 0;
+        return position;
     }
 
     @Override
@@ -54,6 +60,13 @@ public class OutletdetailpinjiaAdapter extends BaseAdapter{
         }else{
             holder= (ViewHolder) convertView.getTag();
         }
+
+        bitmapUtils.display(holder.iconView, entities.get(position).userIcon);
+        holder.noView.setText(entities.get(position).name);
+        holder.timeView.setText(entities.get(position).createDate);
+        holder.barView.setStar(Double.parseDouble(entities.get(position).star));
+        holder.pingjiaView.setText("服务："+entities.get(position).serviceScore+"\u3000"+"技术："+entities.get(position).technologyScore+"\u3000"+"环境："+entities.get(position).environmentScore);
+        holder.contentView.setText(entities.get(position).content);
         return convertView;
     }
 

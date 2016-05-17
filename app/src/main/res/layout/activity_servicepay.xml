@@ -88,7 +88,6 @@
                 <TextView
                     android:id="@+id/service_pay_phone"
                     android:layout_width="wrap_content"
-                    android:layout_weight="1"
                     android:layout_marginLeft="8dp"
                     android:textSize="@dimen/second_font"
                     android:textColor="#5F5D5D"

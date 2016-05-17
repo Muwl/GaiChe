@@ -44,7 +44,7 @@
             android:padding="8dp"
             android:src="@mipmap/incream"/>
 
-        <EditText
+        <TextView
             android:id="@+id/outletdetail_seritem_num"
             android:layout_width="23dp"
             android:layout_height="23dp"

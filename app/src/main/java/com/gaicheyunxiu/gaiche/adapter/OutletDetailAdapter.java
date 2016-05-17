@@ -8,8 +8,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.gaicheyunxiu.gaiche.R;
+import com.gaicheyunxiu.gaiche.model.OuletEvaluaEntity;
 import com.gaicheyunxiu.gaiche.view.RatingBar;
 import com.lidroid.xutils.BitmapUtils;
+
+import java.util.List;
 
 /**
  * Created by Administrator on 2016/5/16.
@@ -17,25 +20,27 @@ import com.lidroid.xutils.BitmapUtils;
 public class OutletDetailAdapter extends BaseAdapter{
     private Context context;
     private BitmapUtils bitmapUtils;
+    private List<OuletEvaluaEntity> entities;
 
-    public OutletDetailAdapter(Context context) {
+    public OutletDetailAdapter(Context context,List<OuletEvaluaEntity> entities) {
         this.context = context;
+        this.entities=entities;
         bitmapUtils=new BitmapUtils(context);
     }
 
     @Override
     public int getCount() {
-        return 4;
+        return entities.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return null;
+        return entities.get(position);
     }
 
     @Override
     public long getItemId(int position) {
-        return 0;
+        return position;
     }
 
     @Override
@@ -52,8 +57,10 @@ public class OutletDetailAdapter extends BaseAdapter{
         }else{
             holder= (ViewHolder) convertView.getTag();
         }
-
-
+        bitmapUtils.display(holder.iconView,entities.get(position).userIcon );
+        holder.noView.setText(entities.get(position).name);
+        holder.barView.setStar(Double.parseDouble(entities.get(position).environmentScore));
+        holder.contentView.setText(entities.get(position).content);
         return convertView;
     }
     class ViewHolder{
