@@ -63,8 +63,14 @@ public class ShipaddressActivity extends BaseActivity implements View.OnClickLis
             super.handleMessage(msg);
             switch (msg.what){
                 case CustomeDialog.RET_OK:
-                    int position=msg.what;
-                    delAddress(position);
+                    int position=msg.arg1;
+                    int flag=msg.arg2;
+                    if (flag==-1){
+                        delAddress(position);
+                    }else if (flag==-2){
+                        updateAddress(position);
+                    }
+
                     break;
             }
         }
@@ -103,7 +109,7 @@ public class ShipaddressActivity extends BaseActivity implements View.OnClickLis
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
                 if (!adapter.getDatas().get(i).isDefault()){
-                    CustomeDialog dialog = new CustomeDialog(ShipaddressActivity.this, handler,"确定要修改此地址为默认地址",-1,-1);
+                    CustomeDialog dialog = new CustomeDialog(ShipaddressActivity.this, handler,"确定要修改此地址为默认地址",i,-2);
                 }
                 return true;
             }
@@ -127,7 +133,7 @@ public class ShipaddressActivity extends BaseActivity implements View.OnClickLis
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (resultCode!=RESULT_OK){
+        if (resultCode==RESULT_OK){
             List<AddressVo> addressVos=adapter.getDatas();
             AddressVo addressVo= (AddressVo) data.getSerializableExtra("entity");
             for (int i=0;i<addressVos.size();i++){
@@ -240,6 +246,80 @@ public class ShipaddressActivity extends BaseActivity implements View.OnClickLis
                                         "验证错误，请重新登录");
                                 ToosUtils.goReLogin(ShipaddressActivity.this);
                             }else {
+                                ToastUtils.displayShortToast(
+                                        ShipaddressActivity.this,
+                                        (String) state.result);
+                            }
+                        } catch (Exception e) {
+                            ToastUtils
+                                    .displaySendFailureToast(ShipaddressActivity.this);
+                        }
+
+                    }
+                });
+
+    }
+
+
+    /**
+     * 删除收货地址
+     */
+    private void updateAddress(final int position) {
+        List<AddressVo> addressVos =adapter.getDatas();
+        String oldId="";
+        for (int i=0;i<addressVos.size();i++){
+            if (addressVos.get(i).isDefault()){
+                oldId=addressVos.get(i).getId();
+            }
+        }
+        RequestParams rp = new RequestParams();
+        rp.addBodyParameter("sign", ShareDataTool.getToken(ShipaddressActivity.this));
+        rp.addBodyParameter("id", adapter.getDatas().get(position).getId());
+        if (!ToosUtils.isStringEmpty(oldId)){
+            rp.addBodyParameter("oldId", oldId);
+        }
+        HttpUtils utils = new HttpUtils();
+        utils.configTimeout(20000);
+        utils.send(HttpRequest.HttpMethod.POST, Constant.ROOT_PATH + "address/isDefault",
+                rp, new RequestCallBack<String>() {
+                    @Override
+                    public void onStart() {
+                        super.onStart();
+                        pro.setVisibility(View.VISIBLE);
+                    }
+
+                    @Override
+                    public void onFailure(HttpException arg0, String arg1) {
+                        pro.setVisibility(View.GONE);
+                        ToastUtils.displayFailureToast(ShipaddressActivity.this);
+                    }
+
+                    @Override
+                    public void onSuccess(ResponseInfo<String> arg0) {
+                        pro.setVisibility(View.GONE);
+                        try {
+                            Gson gson = new Gson();
+                            LogManager.LogShow("-----------", arg0.result,
+                                    LogManager.ERROR);
+                            ReturnState state = gson.fromJson(arg0.result,
+                                    ReturnState.class);
+                            if (Constant.RETURN_OK.equals(state.msg)) {
+                                List<AddressVo> addressVos =adapter.getDatas();
+                                for (int i=0;i<addressVos.size();i++){
+                                    if (addressVos.get(i).getId().equals(adapter.getDatas().get(position).getId())){
+                                        addressVos.get(i).setIsDefault(true);
+                                    }else{
+                                        addressVos.get(i).setIsDefault(false);
+                                    }
+                                }
+                                adapter.notifyDataSetChanged();
+                                ToastUtils.displayShortToast(ShipaddressActivity.this,
+                                        "删除成功！");
+                            } else if (Constant.TOKEN_ERR.equals(state.msg)) {
+                                ToastUtils.displayShortToast(ShipaddressActivity.this,
+                                        "验证错误，请重新登录");
+                                ToosUtils.goReLogin(ShipaddressActivity.this);
+                            } else {
                                 ToastUtils.displayShortToast(
                                         ShipaddressActivity.this,
                                         (String) state.result);

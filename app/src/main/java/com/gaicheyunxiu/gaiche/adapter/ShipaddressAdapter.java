@@ -51,7 +51,12 @@ public class ShipaddressAdapter extends BaseDataAdapter<AddressVo> {
         }
         holder.name.setText(data.get(position).getName());
         holder.phone.setText(data.get(position).getMobile());
-        holder.address.setText(data.get(position).getProvince()+data.get(position).getCity()+data.get(position).getDistrict()+data.get(position).getAddress());
+        holder.address.setText(data.get(position).getProvince() + data.get(position).getCity() + data.get(position).getDistrict() + data.get(position).getAddress());
+        if (data.get(position).isDefault()){
+            holder.imageView.setImageResource(R.mipmap.address_select);
+        }else{
+            holder.imageView.setImageResource(R.mipmap.address_noselect);
+        }
 
         holder.del.setOnClickListener(new View.OnClickListener() {
             @Override
