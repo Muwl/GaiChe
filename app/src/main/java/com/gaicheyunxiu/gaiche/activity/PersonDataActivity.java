@@ -170,7 +170,7 @@ public class PersonDataActivity extends BaseActivity implements View.OnClickList
                     break;
                 case PHONE_RESULT:
                     String phoneStr=data.getStringExtra("phone");
-                    name.setText(phoneStr);
+                    phone.setText(phoneStr);
                     break;
 
                 case CONTENT_WITH_DATA:

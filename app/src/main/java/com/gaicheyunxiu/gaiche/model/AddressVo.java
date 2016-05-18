@@ -7,16 +7,16 @@ import java.io.Serializable;
  * 地址实体
  */
 public class AddressVo implements Serializable{
-   private  String id;
-    private String userId;
-    private String name;
-    private String mobile;
-    private String phone;
-    private String province;
-    private String city;
-    private String district;
-    private String address;
-    private boolean isDefault;
+    public  String id;
+    public String userId;
+    public String name;
+    public String mobile;
+    public String phone;
+    public String province;
+    public String city;
+    public String district;
+    public String address;
+    public  boolean isDefault;
 
     public String getId() {
         return id;

@@ -319,6 +319,13 @@
 
     </ScrollView>
 
+
+        <include
+            android:id="@+id/servicepay_pro"
+            layout="@layout/pro"
+            android:visibility="gone"
+            />
+
     </RelativeLayout>
 
 </LinearLayout>

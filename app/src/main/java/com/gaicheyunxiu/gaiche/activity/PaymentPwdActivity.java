@@ -1,5 +1,6 @@
 package com.gaicheyunxiu.gaiche.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.view.View;
@@ -71,7 +72,7 @@ public class PaymentPwdActivity extends BaseActivity implements View.OnClickList
         title.setText("修改支付密码");
         getCode.setOnClickListener(this);
         submit.setOnClickListener(this);
-
+        phone.setText(ShareDataTool.getRegiterEntity(this).mobile);
     }
 
     @Override
@@ -210,12 +211,13 @@ public class PaymentPwdActivity extends BaseActivity implements View.OnClickList
      */
     private void UpdateUserInfo() {
         RequestParams rp = new RequestParams();
-        rp.addBodyParameter("token", ShareDataTool.getToken(this));
+        rp.addBodyParameter("sign", ShareDataTool.getToken(this));
         rp.addBodyParameter("username",ToosUtils.getTextContent(phone));
-        rp.addBodyParameter("password", ToosUtils.getTextContent(pwd));
+        rp.addBodyParameter("payPassword", ToosUtils.getTextContent(pwd));
         rp.addBodyParameter("authCode", ToosUtils.getTextContent(code));
         HttpUtils utils = new HttpUtils();
         utils.configTimeout(20000);
+//        LogManager.LogShow("-------",Constant.ROOT_PATH + "user/operationPayPwd");
         utils.send(HttpRequest.HttpMethod.POST, Constant.ROOT_PATH
                 + "user/operationPayPwd", rp, new RequestCallBack<String>() {
             @Override
@@ -241,6 +243,8 @@ public class PaymentPwdActivity extends BaseActivity implements View.OnClickList
                         LogManager.LogShow("-----", arg0.result,
                                 LogManager.ERROR);
                         ToastUtils.displayShortToast(PaymentPwdActivity.this, "修改成功");
+                        Intent intent=new Intent();
+                        setResult(RESULT_OK,intent);
                         finish();
                     } else if (Constant.TOKEN_ERR.equals(state.msg)) {
                         ToastUtils.displayShortToast(PaymentPwdActivity.this,

@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Handler;
+import android.os.Message;
 import android.util.DisplayMetrics;
 import android.view.Gravity;
 import android.view.View;
@@ -30,11 +31,13 @@ public class BrandDelDialog implements OnClickListener {
 	private Handler handler;
 	private TextView del;
 	private TextView cancel;
+	private int position;
 
-	public BrandDelDialog(final Context context, Handler handler) {
+	public BrandDelDialog(final Context context, Handler handler,int position) {
 		super();
 		this.context = context;
 		this.handler = handler;
+		this.position=position;
 		d = new Dialog(context);
 		d.requestWindowFeature(Window.FEATURE_NO_TITLE);
 		view = View.inflate(context, R.layout.brand_del_dialog, null);
@@ -89,7 +92,10 @@ public class BrandDelDialog implements OnClickListener {
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.brand_del_ok:
-			handler.sendEmptyMessage(44);
+			Message message=new Message();
+			message.what=89;
+			message.arg1=position;
+			handler.sendMessage(message);
 			d.dismiss();
 			break;
 		case R.id.brand_del_cancel:

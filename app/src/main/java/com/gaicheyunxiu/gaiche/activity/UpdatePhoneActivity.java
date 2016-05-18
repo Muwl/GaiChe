@@ -35,7 +35,7 @@ public class UpdatePhoneActivity extends  BaseActivity implements View.OnClickLi
 
     private TextView title;
 
-    private TextView oldPhone;
+    private EditText oldPhone;
 
     private EditText oldcode;
 
@@ -57,11 +57,14 @@ public class UpdatePhoneActivity extends  BaseActivity implements View.OnClickLi
 
     private TimeCount2 time2;
 
+    private int flag;//1代表未绑定手机号进入
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_updatephone);
-        oldPhoneStr=getIntent().getStringExtra("phone");
+        flag=getIntent().getIntExtra("flag", 0);
+
         initView();
     }
 
@@ -70,19 +73,27 @@ public class UpdatePhoneActivity extends  BaseActivity implements View.OnClickLi
         time2 = new TimeCount2(60000, 1000);
         back= (ImageView) findViewById(R.id.title_back);
         title= (TextView) findViewById(R.id.title_text);
-        oldPhone= (TextView) findViewById(R.id.updatephone_oldphone);
+        oldPhone= (EditText) findViewById(R.id.updatephone_oldphone);
         oldcode= (EditText) findViewById(R.id.updatephone_oldcode);
         getOldCode= (TextView) findViewById(R.id.updatephone_getoldcode);
         newPhone= (EditText) findViewById(R.id.updatephone_newphone);
         newCode= (EditText) findViewById(R.id.updatephone_newcode);
         getNewCode= (TextView) findViewById(R.id.updatephone_getnewcode);
         submit= (TextView) findViewById(R.id.updatephone_ok);
+        pro=  findViewById(R.id.updatephone_pro);
         back.setOnClickListener(this);
         title.setText("修改手机号");
         getNewCode.setOnClickListener(this);
         getOldCode.setOnClickListener(this);
         submit.setOnClickListener(this);
-
+        if (flag==1){
+            oldPhoneStr="";
+            oldPhone.setEnabled(true);
+        }else{
+            oldPhoneStr=getIntent().getStringExtra("phone");
+            oldPhone.setEnabled(false);
+        }
+//        oldPhoneStr="18611644286";
         oldPhone.setText(oldPhoneStr);
     }
 

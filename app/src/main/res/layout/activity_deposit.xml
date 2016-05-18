@@ -1,88 +1,97 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:background="@color/activity_bg"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/activity_bg"
+    android:orientation="vertical">
 
     <include
         android:id="@+id/deposit_title"
-        layout="@layout/activity_title"/>
+        layout="@layout/activity_title" />
 
-    <ScrollView
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fillViewport="true"
-        android:scrollbars="none">
+        android:layout_height="match_parent">
 
-        <LinearLayout
+
+        <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
-
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="1px"
-                android:background="@color/bottom_div"
-                android:layout_marginTop="10dp"/>
+            android:fillViewport="true"
+            android:scrollbars="none">
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingLeft="10dp"
-                android:paddingTop="10dp"
-                android:background="@color/write"
-                android:paddingBottom="10dp"
-                android:paddingRight="10dp">
+                android:layout_height="match_parent"
+                android:orientation="vertical">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="#000000"
-                    android:textSize="@dimen/second_font"
-                    android:text="金额 （元）"/>
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:layout_marginTop="10dp"
+                    android:background="@color/bottom_div" />
 
-                <EditText
-                    android:id="@+id/deposit_money"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="@dimen/second_font"
-                    android:textColor="#332C2B"
-                    android:hint="当前收益余额1003.2元"
-                    android:background="@null"
+                    android:background="@color/write"
+                    android:paddingBottom="10dp"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:paddingTop="10dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="金额 （元）"
+                        android:textColor="#000000"
+                        android:textSize="@dimen/second_font" />
+
+                    <EditText
+                        android:id="@+id/deposit_money"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:background="@null"
+                        android:hint="当前收益余额1003.2元"
+                        android:inputType="number"
+                        android:textColor="#332C2B"
+                        android:textSize="@dimen/second_font" />
+                </LinearLayout>
+
+                <com.gaicheyunxiu.gaiche.view.MyListView
+                    android:id="@+id/deposit_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:divider="@color/activity_bg"
+                    android:dividerHeight="10dp" />
+
+                <TextView
+                    android:id="@+id/deposit_ok"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp"
                     android:layout_marginLeft="15dp"
-                    android:inputType="number"/>
+                    android:layout_marginRight="15dp"
+                    android:layout_marginTop="25dp"
+                    android:background="@drawable/dialog_ok_btn"
+                    android:clickable="true"
+                    android:gravity="center"
+                    android:paddingBottom="12dp"
+                    android:paddingTop="12dp"
+                    android:text="提交"
+                    android:textColor="@color/write"
+                    android:textSize="@dimen/first_font" />
             </LinearLayout>
+        </ScrollView>
 
-            <com.gaicheyunxiu.gaiche.view.MyListView
-                android:id="@+id/deposit_list"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:divider="@color/activity_bg"
-                android:layout_marginTop="10dp"
-                android:dividerHeight="10dp"/>
+        <include
+            android:id="@+id/deposit_pro"
+            layout="@layout/pro"
+            android:visibility="gone" />
 
-            <TextView
-                android:id="@+id/deposit_ok"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="25dp"
-                android:textColor="@color/write"
-                android:background="@drawable/dialog_ok_btn"
-                android:paddingTop="12dp"
-                android:paddingBottom="12dp"
-                android:gravity="center"
-                android:layout_marginBottom="20dp"
-                android:clickable="true"
-                android:textSize="@dimen/first_font"
-                android:text="提交"
-                android:layout_marginLeft="15dp"
-                android:layout_marginRight="15dp"/>
-        </LinearLayout>
-    </ScrollView>
-
-
-
+    </RelativeLayout>
 
 
 </LinearLayout>

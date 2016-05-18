@@ -26,11 +26,16 @@ public class WalletActivity extends BaseActivity implements View.OnClickListener
 
     private TextView deposit;
 
+    private String smoney;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_wallet);
+        smoney=getIntent().getStringExtra("money");
         initView();
+
     }
 
     private void initView() {
@@ -48,6 +53,7 @@ public class WalletActivity extends BaseActivity implements View.OnClickListener
         detail.setVisibility(View.VISIBLE);
         recharge.setOnClickListener(this);
         deposit.setOnClickListener(this);
+        money.setText("￥"+smoney);
     }
 
     @Override
@@ -66,6 +72,7 @@ public class WalletActivity extends BaseActivity implements View.OnClickListener
                 break;
             case R.id.wallet_deposit:
                 Intent intent2=new Intent(WalletActivity.this,DepositActivity.class);
+                intent2.putExtra("money",smoney);
                 startActivity(intent2);
                 break;
         }

@@ -9,134 +9,147 @@
         android:id="@+id/mywallet_title"
         layout="@layout/activity_title" />
 
-    <ScrollView
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fillViewport="true"
-        android:scrollbars="none">
+        android:layout_height="match_parent">
 
-
-        <LinearLayout
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_height="match_parent"
+            android:fillViewport="true"
+            android:scrollbars="none">
+
 
             <LinearLayout
-                android:id="@+id/mywallet_wallet"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/earning_btn"
-                android:layout_marginTop="10dp"
-                android:paddingLeft="15dp"
-                android:paddingRight="15dp"
-                android:paddingTop="10dp"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:paddingBottom="10dp"
-                android:clickable="true">
-                <ImageView
-                    android:layout_width="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:id="@+id/mywallet_wallet"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:src="@mipmap/person_money"/>
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/earning_btn"
+                    android:clickable="true"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingBottom="10dp"
+                    android:paddingLeft="15dp"
+                    android:paddingRight="15dp"
+                    android:paddingTop="10dp">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@mipmap/person_money" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_weight="1"
+                        android:text="钱包"
+                        android:textColor="@color/write"
+                        android:textSize="@dimen/first_font" />
+
+                    <TextView
+                        android:id="@+id/mywallet_money"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="￥898.80"
+                        android:textColor="@color/write"
+                        android:textSize="@dimen/first_font" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="4dp"
+                        android:src="@mipmap/earnings_go" />
+
+                </LinearLayout>
+
+                <ImageView
+                    android:id="@+id/mywallet_div"
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:layout_marginTop="10dp"
+                    android:background="@color/bottom_div" />
+
+                <com.gaicheyunxiu.gaiche.view.MyListView
+                    android:id="@+id/mywallet_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:scrollbars="none" />
+
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:layout_marginTop="10dp"
+                    android:background="@color/bottom_div" />
+
+                <LinearLayout
+                    android:id="@+id/mywallet_addbrandlin"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/item_bg"
+                    android:clickable="true"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingBottom="10dp"
+                    android:paddingLeft="15dp"
+                    android:paddingRight="15dp"
+                    android:paddingTop="10dp">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@mipmap/brand_add" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_weight="1"
+                        android:text="添加银行卡"
+                        android:textColor="#5F5D5D"
+                        android:textSize="@dimen/first_font" />
+
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="4dp"
+                        android:src="@mipmap/main_go" />
+
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:background="@color/bottom_div" />
 
                 <TextView
-                    android:layout_width="0dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:textColor="@color/write"
-                    android:textSize="@dimen/first_font"
-                    android:layout_marginLeft="10dp"
-                    android:text="钱包"/>
-
-                <TextView
-                    android:id="@+id/mywallet_money"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/write"
-                    android:textSize="@dimen/first_font"
-                    android:text="￥898.80"/>
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_marginLeft="4dp"
-                    android:layout_height="wrap_content"
-                    android:src="@mipmap/earnings_go"/>
-
-            </LinearLayout>
-
-            <ImageView
-                android:id="@+id/mywallet_div"
-                android:layout_width="match_parent"
-                android:layout_height="1px"
-                android:layout_marginTop="10dp"
-                android:background="@color/bottom_div"/>
-
-            <com.gaicheyunxiu.gaiche.view.MyListView
-                android:id="@+id/mywallet_list"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:scrollbars="none"/>
-
-
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="1px"
-                android:layout_marginTop="10dp"
-                android:background="@color/bottom_div"/>
-            <LinearLayout
-                android:id="@+id/mywallet_addbrandlin"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/item_bg"
-                android:paddingLeft="15dp"
-                android:paddingRight="15dp"
-                android:paddingTop="10dp"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:paddingBottom="10dp"
-                android:clickable="true">
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@mipmap/brand_add"/>
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                    android:layout_marginLeft="35dp"
+                    android:layout_marginRight="35dp"
+                    android:layout_marginTop="25dp"
+                    android:text="支付密码和绑定手机的双重保障了解更多"
                     android:textColor="#5F5D5D"
-                    android:textSize="@dimen/first_font"
-                    android:layout_marginLeft="10dp"
-                    android:text="添加银行卡"/>
+                    android:textSize="@dimen/second_font" />
 
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_marginLeft="4dp"
-                    android:layout_height="wrap_content"
-                    android:src="@mipmap/main_go"/>
 
             </LinearLayout>
 
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="1px"
-                android:background="@color/bottom_div"/>
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="@dimen/second_font"
-                android:text="支付密码和绑定手机的双重保障了解更多"
-                android:layout_marginTop="25dp"
-                android:layout_marginLeft="35dp"
-                android:layout_marginRight="35dp"
-                android:textColor="#5F5D5D"/>
+        </ScrollView>
 
+        <include
+            android:id="@+id/mywallet_pro"
+            layout="@layout/pro"
+            android:visibility="gone" />
+    </RelativeLayout>
 
-
-        </LinearLayout>
-
-
-    </ScrollView>
 </LinearLayout>

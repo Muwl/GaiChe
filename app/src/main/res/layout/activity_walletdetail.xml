@@ -1,19 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
     android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:background="@color/write"
-    android:layout_height="match_parent">
+    android:orientation="vertical">
 
     <include
         android:id="@+id/walletdetail_title"
-        layout="@layout/activity_title"/>
+        layout="@layout/activity_title" />
 
-
-    <ListView
-        android:id="@+id/walletdetail_list"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:scrollbars="none"/>
+        android:layout_height="match_parent">
 
+        <com.handmark.pulltorefresh.library.PullToRefreshListView
+            android:id="@+id/walletdetail_list"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:cacheColorHint="#00000000"
+            android:fadingEdge="none"
+            android:fastScrollEnabled="false"
+            android:scrollbars="none"
+            android:footerDividersEnabled="false"
+            android:headerDividersEnabled="false"
+            android:smoothScrollbar="true" />
+
+
+        <include
+            android:id="@+id/walletdetail_pro"
+            layout="@layout/pro"
+            android:visibility="gone" />
+
+    </RelativeLayout>
 </LinearLayout>

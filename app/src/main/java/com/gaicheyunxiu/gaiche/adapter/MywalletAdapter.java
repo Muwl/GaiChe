@@ -7,6 +7,10 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.gaicheyunxiu.gaiche.R;
+import com.gaicheyunxiu.gaiche.model.BankCardEntity;
+import com.gaicheyunxiu.gaiche.model.MyWalletEntity;
+
+import java.util.List;
 
 /**
  * Created by Mu on 2016/1/6.
@@ -15,24 +19,26 @@ import com.gaicheyunxiu.gaiche.R;
 public class MywalletAdapter extends BaseAdapter{
 
     private Context context;
+    private List<BankCardEntity> entities;
 
-    public MywalletAdapter(Context context) {
+    public MywalletAdapter(Context context,List<BankCardEntity> entities) {
         this.context = context;
+        this.entities=entities;
     }
 
     @Override
     public int getCount() {
-        return 1;
+        return entities.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return null;
+        return entities.get(position);
     }
 
     @Override
     public long getItemId(int position) {
-        return 0;
+        return position;
     }
 
     @Override
@@ -49,6 +55,9 @@ public class MywalletAdapter extends BaseAdapter{
             holder= (ViewHolder) convertView.getTag();
         }
 
+        holder.brandName.setText(entities.get(position).bank);
+        holder.brandStype.setText(entities.get(position).type);
+        holder.brandNo.setText(entities.get(position).bankCardNo);
         return convertView;
     }
     class  ViewHolder{

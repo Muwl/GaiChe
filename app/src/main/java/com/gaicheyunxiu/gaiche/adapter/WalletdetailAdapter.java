@@ -7,6 +7,9 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.gaicheyunxiu.gaiche.R;
+import com.gaicheyunxiu.gaiche.model.TrainingRecordEntity;
+
+import java.util.List;
 
 /**
  * Created by Mu on 2016/1/6.
@@ -14,24 +17,26 @@ import com.gaicheyunxiu.gaiche.R;
 public class WalletdetailAdapter extends BaseAdapter {
 
     private Context context;
+    private List<TrainingRecordEntity> entities;
 
-    public WalletdetailAdapter(Context context) {
+    public WalletdetailAdapter(Context context,List<TrainingRecordEntity> entities) {
         this.context = context;
+        this.entities=entities;
     }
 
     @Override
     public int getCount() {
-        return 5;
+        return entities.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return null;
+        return entities.get(position);
     }
 
     @Override
     public long getItemId(int position) {
-        return 0;
+        return position;
     }
 
     @Override
@@ -47,6 +52,10 @@ public class WalletdetailAdapter extends BaseAdapter {
         }else{
             holder= (ViewHolder) convertView.getTag();
         }
+
+        holder.state.setText(entities.get(position).detail);
+        holder.time.setText(entities.get(position).createDate);
+        holder.money.setText(entities.get(position).amount);
         return convertView;
     }
     class ViewHolder{

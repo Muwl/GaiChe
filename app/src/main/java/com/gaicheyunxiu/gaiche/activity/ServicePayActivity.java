@@ -9,6 +9,30 @@ import android.widget.TextView;
 import com.gaicheyunxiu.gaiche.R;
 import com.gaicheyunxiu.gaiche.adapter.ServiceOrderAdapter;
 import com.gaicheyunxiu.gaiche.dialog.PaymentDialog;
+import com.gaicheyunxiu.gaiche.model.AddAdressState;
+import com.gaicheyunxiu.gaiche.model.AddressVo;
+import com.gaicheyunxiu.gaiche.model.MyCarEntity;
+import com.gaicheyunxiu.gaiche.model.ReturnState;
+import com.gaicheyunxiu.gaiche.model.ServiceOrderUp;
+import com.gaicheyunxiu.gaiche.model.ServiceOrderVo;
+import com.gaicheyunxiu.gaiche.model.ShopEvaluationState;
+import com.gaicheyunxiu.gaiche.model.ShopServiceEntity;
+import com.gaicheyunxiu.gaiche.utils.Constant;
+import com.gaicheyunxiu.gaiche.utils.LogManager;
+import com.gaicheyunxiu.gaiche.utils.MyApplication;
+import com.gaicheyunxiu.gaiche.utils.ShareDataTool;
+import com.gaicheyunxiu.gaiche.utils.ToastUtils;
+import com.gaicheyunxiu.gaiche.utils.ToosUtils;
+import com.google.gson.Gson;
+import com.lidroid.xutils.HttpUtils;
+import com.lidroid.xutils.exception.HttpException;
+import com.lidroid.xutils.http.RequestParams;
+import com.lidroid.xutils.http.ResponseInfo;
+import com.lidroid.xutils.http.callback.RequestCallBack;
+import com.lidroid.xutils.http.client.HttpRequest;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Administrator on 2016/1/2.
@@ -46,7 +70,19 @@ public class ServicePayActivity extends  BaseActivity implements View.OnClickLis
 
     private TextView submit;
 
-    private int checkIndex=1;//1钱包 2支付宝 3 微信 4银联
+    private View pro;
+
+    private int checkIndex=0;//0钱包 1支付宝 2 微信 3银联
+
+    private int flag;//1门店详情进入
+
+    private String shopId;
+
+    private List<ShopServiceEntity> shopServiceEntityList;
+
+    private AddressVo addressVo;
+
+    private double totalMoney;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +92,8 @@ public class ServicePayActivity extends  BaseActivity implements View.OnClickLis
     }
 
     private void initView() {
+        flag=getIntent().getIntExtra("flag",0);
+
         back= (ImageView) findViewById(R.id.title_back);
         title= (TextView) findViewById(R.id.title_text);
         wallet=findViewById(R.id.servicepay_wallet);
@@ -72,8 +110,9 @@ public class ServicePayActivity extends  BaseActivity implements View.OnClickLis
         yinliancb= (CheckBox) findViewById(R.id.servicepay_yinlian_cb);
         money= (TextView) findViewById(R.id.servicepay_money);
         submit= (TextView) findViewById(R.id.servicepay_ok);
+        pro= findViewById(R.id.servicepay_pro);
 
-        title.setText("付款");
+        title.setText("去结算");
         back.setOnClickListener(this);
         lin.setOnClickListener(this);
         zhifubao.setOnClickListener(this);
@@ -86,7 +125,15 @@ public class ServicePayActivity extends  BaseActivity implements View.OnClickLis
         zhifubaocb.setChecked(false);
         weixincb.setChecked(false);
         yinliancb.setChecked(false);
-        checkIndex=1;
+        checkIndex=0;
+        if (flag==1){
+            shopId=getIntent().getStringExtra("shopId");
+            shopServiceEntityList= (List<ShopServiceEntity>) getIntent().getSerializableExtra("entities");
+            num.setText("共"+shopServiceEntityList.size()+"项服务");
+            totalMoney=calMoney(shopServiceEntityList);
+            money.setText("￥"+totalMoney);
+        }
+        getDefaultAddress();
 
     }
 
@@ -107,7 +154,7 @@ public class ServicePayActivity extends  BaseActivity implements View.OnClickLis
                 zhifubaocb.setChecked(true);
                 weixincb.setChecked(false);
                 yinliancb.setChecked(false);
-                checkIndex=2;
+                checkIndex=1;
 
                 break;
 
@@ -116,7 +163,7 @@ public class ServicePayActivity extends  BaseActivity implements View.OnClickLis
                 zhifubaocb.setChecked(false);
                 weixincb.setChecked(false);
                 yinliancb.setChecked(false);
-                checkIndex=1;
+                checkIndex=0;
                 break;
 
             case R.id.servicepay_weixin:
@@ -124,7 +171,7 @@ public class ServicePayActivity extends  BaseActivity implements View.OnClickLis
                 zhifubaocb.setChecked(false);
                 weixincb.setChecked(true);
                 yinliancb.setChecked(false);
-                checkIndex=3;
+                checkIndex=2;
                 break;
 
             case R.id.servicepay_yinlian:
@@ -132,12 +179,155 @@ public class ServicePayActivity extends  BaseActivity implements View.OnClickLis
                 zhifubaocb.setChecked(false);
                 weixincb.setChecked(false);
                 yinliancb.setChecked(true);
-                checkIndex=4;
+                checkIndex=3;
                 break;
 
             case R.id.servicepay_ok:
-                PaymentDialog dialog=new PaymentDialog(ServicePayActivity.this);
+                getServiceOrder();
+//                PaymentDialog dialog=new PaymentDialog(ServicePayActivity.this);
                 break;
         }
+    }
+
+
+
+    /**
+     * 查询默认收货地址
+     */
+    private void getDefaultAddress() {
+        RequestParams rp = new RequestParams();
+        HttpUtils utils = new HttpUtils();
+        utils.configTimeout(20000);
+        String url="address/findDefault";
+        rp.addBodyParameter("sign",ShareDataTool.getToken(this));
+        utils.send(HttpRequest.HttpMethod.POST, Constant.ROOT_PATH
+                + url, rp, new RequestCallBack<String>() {
+            @Override
+            public void onStart() {
+                super.onStart();
+                pro.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void onFailure(HttpException arg0, String arg1) {
+                pro.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onSuccess(ResponseInfo<String> arg0) {
+                pro.setVisibility(View.GONE);
+                try {
+                    Gson gson = new Gson();
+                    ReturnState state = gson.fromJson(arg0.result,
+                            ReturnState.class);
+                    if (Constant.RETURN_OK.equals(state.msg)) {
+                        LogManager.LogShow("-----", arg0.result,
+                                LogManager.ERROR);
+                        AddAdressState addAdressState= gson.fromJson(arg0.result, AddAdressState.class);
+                        addressVo=addAdressState.result;
+                        person.setText(addressVo.name);
+                        phone.setText(addressVo.phone);
+                    } else if (Constant.TOKEN_ERR.equals(state.msg)) {
+                        ToastUtils.displayShortToast(ServicePayActivity.this,
+                                "验证错误，请重新登录");
+                        ToosUtils.goReLogin(ServicePayActivity.this);
+                    } else {
+                        ToastUtils.displayShortToast(ServicePayActivity.this,
+                                (String) state.result);
+                    }
+                } catch (Exception e) {
+                    ToastUtils.displaySendFailureToast(ServicePayActivity.this);
+                }
+
+            }
+        });
+    }
+
+
+
+    /**
+     * 结算服务订单
+     */
+    private void getServiceOrder() {
+        if (addressVo==null){
+            ToastUtils.displayShortToast(this,"请选择收货地址！");
+        }
+        RequestParams rp = new RequestParams();
+        HttpUtils utils = new HttpUtils();
+        utils.configTimeout(20000);
+        String url="serviceOrder/add";
+        rp.addBodyParameter("sign", ShareDataTool.getToken(this));
+        ServiceOrderUp serviceOrderUp=new ServiceOrderUp();
+        serviceOrderUp.shopId=shopId;
+        MyCarEntity myCarEntity= MyApplication.getInstance().getCarEntity();
+        if (myCarEntity!=null){
+            serviceOrderUp.carTypeId=myCarEntity.carTypeId;
+        }
+        serviceOrderUp.defAddId=addressVo.id;
+        serviceOrderUp.payment=String.valueOf(checkIndex);
+        List<ServiceOrderVo> serviceOrderVos=new ArrayList<>();
+        for (int i=0;i<shopServiceEntityList.size();i++){
+            ServiceOrderVo serviceOrderVo=new ServiceOrderVo();
+            serviceOrderVo.serviceId=shopServiceEntityList.get(i).id;
+            serviceOrderVo.num= String.valueOf(shopServiceEntityList.get(i).num);
+            serviceOrderVos.add(serviceOrderVo);
+        }
+        serviceOrderUp.service=serviceOrderVos;
+        rp.addBodyParameter("order",new Gson().toJson(serviceOrderUp));
+        LogManager.LogShow("------",Constant.ROOT_PATH + url+"?sign="+ShareDataTool.getToken(this)+"&order="+new Gson().toJson(serviceOrderUp),LogManager.ERROR);
+        utils.send(HttpRequest.HttpMethod.POST, Constant.ROOT_PATH
+                + url, rp, new RequestCallBack<String>() {
+            @Override
+            public void onStart() {
+                super.onStart();
+                pro.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void onFailure(HttpException arg0, String arg1) {
+                pro.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onSuccess(ResponseInfo<String> arg0) {
+                pro.setVisibility(View.GONE);
+                try {
+                    Gson gson = new Gson();
+                    ReturnState state = gson.fromJson(arg0.result,
+                            ReturnState.class);
+                    if (Constant.RETURN_OK.equals(state.msg)) {
+                        LogManager.LogShow("-----", arg0.result,
+                                LogManager.ERROR);
+
+                    } else if (Constant.TOKEN_ERR.equals(state.msg)) {
+                        ToastUtils.displayShortToast(ServicePayActivity.this,
+                                "验证错误，请重新登录");
+                        ToosUtils.goReLogin(ServicePayActivity.this);
+                    } else {
+                        ToastUtils.displayShortToast(ServicePayActivity.this,
+                                (String) state.result);
+                    }
+                } catch (Exception e) {
+                    ToastUtils.displaySendFailureToast(ServicePayActivity.this);
+                }
+
+            }
+        });
+    }
+
+    /**
+     * 计算价格
+     * @param entities
+     * @return
+     */
+    private double calMoney(List<ShopServiceEntity> entities){
+        double d=0;
+        for (int i=0;i<entities.size();i++){
+            if (entities.get(i).flag){
+                d=d+entities.get(i).num*Double.valueOf(entities.get(i).price);
+            }
+        }
+        return d;
+
     }
 }

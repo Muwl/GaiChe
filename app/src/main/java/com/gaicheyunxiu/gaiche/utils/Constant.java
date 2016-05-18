@@ -20,6 +20,8 @@ public class Constant {
 	// 联网Token失败
 	public static final String TOKEN_ERR = "201";
 
+	public static final String INFO_NOCOM = "203";
+
 
 
 
