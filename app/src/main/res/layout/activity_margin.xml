@@ -9,16 +9,10 @@
         android:id="@+id/margin_title"
         layout="@layout/activity_title" />
 
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:fillViewport="true"
-        android:scrollbars="none">
-
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
             android:orientation="vertical">
 
             <LinearLayout
@@ -116,25 +110,34 @@
                 android:layout_height="1px"
                 android:background="#EF8641" />
 
-            <LinearLayout
+
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="#b4b4b4">
+                android:layout_height="match_parent">
 
-                <com.gaicheyunxiu.gaiche.view.MyGridView
-                    android:id="@+id/margin_grid"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginBottom="1px"
-                    android:horizontalSpacing="1px"
-                    android:numColumns="3"
-                    android:verticalSpacing="1px" />
 
-            </LinearLayout>
+                <com.handmark.pulltorefresh.library.PullToRefreshListView
+                    android:id="@+id/margin_list"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:cacheColorHint="#00000000"
+                    android:fadingEdge="none"
+                    android:fastScrollEnabled="false"
+                    android:scrollbars="none"
+                    android:footerDividersEnabled="false"
+                    android:headerDividersEnabled="false"
+                    android:smoothScrollbar="true" />
+
+                <include
+                    android:id="@+id/margin_pro"
+                    layout="@layout/pro"
+                    android:visibility="gone"
+                    />
+
+            </RelativeLayout>
+
         </LinearLayout>
 
-
-    </ScrollView>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -166,7 +169,7 @@
             android:gravity="center"
             android:paddingBottom="15dp"
             android:paddingTop="15dp"
-            android:text="200.00M"
+            android:text="0"
             android:textColor="@color/write"
             android:textSize="@dimen/thrid_font" />
 
@@ -184,7 +187,7 @@
             android:gravity="center"
             android:paddingBottom="15dp"
             android:paddingTop="15dp"
-            android:text="1003.50"
+            android:text="0"
             android:textColor="@color/write"
             android:textSize="@dimen/second_font" />
 

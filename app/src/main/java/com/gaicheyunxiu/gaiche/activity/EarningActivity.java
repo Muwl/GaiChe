@@ -16,6 +16,7 @@ import com.gaicheyunxiu.gaiche.utils.ShareDataTool;
 import com.gaicheyunxiu.gaiche.utils.ToastUtils;
 import com.gaicheyunxiu.gaiche.utils.ToosUtils;
 import com.google.gson.Gson;
+import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.lidroid.xutils.HttpUtils;
 import com.lidroid.xutils.exception.HttpException;
 import com.lidroid.xutils.http.RequestParams;
@@ -44,6 +45,7 @@ public class EarningActivity extends BaseActivity implements View.OnClickListene
     private View pro;
 
     private EarnIncomeEntity incomeEntity;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

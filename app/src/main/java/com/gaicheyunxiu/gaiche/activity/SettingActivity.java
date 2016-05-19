@@ -2,11 +2,15 @@ package com.gaicheyunxiu.gaiche.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.gaicheyunxiu.gaiche.R;
+import com.gaicheyunxiu.gaiche.dialog.CustomeDialog;
+import com.gaicheyunxiu.gaiche.utils.ToosUtils;
 
 /**
  * Created by Administrator on 2016/2/11.
@@ -27,6 +31,22 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
     private View about;
 
     private View logout;
+
+    private Handler handler=new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what){
+                case 40:
+                    int flag=msg.arg1;
+                    if (flag==-5){
+                        ToosUtils.goReLogin(SettingActivity.this);
+                    }else if(flag==-2){
+
+                    }
+                    break;
+            }
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,7 +93,7 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
                 break;
 
             case R.id.setting_catch:
-
+                CustomeDialog customeDialog=new CustomeDialog(SettingActivity.this,handler,"确定清楚缓存？",-2,-1);
                 break;
 
             case R.id.setting_about:
@@ -82,6 +102,8 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
                 break;
 
             case R.id.setting_logout:
+                CustomeDialog customeDialog2=new CustomeDialog(SettingActivity.this,handler,"确定退出？",-5,-1);
+
                 break;
         }
     }

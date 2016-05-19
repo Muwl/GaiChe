@@ -10,6 +10,7 @@ import com.gaicheyunxiu.gaiche.R;
 import com.gaicheyunxiu.gaiche.model.ReturnState;
 import com.gaicheyunxiu.gaiche.utils.Constant;
 import com.gaicheyunxiu.gaiche.utils.LogManager;
+import com.gaicheyunxiu.gaiche.utils.ShareDataTool;
 import com.gaicheyunxiu.gaiche.utils.ToastUtils;
 import com.gaicheyunxiu.gaiche.utils.ToosUtils;
 import com.google.gson.Gson;
@@ -80,6 +81,7 @@ public class FreebackActivity extends BaseActivity implements View.OnClickListen
         }
         RequestParams rp = new RequestParams();
         HttpUtils utils = new HttpUtils();
+        rp.addBodyParameter("sign", ShareDataTool.getToken(this));
         rp.addBodyParameter("content",ToosUtils.getTextContent(content));
         utils.configTimeout(20000);
         utils.send(HttpRequest.HttpMethod.POST, Constant.ROOT_PATH
@@ -107,7 +109,7 @@ public class FreebackActivity extends BaseActivity implements View.OnClickListen
                         LogManager.LogShow("-----", arg0.result,
                                 LogManager.ERROR);
                         ToastUtils.displayShortToast(FreebackActivity.this,
-                                "保存成功");
+                                "提交成功");
                         finish();
                     } else if (Constant.TOKEN_ERR.equals(state.msg)) {
                         ToastUtils.displayShortToast(FreebackActivity.this,

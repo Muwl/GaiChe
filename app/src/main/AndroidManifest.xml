@@ -354,6 +354,12 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustUnspecified|stateHidden|adjustResize" >
         </activity>
+        <activity
+            android:name=".activity.ServiceOrderOutActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden|adjustResize" >
+        </activity>
 
         <activity
             android:name=".activity.AboutActivity"

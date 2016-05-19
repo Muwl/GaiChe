@@ -1,17 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
-    android:background="@color/write"
+    android:background="@color/activity_bg"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <include
-        android:id="@+id/about_title"
+        android:id="@+id/serviceorder_title"
         layout="@layout/activity_title"/>
 
-    <WebView
-        android:id="@+id/adbout_webview"
+    <ListView
+        android:id="@+id/serviceorder_list"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
-
+        android:dividerHeight="1px"
+        android:divider="@color/bottom_div"
+        android:scrollbars="none"
+        android:layout_height="match_parent"/>
 </LinearLayout>

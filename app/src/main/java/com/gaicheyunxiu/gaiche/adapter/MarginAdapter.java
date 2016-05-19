@@ -7,6 +7,9 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.gaicheyunxiu.gaiche.R;
+import com.gaicheyunxiu.gaiche.model.EarningsEntity;
+
+import java.util.List;
 
 /**
  * Created by Mu on 2016/1/6.
@@ -15,24 +18,26 @@ import com.gaicheyunxiu.gaiche.R;
 public class MarginAdapter extends BaseAdapter{
 
     private Context context;
+    private List<EarningsEntity> entities;
 
-    public MarginAdapter(Context context) {
+    public MarginAdapter(Context context, List<EarningsEntity> entities) {
         this.context = context;
+        this.entities=entities;
     }
 
     @Override
     public int getCount() {
-        return 36;
+        return entities.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return null;
+        return entities.get(position);
     }
 
     @Override
     public long getItemId(int position) {
-        return 0;
+        return position;
     }
 
     @Override
@@ -41,14 +46,19 @@ public class MarginAdapter extends BaseAdapter{
         if (convertView==null){
             convertView=View.inflate(context, R.layout.margin_item,null);
             holder=new ViewHolder();
-            holder.textView= (TextView) convertView.findViewById(R.id.margin_item_text);
+            holder.gcView= (TextView) convertView.findViewById(R.id.margin_item_gc);
             convertView.setTag(holder);
         }else{
             holder= (ViewHolder) convertView.getTag();
         }
+        holder.gcView.setText(entities.get(position).gcCode);
+        holder.money.setText(entities.get(position).mvalue);
+        holder.earn.setText(entities.get(position).incomeAmount);
         return convertView;
     }
     class ViewHolder{
-        public TextView textView;
+        public TextView gcView;
+        public TextView money;
+        public TextView earn;
     }
 }

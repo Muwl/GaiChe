@@ -1,5 +1,6 @@
 package com.gaicheyunxiu.gaiche.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.CheckBox;
@@ -31,6 +32,7 @@ import com.lidroid.xutils.http.ResponseInfo;
 import com.lidroid.xutils.http.callback.RequestCallBack;
 import com.lidroid.xutils.http.client.HttpRequest;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -146,7 +148,9 @@ public class ServicePayActivity extends  BaseActivity implements View.OnClickLis
                 break;
 
             case R.id.servicepay_lin:
-
+                Intent intent=new Intent(ServicePayActivity.this,ServiceOrderOutActivity.class);
+                intent.putExtra("entities", (Serializable) shopServiceEntityList);
+                startActivity(intent);
                 break;
             
             case R.id.servicepay_zhifubao:

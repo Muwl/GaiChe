@@ -9,6 +9,7 @@ import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -75,6 +76,8 @@ public class ShopDetailActivity extends BaseActivity implements View.OnClickList
 
     private ShopDetailEntity detailEntity;
 
+    private EditText numView;
+
     private TextView name;
 
     private RatingBar ratingBar;
@@ -86,6 +89,8 @@ public class ShopDetailActivity extends BaseActivity implements View.OnClickList
     private TextView oldMoney;
 
     private TextView volumeView;
+
+    private TextView addCart;
 
     private TextView shopNo;
 
@@ -131,10 +136,10 @@ public class ShopDetailActivity extends BaseActivity implements View.OnClickList
     private void initView() {
         width= DensityUtil.getScreenWidth(this);
         id=getIntent().getStringExtra("id");
-        id="10";
         back= (ImageView) findViewById(R.id.title_back);
         title= (TextView) findViewById(R.id.title_text);
         gallery = (MyGallery) findViewById(R.id.shopdetail_gallery);
+        numView = (EditText) findViewById(R.id.shopdetail_num);
         galllin = (LinearLayout) findViewById(R.id.shopdetail_lin);
         listView= (ListView) findViewById(R.id.shopdetail_list);
         name= (TextView) findViewById(R.id.shopdetail_name);
@@ -145,6 +150,7 @@ public class ShopDetailActivity extends BaseActivity implements View.OnClickList
         volumeView= (TextView) findViewById(R.id.shopdetail_volume);
         shopNo= (TextView) findViewById(R.id.shopdetail_no);
         infoView= (TextView) findViewById(R.id.shopdetail_info);
+        addCart= (TextView) findViewById(R.id.shopdetail_addcart);
         pro=  findViewById(R.id.shopdetail_pro);
         afterservice= (TextView) findViewById(R.id.shopdetail_afterservice);
         evalnum= (TextView) findViewById(R.id.shopdetail_evalnum);
@@ -156,6 +162,7 @@ public class ShopDetailActivity extends BaseActivity implements View.OnClickList
         listView.setAdapter(adapter);
         title.setText("商品详情");
         title.setOnClickListener(this);
+        addCart.setOnClickListener(this);
         back.setOnClickListener(this);
         infoView.setOnClickListener(this);
         oldMoney.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
@@ -174,6 +181,10 @@ public class ShopDetailActivity extends BaseActivity implements View.OnClickList
                 intent.putExtra("url",Constant.ROOT_PATH+"commodity/findIntroduction?id="+id);
                 startActivity(intent);
                 break;
+
+            case R.id.shopdetail_addcart:
+                addshoppingCart();
+            break;
         }
     }
 
@@ -241,8 +252,12 @@ public class ShopDetailActivity extends BaseActivity implements View.OnClickList
         oldMoney.setText("￥" +detailEntity.originalPrice+"元");
         volumeView.setText("销量"+detailEntity.paymentNum+"笔");
         evalnum.setText("用户评论（" + detailEntity.evaluationNum + "）");
-        shopNo.setText(Html.fromHtml(detailEntity.specification));
-        afterservice.setText(Html.fromHtml(detailEntity.afterSalesService));
+        if (!ToosUtils.isStringEmpty(detailEntity.specification)){
+            shopNo.setText(Html.fromHtml(detailEntity.specification));
+        }
+        if (!ToosUtils.isStringEmpty(detailEntity.afterSalesService)){
+            afterservice.setText(Html.fromHtml(detailEntity.afterSalesService));
+        }
         evalscore.setText("商品综合满意度：" + detailEntity.evaluationScore + "分，共" + detailEntity.evaluationNum + "条");
         addBunne(detailEntity.detailImage);
     }
@@ -347,5 +362,64 @@ public class ShopDetailActivity extends BaseActivity implements View.OnClickList
             }
         };
         timer.schedule(task, 1000, 3000);
+    }
+
+
+    /**
+     * 新增购物车
+     */
+    private void addshoppingCart() {
+        RequestParams rp = new RequestParams();
+        HttpUtils utils = new HttpUtils();
+        rp.addBodyParameter("sign", ShareDataTool.getToken(this));
+        MyCarEntity carEntity=MyApplication.getInstance().getCarEntity();
+        if (carEntity!=null){
+            rp.addBodyParameter("carTypeId", carEntity.carTypeId);
+        }
+        rp.addBodyParameter("commodityId", id);
+        rp.addBodyParameter("num", ToosUtils.getTextContent(numView));
+        utils.configTimeout(20000);
+        utils.send(HttpRequest.HttpMethod.POST, Constant.ROOT_PATH
+                + "shoppingCart/save", rp, new RequestCallBack<String>() {
+            @Override
+            public void onStart() {
+                pro.setVisibility(View.VISIBLE);
+                super.onStart();
+            }
+
+            @Override
+            public void onFailure(HttpException arg0, String arg1) {
+                pro.setVisibility(View.GONE);
+                ToastUtils.displayFailureToast(ShopDetailActivity.this);
+            }
+
+            @Override
+            public void onSuccess(ResponseInfo<String> arg0) {
+                pro.setVisibility(View.GONE);
+                LogManager.LogShow("-----", arg0.result + "=====",
+                        LogManager.ERROR);
+                try {
+                    Gson gson = new Gson();
+                    ReturnState state = gson.fromJson(arg0.result,
+                            ReturnState.class);
+                    if (Constant.RETURN_OK.equals(state.msg)) {
+                        ToastUtils.displayShortToast(ShopDetailActivity.this,
+                                "添加成功！");
+                    } else if (Constant.TOKEN_ERR.equals(state.msg)) {
+                        ToastUtils.displayShortToast(ShopDetailActivity.this,
+                                "验证错误，请重新登录");
+                        ToosUtils.goReLogin(ShopDetailActivity.this);
+                    } else {
+                        ToastUtils.displayShortToast(ShopDetailActivity.this,
+                                (String) state.result);
+                    }
+                } catch (Exception e) {
+                    LogManager.LogShow("-----", e.toString(),
+                            LogManager.ERROR);
+                    ToastUtils.displaySendFailureToast(ShopDetailActivity.this);
+                }
+
+            }
+        });
     }
 }
