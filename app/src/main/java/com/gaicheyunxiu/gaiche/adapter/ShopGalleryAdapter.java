@@ -63,7 +63,9 @@ public class ShopGalleryAdapter extends BaseAdapter {
 		 imageView.setScaleType(ScaleType.FIT_XY);
 		imageView.setLayoutParams(new Gallery.LayoutParams(width,
 				ViewGroup.LayoutParams.MATCH_PARENT));
-		utils.display(imageView, images.get(position % images.size()));
+		if (images.size()!=0){
+			utils.display(imageView, images.get(position % images.size()));
+		}
 		return imageView;
 	}
 }

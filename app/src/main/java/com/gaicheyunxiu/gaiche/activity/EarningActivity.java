@@ -101,10 +101,10 @@ public class EarningActivity extends BaseActivity implements View.OnClickListene
         HttpUtils utils = new HttpUtils();
         utils.configTimeout(20000);
         LogManager.LogShow("-----",  Constant.ROOT_PATH
-                        + "earings/income?sign="+ShareDataTool.getToken(this),
+                        + "earnings/income?sign="+ShareDataTool.getToken(this),
                 LogManager.ERROR);
         utils.send(HttpRequest.HttpMethod.POST, Constant.ROOT_PATH
-                + "earings/income", rp, new RequestCallBack<String>() {
+                + "earnings/income", rp, new RequestCallBack<String>() {
             @Override
             public void onStart() {
                 pro.setVisibility(View.VISIBLE);

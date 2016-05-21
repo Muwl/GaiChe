@@ -16,6 +16,7 @@
         android:layout_width="match_parent"
         android:scrollbars="none"
         android:divider="@color/transparent"
+        android:background="@color/write"
         android:dividerHeight="0dp"
         android:layout_height="match_parent"/>
 
@@ -23,7 +24,7 @@
             android:id="@+id/cart_empty"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="horizontal"
+            android:orientation="vertical"
             android:visibility="gone"
             android:background="@color/write">
             <TextView
@@ -78,6 +79,12 @@
 
 
         </LinearLayout>
+
+        <include
+            android:id="@+id/cart_pro"
+            layout="@layout/pro"
+            android:visibility="gone"
+            />
 
     </RelativeLayout>
 
