@@ -14,12 +14,14 @@ import android.widget.AdapterView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.gaicheyunxiu.gaiche.R;
 import com.gaicheyunxiu.gaiche.activity.CarbrandActivity;
 import com.gaicheyunxiu.gaiche.activity.CrowdFundActivity;
 import com.gaicheyunxiu.gaiche.activity.QRScanActivity;
+import com.gaicheyunxiu.gaiche.activity.ShopDetailActivity;
 import com.gaicheyunxiu.gaiche.adapter.FHomeGrallryAdapter;
 import com.gaicheyunxiu.gaiche.adapter.GalleryAdapter;
 import com.gaicheyunxiu.gaiche.adapter.PartsAdapter;
@@ -28,6 +30,8 @@ import com.gaicheyunxiu.gaiche.model.AdState;
 import com.gaicheyunxiu.gaiche.model.CarTypeEntity;
 import com.gaicheyunxiu.gaiche.model.CommodityEntity;
 import com.gaicheyunxiu.gaiche.model.CommodityState;
+import com.gaicheyunxiu.gaiche.model.CrowdfundingProjectEntity;
+import com.gaicheyunxiu.gaiche.model.CrowdfundingProjectState;
 import com.gaicheyunxiu.gaiche.model.MyCarEntity;
 import com.gaicheyunxiu.gaiche.model.PersonDynamicEntity;
 import com.gaicheyunxiu.gaiche.model.PopularCateEntity;
@@ -87,7 +91,9 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
 
     private GalleryAdapter galleryAdapter;
 
-    private ImageView shop;
+    private ImageView crowShop1;
+
+    private ImageView crowShop2;
 
     private Timer timer;
 
@@ -118,6 +124,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
     private ImageView hotshop4View;
 
     private MyListView mylistView;
+
+    private List<CrowdfundingProjectEntity> crowdfundingProjectEntities;
 
 
     private Handler handler = new Handler() {
@@ -154,7 +162,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
         carImage= (ImageView) view.findViewById(R.id.main_carimage);
         carAddImage= (ImageView) view.findViewById(R.id.main_caraddimage);
         carName= (TextView) view.findViewById(R.id.main_carbrand);
-        shop= (ImageView) view.findViewById(R.id.home_shop);
+        crowShop1= (ImageView) view.findViewById(R.id.home_shop);
+        crowShop2= (ImageView) view.findViewById(R.id.home_shop2);
         lin = (LinearLayout) view.findViewById(R.id.home_lin);
         gallery = (MyGallery) view.findViewById(R.id.gallery);
         galllin = (LinearLayout) view.findViewById(R.id.lin);
@@ -184,7 +193,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
         mylistView.setAdapter(partsAdapter);
         carLin.setOnClickListener(this);
         code.setOnClickListener(this);
-        shop.setOnClickListener(this);
+        crowShop1.setOnClickListener(this);
+        crowShop2.setOnClickListener(this);
         int m = DensityUtil.dip2px(getActivity(), 3);
         for (int i = 0; i <3; i++) {
             ImageView image = (ImageView) LayoutInflater.from(getActivity())
@@ -216,10 +226,20 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
             }
         });
 
+        mylistView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent=new Intent(getActivity(), ShopDetailActivity.class);
+                intent.putExtra("id",commodityEntities.get(position).id);
+                startActivity(intent);
+            }
+        });
+
         getAd();
         getHotSale();
         getpopularShop();
-
+        getFundProject();
+        mylistView.setFocusable(false);
     }
 
     @Override
@@ -254,8 +274,19 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
                 break;
 
             case R.id.home_shop:
-                Intent intent3=new Intent(getActivity(), CrowdFundActivity.class);
-                startActivity(intent3);
+                if (crowdfundingProjectEntities!=null && crowdfundingProjectEntities.size()>0){
+                    Intent intent3=new Intent(getActivity(), CrowdFundActivity.class);
+                    intent3.putExtra("entity",crowdfundingProjectEntities.get(0));
+                    startActivity(intent3);
+                }
+                break;
+
+            case R.id.home_shop2:
+                if (crowdfundingProjectEntities!=null && crowdfundingProjectEntities.size()>1){
+                    Intent intent3=new Intent(getActivity(), CrowdFundActivity.class);
+                    intent3.putExtra("entity",crowdfundingProjectEntities.get(1));
+                    startActivity(intent3);
+                }
                 break;
         }
     }
@@ -443,9 +474,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
         RequestParams rp = new RequestParams();
         HttpUtils utils = new HttpUtils();
         utils.configTimeout(20000);
-        LogManager.LogShow("*********", Constant.ROOT_PATH
-                        + "popularCategories/query",
-                LogManager.ERROR);
         utils.send(HttpRequest.HttpMethod.POST, Constant.ROOT_PATH
                 + "popularCategories/query", rp, new RequestCallBack<String>() {
             @Override
@@ -506,6 +534,65 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
                     break;
             }
         }
+    }
+
+    /**
+     * 众筹项目查询
+     */
+    private void getFundProject() {
+        RequestParams rp = new RequestParams();
+        HttpUtils utils = new HttpUtils();
+        utils.configTimeout(20000);
+        utils.send(HttpRequest.HttpMethod.POST, Constant.ROOT_PATH
+                + "crowdfundingProject/find", rp, new RequestCallBack<String>() {
+            @Override
+            public void onStart() {
+                super.onStart();
+            }
+
+            @Override
+            public void onFailure(HttpException arg0, String arg1) {
+                ToastUtils.displayFailureToast(getActivity());
+            }
+
+            @Override
+            public void onSuccess(ResponseInfo<String> arg0) {
+                try {
+                    Gson gson = new Gson();
+                    ReturnState state = gson.fromJson(arg0.result,
+                            ReturnState.class);
+                    if (Constant.RETURN_OK.equals(state.msg)) {
+                        LogManager.LogShow("-----***111", arg0.result,
+                                LogManager.ERROR);
+                        CrowdfundingProjectState projectState=gson.fromJson(arg0.result,CrowdfundingProjectState.class);
+                        crowdfundingProjectEntities=projectState.result;
+                        if (crowdfundingProjectEntities.size()==0){
+                            crowShop1.setVisibility(View.GONE);
+                            crowShop2.setVisibility(View.GONE);
+                        }
+                        if (crowdfundingProjectEntities.size()>0){
+                            bitmapUtils.display(crowShop1,crowdfundingProjectEntities.get(0).mobileImg);
+                            crowShop1.setVisibility(View.VISIBLE);
+                            crowShop2.setVisibility(View.INVISIBLE);
+                        }
+                        if (crowdfundingProjectEntities.size()>1){
+                            bitmapUtils.display(crowShop2,crowdfundingProjectEntities.get(1).mobileImg);
+                            crowShop2.setVisibility(View.VISIBLE);
+                        }
+                    } else if (Constant.TOKEN_ERR.equals(state.msg)) {
+                        ToastUtils.displayShortToast(getActivity(),
+                                "验证错误，请重新登录");
+                        ToosUtils.goReLogin(getActivity());
+                    } else {
+                        ToastUtils.displayShortToast(getActivity(),
+                                (String) state.result);
+                    }
+                } catch (Exception e) {
+                    ToastUtils.displaySendFailureToast(getActivity());
+                }
+
+            }
+        });
     }
 
 }

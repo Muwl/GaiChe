@@ -154,6 +154,10 @@ public class RatingBar extends LinearLayout {
 
     }
 
+    public double getStar(){
+        return starCount;
+    }
+
 
     /**
      * change stat listener

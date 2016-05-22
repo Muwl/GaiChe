@@ -246,7 +246,7 @@
                 android:textColor="#5F5D5D"
                 android:gravity="center"
                 android:textSize="@dimen/second_font"
-                android:text="轮胎"/>
+                android:text="轮胎修补"/>
 
 
             <TextView
@@ -262,7 +262,7 @@
                 android:textColor="#5F5D5D"
                 android:gravity="center"
                 android:textSize="@dimen/second_font"
-                android:text="蓄电池"/>
+                android:text="四轮定位"/>
 
             <TextView
                 android:id="@+id/foutlet_more"

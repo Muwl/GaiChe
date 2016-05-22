@@ -124,6 +124,30 @@
                     android:layout_height="1px"
                     android:background="@color/bottom_div" />
 
+                <TextView
+                    android:id="@+id/clearing_outsel"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="#5F5D5D"
+                    android:textSize="@dimen/second_font"
+                    android:paddingBottom="10dp"
+                    android:visibility="gone"
+                    android:paddingLeft="18dp"
+                    android:drawablePadding="10dp"
+                    android:background="@drawable/item_bg"
+                    android:text="选择安装门店"
+                    android:drawableRight="@mipmap/main_go"
+                    android:paddingRight="18dp"
+                    android:paddingTop="10dp"
+                    />
+
+
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="1px"
+                    android:background="@color/bottom_div" />
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

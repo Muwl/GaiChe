@@ -8,7 +8,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.gaicheyunxiu.gaiche.R;
+import com.gaicheyunxiu.gaiche.model.CrowCommityEntity;
 import com.lidroid.xutils.BitmapUtils;
+
+import java.util.List;
 
 /**
  * Created by Administrator on 2016/3/14.
@@ -18,25 +21,26 @@ public class CrowdfundAdapter extends BaseAdapter {
 
     private Context context;
     private BitmapUtils bitmapUtils;
-
-    public CrowdfundAdapter(Context context) {
+    private List<CrowCommityEntity> entities;
+    public CrowdfundAdapter(Context context,List<CrowCommityEntity> entities) {
         this.context = context;
+        this.entities=entities;
         bitmapUtils=new BitmapUtils(context);
     }
 
     @Override
     public int getCount() {
-        return 8;
+        return entities.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return null;
+        return entities.get(position);
     }
 
     @Override
     public long getItemId(int position) {
-        return 0;
+        return position;
     }
 
     @Override
@@ -55,6 +59,12 @@ public class CrowdfundAdapter extends BaseAdapter {
         }else{
             holder= (ViewHolder) convertView.getTag();
         }
+
+        bitmapUtils.display(holder.imageView,entities.get(position).briefImage);
+        holder.name.setText(entities.get(position).name);
+        holder.newPrice.setText(entities.get(position).presentPrice);
+        holder.m.setText(entities.get(position).mValue);
+        holder.oldPrice.setText(entities.get(position).originalPrice);
         return convertView;
     }
     class ViewHolder{

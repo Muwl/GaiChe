@@ -1,10 +1,12 @@
 package com.gaicheyunxiu.gaiche.activity;
 
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RadioButton;
@@ -235,6 +237,14 @@ public class OultSelActivity extends BaseActivity implements View.OnClickListene
 
             }
 
+        });
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(OultSelActivity.this, OutletDetailActivity.class);
+                intent.putExtra("shopId",entities.get(position).id);
+                startActivity(intent);
+            }
         });
 
 

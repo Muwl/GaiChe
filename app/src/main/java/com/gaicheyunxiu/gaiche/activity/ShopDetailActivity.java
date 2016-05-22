@@ -53,7 +53,7 @@ import java.util.TimerTask;
  * Created by Administrator on 2016/3/20.
  * 商品详情
  */
-public class ShopDetailActivity extends BaseActivity implements View.OnClickListener{
+public class ShopDetailActivity extends BaseActivity implements View.OnClickListener {
 
     private TextView title;
 
@@ -73,10 +73,9 @@ public class ShopDetailActivity extends BaseActivity implements View.OnClickList
 
     private LinearLayout galllin = null;
 
-
     private ShopDetailEntity detailEntity;
 
-    private EditText numView;
+    private TextView numView;
 
     private TextView name;
 
@@ -92,6 +91,8 @@ public class ShopDetailActivity extends BaseActivity implements View.OnClickList
 
     private TextView addCart;
 
+    private TextView buy;
+
     private TextView shopNo;
 
     private TextView afterservice;
@@ -102,7 +103,7 @@ public class ShopDetailActivity extends BaseActivity implements View.OnClickList
 
     private ShopGalleryAdapter galleryAdapter;
 
-    private  int width;
+    private int width;
 
     private Timer timer;
 
@@ -111,6 +112,10 @@ public class ShopDetailActivity extends BaseActivity implements View.OnClickList
     private List<EvaluationEntity> entities;
 
     private TextView infoView;
+
+    public  ImageView incream;
+
+    public ImageView add;
 
     private Handler handler = new Handler() {
         public void handleMessage(Message msg) {
@@ -123,7 +128,9 @@ public class ShopDetailActivity extends BaseActivity implements View.OnClickList
                     }
                     break;
             }
-        };
+        }
+
+        ;
     };
 
     @Override
@@ -134,36 +141,42 @@ public class ShopDetailActivity extends BaseActivity implements View.OnClickList
     }
 
     private void initView() {
-        width= DensityUtil.getScreenWidth(this);
-        id=getIntent().getStringExtra("id");
-        back= (ImageView) findViewById(R.id.title_back);
-        title= (TextView) findViewById(R.id.title_text);
+        width = DensityUtil.getScreenWidth(this);
+        id = getIntent().getStringExtra("id");
+        back = (ImageView) findViewById(R.id.title_back);
+        title = (TextView) findViewById(R.id.title_text);
         gallery = (MyGallery) findViewById(R.id.shopdetail_gallery);
-        numView = (EditText) findViewById(R.id.shopdetail_num);
+        numView = (TextView) findViewById(R.id.shopdetail_num);
         galllin = (LinearLayout) findViewById(R.id.shopdetail_lin);
-        listView= (ListView) findViewById(R.id.shopdetail_list);
-        name= (TextView) findViewById(R.id.shopdetail_name);
-        ratingBar= (RatingBar) findViewById(R.id.shopdetail_bar);
-        newPrice= (TextView) findViewById(R.id.shopdetail_newprice);
-        mView= (TextView) findViewById(R.id.shopdetail_m);
-        oldMoney= (TextView) findViewById(R.id.shopdetail_oldmoney);
-        volumeView= (TextView) findViewById(R.id.shopdetail_volume);
-        shopNo= (TextView) findViewById(R.id.shopdetail_no);
-        infoView= (TextView) findViewById(R.id.shopdetail_info);
-        addCart= (TextView) findViewById(R.id.shopdetail_addcart);
-        pro=  findViewById(R.id.shopdetail_pro);
-        afterservice= (TextView) findViewById(R.id.shopdetail_afterservice);
-        evalnum= (TextView) findViewById(R.id.shopdetail_evalnum);
-        evalscore= (TextView) findViewById(R.id.shopdetail_evalscore);
+        listView = (ListView) findViewById(R.id.shopdetail_list);
+        name = (TextView) findViewById(R.id.shopdetail_name);
+        ratingBar = (RatingBar) findViewById(R.id.shopdetail_bar);
+        newPrice = (TextView) findViewById(R.id.shopdetail_newprice);
+        mView = (TextView) findViewById(R.id.shopdetail_m);
+        oldMoney = (TextView) findViewById(R.id.shopdetail_oldmoney);
+        volumeView = (TextView) findViewById(R.id.shopdetail_volume);
+        shopNo = (TextView) findViewById(R.id.shopdetail_no);
+        infoView = (TextView) findViewById(R.id.shopdetail_info);
+        addCart = (TextView) findViewById(R.id.shopdetail_addcart);
+        add = (ImageView) findViewById(R.id.shopdetail_add);
+        incream = (ImageView) findViewById(R.id.shopdetail_incream);
+        buy = (TextView) findViewById(R.id.shopdetail_buy);
+        pro = findViewById(R.id.shopdetail_pro);
+        afterservice = (TextView) findViewById(R.id.shopdetail_afterservice);
+        evalnum = (TextView) findViewById(R.id.shopdetail_evalnum);
+        evalscore = (TextView) findViewById(R.id.shopdetail_evalscore);
 
 
-        entities=new ArrayList<>();
-        adapter=new ShopDetailAdapter(this,entities);
+        entities = new ArrayList<>();
+        adapter = new ShopDetailAdapter(this, entities);
         listView.setAdapter(adapter);
         title.setText("商品详情");
         title.setOnClickListener(this);
+        buy.setOnClickListener(this);
         addCart.setOnClickListener(this);
         back.setOnClickListener(this);
+        incream.setOnClickListener(this);
+        add.setOnClickListener(this);
         infoView.setOnClickListener(this);
         oldMoney.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
         getShopDetail(id);
@@ -172,19 +185,42 @@ public class ShopDetailActivity extends BaseActivity implements View.OnClickList
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.title_back:
                 finish();
                 break;
             case R.id.shopdetail_info:
-                Intent intent=new Intent(ShopDetailActivity.this,ShopDetailInfoActivity.class);
-                intent.putExtra("url",Constant.ROOT_PATH+"commodity/findIntroduction?id="+id);
+                Intent intent = new Intent(ShopDetailActivity.this, ShopDetailInfoActivity.class);
+                intent.putExtra("url", Constant.ROOT_PATH + "commodity/findIntroduction?id=" + id);
                 startActivity(intent);
                 break;
 
             case R.id.shopdetail_addcart:
                 addshoppingCart();
-            break;
+                break;
+            case R.id.shopdetail_buy:
+                Intent intent1=new Intent(ShopDetailActivity.this,ClearingActivity.class);
+                intent1.putExtra("flag",2);
+                intent1.putExtra("entity",detailEntity);
+                startActivity(intent1);
+                break;
+
+            case R.id.shopdetail_add:
+                if (detailEntity!=null){
+                    detailEntity.num=detailEntity.num+1;
+                    numView.setText(detailEntity.num+"");
+                }
+                break;
+
+            case R.id.shopdetail_incream:
+                if (detailEntity!=null){
+                    if (detailEntity.num>1){
+                        detailEntity.num=detailEntity.num-1;
+                        numView.setText(detailEntity.num+"");
+                    }
+
+                }
+                break;
         }
     }
 
@@ -197,7 +233,7 @@ public class ShopDetailActivity extends BaseActivity implements View.OnClickList
         HttpUtils utils = new HttpUtils();
         rp.addBodyParameter("id", id);
         utils.configTimeout(20000);
-        LogManager.LogShow("-----", Constant.ROOT_PATH+ "commodity/findById?id="+id,
+        LogManager.LogShow("-----", Constant.ROOT_PATH + "commodity/findById?id=" + id,
                 LogManager.ERROR);
         utils.send(HttpRequest.HttpMethod.POST, Constant.ROOT_PATH
                 + "commodity/findById", rp, new RequestCallBack<String>() {
@@ -223,8 +259,9 @@ public class ShopDetailActivity extends BaseActivity implements View.OnClickList
                     ReturnState state = gson.fromJson(arg0.result,
                             ReturnState.class);
                     if (Constant.RETURN_OK.equals(state.msg)) {
-                        ShopDetailState shopDetailState=gson.fromJson(arg0.result,ShopDetailState.class);
-                        detailEntity=shopDetailState.result;
+                        ShopDetailState shopDetailState = gson.fromJson(arg0.result, ShopDetailState.class);
+                        detailEntity = shopDetailState.result;
+                        detailEntity.num=1;
                         setValue();
                     } else if (Constant.TOKEN_ERR.equals(state.msg)) {
                         ToastUtils.displayShortToast(ShopDetailActivity.this,
@@ -244,18 +281,18 @@ public class ShopDetailActivity extends BaseActivity implements View.OnClickList
         });
     }
 
-    private void setValue(){
+    private void setValue() {
         name.setText(detailEntity.name);
         ratingBar.setStar(detailEntity.evaluationScore);
         newPrice.setText("￥" + detailEntity.presentPrice + "元");
-        mView.setText(detailEntity.MValue+"M");
-        oldMoney.setText("￥" +detailEntity.originalPrice+"元");
-        volumeView.setText("销量"+detailEntity.paymentNum+"笔");
+        mView.setText(detailEntity.MValue + "M");
+        oldMoney.setText("￥" + detailEntity.originalPrice + "元");
+        volumeView.setText("销量" + detailEntity.paymentNum + "笔");
         evalnum.setText("用户评论（" + detailEntity.evaluationNum + "）");
-        if (!ToosUtils.isStringEmpty(detailEntity.specification)){
+        if (!ToosUtils.isStringEmpty(detailEntity.specification)) {
             shopNo.setText(Html.fromHtml(detailEntity.specification));
         }
-        if (!ToosUtils.isStringEmpty(detailEntity.afterSalesService)){
+        if (!ToosUtils.isStringEmpty(detailEntity.afterSalesService)) {
             afterservice.setText(Html.fromHtml(detailEntity.afterSalesService));
         }
         evalscore.setText("商品综合满意度：" + detailEntity.evaluationScore + "分，共" + detailEntity.evaluationNum + "条");
@@ -372,8 +409,8 @@ public class ShopDetailActivity extends BaseActivity implements View.OnClickList
         RequestParams rp = new RequestParams();
         HttpUtils utils = new HttpUtils();
         rp.addBodyParameter("sign", ShareDataTool.getToken(this));
-        MyCarEntity carEntity=MyApplication.getInstance().getCarEntity();
-        if (carEntity!=null){
+        MyCarEntity carEntity = MyApplication.getInstance().getCarEntity();
+        if (carEntity != null) {
             rp.addBodyParameter("carTypeId", carEntity.carTypeId);
         }
         rp.addBodyParameter("commodityId", id);

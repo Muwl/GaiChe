@@ -2,6 +2,7 @@ package com.gaicheyunxiu.gaiche.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Handler;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -12,6 +13,10 @@ import com.gaicheyunxiu.gaiche.R;
 import com.gaicheyunxiu.gaiche.activity.AfterSaleActivity;
 import com.gaicheyunxiu.gaiche.activity.OrderEvaluteAvtivity;
 import com.gaicheyunxiu.gaiche.activity.ReqrefundActivity;
+import com.gaicheyunxiu.gaiche.model.ShopOrderVo;
+import com.lidroid.xutils.BitmapUtils;
+
+import java.util.List;
 
 /**
  * Created by Administrator on 2015/12/29.
@@ -20,23 +25,33 @@ import com.gaicheyunxiu.gaiche.activity.ReqrefundActivity;
 public class ShoporderItemAdapter  extends BaseAdapter{
 
     private Context context;
-    public ShoporderItemAdapter(Context context) {
+    private List<ShopOrderVo> entities;
+    private BitmapUtils bitmapUtils;
+    private int groupoi;
+    private Handler handler;
+    private String orderState;
+    public ShoporderItemAdapter(Context context,List<ShopOrderVo> entities,int groupoi,Handler handler,String orderState) {
         this.context = context;
+        this.entities = entities;
+        this.groupoi=groupoi;
+        this.handler=handler;
+        this.orderState=orderState;
+        bitmapUtils=new BitmapUtils(context);
     }
 
     @Override
     public int getCount() {
-        return 2;
+        return entities.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return null;
+        return entities.get(position);
     }
 
     @Override
     public long getItemId(int position) {
-        return 0;
+        return position;
     }
 
     @Override
@@ -61,10 +76,16 @@ public class ShoporderItemAdapter  extends BaseAdapter{
             holder= (ViewHolder) convertView.getTag();
         }
 
+        bitmapUtils.display(holder.icon, entities.get(position).briefImage);
+        holder.name.setText("【" + entities.get(position).name + "】" + entities.get(position).businessName);
+        holder.money.setText("￥" + entities.get(position).presentPrice + "元");
+        holder.m.setText("￥"+entities.get(position).mVaule+"M");
+        holder.oldmoney.setText("￥"+entities.get(position).originalPrice);
+        holder.m.setText("销量：" + entities.get(position).sales + "件");
         holder.orgbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(context, OrderEvaluteAvtivity.class);
+                Intent intent = new Intent(context, OrderEvaluteAvtivity.class);
                 context.startActivity(intent);
             }
         });
@@ -75,6 +96,21 @@ public class ShoporderItemAdapter  extends BaseAdapter{
                 context.startActivity(intent);
             }
         });
+
+        if ("0".equals(orderState)){
+            holder.div.setVisibility(View.GONE);
+            holder.lin.setVisibility(View.GONE);
+        }else if("2".equals(orderState)){
+            holder.div.setVisibility(View.VISIBLE);
+            holder.lin.setVisibility(View.VISIBLE);
+            holder.orgbtn.setText("确认收货");
+            holder.graybtn.setText("查看物流");
+        }else if("4".equals(orderState)){
+            holder.div.setVisibility(View.VISIBLE);
+            holder.lin.setVisibility(View.VISIBLE);
+            holder.orgbtn.setText("申请退货");
+            holder.graybtn.setText("评价");
+        }
         return convertView;
     }
     class ViewHolder{

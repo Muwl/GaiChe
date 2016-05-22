@@ -60,6 +60,7 @@
             android:orientation="vertical">
 
             <LinearLayout
+                android:id="@+id/service_pay_lin1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/write"
@@ -97,10 +98,12 @@
             </LinearLayout>
 
             <ImageView
+                android:id="@+id/service_pay_div1"
                 android:layout_width="match_parent"
                 android:layout_height="1px"
                 android:background="@color/bottom_div"/>
             <ImageView
+                android:id="@+id/service_pay_div2"
                 android:layout_width="match_parent"
                 android:layout_height="1px"
                 android:layout_marginTop="10dp"

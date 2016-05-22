@@ -18,8 +18,10 @@ import com.gaicheyunxiu.gaiche.model.OrderCommodityVo;
 import com.gaicheyunxiu.gaiche.model.ReturnState;
 import com.gaicheyunxiu.gaiche.model.ShopCartCommodityEntity;
 import com.gaicheyunxiu.gaiche.model.ShopCartEntity;
+import com.gaicheyunxiu.gaiche.model.ShopDetailEntity;
 import com.gaicheyunxiu.gaiche.utils.Constant;
 import com.gaicheyunxiu.gaiche.utils.LogManager;
+import com.gaicheyunxiu.gaiche.utils.MyApplication;
 import com.gaicheyunxiu.gaiche.utils.ShareDataTool;
 import com.gaicheyunxiu.gaiche.utils.ToastUtils;
 import com.gaicheyunxiu.gaiche.utils.ToosUtils;
@@ -31,6 +33,7 @@ import com.lidroid.xutils.http.ResponseInfo;
 import com.lidroid.xutils.http.callback.RequestCallBack;
 import com.lidroid.xutils.http.client.HttpRequest;
 
+import java.net.ContentHandler;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -86,6 +89,10 @@ public class ClearingActivity extends BaseActivity implements View.OnClickListen
 
     private ShopCartEntity shopCartEntity;
 
+    private TextView outSel;
+
+    private ShopDetailEntity shopDetailEntity;
+
     private int checkIndex=1;//0钱包 1支付宝 2 微信 3银联
 
     private int flag;//1代表购物车  2代表商城
@@ -98,7 +105,7 @@ public class ClearingActivity extends BaseActivity implements View.OnClickListen
         if (flag==1){
             shopCartEntity= (ShopCartEntity) getIntent().getSerializableExtra("entity");
         }else if(flag==2){
-
+            shopDetailEntity= (ShopDetailEntity) getIntent().getSerializableExtra("entity");
         }
         initView();
     }
@@ -111,6 +118,7 @@ public class ClearingActivity extends BaseActivity implements View.OnClickListen
         address= (TextView) findViewById(R.id.clearing_address);
         addressview=findViewById(R.id.clearing_addview);
         delivery= (TextView) findViewById(R.id.clearing_delivery);
+        outSel= (TextView) findViewById(R.id.clearing_outsel);
         wallet=findViewById(R.id.pay_wallet);
         walletcb= (CheckBox) findViewById(R.id.pay_wallet_cb);
         zhifubao=findViewById(R.id.pay_zhifubao);
@@ -126,7 +134,13 @@ public class ClearingActivity extends BaseActivity implements View.OnClickListen
         submit= (TextView) findViewById(R.id.clearing_ok);
         pro=  findViewById(R.id.pay_freight_pro);
 
-        title.setText("去结算");
+        if (flag==1){
+            title.setText("去结算");
+            outSel.setVisibility(View.GONE);
+        }else{
+            title.setText("立即购买");
+            outSel.setVisibility(View.VISIBLE);
+        }
         back.setOnClickListener(this);
         addressview.setOnClickListener(this);
         zhifubao.setOnClickListener(this);
@@ -143,10 +157,16 @@ public class ClearingActivity extends BaseActivity implements View.OnClickListen
 
         int m=0;
         double smoney=0;
-        for (int i=0;i<shopCartEntity.cartCommodityVOs.size();i++){
-            int num=Integer.valueOf(shopCartEntity.cartCommodityVOs.get(i).amount);
-            m=m+num;
-            smoney=smoney+Double.valueOf(shopCartEntity.cartCommodityVOs.get(i).commodityPrice)*num;
+
+        if (flag==1) {
+            for (int i = 0; i < shopCartEntity.cartCommodityVOs.size(); i++) {
+                int num = Integer.valueOf(shopCartEntity.cartCommodityVOs.get(i).amount);
+                m = m + num;
+                smoney = smoney + Double.valueOf(shopCartEntity.cartCommodityVOs.get(i).commodityPrice) * num;
+            }
+        }else if(flag==2){
+            m=shopDetailEntity.num;
+            smoney =  Double.valueOf(shopDetailEntity.presentPrice) * m;
         }
 
         shopPrice.setText("商品价格￥"+smoney);
@@ -246,7 +266,7 @@ public class ClearingActivity extends BaseActivity implements View.OnClickListen
                         addressVo=addAdressState.result;
                         person.setText("收货人："+addressVo.name);
                         phone.setText(addressVo.phone);
-                        address.setText("收货地址："+addressVo.province+addressVo.city+addressVo.district+addressVo.address);
+                        address.setText("收货地址：" + addressVo.province + addressVo.city + addressVo.district + addressVo.address);
                         getCost();
                     } else if (Constant.TOKEN_ERR.equals(state.msg)) {
                         ToastUtils.displayShortToast(ClearingActivity.this,
@@ -330,7 +350,6 @@ public class ClearingActivity extends BaseActivity implements View.OnClickListen
 
         CommodifyOrderEntity commodifyOrderEntity=new CommodifyOrderEntity();
         commodifyOrderEntity.payWay= String.valueOf(checkIndex);
-        commodifyOrderEntity.carTypeId=shopCartEntity.carTypeId;
         commodifyOrderEntity.receiveProvince=addressVo.province;
         commodifyOrderEntity.receiveCity=addressVo.city;
         commodifyOrderEntity.receiveDistrict=addressVo.district;
@@ -338,17 +357,38 @@ public class ClearingActivity extends BaseActivity implements View.OnClickListen
         commodifyOrderEntity.name=addressVo.name;
         commodifyOrderEntity.mobile=addressVo.mobile;
         commodifyOrderEntity.isShoppingCart= String.valueOf(flag);
-        List<CommodifyOrderVo> commodifyOrderVos=new ArrayList<>();
-        for (int i=0;i<shopCartEntity.cartCommodityVOs.size();i++){
-            ShopCartCommodityEntity shopCartCommodityEntity=shopCartEntity.cartCommodityVOs.get(i);
-            CommodifyOrderVo commodifyOrderVo=new CommodifyOrderVo();
-            commodifyOrderVo.commodityId=shopCartCommodityEntity.commodityId;
-            commodifyOrderVo.price=shopCartCommodityEntity.commodityPrice;
-            commodifyOrderVo.mVaule=shopCartCommodityEntity.mValue;
-            commodifyOrderVo.num= Double.parseDouble(shopCartCommodityEntity.amount);
-            commodifyOrderVos.add(commodifyOrderVo);
+        if (flag==1){
+            commodifyOrderEntity.carTypeId=shopCartEntity.carTypeId;
+            List<CommodifyOrderVo> commodifyOrderVos=new ArrayList<>();
+            for (int i=0;i<shopCartEntity.cartCommodityVOs.size();i++){
+                ShopCartCommodityEntity shopCartCommodityEntity=shopCartEntity.cartCommodityVOs.get(i);
+                CommodifyOrderVo commodifyOrderVo=new CommodifyOrderVo();
+                commodifyOrderVo.commodityId=shopCartCommodityEntity.commodityId;
+                commodifyOrderVo.price=shopCartCommodityEntity.commodityPrice;
+                commodifyOrderVo.mVaule=shopCartCommodityEntity.mValue;
+                commodifyOrderVo.num= Double.parseDouble(shopCartCommodityEntity.amount);
+                commodifyOrderVo.freight= "0";
+                commodifyOrderVos.add(commodifyOrderVo);
+            }
+            commodifyOrderEntity.vos=commodifyOrderVos;
+        }else if(flag==2){
+            if (MyApplication.getInstance().getCarEntity()!=null) {
+                commodifyOrderEntity.carTypeId = MyApplication.getInstance().getCarEntity().carTypeId;
+            }
+                List<CommodifyOrderVo> commodifyOrderVos=new ArrayList<>();
+                CommodifyOrderVo commodifyOrderVo=new CommodifyOrderVo();
+                commodifyOrderVo.commodityId=shopDetailEntity.id;
+                commodifyOrderVo.merchantId=shopDetailEntity.merchantId;
+                commodifyOrderVo.price= String.valueOf(shopDetailEntity.presentPrice);
+                commodifyOrderVo.mVaule= String.valueOf(shopDetailEntity.MValue);
+                commodifyOrderVo.num= shopDetailEntity.num;
+                commodifyOrderVo.freight= "0";
+                commodifyOrderVos.add(commodifyOrderVo);
+
+            commodifyOrderEntity.vos=commodifyOrderVos;
         }
-        commodifyOrderEntity.vos=commodifyOrderVos;
+
+
         return commodifyOrderEntity;
     }
 
@@ -368,16 +408,23 @@ public class ClearingActivity extends BaseActivity implements View.OnClickListen
         orderCommodityVo.receiveDistrict=addressVo.district;
         orderCommodityVo.receiveDetail=addressVo.address;
         List<OrderCommodityDigestEntity> commodityDigestEntities=new ArrayList<>();
-        for (int i=0;i<shopCartEntity.cartCommodityVOs.size();i++) {
-            ShopCartCommodityEntity shopCartCommodityEntity = shopCartEntity.cartCommodityVOs.get(i);
+        if (flag==1){
+            for (int i=0;i<shopCartEntity.cartCommodityVOs.size();i++) {
+                ShopCartCommodityEntity shopCartCommodityEntity = shopCartEntity.cartCommodityVOs.get(i);
+                OrderCommodityDigestEntity digestEntity=new OrderCommodityDigestEntity();
+                digestEntity.commodityId=shopCartCommodityEntity.commodityId;
+                digestEntity.num=shopCartCommodityEntity.amount;
+                commodityDigestEntities.add(digestEntity);
+            }
+        }else{
             OrderCommodityDigestEntity digestEntity=new OrderCommodityDigestEntity();
-            digestEntity.commodityId=shopCartCommodityEntity.commodityId;
-            digestEntity.num=shopCartCommodityEntity.amount;
+            digestEntity.commodityId=shopDetailEntity.id;
+            digestEntity.num= String.valueOf(shopDetailEntity.num);
             commodityDigestEntities.add(digestEntity);
         }
+
         orderCommodityVo.list=commodityDigestEntities;
         rp.addBodyParameter("orderDigestVoStr", new Gson().toJson(orderCommodityVo));
-
         LogManager.LogShow("------",Constant.ROOT_PATH+ url+"?sign="+ ShareDataTool.getToken(this)+"&orderDigestVoStr="+new Gson().toJson(orderCommodityVo),LogManager.ERROR);
         utils.send(HttpRequest.HttpMethod.POST, Constant.ROOT_PATH
                 + url, rp, new RequestCallBack<String>() {
@@ -403,7 +450,7 @@ public class ClearingActivity extends BaseActivity implements View.OnClickListen
                     if (Constant.RETURN_OK.equals(state.msg)) {
                         LogManager.LogShow("-----", arg0.result,
                                 LogManager.ERROR);
-
+                        PaymentDialog dialog=new PaymentDialog(ClearingActivity.this);
                     } else if (Constant.TOKEN_ERR.equals(state.msg)) {
                         ToastUtils.displayShortToast(ClearingActivity.this,
                                 "验证错误，请重新登录");
@@ -419,6 +466,8 @@ public class ClearingActivity extends BaseActivity implements View.OnClickListen
             }
         });
     }
+
+
 
 
 

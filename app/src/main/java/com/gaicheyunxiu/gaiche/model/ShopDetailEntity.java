@@ -35,5 +35,7 @@ public class ShopDetailEntity implements Serializable {
     public int paymentNum;
     public double evaluationScore;
 
+    public int num;
+
 
 }

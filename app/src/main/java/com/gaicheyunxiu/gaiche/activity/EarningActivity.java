@@ -129,8 +129,8 @@ public class EarningActivity extends BaseActivity implements View.OnClickListene
                     if (Constant.RETURN_OK.equals(state.msg)) {
                         EarnIncomeState earnIncomeState=gson.fromJson(arg0.result,EarnIncomeState.class);
                         incomeEntity=earnIncomeState.result;
-                        margin.setText(incomeEntity.equityMoney);
-                        m.setText(incomeEntity.earningsMvalue);
+                        margin.setText("￥"+incomeEntity.equityMoney);
+                        m.setText("￥"+incomeEntity.earningsMvalue);
                     } else if (Constant.TOKEN_ERR.equals(state.msg)) {
                         ToastUtils.displayShortToast(EarningActivity.this,
                                 "验证错误，请重新登录");

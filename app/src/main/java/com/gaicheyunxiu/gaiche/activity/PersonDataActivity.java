@@ -16,6 +16,7 @@ import com.gaicheyunxiu.gaiche.R;
 import com.gaicheyunxiu.gaiche.dialog.PhotoDialog;
 import com.gaicheyunxiu.gaiche.model.PersonDataEntity;
 import com.gaicheyunxiu.gaiche.model.PersonDynamicEntity;
+import com.gaicheyunxiu.gaiche.model.RegiterEntity;
 import com.gaicheyunxiu.gaiche.model.ReturnState;
 import com.gaicheyunxiu.gaiche.utils.Constant;
 import com.gaicheyunxiu.gaiche.utils.LogManager;
@@ -317,7 +318,12 @@ public class PersonDataActivity extends BaseActivity implements View.OnClickList
                                 LogManager.ERROR);
                         PersonDataEntity personDataEntity = gson.fromJson(arg0.result, PersonDataEntity.class);
                         setValue(personDataEntity.result);
-
+                        RegiterEntity regiterEntity=ShareDataTool.getRegiterEntity(PersonDataActivity.this);
+                        regiterEntity.icon=personDataEntity.result.icon;
+                        regiterEntity.gcCode=personDataEntity.result.gcCode;
+                        regiterEntity.nickname=personDataEntity.result.nickname;
+                        regiterEntity.mobile=personDataEntity.result.mobile;
+                        ShareDataTool.SaveInfo(PersonDataActivity.this,regiterEntity);
                     } else if (Constant.TOKEN_ERR.equals(state.msg)) {
                         ToastUtils.displayShortToast(PersonDataActivity.this,
                                 "验证错误，请重新登录");

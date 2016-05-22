@@ -14,6 +14,7 @@ import com.gaicheyunxiu.gaiche.model.AddAdressState;
 import com.gaicheyunxiu.gaiche.model.AddressVo;
 import com.gaicheyunxiu.gaiche.model.MyCarEntity;
 import com.gaicheyunxiu.gaiche.model.ReturnState;
+import com.gaicheyunxiu.gaiche.model.SerOrderEntity;
 import com.gaicheyunxiu.gaiche.model.ServiceOrderUp;
 import com.gaicheyunxiu.gaiche.model.ServiceOrderVo;
 import com.gaicheyunxiu.gaiche.model.ShopEvaluationState;
@@ -76,7 +77,7 @@ public class ServicePayActivity extends  BaseActivity implements View.OnClickLis
 
     private int checkIndex=0;//0钱包 1支付宝 2 微信 3银联
 
-    private int flag;//1门店详情进入
+    private int flag;//1门店详情进入  2从服务订单付款
 
     private String shopId;
 
@@ -85,6 +86,14 @@ public class ServicePayActivity extends  BaseActivity implements View.OnClickLis
     private AddressVo addressVo;
 
     private double totalMoney;
+
+    private SerOrderEntity serOrderEntity;
+
+    private View lin1;
+
+    private ImageView div1;
+
+    private ImageView div2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -101,7 +110,7 @@ public class ServicePayActivity extends  BaseActivity implements View.OnClickLis
         wallet=findViewById(R.id.servicepay_wallet);
         person= (TextView) findViewById(R.id.service_pay_person);
         phone= (TextView) findViewById(R.id.service_pay_phone);
-        lin=findViewById(R.id.servicepay_lin);
+        lin1=findViewById(R.id.service_pay_lin1);
         num= (TextView) findViewById(R.id.servicepay_num);
         walletcb= (CheckBox) findViewById(R.id.servicepay_wallet_cb);
         zhifubao=findViewById(R.id.servicepay_zhifubao);
@@ -113,6 +122,9 @@ public class ServicePayActivity extends  BaseActivity implements View.OnClickLis
         money= (TextView) findViewById(R.id.servicepay_money);
         submit= (TextView) findViewById(R.id.servicepay_ok);
         pro= findViewById(R.id.servicepay_pro);
+        div1= (ImageView) findViewById(R.id.service_pay_div1);
+        div2= (ImageView) findViewById(R.id.service_pay_div2);
+        lin= findViewById(R.id.servicepay_lin);
 
         title.setText("去结算");
         back.setOnClickListener(this);
@@ -134,8 +146,21 @@ public class ServicePayActivity extends  BaseActivity implements View.OnClickLis
             num.setText("共"+shopServiceEntityList.size()+"项服务");
             totalMoney=calMoney(shopServiceEntityList);
             money.setText("￥"+totalMoney);
+            div1.setVisibility(View.VISIBLE);
+            lin.setVisibility(View.VISIBLE);
+            lin1.setVisibility(View.VISIBLE);
+            div2.setVisibility(View.VISIBLE);
+        }else if(flag==2){
+            serOrderEntity= (SerOrderEntity) getIntent().getSerializableExtra("entity");
+            div1.setVisibility(View.GONE);
+            div2.setVisibility(View.GONE);
+            lin.setVisibility(View.GONE);
+            lin1.setVisibility(View.GONE);
+            money.setText("￥" + serOrderEntity.totalPrice);
         }
-        getDefaultAddress();
+        if (flag!=2){
+            getDefaultAddress();
+        }
 
     }
 
@@ -253,32 +278,37 @@ public class ServicePayActivity extends  BaseActivity implements View.OnClickLis
      * 结算服务订单
      */
     private void getServiceOrder() {
-        if (addressVo==null){
-            ToastUtils.displayShortToast(this,"请选择收货地址！");
-        }
         RequestParams rp = new RequestParams();
         HttpUtils utils = new HttpUtils();
         utils.configTimeout(20000);
-        String url="serviceOrder/add";
         rp.addBodyParameter("sign", ShareDataTool.getToken(this));
-        ServiceOrderUp serviceOrderUp=new ServiceOrderUp();
-        serviceOrderUp.shopId=shopId;
-        MyCarEntity myCarEntity= MyApplication.getInstance().getCarEntity();
-        if (myCarEntity!=null){
-            serviceOrderUp.carTypeId=myCarEntity.carTypeId;
+        String url="serviceOrder/add";
+        if (flag==1){
+            if (addressVo==null){
+                ToastUtils.displayShortToast(this,"请选择收货地址！");
+            }
+            ServiceOrderUp serviceOrderUp=new ServiceOrderUp();
+            serviceOrderUp.shopId=shopId;
+            MyCarEntity myCarEntity= MyApplication.getInstance().getCarEntity();
+            if (myCarEntity!=null){
+                serviceOrderUp.carTypeId=myCarEntity.carTypeId;
+            }
+            serviceOrderUp.defAddId=addressVo.id;
+            serviceOrderUp.payment=String.valueOf(checkIndex);
+            List<ServiceOrderVo> serviceOrderVos=new ArrayList<>();
+            for (int i=0;i<shopServiceEntityList.size();i++){
+                ServiceOrderVo serviceOrderVo=new ServiceOrderVo();
+                serviceOrderVo.serviceId=shopServiceEntityList.get(i).id;
+                serviceOrderVo.num= String.valueOf(shopServiceEntityList.get(i).num);
+                serviceOrderVos.add(serviceOrderVo);
+            }
+            serviceOrderUp.service=serviceOrderVos;
+            rp.addBodyParameter("order",new Gson().toJson(serviceOrderUp));
+            LogManager.LogShow("------", Constant.ROOT_PATH + url + "?sign=" + ShareDataTool.getToken(this) + "&order=" + new Gson().toJson(serviceOrderUp), LogManager.ERROR);
+        }else if (flag==2){
+
         }
-        serviceOrderUp.defAddId=addressVo.id;
-        serviceOrderUp.payment=String.valueOf(checkIndex);
-        List<ServiceOrderVo> serviceOrderVos=new ArrayList<>();
-        for (int i=0;i<shopServiceEntityList.size();i++){
-            ServiceOrderVo serviceOrderVo=new ServiceOrderVo();
-            serviceOrderVo.serviceId=shopServiceEntityList.get(i).id;
-            serviceOrderVo.num= String.valueOf(shopServiceEntityList.get(i).num);
-            serviceOrderVos.add(serviceOrderVo);
-        }
-        serviceOrderUp.service=serviceOrderVos;
-        rp.addBodyParameter("order",new Gson().toJson(serviceOrderUp));
-        LogManager.LogShow("------",Constant.ROOT_PATH + url+"?sign="+ShareDataTool.getToken(this)+"&order="+new Gson().toJson(serviceOrderUp),LogManager.ERROR);
+
         utils.send(HttpRequest.HttpMethod.POST, Constant.ROOT_PATH
                 + url, rp, new RequestCallBack<String>() {
             @Override
@@ -302,7 +332,7 @@ public class ServicePayActivity extends  BaseActivity implements View.OnClickLis
                     if (Constant.RETURN_OK.equals(state.msg)) {
                         LogManager.LogShow("-----", arg0.result,
                                 LogManager.ERROR);
-
+                        PaymentDialog dialog=new PaymentDialog(ServicePayActivity.this);
                     } else if (Constant.TOKEN_ERR.equals(state.msg)) {
                         ToastUtils.displayShortToast(ServicePayActivity.this,
                                 "验证错误，请重新登录");

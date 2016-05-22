@@ -167,12 +167,12 @@
                         android:textSize="@dimen/first_font" />
 
                     <ImageView
-                        android:id="@+id/cart_item_item_incream"
+                        android:id="@+id/shopdetail_incream"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:src="@drawable/num_incream_btn" />
 
-                    <EditText
+                    <TextView
                         android:id="@+id/shopdetail_num"
                         android:layout_width="50dp"
                         android:layout_height="match_parent"

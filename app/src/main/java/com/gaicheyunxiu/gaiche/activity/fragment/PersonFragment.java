@@ -146,7 +146,6 @@ public class PersonFragment extends Fragment implements View.OnClickListener{
         settingView.setOnClickListener(this);
         bitmapUtils=new BitmapUtils(getActivity());
         reFushPersonInfo();
-        getDynamic();
     }
 
     @Override
@@ -262,6 +261,7 @@ public class PersonFragment extends Fragment implements View.OnClickListener{
     public void onResume() {
         super.onResume();
         getDynamic();
+        reFushPersonInfo();
     }
 
     /**
@@ -275,6 +275,8 @@ public class PersonFragment extends Fragment implements View.OnClickListener{
         rp.addBodyParameter("sign", ShareDataTool.getToken(getActivity()));
         HttpUtils utils = new HttpUtils();
         utils.configTimeout(20000);
+        LogManager.LogShow("-----", Constant.ROOT_PATH + "user/findUserDynamic?sign="+ShareDataTool.getToken(getActivity()),
+                LogManager.ERROR);
         utils.send(HttpRequest.HttpMethod.POST, Constant.ROOT_PATH
                 + "user/findUserDynamic", rp, new RequestCallBack<String>() {
             @Override
@@ -308,7 +310,7 @@ public class PersonFragment extends Fragment implements View.OnClickListener{
                                 (String) state.result);
                     }
                 } catch (Exception e) {
-                    ToastUtils.displaySendFailureToast(getActivity());
+//                    ToastUtils.displaySendFailureToast(getActivity());
                 }
 
             }

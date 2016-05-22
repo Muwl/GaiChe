@@ -6,6 +6,7 @@ import com.lidroid.xutils.DbUtils;
 import com.lidroid.xutils.db.sqlite.Selector;
 import com.lidroid.xutils.exception.DbException;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -44,4 +45,56 @@ public class CityDBUtils {
         }
 
     }
+
+    /**
+     * 获取省
+     * @param context
+     * @return
+     */
+    public static List<CityEntity> getProvinces(Context context){
+        DbUtils dbUtils=instance(context);
+        try {
+            List<CityEntity> cityEntities=dbUtils.findAll(Selector.from(CityEntity.class).where("level_type","=","1"));
+            return  cityEntities;
+        } catch (DbException e) {
+            e.printStackTrace();
+            return  new ArrayList<>();
+        }
+
+    }
+
+    /**
+     * 获取市根据省
+     * @param context
+     * @return
+     */
+    public static List<CityEntity> getCity(Context context,String proId){
+        DbUtils dbUtils=instance(context);
+        try {
+            List<CityEntity> cityEntities=dbUtils.findAll(Selector.from(CityEntity.class).where("level_type", "=", "2").and("parent_id", "=", proId));
+            return  cityEntities;
+        } catch (DbException e) {
+            e.printStackTrace();
+            return  new ArrayList<>();
+        }
+
+    }
+
+    /**
+     * 获取地区根据市
+     * @param context
+     * @return
+     */
+    public static List<CityEntity> getAreas(Context context,String cityId){
+        DbUtils dbUtils=instance(context);
+        try {
+            List<CityEntity> cityEntities=dbUtils.findAll(Selector.from(CityEntity.class).where("level_type","=","3").and("parent_id","=",cityId));
+            return  cityEntities;
+        } catch (DbException e) {
+            e.printStackTrace();
+            return  new ArrayList<>();
+        }
+
+    }
+
 }
