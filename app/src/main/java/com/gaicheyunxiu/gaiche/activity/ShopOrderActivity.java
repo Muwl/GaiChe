@@ -1,5 +1,6 @@
 package com.gaicheyunxiu.gaiche.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -13,10 +14,13 @@ import android.widget.TextView;
 
 import com.gaicheyunxiu.gaiche.R;
 import com.gaicheyunxiu.gaiche.adapter.ShopOrderAdapter;
+import com.gaicheyunxiu.gaiche.dialog.CustomeConDialog;
+import com.gaicheyunxiu.gaiche.dialog.CustomeDialog;
 import com.gaicheyunxiu.gaiche.model.CrowCommityState;
 import com.gaicheyunxiu.gaiche.model.ReturnState;
 import com.gaicheyunxiu.gaiche.model.ShopOrderEntity;
 import com.gaicheyunxiu.gaiche.model.ShopOrderState;
+import com.gaicheyunxiu.gaiche.model.ShopOrderVo;
 import com.gaicheyunxiu.gaiche.utils.Constant;
 import com.gaicheyunxiu.gaiche.utils.LogManager;
 import com.gaicheyunxiu.gaiche.utils.ShareDataTool;
@@ -66,7 +70,65 @@ public class ShopOrderActivity extends  BaseActivity implements View.OnClickList
     private Handler handler=new Handler(){
         @Override
         public void handleMessage(Message msg) {
+            switch (msg.what){
+                case 1336:
+                    //查看物流
+                    int groupPoi=msg.arg2;
+                    int position=msg.arg1;
+                    break;
+                case 1337:
+                    //评价
+                    int groupPoi1=msg.arg2;
+                    int position1=msg.arg1;
 
+                    Intent intent = new Intent(ShopOrderActivity.this, OrderEvaluteAvtivity.class);
+                    intent.putExtra("orderId",entities.get(groupPoi1).orderId);
+                    intent.putExtra("createDate", entities.get(groupPoi1).createDate);
+                    if ("0".equals(entities.get(groupPoi1).split)){
+                        intent.putExtra("entity", entities.get(groupPoi1).orderListVos.get(position1));
+                    }else{
+                        intent.putExtra("entity", entities.get(groupPoi1).vos.get(position1));
+                    }
+                    startActivity(intent);
+                    break;
+                case 1556:
+                    //付款
+                    int position3=msg.arg1;
+
+                    break;
+
+                case CustomeDialog.RET_OK:
+                    int flag2=msg.arg2;
+                    if (flag2==-1){
+                        //确定取消订单
+                        int position2=msg.arg1;
+                        cancelOrder(position2);
+                    }else if(flag2==-2){
+                        //确定删除订单
+                        int position2=msg.arg1;
+                        delOrder(position2);
+                    }
+
+                    break;
+
+                case CustomeConDialog.RET__OK:
+                    int flag= (int) msg.obj;
+                    if (flag==-1){
+                        //确定收货
+                        int groupPoi4=msg.arg2;
+                        int position4=msg.arg1;
+                        confirmOrder(groupPoi4,position4);
+
+                    }else if(flag==-2){
+                        //申请退货
+                        int groupPoi4=msg.arg2;
+                        int position4=msg.arg1;
+                        refundOrder(groupPoi4,position4);
+
+                    }
+
+                    break;
+            }
         }
     };
 

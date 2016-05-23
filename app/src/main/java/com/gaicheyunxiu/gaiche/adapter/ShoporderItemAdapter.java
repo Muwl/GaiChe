@@ -3,6 +3,7 @@ package com.gaicheyunxiu.gaiche.adapter;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Handler;
+import android.os.Message;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -13,6 +14,7 @@ import com.gaicheyunxiu.gaiche.R;
 import com.gaicheyunxiu.gaiche.activity.AfterSaleActivity;
 import com.gaicheyunxiu.gaiche.activity.OrderEvaluteAvtivity;
 import com.gaicheyunxiu.gaiche.activity.ReqrefundActivity;
+import com.gaicheyunxiu.gaiche.dialog.CustomeConDialog;
 import com.gaicheyunxiu.gaiche.dialog.CustomeDialog;
 import com.gaicheyunxiu.gaiche.model.ShopOrderVo;
 import com.lidroid.xutils.BitmapUtils;
@@ -56,7 +58,7 @@ public class ShoporderItemAdapter  extends BaseAdapter{
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         ViewHolder holder=null;
         if (convertView==null){
             holder=new ViewHolder();
@@ -83,13 +85,13 @@ public class ShoporderItemAdapter  extends BaseAdapter{
         holder.m.setText("￥"+entities.get(position).mVaule+"M");
         holder.oldmoney.setText("￥" + entities.get(position).originalPrice);
         holder.m.setText("销量：" + entities.get(position).sales + "件");
-        holder.orgbtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(context, OrderEvaluteAvtivity.class);
-                context.startActivity(intent);
-            }
-        });
+//        holder.orgbtn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(context, OrderEvaluteAvtivity.class);
+//                context.startActivity(intent);
+//            }
+//        });
         holder.graybtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -106,18 +108,50 @@ public class ShoporderItemAdapter  extends BaseAdapter{
             holder.lin.setVisibility(View.VISIBLE);
             holder.orgbtn.setText("确认收货");
             holder.graybtn.setText("查看物流");
+
+            holder.orgbtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    CustomeConDialog customeConDialog = new CustomeConDialog(context, handler, "确定收货？", position, groupoi, -1);
+                }
+            });
+            holder.graybtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Message message=new Message();
+                    message.what=1336;
+                    message.arg1=position;
+                    message.arg2=groupoi;
+                    handler.sendMessage(message);
+                }
+            });
+
+
         }else if("4".equals(orderState)){
             holder.div.setVisibility(View.VISIBLE);
             holder.lin.setVisibility(View.VISIBLE);
             holder.orgbtn.setText("申请退货");
             holder.graybtn.setText("评价");
+
+            holder.orgbtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    CustomeConDialog customeConDialog = new CustomeConDialog(context, handler, "确定申请退货？", position, groupoi, -2);
+                }
+            });
+
+            holder.graybtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Message message=new Message();
+                    message.what=1337;
+                    message.arg1=position;
+                    message.arg2=groupoi;
+                    handler.sendMessage(message);
+                }
+            });
         }
 
-        holder.orgbtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-            }
-        });
         return convertView;
     }
     class ViewHolder{

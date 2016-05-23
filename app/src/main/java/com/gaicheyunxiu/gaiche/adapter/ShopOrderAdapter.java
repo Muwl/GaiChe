@@ -2,6 +2,7 @@ package com.gaicheyunxiu.gaiche.adapter;
 
 import android.content.Context;
 import android.os.Handler;
+import android.os.Message;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -9,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.gaicheyunxiu.gaiche.R;
+import com.gaicheyunxiu.gaiche.dialog.CustomeDialog;
 import com.gaicheyunxiu.gaiche.model.ShopOrderEntity;
 import com.gaicheyunxiu.gaiche.model.ShopOrderVo;
 import com.gaicheyunxiu.gaiche.view.MyListView;
@@ -47,7 +49,7 @@ public class ShopOrderAdapter extends BaseAdapter{
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         ViewHolder holder=null;
         if (convertView==null){
             holder=new ViewHolder();
@@ -76,6 +78,22 @@ public class ShopOrderAdapter extends BaseAdapter{
             holder.orgbtn.setVisibility(View.VISIBLE);
             holder.graybtn.setText("取消订单");
             holder.orgbtn.setText("\u3000付款\u3000");
+            holder.graybtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    CustomeDialog customeDialog = new CustomeDialog(context, handler, "确定取消订单？", position, -1);
+                }
+            });
+
+            holder.orgbtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Message message=new Message();
+                    message.what=1556;
+                    message.arg1=position;
+                    handler.sendMessage(message);
+                }
+            });
 
         }else if("2".equals(entities.get(position).orderState)){
             holder.state.setText("待收货");
@@ -90,6 +108,13 @@ public class ShopOrderAdapter extends BaseAdapter{
             holder.graybtn.setVisibility(View.VISIBLE);
             holder.orgbtn.setVisibility(View.GONE);
             holder.graybtn.setText("删除订单");
+
+            holder.graybtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    CustomeDialog customeDialog = new CustomeDialog(context, handler, "确定删除订单？", position, -2);
+                }
+            });
         }
         List<ShopOrderVo> shopOrderVos=null;
         if ("0".equals(entities.get(position).split)){
