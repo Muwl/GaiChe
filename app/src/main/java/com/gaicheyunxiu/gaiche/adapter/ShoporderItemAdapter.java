@@ -13,6 +13,7 @@ import com.gaicheyunxiu.gaiche.R;
 import com.gaicheyunxiu.gaiche.activity.AfterSaleActivity;
 import com.gaicheyunxiu.gaiche.activity.OrderEvaluteAvtivity;
 import com.gaicheyunxiu.gaiche.activity.ReqrefundActivity;
+import com.gaicheyunxiu.gaiche.dialog.CustomeDialog;
 import com.gaicheyunxiu.gaiche.model.ShopOrderVo;
 import com.lidroid.xutils.BitmapUtils;
 
@@ -80,7 +81,7 @@ public class ShoporderItemAdapter  extends BaseAdapter{
         holder.name.setText("【" + entities.get(position).name + "】" + entities.get(position).businessName);
         holder.money.setText("￥" + entities.get(position).presentPrice + "元");
         holder.m.setText("￥"+entities.get(position).mVaule+"M");
-        holder.oldmoney.setText("￥"+entities.get(position).originalPrice);
+        holder.oldmoney.setText("￥" + entities.get(position).originalPrice);
         holder.m.setText("销量：" + entities.get(position).sales + "件");
         holder.orgbtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -111,6 +112,12 @@ public class ShoporderItemAdapter  extends BaseAdapter{
             holder.orgbtn.setText("申请退货");
             holder.graybtn.setText("评价");
         }
+
+        holder.orgbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+            }
+        });
         return convertView;
     }
     class ViewHolder{

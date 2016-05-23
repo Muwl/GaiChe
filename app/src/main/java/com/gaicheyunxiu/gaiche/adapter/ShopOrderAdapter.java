@@ -1,6 +1,7 @@
 package com.gaicheyunxiu.gaiche.adapter;
 
 import android.content.Context;
+import android.os.Handler;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -8,7 +9,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.gaicheyunxiu.gaiche.R;
+import com.gaicheyunxiu.gaiche.model.ShopOrderEntity;
+import com.gaicheyunxiu.gaiche.model.ShopOrderVo;
 import com.gaicheyunxiu.gaiche.view.MyListView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Administrator on 2015/12/29.
@@ -17,23 +23,27 @@ import com.gaicheyunxiu.gaiche.view.MyListView;
 public class ShopOrderAdapter extends BaseAdapter{
 
     private Context context;
+    private List<ShopOrderEntity> entities;
+    private Handler handler;
 
-    public ShopOrderAdapter(Context context) {
+    public ShopOrderAdapter(Context context,List<ShopOrderEntity> entities,Handler handler) {
         this.context = context;
+        this.entities=entities;
+        this.handler=handler;
     }
     @Override
     public int getCount() {
-        return 3;
+        return entities.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return null;
+        return entities.get(position);
     }
 
     @Override
     public long getItemId(int position) {
-        return 0;
+        return position;
     }
 
     @Override
@@ -55,7 +65,39 @@ public class ShopOrderAdapter extends BaseAdapter{
         }else{
             holder= (ViewHolder) convertView.getTag();
         }
-        ShoporderItemAdapter adapter=new ShoporderItemAdapter(context);
+        holder.orderno.setText("订单号："+entities.get(position).orderId);
+        holder.money.setText("￥"+entities.get(position).price+"元");
+        holder.time.setText(entities.get(position).createDate);
+        if ("0".equals(entities.get(position).orderState)){
+            holder.state.setText("代付款");
+            holder.money.setVisibility(View.VISIBLE);
+            holder.div.setVisibility(View.VISIBLE);
+            holder.graybtn.setVisibility(View.VISIBLE);
+            holder.orgbtn.setVisibility(View.VISIBLE);
+            holder.graybtn.setText("取消订单");
+            holder.orgbtn.setText("\u3000付款\u3000");
+
+        }else if("2".equals(entities.get(position).orderState)){
+            holder.state.setText("待收货");
+            holder.money.setVisibility(View.GONE);
+            holder.div.setVisibility(View.GONE);
+            holder.graybtn.setVisibility(View.GONE);
+            holder.orgbtn.setVisibility(View.GONE);
+        }else if("4".equals(entities.get(position).orderState)){
+            holder.state.setText("待评价");
+            holder.money.setVisibility(View.GONE);
+            holder.div.setVisibility(View.GONE);
+            holder.graybtn.setVisibility(View.VISIBLE);
+            holder.orgbtn.setVisibility(View.GONE);
+            holder.graybtn.setText("删除订单");
+        }
+        List<ShopOrderVo> shopOrderVos=null;
+        if ("0".equals(entities.get(position).split)){
+            shopOrderVos=entities.get(position).orderListVos;
+        }else{
+            shopOrderVos=entities.get(position).vos;
+        }
+        ShoporderItemAdapter adapter=new ShoporderItemAdapter(context,shopOrderVos,position,handler,entities.get(position).orderState);
         holder.listView.setAdapter(adapter);
         return convertView;
     }
