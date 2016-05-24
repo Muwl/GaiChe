@@ -91,7 +91,7 @@ public class ShopListActivity extends BaseActivity implements View.OnClickListen
 
     private String type;
 
-    private int comeFlag;//1 代表广告 2 代表热门列表 3从商城直接进去商品列表 4从搜索列表进去的 5从养修页面进入
+    private int comeFlag;//1 代表广告 2 代表热门列表 3从商城直接进去商品列表 4从搜索列表进去的 5从养修页面进入 6从首页热门分类进入
 
     private String category;//商品类别
 
@@ -106,6 +106,8 @@ public class ShopListActivity extends BaseActivity implements View.OnClickListen
     private String keywords;
 
     private String supportIds;
+
+    private String commodityTypeId;
 
     private Handler handler = new Handler() {
         public void handleMessage(Message msg) {
@@ -135,6 +137,10 @@ public class ShopListActivity extends BaseActivity implements View.OnClickListen
             serchView.setVisibility(View.GONE);
             carLin.setVisibility(View.VISIBLE);
         }
+        if (ToosUtils.goBrand(ShopListActivity.this,0)){
+            return;
+        }
+        getAdShop(1);
     }
 
     private void initView() {
@@ -150,6 +156,8 @@ public class ShopListActivity extends BaseActivity implements View.OnClickListen
             keywords=getIntent().getStringExtra("keywords");
         }else if(comeFlag==5){
             supportIds=getIntent().getStringExtra("id");
+        }else if(comeFlag==6){
+            commodityTypeId=getIntent().getStringExtra("commodityTypeId");
         }
         bitmapUtils=new BitmapUtils(this);
         commodityEntityList=new ArrayList<>();
@@ -178,7 +186,7 @@ public class ShopListActivity extends BaseActivity implements View.OnClickListen
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(ShopListActivity.this, ShopDetailActivity.class);
-                intent.putExtra("id",commodityEntityList.get(position).id);
+                intent.putExtra("id", commodityEntityList.get(position).id);
                 startActivity(intent);
             }
         });
@@ -207,12 +215,12 @@ public class ShopListActivity extends BaseActivity implements View.OnClickListen
                 } else if (comeFlag == 2) {
                     intent.putExtra("type", type);
                     intent.putExtra("comeFlag", 2);
-                }else if(comeFlag==3){
+                } else if (comeFlag == 3) {
                     intent.putExtra("category", category);
                     intent.putExtra("comeFlag", 3);
-                }else if(comeFlag==5){
-                    intent.putExtra("comeFlag",5);
-                    intent.putExtra("ids",supportIds);
+                } else if (comeFlag == 5) {
+                    intent.putExtra("comeFlag", 5);
+                    intent.putExtra("ids", supportIds);
                 }
 
                 if (!ToosUtils.isStringEmpty(brandName)) {
@@ -240,7 +248,7 @@ public class ShopListActivity extends BaseActivity implements View.OnClickListen
 
         });
         sort="0";
-        getAdShop(1);
+
 
     }
 
@@ -259,6 +267,9 @@ public class ShopListActivity extends BaseActivity implements View.OnClickListen
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode!=RESULT_OK && requestCode==8856 ){
+            finish();
+        }
         if (resultCode!=RESULT_OK){
             return;
         }
@@ -267,6 +278,9 @@ public class ShopListActivity extends BaseActivity implements View.OnClickListen
             getAdShop(1);
         }
 
+        if (requestCode==8856){
+            getAdShop(1);
+        }
         if (requestCode==1224 && resultCode== Activity.RESULT_OK){
             MyCarEntity carEntity= MyApplication.getInstance().getCarEntity();
             if (carEntity!=null){
@@ -432,6 +446,12 @@ public class ShopListActivity extends BaseActivity implements View.OnClickListen
                 }
                 rp.addBodyParameter("ids", supportIds);
                 url="maintenance/findAllMaceComm";
+            }else if(comeFlag==6){
+                if (carEntity!=null) {
+                    rp.addBodyParameter("carTypeId", carEntity.carTypeId);
+                }
+                rp.addBodyParameter("commodityTypeId", commodityTypeId);
+                url="shou/commoditys";
             }
 
         }

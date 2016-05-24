@@ -18,7 +18,7 @@ public class ShopDetailEntity implements Serializable {
     public String distributionType;//配送方式（0:物流 1：自主配送）
     public String distributionDetail;
     public double weight;
-    public double standard;
+    public String standard;
     public String unit;
     public int inventory;
     public String introduction;

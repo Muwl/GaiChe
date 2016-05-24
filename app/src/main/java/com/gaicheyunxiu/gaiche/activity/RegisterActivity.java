@@ -45,6 +45,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
     private View pro;
     private String sphone;
     private TimeCount time;
+    private TextView protocol;
 
 
     @Override
@@ -66,12 +67,14 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
         repwdView= (EditText) findViewById(R.id.regiter_repwd);
         checkBox= (CheckBox) findViewById(R.id.regiter_radio);
         submit= (TextView) findViewById(R.id.regiter_ok);
+        protocol= (TextView) findViewById(R.id.regiter_protocol);
         pro=  findViewById(R.id.regiter_pro);
 
         title.setText("手机快速注册");
         back.setOnClickListener(this);
         getCodeView.setOnClickListener(this);
         submit.setOnClickListener(this);
+        protocol.setOnClickListener(this);
     }
 
     @Override
@@ -82,7 +85,10 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                 break;
             case R.id.regiter_getcode:
                 sendMessage();
-
+                break;
+            case R.id.regiter_protocol:
+                Intent intent=new Intent(RegisterActivity.this,ProtocolActivity.class);
+                startActivity(intent);
                 break;
             case R.id.regiter_ok:
                 if (checkInput()){

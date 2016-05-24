@@ -63,19 +63,6 @@ public class GalleryAdapter extends BaseAdapter {
 		 imageView.setScaleType(ScaleType.FIT_XY);
 		imageView.setLayoutParams(new Gallery.LayoutParams(width,
 				ViewGroup.LayoutParams.MATCH_PARENT));
-		imageView.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				if ("1".equals(images.get(position % images.size()).type)) {
-					ToosUtils.openUrl(context, Constant.ROOT_PATH+"advertisement/getContent?id="+images.get(position % images.size()).id);
-				} else {
-					Intent intent=new Intent(context, ShopListActivity.class);
-					intent.putExtra("id",images.get(position % images.size()).id);
-					intent.putExtra("comeFlag",1);
-					context.startActivity(intent);
-				}
-			}
-		});
 		utils.display(imageView, images.get(position % images.size()).mobileImg);
 		return imageView;
 	}

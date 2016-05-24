@@ -78,7 +78,6 @@ public class CarTimeActivity extends BaseActivity implements View.OnClickListene
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent();
                 typeEntity.productionDate = (String) adapter.getItem(position);
                 findTypeId();
             }
@@ -194,7 +193,25 @@ public class CarTimeActivity extends BaseActivity implements View.OnClickListene
                         LogManager.LogShow("-----", arg0.result,
                                 LogManager.ERROR);
                         CarTimeEntity carTimeEntity=gson.fromJson(arg0.result,CarTimeEntity.class);
-                        saveCar(carTimeEntity.result.get(0));
+
+                        if (ToosUtils.isStringEmpty(ShareDataTool.getToken(CarTimeActivity.this))){
+                            MyCarEntity myCarEntity=new MyCarEntity();
+                            myCarEntity.carBrandId=typeEntity.carBrandid;
+                            myCarEntity.carTypeId=carTimeEntity.result.get(0);
+                            myCarEntity.carBrandName=typeEntity.carBrandName;
+                            myCarEntity.carBrandLogo=typeEntity.carBrandLogo;
+                            myCarEntity.productionPlace=typeEntity.productionPlace;
+                            myCarEntity.type=typeEntity.type;
+                            myCarEntity.displacement=typeEntity.displacement;
+                            myCarEntity.productionDate=typeEntity.productionDate;
+                            ShareDataTool.saveCar(CarTimeActivity.this,myCarEntity);
+                            ((MyApplication) getApplication()).setCarEntity(myCarEntity);
+                            Intent intent=new Intent();
+                            setResult(RESULT_OK,intent);
+                            finish();
+                        }else{
+                            saveCar(carTimeEntity.result.get(0));
+                        }
                     } else if (Constant.TOKEN_ERR.equals(state.msg)) {
                         ToastUtils.displayShortToast(CarTimeActivity.this,
                                 "验证错误，请重新登录");

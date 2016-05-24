@@ -190,30 +190,32 @@ public class OultSelActivity extends BaseActivity implements View.OnClickListene
         }else if(flag==3){
             LocalUtils localUtils = new LocalUtils(this, handler);
             serviceId=getIntent().getStringExtra("serviceId");
+            String stitle=getIntent().getStringExtra("title");
+            title.setText(stitle);
             localUtils.startLocation();
-            switch (serviceId){
-                case   OutletFragment.BAOYANG_FLAG:
-                    title.setText("保养安装");
-                    break;
-                case   OutletFragment.XICHE_FLAG:
-                    title.setText("普通洗车");
-                    break;
-                case   OutletFragment.TIEMO_FLAG:
-                    title.setText("贴膜");
-                    break;
-                case   OutletFragment.BANJIN_FLAG:
-                    title.setText("钣金喷漆");
-                    break;
-                case   OutletFragment.PAOGUANG_FLAG:
-                    title.setText("抛光封釉");
-                    break;
-                case   OutletFragment.LUOTAI_FLAG:
-                    title.setText("轮胎修补");
-                    break;
-                case   OutletFragment.SILUN_FLAG:
-                    title.setText("四轮定位");
-                    break;
-            }
+//            switch (serviceId){
+//                case   OutletFragment.BAOYANG_FLAG:
+//                    title.setText("保养安装");
+//                    break;
+//                case   OutletFragment.XICHE_FLAG:
+//                    title.setText("普通洗车");
+//                    break;
+//                case   OutletFragment.TIEMO_FLAG:
+//                    title.setText("贴膜");
+//                    break;
+//                case   OutletFragment.BANJIN_FLAG:
+//                    title.setText("钣金喷漆");
+//                    break;
+//                case   OutletFragment.PAOGUANG_FLAG:
+//                    title.setText("抛光封釉");
+//                    break;
+//                case   OutletFragment.LUOTAI_FLAG:
+//                    title.setText("轮胎修补");
+//                    break;
+//                case   OutletFragment.SILUN_FLAG:
+//                    title.setText("四轮定位");
+//                    break;
+//            }
         }
         group.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -374,6 +376,7 @@ public class OultSelActivity extends BaseActivity implements View.OnClickListene
             rp.addBodyParameter("pageNo", pageNo+"");
             url = "shop/nearShop";
         }else if(flag==3){
+            rp.addBodyParameter("sort", sort);
             rp.addBodyParameter("longitude", String.valueOf(bdLocation.getLongitude()));
             rp.addBodyParameter("latitude", String.valueOf(bdLocation.getLatitude()));
             rp.addBodyParameter("serviceId", serviceId);

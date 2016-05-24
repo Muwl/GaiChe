@@ -145,7 +145,11 @@ public class PersonFragment extends Fragment implements View.OnClickListener{
         crowdorderView.setOnClickListener(this);
         settingView.setOnClickListener(this);
         bitmapUtils=new BitmapUtils(getActivity());
-        reFushPersonInfo();
+
+        if (ToosUtils.isStringEmpty(ShareDataTool.getToken(getActivity()))){
+            ToosUtils.goReLogin(getActivity());
+            return;
+        }
     }
 
     @Override

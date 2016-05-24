@@ -168,8 +168,7 @@ public class StoreFragment extends Fragment implements View.OnClickListener{
             case R.id.fstore_carlin:
                 MyCarEntity carEntity= MyApplication.getInstance().getCarEntity();
                 if (carEntity==null){
-                    Intent intent2=new Intent(getActivity(), CarbrandActivity.class);
-                    startActivityForResult(intent2, 1224);
+                    ToosUtils.goBrand(getActivity(),1);
                 }else{
 
                 }
@@ -178,20 +177,29 @@ public class StoreFragment extends Fragment implements View.OnClickListener{
         }
     }
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode==1224 && resultCode== Activity.RESULT_OK){
-            MyCarEntity carEntity= MyApplication.getInstance().getCarEntity();
-            if (carEntity!=null){
-                bitmapUtils.display(carImage,carEntity.carBrandLogo);
-                carAddImage.setVisibility(View.GONE);
-                carName.setText(carEntity.carBrandName+carEntity.type+carEntity.displacement+carEntity.productionDate);
-            }
-            LogManager.LogShow("----------**&&",carEntity.toString(),LogManager.ERROR);
+    public void onRefush(){
+        MyCarEntity carEntity= MyApplication.getInstance().getCarEntity();
+        if (carEntity!=null){
+            bitmapUtils.display(carImage,carEntity.carBrandLogo);
+            carAddImage.setVisibility(View.GONE);
+            carName.setText(carEntity.carBrandName+carEntity.type+carEntity.displacement+carEntity.productionDate);
         }
-
     }
+
+//    @Override
+//    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+//        super.onActivityResult(requestCode, resultCode, data);
+//        if (requestCode==1224 && resultCode== Activity.RESULT_OK){
+//            MyCarEntity carEntity= MyApplication.getInstance().getCarEntity();
+//            if (carEntity!=null){
+//                bitmapUtils.display(carImage,carEntity.carBrandLogo);
+//                carAddImage.setVisibility(View.GONE);
+//                carName.setText(carEntity.carBrandName+carEntity.type+carEntity.displacement+carEntity.productionDate);
+//            }
+//            LogManager.LogShow("----------**&&",carEntity.toString(),LogManager.ERROR);
+//        }
+//
+//    }
     /**
      * 查询所有商品分类
      */

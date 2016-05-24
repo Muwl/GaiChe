@@ -1,5 +1,6 @@
 package com.gaicheyunxiu.gaiche.activity;
 
+import android.content.Intent;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
@@ -127,6 +128,23 @@ public class MainActivity extends BaseActivity {
 
     }
 
+    public void checkIndex(int position){
+        switch (position){
+            case 0:
+                group.check(R.id.main_bottom_home);
+                break;
+            case 1:
+                group.check(R.id.main_bottom_store);
+                break;
+            case 2:
+                group.check(R.id.main_bottom_outlet);
+                break;
+            case 3:
+                group.check(R.id.main_bottom_person);
+                break;
+        }
+    }
+
     /**
      * 初始化首个Fragment
      */
@@ -158,5 +176,30 @@ public class MainActivity extends BaseActivity {
     @Override
     public void onBackPressed() {
         moveTaskToBack(true);
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode==8856 && resultCode==RESULT_OK){
+            switch (pageIndex){
+                case 1:
+                    HomeFragment homeFragment= (HomeFragment) fMgr.findFragmentByTag("HomeFragment");
+                    homeFragment.onRefush();
+                    break;
+                case 2:
+                    StoreFragment storeFragment= (StoreFragment) fMgr.findFragmentByTag("StoreFragment");
+                    storeFragment.onRefush();
+                    break;
+                case 3:
+                    OutletFragment outletFragment= (OutletFragment) fMgr.findFragmentByTag("OutletFragment");
+                    outletFragment.onRefush();
+                    break;
+                case 4:
+
+                    break;
+            }
+        }
     }
 }

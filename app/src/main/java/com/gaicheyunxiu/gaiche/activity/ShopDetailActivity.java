@@ -196,9 +196,19 @@ public class ShopDetailActivity extends BaseActivity implements View.OnClickList
                 break;
 
             case R.id.shopdetail_addcart:
+                if (ToosUtils.isStringEmpty(ShareDataTool.getToken(ShopDetailActivity.this))){
+                    ToastUtils.displayShortToast(ShopDetailActivity.this,"请登录！");
+                    ToosUtils.goReLogin(ShopDetailActivity.this);
+                    return;
+                }
                 addshoppingCart();
                 break;
             case R.id.shopdetail_buy:
+                if (ToosUtils.isStringEmpty(ShareDataTool.getToken(ShopDetailActivity.this))){
+                    ToastUtils.displayShortToast(ShopDetailActivity.this,"请登录！");
+                    ToosUtils.goReLogin(ShopDetailActivity.this);
+                    return;
+                }
                 Intent intent1=new Intent(ShopDetailActivity.this,ClearingActivity.class);
                 intent1.putExtra("flag",2);
                 intent1.putExtra("entity",detailEntity);
@@ -290,6 +300,7 @@ public class ShopDetailActivity extends BaseActivity implements View.OnClickList
         volumeView.setText("销量" + detailEntity.paymentNum + "笔");
         evalnum.setText("用户评论（" + detailEntity.evaluationNum + "）");
         if (!ToosUtils.isStringEmpty(detailEntity.specification)) {
+            detailEntity.specification.replaceAll(" ","\n");
             shopNo.setText(Html.fromHtml(detailEntity.specification));
         }
         if (!ToosUtils.isStringEmpty(detailEntity.afterSalesService)) {

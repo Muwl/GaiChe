@@ -4,7 +4,9 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 
+import com.gaicheyunxiu.gaiche.model.MyCarEntity;
 import com.gaicheyunxiu.gaiche.model.RegiterEntity;
+import com.google.gson.Gson;
 
 /**
  * @author Mu
@@ -62,6 +64,28 @@ public class ShareDataTool {
         regiterEntity.nickname= context.getSharedPreferences("sp", Context.MODE_PRIVATE).getString("nickname", "");
         regiterEntity.phone= context.getSharedPreferences("sp", Context.MODE_PRIVATE).getString("phone", "");
         return regiterEntity;
+    }
+
+    public static boolean saveCar(Context context, MyCarEntity myCarEntity) {
+        SharedPreferences sp = context.getSharedPreferences("sp",
+                Context.MODE_PRIVATE);
+        Editor e = sp.edit();
+        if (myCarEntity!=null){
+            Gson gson=new Gson();
+            e.putString("mycar", gson.toJson(myCarEntity));
+            return e.commit();
+        }
+        return false;
+    }
+
+    public static MyCarEntity getCar(Context context){
+        String s=context.getSharedPreferences("mycar", Context.MODE_PRIVATE).getString("token", "");
+        Gson gson=new Gson();
+        try {
+            return gson.fromJson(s,MyCarEntity.class);
+        }catch (Exception e){
+            return null;
+        }
     }
 
 

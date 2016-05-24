@@ -19,6 +19,7 @@ import com.gaicheyunxiu.gaiche.model.OuletHeadEntity;
 import com.gaicheyunxiu.gaiche.model.ShopEntity;
 import com.gaicheyunxiu.gaiche.utils.HttpPostUtils;
 import com.gaicheyunxiu.gaiche.utils.MyApplication;
+import com.gaicheyunxiu.gaiche.utils.ToosUtils;
 import com.gaicheyunxiu.gaiche.view.RatingBar;
 import com.lidroid.xutils.BitmapUtils;
 
@@ -118,6 +119,7 @@ public class FOuletAdapter extends BaseAdapter {
                 holder.bar = (RatingBar) convertView.findViewById(R.id.foutlet_item_bar);
                 holder.num = (TextView) convertView.findViewById(R.id.foutlet_item_discussnum);
                 holder.money = (TextView) convertView.findViewById(R.id.foutlet_item_money);
+                holder.lin = convertView.findViewById(R.id.foutlet_item_lin);
                 holder.m = (TextView) convertView.findViewById(R.id.foutlet_item_m);
                 holder.address = (TextView) convertView.findViewById(R.id.foutlet_item_address);
                 holder.distance = (TextView) convertView.findViewById(R.id.foutlet_item_distance);
@@ -204,8 +206,13 @@ public class FOuletAdapter extends BaseAdapter {
             bitmapUtils.display(holder.imageView, shopEntities.get(position - 1).icon);
             holder.name.setText(shopEntities.get(position - 1).name);
             holder.num.setText(shopEntities.get(position - 1).evaluateAmount + "条");
-            holder.money.setText(shopEntities.get(position-1).sumPrice+"元");
-            holder.m.setText(shopEntities.get(position-1).sumMvalue+"M");
+            holder.money.setText(shopEntities.get(position - 1).sumPrice + "元");
+            holder.m.setText(shopEntities.get(position - 1).sumMvalue + "M");
+            holder.lin.setVisibility(View.GONE);
+            if (!ToosUtils.isStringEmpty(shopEntities.get(position-1).score)){
+                holder.bar.setStar(Double.parseDouble(shopEntities.get(position-1).score));
+            }
+            holder.bar.setClickable(false);
             holder.address.setText(shopEntities.get(position-1).district);
             holder.distance.setText(shopEntities.get(position-1).distance+"km");
             holder.bar.setLayoutParams(new LinearLayout.LayoutParams((int) (0.30 * width), (int) (0.045 * width)));
@@ -242,6 +249,7 @@ public class FOuletAdapter extends BaseAdapter {
         public TextView num;
         public TextView money;
         public TextView m;
+        public View lin;
         public TextView address;
         public TextView distance;
     }

@@ -1,5 +1,6 @@
 package com.gaicheyunxiu.gaiche.activity.fragment;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -22,6 +23,7 @@ import com.baidu.location.LocationClientOption;
 import com.baidu.location.Poi;
 import com.baidu.mapapi.SDKInitializer;
 import com.gaicheyunxiu.gaiche.R;
+import com.gaicheyunxiu.gaiche.activity.MainActivity;
 import com.gaicheyunxiu.gaiche.activity.OultSelActivity;
 import com.gaicheyunxiu.gaiche.activity.OutletDetailActivity;
 import com.gaicheyunxiu.gaiche.activity.SerchActivity;
@@ -107,42 +109,49 @@ public class OutletFragment extends Fragment implements View.OnClickListener {
                     Intent intent2 = new Intent(getActivity(), OultSelActivity.class);
                     intent2.putExtra("flag", 3);
                     intent2.putExtra("serviceId", BAOYANG_FLAG);
+                    intent2.putExtra("title","保养安装");
                     startActivity(intent2);
                     break;
                 case 1447:
                     Intent intent3 = new Intent(getActivity(), OultSelActivity.class);
                     intent3.putExtra("flag", 3);
                     intent3.putExtra("serviceId", XICHE_FLAG);
+                    intent3.putExtra("title","普通洗车");
                     startActivity(intent3);
                     break;
                 case 1448:
                     Intent intent4 = new Intent(getActivity(), OultSelActivity.class);
                     intent4.putExtra("flag", 3);
                     intent4.putExtra("serviceId", TIEMO_FLAG);
+                    intent4.putExtra("title","贴膜");
                     startActivity(intent4);
                     break;
                 case 1449:
                     Intent intent5 = new Intent(getActivity(), OultSelActivity.class);
                     intent5.putExtra("flag", 3);
                     intent5.putExtra("serviceId", BANJIN_FLAG);
+                    intent5.putExtra("title","钣金喷漆");
                     startActivity(intent5);
                     break;
                 case 1450:
                     Intent intent6 = new Intent(getActivity(), OultSelActivity.class);
                     intent6.putExtra("flag", 3);
                     intent6.putExtra("serviceId", PAOGUANG_FLAG);
+                    intent6.putExtra("title","抛光封釉");
                     startActivity(intent6);
                     break;
                 case 1451:
                     Intent intent7 = new Intent(getActivity(), OultSelActivity.class);
                     intent7.putExtra("flag", 3);
                     intent7.putExtra("serviceId", LUOTAI_FLAG);
+                    intent7.putExtra("title","轮胎修补");
                     startActivity(intent7);
                     break;
                 case 1452:
                     Intent intent8 = new Intent(getActivity(), OultSelActivity.class);
                     intent8.putExtra("flag", 3);
                     intent8.putExtra("serviceId", SILUN_FLAG);
+                    intent8.putExtra("title","四轮定位");
                     startActivity(intent8);
                     break;
                 case 1453:
@@ -180,19 +189,22 @@ public class OutletFragment extends Fragment implements View.OnClickListener {
         mLocationClient = new LocationClient(getActivity().getApplicationContext());     //声明LocationClient类
         mLocationClient.registerLocationListener(myListener);    //注册监听函数
         initLocation();
-        mLocationClient.start();
-
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                LogManager.LogShow("--------------", "00000000000000000000000", LogManager.ERROR);
+
                 if (position > 0) {
                     Intent intent = new Intent(getActivity(), OutletDetailActivity.class);
-                    intent.putExtra("shopId",entities.get(position-1).id);
+                    intent.putExtra("shopId", entities.get(position - 1).id);
                     startActivity(intent);
                 }
             }
         });
+
+        if (ToosUtils.goBrand(getActivity(),0)){
+            return;
+        }
+        mLocationClient.start();
 
     }
 
@@ -247,6 +259,9 @@ public class OutletFragment extends Fragment implements View.OnClickListener {
         super.onStop();
     }
 
+    public void onRefush(){
+        mLocationClient.start();
+    }
 
     /**
      * 查询热门门店

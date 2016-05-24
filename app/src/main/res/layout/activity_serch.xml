@@ -20,6 +20,7 @@
         android:layout_weight="1"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:padding="2dp"
         android:background="@drawable/serch_bg"
         android:layout_margin="10dp">
 

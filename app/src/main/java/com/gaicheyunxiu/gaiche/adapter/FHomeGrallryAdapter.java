@@ -10,10 +10,12 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import com.gaicheyunxiu.gaiche.R;
+import com.gaicheyunxiu.gaiche.activity.EarningActivity;
 import com.gaicheyunxiu.gaiche.activity.FSupportActivity;
 import com.gaicheyunxiu.gaiche.activity.FcialActivity;
 import com.gaicheyunxiu.gaiche.activity.ShopListActivity;
 import com.gaicheyunxiu.gaiche.utils.DensityUtil;
+import com.gaicheyunxiu.gaiche.utils.ToosUtils;
 
 /**
  * Created by Administrator on 2015/12/20.
@@ -291,6 +293,12 @@ public class FHomeGrallryAdapter extends BaseAdapter implements View.OnClickList
             case R.id.home_support:
                 Intent intent22=new Intent(context, FSupportActivity.class);
                 context.startActivity(intent22);
+                break;
+
+            case R.id.home_ask:
+                //收益
+                Intent intent23=new Intent(context, EarningActivity.class);
+                context.startActivity(intent23);
                 break;
         }
     }

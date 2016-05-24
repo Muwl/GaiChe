@@ -20,8 +20,10 @@ import android.widget.TextView;
 import com.gaicheyunxiu.gaiche.R;
 import com.gaicheyunxiu.gaiche.activity.CarbrandActivity;
 import com.gaicheyunxiu.gaiche.activity.CrowdFundActivity;
+import com.gaicheyunxiu.gaiche.activity.MainActivity;
 import com.gaicheyunxiu.gaiche.activity.QRScanActivity;
 import com.gaicheyunxiu.gaiche.activity.ShopDetailActivity;
+import com.gaicheyunxiu.gaiche.activity.ShopListActivity;
 import com.gaicheyunxiu.gaiche.adapter.FHomeGrallryAdapter;
 import com.gaicheyunxiu.gaiche.adapter.GalleryAdapter;
 import com.gaicheyunxiu.gaiche.adapter.PartsAdapter;
@@ -127,6 +129,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
 
     private List<CrowdfundingProjectEntity> crowdfundingProjectEntities;
 
+    private  List<PopularCateEntity> popularCateEntities;//首页热门分类的四大模块
+
 
     private Handler handler = new Handler() {
         public void handleMessage(Message msg) {
@@ -193,8 +197,13 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
         mylistView.setAdapter(partsAdapter);
         carLin.setOnClickListener(this);
         code.setOnClickListener(this);
+        typeView.setOnClickListener(this);
         crowShop1.setOnClickListener(this);
         crowShop2.setOnClickListener(this);
+        hotshop1View.setOnClickListener(this);
+        hotshop2View.setOnClickListener(this);
+        hotshop3View.setOnClickListener(this);
+        hotshop4View.setOnClickListener(this);
         int m = DensityUtil.dip2px(getActivity(), 3);
         for (int i = 0; i <3; i++) {
             ImageView image = (ImageView) LayoutInflater.from(getActivity())
@@ -265,45 +274,81 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
             case R.id.main_carlin:
                 MyCarEntity carEntity= MyApplication.getInstance().getCarEntity();
                 if (carEntity==null){
-                    Intent intent2=new Intent(getActivity(), CarbrandActivity.class);
-                    startActivityForResult(intent2, 1224);
+                    ToosUtils.goBrand(getActivity(),1);
                 }else{
 
                 }
 
                 break;
 
+            case R.id.home_type:
+                ((MainActivity)getActivity()).checkIndex(1);
+
+                break;
+
+            case R.id.home_hotshop1:
+                if (popularCateEntities==null || popularCateEntities.size()==0){
+                    return;
+                }
+                Intent intent1=new Intent(getActivity(), ShopListActivity.class);
+                intent1.putExtra("commodityTypeId",popularCateEntities.get(0).commodityTypeId);
+                startActivity(intent1);
+                break;
+            case R.id.home_hotshop2:
+                if (popularCateEntities==null || popularCateEntities.size()==0){
+                    return;
+                }
+                Intent intent2=new Intent(getActivity(), ShopListActivity.class);
+                intent2.putExtra("commodityTypeId",popularCateEntities.get(1).commodityTypeId);
+                startActivity(intent2);
+                break;
+            case R.id.home_hotshop3:
+                if (popularCateEntities==null || popularCateEntities.size()==0){
+                    return;
+                }
+                Intent intent3=new Intent(getActivity(), ShopListActivity.class);
+                intent3.putExtra("commodityTypeId",popularCateEntities.get(2).commodityTypeId);
+                startActivity(intent3);
+                break;
+            case R.id.home_hotshop4:
+                if (popularCateEntities==null || popularCateEntities.size()==0){
+                    return;
+                }
+                Intent intent4=new Intent(getActivity(), ShopListActivity.class);
+                intent4.putExtra("commodityTypeId",popularCateEntities.get(3).commodityTypeId);
+                startActivity(intent4);
+                break;
+
             case R.id.home_shop:
                 if (crowdfundingProjectEntities!=null && crowdfundingProjectEntities.size()>0){
-                    Intent intent3=new Intent(getActivity(), CrowdFundActivity.class);
-                    intent3.putExtra("entity",crowdfundingProjectEntities.get(0));
-                    startActivity(intent3);
+                    Intent intent5=new Intent(getActivity(), CrowdFundActivity.class);
+                    intent5.putExtra("entity",crowdfundingProjectEntities.get(0));
+                    startActivity(intent5);
                 }
                 break;
 
             case R.id.home_shop2:
                 if (crowdfundingProjectEntities!=null && crowdfundingProjectEntities.size()>1){
-                    Intent intent3=new Intent(getActivity(), CrowdFundActivity.class);
-                    intent3.putExtra("entity",crowdfundingProjectEntities.get(1));
-                    startActivity(intent3);
+                    Intent intent6=new Intent(getActivity(), CrowdFundActivity.class);
+                    intent6.putExtra("entity",crowdfundingProjectEntities.get(1));
+                    startActivity(intent6);
                 }
                 break;
+        }
+    }
+
+    public void onRefush(){
+        MyCarEntity carEntity= MyApplication.getInstance().getCarEntity();
+        if (carEntity!=null){
+            bitmapUtils.display(carImage,carEntity.carBrandLogo);
+            carAddImage.setVisibility(View.GONE);
+            carName.setText(carEntity.carBrandName+carEntity.type+carEntity.displacement+carEntity.productionDate);
         }
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode==1224 && resultCode== Activity.RESULT_OK){
-            MyCarEntity carEntity= MyApplication.getInstance().getCarEntity();
-            if (carEntity!=null){
-                bitmapUtils.display(carImage,carEntity.carBrandLogo);
-                carAddImage.setVisibility(View.GONE);
-                carName.setText(carEntity.carBrandName+carEntity.type+carEntity.displacement+carEntity.productionDate);
-            }
-            LogManager.LogShow("----------**&&",carEntity.toString(),LogManager.ERROR);
-        }
-
     }
 
 
@@ -369,6 +414,20 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
         }
         galleryAdapter = new GalleryAdapter(getActivity(), gallery, images, width);
         gallery.setAdapter(galleryAdapter);
+
+        gallery.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                if ("1".equals(images.get(position % images.size()).type)) {
+                    ToosUtils.openUrl(getActivity(), Constant.ROOT_PATH+"advertisement/getContent?id="+images.get(position % images.size()).id);
+                } else {
+                    Intent intent=new Intent(getActivity(), ShopListActivity.class);
+                    intent.putExtra("id",images.get(position % images.size()).id);
+                    intent.putExtra("comeFlag",1);
+                    getActivity().startActivity(intent);
+                }
+            }
+        });
         gallery.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 
             @Override
@@ -378,11 +437,14 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
                 int count = lin.getChildCount();
                 for (int i = 0; i < count; i++) {
                     iv = (ImageView) galllin.getChildAt(i);
-                    if (i == position % images.size()) {
-                        iv.setImageResource(R.mipmap.circle_select);
-                    } else {
-                        iv.setImageResource(R.mipmap.circle_normal);
+                    if (iv!=null){
+                        if (i == position % images.size()) {
+                            iv.setImageResource(R.mipmap.circle_select);
+                        } else {
+                            iv.setImageResource(R.mipmap.circle_normal);
+                        }
                     }
+
                 }
 
             }
@@ -496,7 +558,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
                             LogManager.ERROR);
                     if (Constant.RETURN_OK.equals(state.msg)) {
                         PopularCateState popularCateState=gson.fromJson(arg0.result, PopularCateState.class);
-                        List<PopularCateEntity> popularCateEntities=popularCateState.result;
+                       popularCateEntities=popularCateState.result;
                         setPopValue(popularCateEntities);
                     } else if (Constant.TOKEN_ERR.equals(state.msg)) {
                         ToastUtils.displayShortToast(getActivity(),

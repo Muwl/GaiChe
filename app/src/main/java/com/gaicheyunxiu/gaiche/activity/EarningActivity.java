@@ -46,6 +46,8 @@ public class EarningActivity extends BaseActivity implements View.OnClickListene
 
     private EarnIncomeEntity incomeEntity;
 
+    private int flag=0;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,9 +69,25 @@ public class EarningActivity extends BaseActivity implements View.OnClickListene
         title.setText("收益");
         marginlin.setOnClickListener(this);
         mlin.setOnClickListener(this);
+
+        if (ToosUtils.isStringEmpty(ShareDataTool.getToken(this))){
+            ToosUtils.goReLogin(this);
+            return;
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (ToosUtils.isStringEmpty(ShareDataTool.getToken(this))){
+            if (flag==1){
+                finish();
+            }
+            flag=1;
+            return;
+        }
+        flag=1;
         getIncome();
-
-
     }
 
     @Override
@@ -127,10 +145,10 @@ public class EarningActivity extends BaseActivity implements View.OnClickListene
                     ReturnState state = gson.fromJson(arg0.result,
                             ReturnState.class);
                     if (Constant.RETURN_OK.equals(state.msg)) {
-                        EarnIncomeState earnIncomeState=gson.fromJson(arg0.result,EarnIncomeState.class);
-                        incomeEntity=earnIncomeState.result;
-                        margin.setText("￥"+incomeEntity.equityMoney);
-                        m.setText("￥"+incomeEntity.earningsMvalue);
+                        EarnIncomeState earnIncomeState = gson.fromJson(arg0.result, EarnIncomeState.class);
+                        incomeEntity = earnIncomeState.result;
+                        margin.setText("￥" + incomeEntity.equityMoney);
+                        m.setText("￥" + incomeEntity.earningsMvalue);
                     } else if (Constant.TOKEN_ERR.equals(state.msg)) {
                         ToastUtils.displayShortToast(EarningActivity.this,
                                 "验证错误，请重新登录");

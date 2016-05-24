@@ -1,9 +1,11 @@
 package com.gaicheyunxiu.gaiche.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RadioGroup;
@@ -80,6 +82,17 @@ public class ServiceArtActivity extends BaseActivity implements View.OnClickList
 
         adapter=new ServiceArtAdapter(this,entities,handler);
         listView.setAdapter(adapter);
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent8 = new Intent(ServiceArtActivity.this, OultSelActivity.class);
+                intent8.putExtra("flag", 3);
+                intent8.putExtra("serviceId", entities.get(position).id);
+                intent8.putExtra("title",entities.get(position).name);
+                startActivity(intent8);
+            }
+        });
 
 
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {

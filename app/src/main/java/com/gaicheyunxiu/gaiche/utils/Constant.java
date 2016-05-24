@@ -3,7 +3,8 @@ package com.gaicheyunxiu.gaiche.utils;
 public class Constant {
 
 	/** 根目录 **/
-	 public static final String ROOT_PATH = "http://121.42.202.71/gcyx/api/";
+	 public static final String ROOT_PATH = "http://api.gaicheyunxiu.com:8082/api/";
+//	 public static final String ROOT_PATH = "http://121.42.202.71/gcyx/api/";
 //	public static final String ROOT_PATH = "http://103.244.165.163:8081/louyu";
 
 //	 public static final String ROOT_PATH = "http://192.168.1.10:8080/louyu";

@@ -1,5 +1,6 @@
 package com.gaicheyunxiu.gaiche.utils;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -7,6 +8,8 @@ import android.net.Uri;
 import android.os.Environment;
 import android.widget.TextView;
 
+import com.gaicheyunxiu.gaiche.activity.BrandActivity;
+import com.gaicheyunxiu.gaiche.activity.CarbrandActivity;
 import com.gaicheyunxiu.gaiche.activity.LoginActivity;
 
 import java.io.ByteArrayOutputStream;
@@ -107,6 +110,18 @@ public class ToosUtils {
 		context.startActivity(intent);
 	}
 
+	public static boolean goBrand(Context context,int flag){
+		if (MyApplication.getInstance().getCarEntity()==null){
+			Intent intent=new Intent(context, CarbrandActivity.class);
+			if (flag==0){
+				ToastUtils.displayShortToast(context,"请先添加爱车！");
+			}
+			((Activity)context).startActivityForResult(intent,8856);
+			return true;
+		}
+		return false;
+	}
+
 
 
 	public static File createFile(String path) {
@@ -158,6 +173,8 @@ public class ToosUtils {
 		return null;
 
 	}
+
+
 
 
 

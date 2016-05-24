@@ -85,6 +85,7 @@
 
 
         <LinearLayout
+            android:id="@+id/foutlet_item_lin"
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_marginTop="5dp"
