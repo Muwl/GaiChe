@@ -59,7 +59,7 @@ public class QRpayActivity extends BaseActivity implements View.OnClickListener{
                 break;
 
             case R.id.qrpay_pay:
-                PaymentDialog dialog=new PaymentDialog(QRpayActivity.this);
+                PaymentDialog dialog=new PaymentDialog(QRpayActivity.this,null,null);
 
                 break;
         }

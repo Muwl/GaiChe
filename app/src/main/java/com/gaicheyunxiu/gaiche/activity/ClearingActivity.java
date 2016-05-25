@@ -1,6 +1,9 @@
 package com.gaicheyunxiu.gaiche.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
@@ -8,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.gaicheyunxiu.gaiche.R;
+import com.gaicheyunxiu.gaiche.dialog.OutSelDialog;
 import com.gaicheyunxiu.gaiche.dialog.PaymentDialog;
 import com.gaicheyunxiu.gaiche.model.AddAdressState;
 import com.gaicheyunxiu.gaiche.model.AddressVo;
@@ -15,6 +19,8 @@ import com.gaicheyunxiu.gaiche.model.CommodifyOrderEntity;
 import com.gaicheyunxiu.gaiche.model.CommodifyOrderVo;
 import com.gaicheyunxiu.gaiche.model.OrderCommodityDigestEntity;
 import com.gaicheyunxiu.gaiche.model.OrderCommodityVo;
+import com.gaicheyunxiu.gaiche.model.OutSelEntity;
+import com.gaicheyunxiu.gaiche.model.PayState;
 import com.gaicheyunxiu.gaiche.model.ReturnState;
 import com.gaicheyunxiu.gaiche.model.ShopCartCommodityEntity;
 import com.gaicheyunxiu.gaiche.model.ShopCartEntity;
@@ -97,6 +103,31 @@ public class ClearingActivity extends BaseActivity implements View.OnClickListen
 
     private int flag;//1代表购物车  2代表商城
 
+    double smoney=0;
+
+    private OutSelEntity outSelEntity;
+
+    private Handler handler=new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what){
+                case 89:
+                    Intent intent3=new Intent(ClearingActivity.this,OultOrderSelActivity.class);
+                    if (outSelEntity!=null){
+                        intent3.putExtra("shopId",outSelEntity.id);
+                    }
+                    if (MyApplication.getInstance().getCarEntity()!=null){
+                        intent3.putExtra("carTypeId",MyApplication.getInstance().getCarEntity().carTypeId);
+                    }
+                    intent3.putExtra("commoditys",shopDetailEntity.id);
+                    startActivityForResult(intent3,5664);
+                    break;
+                case 90:
+                    break;
+            }
+        }
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -141,6 +172,7 @@ public class ClearingActivity extends BaseActivity implements View.OnClickListen
             title.setText("立即购买");
             outSel.setVisibility(View.VISIBLE);
         }
+        outSel.setOnClickListener(this);
         back.setOnClickListener(this);
         addressview.setOnClickListener(this);
         zhifubao.setOnClickListener(this);
@@ -156,7 +188,7 @@ public class ClearingActivity extends BaseActivity implements View.OnClickListen
         checkIndex=0;
 
         int m=0;
-        double smoney=0;
+
 
         if (flag==1) {
             for (int i = 0; i < shopCartEntity.cartCommodityVOs.size(); i++) {
@@ -183,8 +215,15 @@ public class ClearingActivity extends BaseActivity implements View.OnClickListen
             case R.id.title_back:
                 finish();
                 break;
+            case R.id.clearing_outsel:
+                OutSelDialog dialog=new OutSelDialog(ClearingActivity.this,-1,handler);
+
+                break;
 
             case R.id.clearing_addview:
+                Intent intent=new Intent(ClearingActivity.this,ShipaddressActivity.class);
+                intent.putExtra("flag",2);
+                startActivityForResult(intent, 1663);
                 break;
 
             case R.id.pay_zhifubao:
@@ -327,8 +366,11 @@ public class ClearingActivity extends BaseActivity implements View.OnClickListen
                     if (Constant.RETURN_OK.equals(state.msg)) {
                         LogManager.LogShow("-----", arg0.result,
                                 LogManager.ERROR);
+                        PayState payState=gson.fromJson(arg0.result,PayState.class);
                         ToastUtils.displayShortToast(ClearingActivity.this, "提交成功！");
-                        PaymentDialog dialog=new PaymentDialog(ClearingActivity.this);
+                        if (checkIndex==0){
+                            PaymentDialog dialog=new PaymentDialog(ClearingActivity.this,payState.result,String.valueOf(smoney));
+                        }
                     } else if (Constant.TOKEN_ERR.equals(state.msg)) {
                         ToastUtils.displayShortToast(ClearingActivity.this,
                                 "验证错误，请重新登录");
@@ -357,6 +399,9 @@ public class ClearingActivity extends BaseActivity implements View.OnClickListen
         commodifyOrderEntity.name=addressVo.name;
         commodifyOrderEntity.mobile=addressVo.mobile;
         commodifyOrderEntity.isShoppingCart= String.valueOf(flag);
+        if (outSelEntity!=null){
+            commodifyOrderEntity.shopId=outSelEntity.id;
+        }
         if (flag==1){
             commodifyOrderEntity.carTypeId=shopCartEntity.carTypeId;
             List<CommodifyOrderVo> commodifyOrderVos=new ArrayList<>();
@@ -407,6 +452,8 @@ public class ClearingActivity extends BaseActivity implements View.OnClickListen
         orderCommodityVo.receiveCity=addressVo.city;
         orderCommodityVo.receiveDistrict=addressVo.district;
         orderCommodityVo.receiveDetail=addressVo.address;
+        orderCommodityVo.shopId="1";
+
         List<OrderCommodityDigestEntity> commodityDigestEntities=new ArrayList<>();
         if (flag==1){
             for (int i=0;i<shopCartEntity.cartCommodityVOs.size();i++) {
@@ -450,7 +497,7 @@ public class ClearingActivity extends BaseActivity implements View.OnClickListen
                     if (Constant.RETURN_OK.equals(state.msg)) {
                         LogManager.LogShow("-----", arg0.result,
                                 LogManager.ERROR);
-                        PaymentDialog dialog=new PaymentDialog(ClearingActivity.this);
+
                     } else if (Constant.TOKEN_ERR.equals(state.msg)) {
                         ToastUtils.displayShortToast(ClearingActivity.this,
                                 "验证错误，请重新登录");
@@ -467,10 +514,18 @@ public class ClearingActivity extends BaseActivity implements View.OnClickListen
         });
     }
 
-
-
-
-
-
-
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode==1663 && resultCode==RESULT_OK){
+            addressVo= (AddressVo) data.getSerializableExtra("entity");
+            person.setText("收货人："+addressVo.name);
+            phone.setText(addressVo.phone);
+            address.setText("收货地址：" + addressVo.province + addressVo.city + addressVo.district + addressVo.address);
+            getCost();
+        }
+        if (requestCode==5664 && resultCode==RESULT_OK){
+            outSelEntity= (OutSelEntity) data.getSerializableExtra("entity");
+            outSel.setText(outSelEntity.name);
+        }
+    }
 }

@@ -237,6 +237,7 @@ public class AreaDialog implements OnClickListener,OnWheelChangedListener {
 		}
 		mViewDistrict.setViewAdapter(new ArrayWheelAdapter<String>(context, areas));
 		mViewDistrict.setCurrentItem(0);
+		mCurrentDistrictName = areaEntities.get(0).name;
 	}
 
 	/**
@@ -259,6 +260,7 @@ public class AreaDialog implements OnClickListener,OnWheelChangedListener {
 		mViewCity.setCurrentItem(0);
 		updateAreas();
 	}
+
 
 //
 //	protected void initProvinceDatas() {

@@ -9,6 +9,8 @@
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"/>
     <uses-feature android:name="android.hardware.camera.autofocus" />
+    <uses-permission android:name="android.permission.CALL_PHONE">
+    </uses-permission>
 
     <!-- 这个权限用于进行网络定位-->
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"></uses-permission>
@@ -121,6 +123,12 @@
             android:windowSoftInputMode="adjustUnspecified|stateHidden|adjustResize" >
         </activity>
         <activity
+            android:name=".activity.CarmanagerActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden|adjustResize" >
+        </activity>
+        <activity
             android:name=".activity.PaymentPwdActivity"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait"
@@ -154,6 +162,12 @@
         </activity>
         <activity
             android:name=".activity.PaySuccessActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden|adjustResize" >
+        </activity>
+        <activity
+            android:name=".activity.OultOrderSelActivity"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustUnspecified|stateHidden|adjustResize" >

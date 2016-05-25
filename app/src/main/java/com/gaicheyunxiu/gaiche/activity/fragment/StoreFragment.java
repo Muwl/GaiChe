@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import com.gaicheyunxiu.gaiche.R;
 import com.gaicheyunxiu.gaiche.activity.CarbrandActivity;
+import com.gaicheyunxiu.gaiche.activity.CarmanagerActivity;
 import com.gaicheyunxiu.gaiche.activity.ShopListActivity;
 import com.gaicheyunxiu.gaiche.activity.SerchActivity;
 import com.gaicheyunxiu.gaiche.adapter.FOuletAdapter;
@@ -170,7 +171,8 @@ public class StoreFragment extends Fragment implements View.OnClickListener{
                 if (carEntity==null){
                     ToosUtils.goBrand(getActivity(),1);
                 }else{
-
+                    Intent intent1=new Intent(getActivity(), CarmanagerActivity.class);
+                    startActivityForResult(intent1, 8856);
                 }
 
                 break;

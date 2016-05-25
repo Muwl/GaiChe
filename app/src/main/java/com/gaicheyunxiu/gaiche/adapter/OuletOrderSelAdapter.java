@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.gaicheyunxiu.gaiche.R;
 import com.gaicheyunxiu.gaiche.model.OutSelEntity;
+import com.gaicheyunxiu.gaiche.utils.ToosUtils;
 import com.gaicheyunxiu.gaiche.view.RatingBar;
 import com.lidroid.xutils.BitmapUtils;
 
@@ -20,17 +21,19 @@ import java.util.List;
  * Created by Mu on 2015/12/24.
  *
  */
-public class OuletSelAdapter extends BaseAdapter {
+public class OuletOrderSelAdapter extends BaseAdapter {
 
     private Context context;
     private List<OutSelEntity> entities;
     private int width;
     private BitmapUtils bitmapUtils;
+    private String selId;
 
-    public OuletSelAdapter(Context context,List<OutSelEntity> entities,int width) {
+    public OuletOrderSelAdapter(Context context, List<OutSelEntity> entities, int width,String selId) {
         this.context = context;
         this.width=width;
         this.entities=entities;
+        this.selId=selId;
         bitmapUtils=new BitmapUtils(context);
     }
 
@@ -53,10 +56,10 @@ public class OuletSelAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup viewGroup) {
         ViewHolder holder=null;
         if (convertView==null){
-            convertView=View.inflate(context, R.layout.ouletsel_item,null);
+            convertView=View.inflate(context, R.layout.ouletordersel_item,null);
             holder=new ViewHolder();
             holder.imageView= (ImageView) convertView.findViewById(R.id.outlet_item_image);
-            holder.cb= (ImageView) convertView.findViewById(R.id.outlet_item_cb);
+            holder.cb= (CheckBox) convertView.findViewById(R.id.outlet_item_cb);
             holder.name= (TextView) convertView.findViewById(R.id.outlet_item_name);
             holder.bar= (RatingBar) convertView.findViewById(R.id.outlet_item_bar);
             holder.num= (TextView) convertView.findViewById(R.id.outlet_item_discussnum);
@@ -68,6 +71,14 @@ public class OuletSelAdapter extends BaseAdapter {
         }else{
             holder= (ViewHolder) convertView.getTag();
         }
+        if (!ToosUtils.isStringEmpty(selId)){
+            if (selId.equals(entities.get(position).id)){
+                holder.cb.setChecked(true);
+            }else{
+                holder.cb.setChecked(false);
+            }
+        }
+
 
         bitmapUtils.display(holder.imageView,entities.get(position).icon);
         holder.name.setText(entities.get(position).name);
@@ -82,7 +93,7 @@ public class OuletSelAdapter extends BaseAdapter {
     }
     class ViewHolder{
         public ImageView imageView;
-        public ImageView cb;
+        public CheckBox cb;
         public TextView name;
         public RatingBar bar;
         public TextView num;

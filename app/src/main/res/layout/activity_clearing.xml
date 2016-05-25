@@ -87,7 +87,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:text="收货人：王馨梦"
+                                android:text="收货人："
                                 android:textColor="#5F5D5D"
                                 android:textSize="@dimen/second_font" />
 
@@ -96,7 +96,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="10dp"
-                                android:text="18806388231"
+                                android:text=""
                                 android:textColor="#5F5D5D"
                                 android:textSize="@dimen/second_font" />
                         </LinearLayout>
@@ -106,7 +106,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="6dp"
-                            android:text="收货地址：山东省日照市东港区临沂路于高新六路交汇处高新区创业中心11楼盖车云修公司"
+                            android:text="收货地址："
                             android:textColor="#5F5D5D"
                             android:textSize="@dimen/second_font" />
                     </LinearLayout>
@@ -173,7 +173,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
-                        android:text="包邮+自组包邮+10.8元"
+                        android:text=""
                         android:textColor="#5F5D5D"
                         android:textSize="@dimen/second_font" />
                 </LinearLayout>

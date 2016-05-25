@@ -122,6 +122,13 @@ public class ToosUtils {
 		return false;
 	}
 
+	public static void callPhone(Context context,String phone){
+		Intent phoneIntent = new Intent(
+				"android.intent.action.CALL", Uri.parse("tel:"
+				+ phone));
+		context.startActivity(phoneIntent);
+	}
+
 
 
 	public static File createFile(String path) {

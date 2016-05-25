@@ -14,16 +14,11 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.baidu.location.BDLocation;
-import com.baidu.location.BDLocationListener;
-import com.baidu.location.LocationClient;
 import com.gaicheyunxiu.gaiche.R;
-import com.gaicheyunxiu.gaiche.activity.fragment.OutletFragment;
+import com.gaicheyunxiu.gaiche.adapter.OuletOrderSelAdapter;
 import com.gaicheyunxiu.gaiche.adapter.OuletSelAdapter;
-import com.gaicheyunxiu.gaiche.model.CarTypeEntity;
-import com.gaicheyunxiu.gaiche.model.CommodityState;
 import com.gaicheyunxiu.gaiche.model.MyCarEntity;
 import com.gaicheyunxiu.gaiche.model.OueSelState;
-import com.gaicheyunxiu.gaiche.model.OuletHeadEntity;
 import com.gaicheyunxiu.gaiche.model.OutSelEntity;
 import com.gaicheyunxiu.gaiche.model.ReturnState;
 import com.gaicheyunxiu.gaiche.utils.CityDBUtils;
@@ -52,7 +47,7 @@ import java.util.List;
  * Created by Mu on 2015/12/24.
  * 选择门店页面
  */
-public class OultSelActivity extends BaseActivity implements View.OnClickListener {
+public class OultOrderSelActivity extends BaseActivity implements View.OnClickListener {
 
     private ImageView back;
 
@@ -74,7 +69,7 @@ public class OultSelActivity extends BaseActivity implements View.OnClickListene
 
     private PullToRefreshListView listView;
 
-    private OuletSelAdapter adapter;
+    private OuletOrderSelAdapter adapter;
 
     private int width;
 
@@ -90,19 +85,19 @@ public class OultSelActivity extends BaseActivity implements View.OnClickListene
 
     private View pro;
 
-    private int flag;//0代表首页进去 1代表从美容进入 //2附近门店// 3服务项目  //4搜索门店
-
     private BDLocation bdLocation = null;
 
     private CityEntity cityEntity;
 
-    private String serviceId;
-
-    private String keyword;
-
     private View serchView;
 
     private TextView serchText;
+
+    private String shopId;
+
+    private String carTypeId;
+
+    private String commoditys;
 
     private Handler handler = new Handler() {
         @Override
@@ -110,11 +105,11 @@ public class OultSelActivity extends BaseActivity implements View.OnClickListene
             switch (msg.what) {
                 case LocalUtils.LOCAT_OK:
                     bdLocation = (BDLocation) msg.obj;
-                    String city=bdLocation.getCity();
+                    String city = bdLocation.getCity();
                     titleMap.setText(city);
-                    cityEntity= CityDBUtils.getCityIdFromName(OultSelActivity.this, city);
-                    cityEntity.locallongitude=bdLocation.getLongitude();
-                    cityEntity.locallatitude=bdLocation.getLatitude();
+                    cityEntity = CityDBUtils.getCityIdFromName(OultOrderSelActivity.this, city);
+                    cityEntity.locallongitude = bdLocation.getLongitude();
+                    cityEntity.locallatitude = bdLocation.getLatitude();
                     getOulet(1);
                     break;
             }
@@ -128,19 +123,14 @@ public class OultSelActivity extends BaseActivity implements View.OnClickListene
         setContentView(R.layout.activity_ouletsel);
         width = DensityUtil.getScreenWidth(this);
         initView();
-
-        if (flag==4){
-            serchView.setVisibility(View.VISIBLE);
-            group.setVisibility(View.GONE);
-
-        }else{
-            serchView.setVisibility(View.GONE);
-            group.setVisibility(View.VISIBLE);
-        }
+        serchView.setVisibility(View.GONE);
+        group.setVisibility(View.VISIBLE);
     }
 
     private void initView() {
-        flag = getIntent().getIntExtra("flag", 0);
+        shopId = getIntent().getStringExtra("shopId");
+        carTypeId = getIntent().getStringExtra("carTypeId");
+        commoditys = getIntent().getStringExtra("commoditys");
         back = (ImageView) findViewById(R.id.title_back);
         title = (TextView) findViewById(R.id.title_text);
         titleMap = (TextView) findViewById(R.id.title_city);
@@ -152,8 +142,8 @@ public class OultSelActivity extends BaseActivity implements View.OnClickListene
         technology = (RadioButton) findViewById(R.id.ouletsel_technology);
         price = (RadioButton) findViewById(R.id.ouletsel_price);
         listView = (PullToRefreshListView) findViewById(R.id.ouletsel_list);
-        serchView=  findViewById(R.id.ouletsel_serchview);
-        serchText= (TextView) findViewById(R.id.ouletsel_serchtext);
+        serchView = findViewById(R.id.ouletsel_serchview);
+        serchText = (TextView) findViewById(R.id.ouletsel_serchtext);
         pro = findViewById(R.id.ouletsel_pro);
 
         back.setOnClickListener(this);
@@ -161,7 +151,7 @@ public class OultSelActivity extends BaseActivity implements View.OnClickListene
 
         map.setVisibility(View.VISIBLE);
         map.setOnClickListener(this);
-        adapter = new OuletSelAdapter(this, entities, width);
+        adapter = new OuletOrderSelAdapter(this, entities, width, shopId);
         listView.setAdapter(adapter);
         group.check(R.id.ouletsel_default);
         back.setOnClickListener(this);
@@ -169,54 +159,8 @@ public class OultSelActivity extends BaseActivity implements View.OnClickListene
         technology.setOnClickListener(this);
         price.setOnClickListener(this);
         sort = "0";
-
-
-
-        if (flag == 1) {
-            LocalUtils localUtils = new LocalUtils(this, handler);
-            serviceIds = getIntent().getStringExtra("ids");
-            localUtils.startLocation();
-        }else if(flag==2){
-            cityEntity= (CityEntity) getIntent().getSerializableExtra("city");
-            title.setText("附近门店");
-            price.setVisibility(View.GONE);
-            titleMap.setText(cityEntity.name);
-            getOulet(1);
-        }else if(flag==4){
-            keyword=getIntent().getStringExtra("keywords");
-            serchText.setText(keyword);
-            LocalUtils localUtils = new LocalUtils(this, handler);
-            localUtils.startLocation();
-        }else if(flag==3){
-            LocalUtils localUtils = new LocalUtils(this, handler);
-            serviceId=getIntent().getStringExtra("serviceId");
-            String stitle=getIntent().getStringExtra("title");
-            title.setText(stitle);
-            localUtils.startLocation();
-//            switch (serviceId){
-//                case   OutletFragment.BAOYANG_FLAG:
-//                    title.setText("保养安装");
-//                    break;
-//                case   OutletFragment.XICHE_FLAG:
-//                    title.setText("普通洗车");
-//                    break;
-//                case   OutletFragment.TIEMO_FLAG:
-//                    title.setText("贴膜");
-//                    break;
-//                case   OutletFragment.BANJIN_FLAG:
-//                    title.setText("钣金喷漆");
-//                    break;
-//                case   OutletFragment.PAOGUANG_FLAG:
-//                    title.setText("抛光封釉");
-//                    break;
-//                case   OutletFragment.LUOTAI_FLAG:
-//                    title.setText("轮胎修补");
-//                    break;
-//                case   OutletFragment.SILUN_FLAG:
-//                    title.setText("四轮定位");
-//                    break;
-//            }
-        }
+        LocalUtils localUtils = new LocalUtils(this, handler);
+        localUtils.startLocation();
         group.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
@@ -243,9 +187,11 @@ public class OultSelActivity extends BaseActivity implements View.OnClickListene
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(OultSelActivity.this, OutletDetailActivity.class);
-                intent.putExtra("shopId",entities.get(position).id);
-                startActivity(intent);
+                Intent intent = new Intent();
+                intent.putExtra("entity", entities.get(position));
+                setResult(RESULT_OK, intent);
+                finish();
+
             }
         });
 
@@ -353,51 +299,16 @@ public class OultSelActivity extends BaseActivity implements View.OnClickListene
         RequestParams rp = new RequestParams();
         HttpUtils utils = new HttpUtils();
         utils.configTimeout(20000);
-        MyCarEntity myCarEntity= MyApplication.getInstance().getCarEntity();
-        String url = "service/shop";
-        if (flag == 1) {
-            rp.addBodyParameter("sort", sort);
-            if (myCarEntity!=null){
-                rp.addBodyParameter("carTypeId", myCarEntity.carTypeId);
-            }
-            rp.addBodyParameter("pageNo", pageNo + "");
-            rp.addBodyParameter("longitude", String.valueOf(bdLocation.getLongitude()));
-            rp.addBodyParameter("latitude", String.valueOf(bdLocation.getLatitude()));
-            rp.addBodyParameter("serviceIds", serviceIds);
-            LogManager.LogShow("-----", serviceIds, LogManager.ERROR);
-            url = "service/shop";
-        }else if (flag==2){
-            rp.addBodyParameter("sort", sort);
-            rp.addBodyParameter("longitude",String.valueOf(cityEntity.locallongitude));
-            rp.addBodyParameter("latitude", String.valueOf(cityEntity.locallatitude));
-            rp.addBodyParameter("cityId", cityEntity.id);
-            if (myCarEntity!=null){
-                rp.addBodyParameter("carTypeId", myCarEntity.carTypeId);
-            }
-            rp.addBodyParameter("pageNo", pageNo+"");
-            url = "shop/nearShop";
-        }else if(flag==3){
-            rp.addBodyParameter("sort", sort);
-            rp.addBodyParameter("longitude", String.valueOf(bdLocation.getLongitude()));
-            rp.addBodyParameter("latitude", String.valueOf(bdLocation.getLatitude()));
-            rp.addBodyParameter("serviceId", serviceId);
-            rp.addBodyParameter("pageNo", pageNo + "");
-            if (myCarEntity!=null){
-                rp.addBodyParameter("carTypeId", myCarEntity.carTypeId);
-            }
-            rp.addBodyParameter("cityId", cityEntity.id);
-            url = "shop/findByService";
-        }else if (flag==4){
-            rp.addBodyParameter("longitude", String.valueOf(bdLocation.getLongitude()));
-            rp.addBodyParameter("keyword", keyword);
-            rp.addBodyParameter("latitude", String.valueOf(bdLocation.getLatitude()));
-            rp.addBodyParameter("pageNo", pageNo + "");
-            if (myCarEntity!=null){
-                rp.addBodyParameter("carTypeId", myCarEntity.carTypeId);
-            }
-            rp.addBodyParameter("cityId", cityEntity.id);
-            url = "shop/search";
+        String url = "shop/findByCommodity";
+        rp.addBodyParameter("sort", sort);
+        if (!ToosUtils.isStringEmpty(carTypeId)) {
+            rp.addBodyParameter("carTypeId", carTypeId);
         }
+        rp.addBodyParameter("pageNo", pageNo + "");
+        rp.addBodyParameter("longitude", String.valueOf(bdLocation.getLongitude()));
+        rp.addBodyParameter("latitude", String.valueOf(bdLocation.getLatitude()));
+        rp.addBodyParameter("cityId", cityEntity.id);
+        rp.addBodyParameter("commoditys", commoditys);
         utils.send(HttpRequest.HttpMethod.POST, Constant.ROOT_PATH
                 + url, rp, new RequestCallBack<String>() {
             @Override
@@ -410,7 +321,7 @@ public class OultSelActivity extends BaseActivity implements View.OnClickListene
 
             @Override
             public void onFailure(HttpException arg0, String arg1) {
-                ToastUtils.displayFailureToast(OultSelActivity.this);
+                ToastUtils.displayFailureToast(OultOrderSelActivity.this);
                 pro.setVisibility(View.GONE);
                 listView.onRefreshComplete();
             }
@@ -440,15 +351,15 @@ public class OultSelActivity extends BaseActivity implements View.OnClickListene
                         }
 
                     } else if (Constant.TOKEN_ERR.equals(state.msg)) {
-                        ToastUtils.displayShortToast(OultSelActivity.this,
+                        ToastUtils.displayShortToast(OultOrderSelActivity.this,
                                 "验证错误，请重新登录");
-                        ToosUtils.goReLogin(OultSelActivity.this);
+                        ToosUtils.goReLogin(OultOrderSelActivity.this);
                     } else {
-                        ToastUtils.displayShortToast(OultSelActivity.this,
+                        ToastUtils.displayShortToast(OultOrderSelActivity.this,
                                 (String) state.result);
                     }
                 } catch (Exception e) {
-                    ToastUtils.displaySendFailureToast(OultSelActivity.this);
+                    ToastUtils.displaySendFailureToast(OultOrderSelActivity.this);
                 }
 
             }

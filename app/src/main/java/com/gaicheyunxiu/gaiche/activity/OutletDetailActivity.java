@@ -119,6 +119,7 @@ public class OutletDetailActivity extends BaseActivity implements View.OnClickLi
     private List<ShopServiceEntity> mrentities;
     private List<ShopEvaluationEntity> evaluationEntities;
     private int pageNo = 1;
+    private OutSelDetailEntity outSelDetailEntity;
     private Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -213,6 +214,9 @@ public class OutletDetailActivity extends BaseActivity implements View.OnClickLi
         hlistview.setAdapter(adapter);
 
         serok.setOnClickListener(this);
+        hyangxiu.setOnClickListener(this);
+        hmeirong.setOnClickListener(this);
+        hphoneView.setOnClickListener(this);
 
         LocalUtils localUtils = new LocalUtils(this, handler);
         localUtils.startLocation();
@@ -267,8 +271,17 @@ public class OutletDetailActivity extends BaseActivity implements View.OnClickLi
     @Override
     public void onClick(View v) {
         switch (v.getId()){
+            case R.id.outletdetail_hyangxiu:
+                group.check(R.id.outletdetail_service);
+                break;
+            case R.id.outletdetail_hmeirong:
+                group.check(R.id.outletdetail_service);
+                break;
             case R.id.title_back:
                 finish();
+                break;
+            case R.id.outletdetail_hphone:
+                ToosUtils.callPhone(OutletDetailActivity.this,outSelDetailEntity.phone);
                 break;
             case R.id.outletdetail_serok:
                 if (ToosUtils.isStringEmpty(ShareDataTool.getToken(OutletDetailActivity.this))){
@@ -337,7 +350,7 @@ public class OutletDetailActivity extends BaseActivity implements View.OnClickLi
                                 LogManager.ERROR);
                         OutSelDetailState outSelDetailState=gson.fromJson(arg0.result,OutSelDetailState.class);
                         OutSelDetailVo outSelDetailVo=outSelDetailState.result;
-                        OutSelDetailEntity outSelDetailEntity=outSelDetailVo.shopVo;
+                        outSelDetailEntity=outSelDetailVo.shopVo;
                         bitmapUtils.display(himage,outSelDetailEntity.icon);
                         hname.setText(outSelDetailEntity.name);
                         hbar.setStar(Double.parseDouble(outSelDetailEntity.score));

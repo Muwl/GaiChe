@@ -459,6 +459,9 @@ public class ShopListActivity extends BaseActivity implements View.OnClickListen
         if (!ToosUtils.isStringEmpty(ShareDataTool.getToken(this))){
             rp.addBodyParameter("sign",ShareDataTool.getToken(this));
         }
+
+//        LogManager.LogShow("-----", Constant.ROOT_PATH+ url+"?category="+category+"&type="+cattype+"&carTypeId="+carEntity.carTypeId+"&pageNum="+1,
+//                LogManager.ERROR);
         utils.send(HttpRequest.HttpMethod.POST, Constant.ROOT_PATH
                 + url, rp, new RequestCallBack<String>() {
             @Override
@@ -473,6 +476,10 @@ public class ShopListActivity extends BaseActivity implements View.OnClickListen
             public void onFailure(HttpException arg0, String arg1) {
                 ToastUtils.displayFailureToast(ShopListActivity.this);
                 pro.setVisibility(View.GONE);
+                LogManager.LogShow("-----", arg0.getMessage(),
+                        LogManager.ERROR);
+                LogManager.LogShow("-----", arg1,
+                        LogManager.ERROR);
                 listView.onRefreshComplete();
             }
 

@@ -208,7 +208,7 @@ public class ServiceOrderActivity extends BaseActivity implements View.OnClickLi
         rp.addBodyParameter("sign", ShareDataTool.getToken(this));
         rp.addBodyParameter("type", String.valueOf(type));
         rp.addBodyParameter("pageNo", String.valueOf(page));
-        LogManager.LogShow("-----", Constant.ROOT_PATH+url+"?sign="+ShareDataTool.getToken(this)+"&type="+String.valueOf(type)+"&page="+String.valueOf(page),
+        LogManager.LogShow("-----", Constant.ROOT_PATH+url+"?sign="+ShareDataTool.getToken(this)+"&type="+String.valueOf(type)+"&pageNo="+String.valueOf(page),
                 LogManager.ERROR);
         utils.send(HttpRequest.HttpMethod.POST, Constant.ROOT_PATH
                 + url, rp, new RequestCallBack<String>() {

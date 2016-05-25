@@ -52,6 +52,8 @@ public class SerchOuletActivity extends BaseActivity implements View.OnClickList
 
     List<String> strings;
 
+    private String cityId;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +63,7 @@ public class SerchOuletActivity extends BaseActivity implements View.OnClickList
     }
 
     private void initView() {
+        cityId=getIntent().getStringExtra("cityId");
         title= (TextView) findViewById(R.id.title_text);
         back= (ImageView) findViewById(R.id.title_back);
         textView= (EditText) findViewById(R.id.serch_text);
@@ -110,6 +113,7 @@ public class SerchOuletActivity extends BaseActivity implements View.OnClickList
         RequestParams rp = new RequestParams();
         HttpUtils utils = new HttpUtils();
         rp.addBodyParameter("keyword", keyword);
+        rp.addBodyParameter("cityId", cityId);
         utils.configTimeout(20000);
         utils.send(HttpRequest.HttpMethod.POST, Constant.ROOT_PATH
                 + "shop/findKeyword", rp, new RequestCallBack<String>() {

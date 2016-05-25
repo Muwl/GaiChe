@@ -13,7 +13,7 @@
         android:orientation="horizontal"
         android:background="@color/write"
         android:layout_marginTop="10dp"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
         <ImageView
             android:id="@+id/personname_cancel"

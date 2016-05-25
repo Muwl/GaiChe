@@ -19,6 +19,7 @@ import android.widget.TextView;
 
 import com.gaicheyunxiu.gaiche.R;
 import com.gaicheyunxiu.gaiche.activity.CarbrandActivity;
+import com.gaicheyunxiu.gaiche.activity.CarmanagerActivity;
 import com.gaicheyunxiu.gaiche.activity.CrowdFundActivity;
 import com.gaicheyunxiu.gaiche.activity.MainActivity;
 import com.gaicheyunxiu.gaiche.activity.QRScanActivity;
@@ -276,7 +277,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
                 if (carEntity==null){
                     ToosUtils.goBrand(getActivity(),1);
                 }else{
-
+                    Intent intent1=new Intent(getActivity(), CarmanagerActivity.class);
+                    startActivityForResult(intent1, 8856);
                 }
 
                 break;

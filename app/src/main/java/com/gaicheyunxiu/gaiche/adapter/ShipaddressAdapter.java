@@ -61,7 +61,7 @@ public class ShipaddressAdapter extends BaseDataAdapter<AddressVo> {
         holder.del.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                CustomeDialog dialog=new CustomeDialog(context,handler,"确定删除次地址?",position,-1);
+                CustomeDialog dialog=new CustomeDialog(context,handler,"确定删除此地址?",position,-1);
             }
         });
 

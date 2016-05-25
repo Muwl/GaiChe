@@ -16,4 +16,6 @@ public class ShopCartEntity implements Serializable {
     public String productionDate;
     public List<ShopCartCommodityEntity> cartCommodityVOs;
     public OutSelEntity outSelEntity;
+
+
 }

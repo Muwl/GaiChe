@@ -93,6 +93,11 @@ public class OutletFragment extends Fragment implements View.OnClickListener {
     private Handler handler = new Handler() {
         public void handleMessage(Message msg) {
             switch (msg.what) {
+                case 16624:
+                    Intent intent11=new Intent(getActivity(), SerchActivity.class);
+                    intent11.putExtra("cityId",cityEntity.id);
+                    startActivity(intent11);
+                    break;
                 case HttpPostUtils.FIND_MYCAR:
                     adapter.notifyDataSetChanged();
                     break;

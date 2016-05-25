@@ -151,7 +151,7 @@
             android:paddingTop="15dp"
             android:text="合计"
             android:textColor="@color/write"
-            android:textSize="@dimen/first_font" />
+            android:textSize="@dimen/second_font" />
 
         <ImageView
             android:layout_width="1px"

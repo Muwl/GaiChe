@@ -45,7 +45,6 @@ public class MincomeActivity extends BaseActivity implements View.OnClickListene
 
     private TextView wallet;
 
-    private MyGridView gridView;
 
     private TextView money;
 
@@ -84,7 +83,6 @@ public class MincomeActivity extends BaseActivity implements View.OnClickListene
         wallet.setOnClickListener(this);
         earningsEntities=new ArrayList<>();
         adapter=new MarginAdapter(this,earningsEntities);
-        gridView.setAdapter(adapter);
         no.setText(ShareDataTool.getRegiterEntity(this).gcCode);
 
         listView.setMode(PullToRefreshBase.Mode.BOTH);

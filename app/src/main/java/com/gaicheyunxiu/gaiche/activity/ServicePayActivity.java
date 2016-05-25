@@ -95,6 +95,9 @@ public class ServicePayActivity extends  BaseActivity implements View.OnClickLis
 
     private ImageView div2;
 
+//    String strUrl=Constant.ROOT_PATH+ url+"?sign="+ ShareDataTool.getToken(context)+"&paySign="+payEntity.paySign+"&payType="+payEntity.payType +"&payPwd="+ToosUtils.getEncrypt(ToosUtils.getTextContent(pwd) + ToosUtils.getEncryptto(payEntity.content);
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -332,7 +335,7 @@ public class ServicePayActivity extends  BaseActivity implements View.OnClickLis
                     if (Constant.RETURN_OK.equals(state.msg)) {
                         LogManager.LogShow("-----", arg0.result,
                                 LogManager.ERROR);
-                        PaymentDialog dialog=new PaymentDialog(ServicePayActivity.this);
+                        PaymentDialog dialog=new PaymentDialog(ServicePayActivity.this,null,null);
                     } else if (Constant.TOKEN_ERR.equals(state.msg)) {
                         ToastUtils.displayShortToast(ServicePayActivity.this,
                                 "验证错误，请重新登录");

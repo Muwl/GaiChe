@@ -54,8 +54,11 @@ public class ShipaddressActivity extends BaseActivity implements View.OnClickLis
 
     private View pro;
 
+    private int flag;
+
     public static final int ADDRESS_ADD=1665;
     private static final int ADDRESS_EDIT=1666;
+
 
     private Handler handler=new Handler(){
         @Override
@@ -84,6 +87,7 @@ public class ShipaddressActivity extends BaseActivity implements View.OnClickLis
     }
 
     private void initView() {
+        flag=getIntent().getIntExtra("flag",flag);
         back = (ImageView) findViewById(R.id.title_back);
         title = (TextView) findViewById(R.id.title_text);
         listView = (ListView) findViewById(R.id.shipaddress_list);
@@ -99,8 +103,13 @@ public class ShipaddressActivity extends BaseActivity implements View.OnClickLis
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Intent intent = new Intent(ShipaddressActivity.this, ShipaddressaddActivity.class);
-                startActivity(intent);
+                if (flag==2){
+                    updateAddress(i);
+                }else{
+                    Intent intent = new Intent(ShipaddressActivity.this, ShipaddressaddActivity.class);
+                    startActivity(intent);
+                }
+
             }
         });
 
@@ -313,8 +322,16 @@ public class ShipaddressActivity extends BaseActivity implements View.OnClickLis
                                     }
                                 }
                                 adapter.notifyDataSetChanged();
-                                ToastUtils.displayShortToast(ShipaddressActivity.this,
-                                        "删除成功！");
+                                if (flag==2){
+                                    Intent intent=new Intent();
+                                    intent.putExtra("entity",addressVos.get(position));
+                                    setResult(RESULT_OK, intent);
+                                    finish();
+                                }else{
+                                    ToastUtils.displayShortToast(ShipaddressActivity.this,
+                                            "修改成功！");
+                                }
+
                             } else if (Constant.TOKEN_ERR.equals(state.msg)) {
                                 ToastUtils.displayShortToast(ShipaddressActivity.this,
                                         "验证错误，请重新登录");

@@ -42,7 +42,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
-                    android:text="商业保证金"
+                    android:text="充值卡\u3000\u3000"
                     android:textColor="@color/write"
                     android:textSize="@dimen/second_font" />
 

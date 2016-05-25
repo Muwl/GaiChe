@@ -27,6 +27,8 @@ import com.gaicheyunxiu.gaiche.utils.ShareDataTool;
 import com.gaicheyunxiu.gaiche.utils.ToastUtils;
 import com.gaicheyunxiu.gaiche.utils.ToosUtils;
 import com.google.gson.Gson;
+import com.handmark.pulltorefresh.library.PullToRefreshBase;
+import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.lidroid.xutils.HttpUtils;
 import com.lidroid.xutils.exception.HttpException;
 import com.lidroid.xutils.http.RequestParams;
@@ -47,7 +49,7 @@ public class ShopOrderActivity extends  BaseActivity implements View.OnClickList
 
     private ImageView back;
 
-    private ListView listView;
+    private PullToRefreshListView listView;
 
     private ShopOrderAdapter adapter;
 
@@ -62,6 +64,10 @@ public class ShopOrderActivity extends  BaseActivity implements View.OnClickList
     private RadioButton evaluating;
 
     private View pro;
+
+    private boolean proFlag = true;
+
+    private int pageNo = 1;
 
     private String orderState="";
 
@@ -143,7 +149,7 @@ public class ShopOrderActivity extends  BaseActivity implements View.OnClickList
     private void initView() {
         title= (TextView) findViewById(R.id.title_text);
         back = (ImageView) findViewById(R.id.title_back);
-        listView= (ListView) findViewById(R.id.shoporder_list);
+        listView= (PullToRefreshListView) findViewById(R.id.shoporder_list);
         group= (RadioGroup) findViewById(R.id.shoporder_group);
         all= (RadioButton) findViewById(R.id.shoporder_all);
         paying= (RadioButton) findViewById(R.id.shoporder_paying);
@@ -159,30 +165,49 @@ public class ShopOrderActivity extends  BaseActivity implements View.OnClickList
         listView.setAdapter(adapter);
         group.check(R.id.shoporder_all);
 
-        getOrder();
+        listView.setMode(PullToRefreshBase.Mode.BOTH);
+        listView.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener<ListView>() {
+            @Override
+            public void onRefresh(PullToRefreshBase<ListView> refreshView) {
+                closePro();
+                if (refreshView.getCurrentMode().equals(PullToRefreshBase.Mode.PULL_FROM_START)) {
+                    getOrder(1);
+                } else if (refreshView.getCurrentMode().equals(PullToRefreshBase.Mode.PULL_FROM_END)) {
+                    getOrder(pageNo + 1);
+                }
+
+            }
+
+        });
+
+        getOrder(1);
         group.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 if (checkedId == R.id.shoporder_all) {
+                    openPro();
                     orderState="";
                     entities.clear();
                     adapter.notifyDataSetChanged();
-                    getOrder();
+                    getOrder(1);
                 } else if (checkedId == R.id.shoporder_paying) {
+                    openPro();
                     orderState="0";
                     entities.clear();
                     adapter.notifyDataSetChanged();
-                    getOrder();
+                    getOrder(1);
                 } else if (checkedId == R.id.shoporder_receiving) {
+                    openPro();
                     orderState="2";
                     entities.clear();
                     adapter.notifyDataSetChanged();
-                    getOrder();
+                    getOrder(1);
                 } else if (checkedId == R.id.shoporder_evaluating) {
+                    openPro();
                     orderState="4";
                     entities.clear();
                     adapter.notifyDataSetChanged();
-                    getOrder();
+                    getOrder(1);
                 }
             }
         });
@@ -197,14 +222,25 @@ public class ShopOrderActivity extends  BaseActivity implements View.OnClickList
         }
     }
 
+
+    private void openPro() {
+        proFlag = true;
+    }
+
+    private void closePro() {
+        proFlag = false;
+    }
+
+
     /**
      * 查询商品订单
      */
-    private void getOrder() {
+    private void getOrder(final int page) {
         RequestParams rp = new RequestParams();
         HttpUtils utils = new HttpUtils();
         utils.configTimeout(20000);
         rp.addBodyParameter("sign", ShareDataTool.getToken(this));
+        rp.addBodyParameter("pageNum", String.valueOf(page));
         if (!ToosUtils.isStringEmpty(orderState)){
             rp.addBodyParameter("orderState",orderState);
         }
@@ -213,18 +249,22 @@ public class ShopOrderActivity extends  BaseActivity implements View.OnClickList
             @Override
             public void onStart() {
                 super.onStart();
-                pro.setVisibility(View.VISIBLE);
+                if (proFlag) {
+                    pro.setVisibility(View.VISIBLE);
+                }
             }
 
             @Override
             public void onFailure(HttpException arg0, String arg1) {
                 ToastUtils.displayFailureToast(ShopOrderActivity.this);
+                listView.onRefreshComplete();
                 pro.setVisibility(View.GONE);
             }
 
             @Override
             public void onSuccess(ResponseInfo<String> arg0) {
                 pro.setVisibility(View.GONE);
+                listView.onRefreshComplete();
                 try {
                     Gson gson = new Gson();
                     ReturnState state = gson.fromJson(arg0.result,
@@ -232,8 +272,12 @@ public class ShopOrderActivity extends  BaseActivity implements View.OnClickList
                     if (Constant.RETURN_OK.equals(state.msg)) {
                         LogManager.LogShow("-----***111", arg0.result,
                                 LogManager.ERROR);
-                        entities.clear();
                         ShopOrderState shopOrderState=gson.fromJson(arg0.result,ShopOrderState.class);
+                        pageNo = Integer.valueOf(page);
+                        if (pageNo == 1) {
+                            entities.clear();
+                            adapter.notifyDataSetChanged();
+                        }
                         for (int i=0;i<shopOrderState.result.size();i++){
                             entities.add(shopOrderState.result.get(i));
                         }

@@ -16,6 +16,21 @@ import android.widget.TextView;
 import com.gaicheyunxiu.gaiche.R;
 import com.gaicheyunxiu.gaiche.activity.PaySuccessActivity;
 import com.gaicheyunxiu.gaiche.activity.PaymentPwdActivity;
+import com.gaicheyunxiu.gaiche.model.PayEntity;
+import com.gaicheyunxiu.gaiche.model.PayState;
+import com.gaicheyunxiu.gaiche.model.ReturnState;
+import com.gaicheyunxiu.gaiche.utils.Constant;
+import com.gaicheyunxiu.gaiche.utils.LogManager;
+import com.gaicheyunxiu.gaiche.utils.ShareDataTool;
+import com.gaicheyunxiu.gaiche.utils.ToastUtils;
+import com.gaicheyunxiu.gaiche.utils.ToosUtils;
+import com.google.gson.Gson;
+import com.lidroid.xutils.HttpUtils;
+import com.lidroid.xutils.exception.HttpException;
+import com.lidroid.xutils.http.RequestParams;
+import com.lidroid.xutils.http.ResponseInfo;
+import com.lidroid.xutils.http.callback.RequestCallBack;
+import com.lidroid.xutils.http.client.HttpRequest;
 
 
 /**
@@ -32,11 +47,16 @@ public class PaymentDialog extends Dialog implements
 	private TextView name;
 	private TextView forgetpwd;
 	private TextView ok;
+	private PayEntity payEntity;
+	private View pro;
+	private String smoney;
 
-	public PaymentDialog(Context context) {
+	public PaymentDialog(Context context,PayEntity payEntity,String smoney) {
 		super(context, R.style.dialog2);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		this.context = context;
+		this.payEntity = payEntity;
+		this.smoney=smoney;
 		setContentView(R.layout.pay_dialog);
 		getWindow().setBackgroundDrawable(new BitmapDrawable());
 		show();
@@ -51,6 +71,8 @@ public class PaymentDialog extends Dialog implements
 		forgetpwd= (TextView) findViewById(R.id.dialog_forget_pwd);
 		name= (TextView) findViewById(R.id.dialog_pay_name);
 		ok= (TextView) findViewById(R.id.dialog_pay_ok);
+		pro= findViewById(R.id.dialog_pay_pro);
+		money.setText(smoney);
 		ok.setOnClickListener(this);
 		close.setOnClickListener(this);
 		forgetpwd.setOnClickListener(this);
@@ -64,9 +86,9 @@ public class PaymentDialog extends Dialog implements
 			dismiss();
 			break;
 		case R.id.dialog_pay_ok:
-			dismiss();
-			Intent intent1=new Intent(context, PaySuccessActivity.class);
-			context.startActivity(intent1);
+
+			walletPay();
+//
 			break;
 		case R.id.dialog_forget_pwd:
 			dismiss();
@@ -77,6 +99,70 @@ public class PaymentDialog extends Dialog implements
 			break;
 		}
 
+	}
+
+	/**
+	 * 钱包支付
+	 */
+	private void walletPay() {
+		if (ToosUtils.isTextEmpty(pwd)){
+			ToastUtils.displayShortToast(context,"请输入密码");
+			return;
+		}
+		RequestParams rp = new RequestParams();
+		HttpUtils utils = new HttpUtils();
+		utils.configTimeout(20000);
+		String url="pay/walletPay";
+//		rp.addBodyParameter("sign", ShareDataTool.getToken(context));
+		rp.addBodyParameter("paySign",payEntity.paySign );
+		rp.addBodyParameter("payType",payEntity.payType );
+		rp.addBodyParameter("payPwd",ToosUtils.getEncrypt(ToosUtils.getTextContent(pwd)));
+		String strUrl=Constant.ROOT_PATH+ url+"?sign="+ ShareDataTool.getToken(context)+ToosUtils.getEncryptto(payEntity.content);
+//		rp.addBodyParameter("commodityOrderVosStr", new Gson().toJson(getOrderEntity()));
+		String ss=Constant.ROOT_PATH+ url+"?sign="+ ShareDataTool.getToken(context)+"&paySign="+payEntity.paySign+"&payType="+payEntity.payType +"&payPwd="+ToosUtils.getEncrypt(ToosUtils.getTextContent(pwd)) + ToosUtils.getEncryptto(payEntity.content);
+		LogManager.LogShow("-----", ss,
+				LogManager.ERROR);
+		utils.send(HttpRequest.HttpMethod.POST, strUrl, rp, new RequestCallBack<String>() {
+			@Override
+			public void onStart() {
+				super.onStart();
+//				pro.setVisibility(View.VISIBLE);
+			}
+
+			@Override
+			public void onFailure(HttpException arg0, String arg1) {
+				ToastUtils.displayFailureToast(context);
+//				pro.setVisibility(View.GONE);
+			}
+
+			@Override
+			public void onSuccess(ResponseInfo<String> arg0) {
+//				pro.setVisibility(View.GONE);
+				try {
+					Gson gson = new Gson();
+					ReturnState state = gson.fromJson(arg0.result,
+							ReturnState.class);
+					if (Constant.RETURN_OK.equals(state.msg)) {
+						LogManager.LogShow("-----", arg0.result,
+								LogManager.ERROR);
+						dismiss();
+						Intent intent1=new Intent(context, PaySuccessActivity.class);
+						context.startActivity(intent1);
+					} else if (Constant.TOKEN_ERR.equals(state.msg)) {
+						ToastUtils.displayShortToast(context,
+								"验证错误，请重新登录");
+						ToosUtils.goReLogin(context);
+					} else {
+						ToastUtils.displayShortToast(context,
+								(String) state.result);
+					}
+				} catch (Exception e) {
+					e.printStackTrace();
+					ToastUtils.displaySendFailureToast(context);
+				}
+
+			}
+		});
 	}
 
 }

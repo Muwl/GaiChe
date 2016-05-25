@@ -81,7 +81,7 @@ public class MarginActivity extends BaseActivity implements View.OnClickListener
         pro= findViewById(R.id.margin_pro);
         money= (TextView) findViewById(R.id.margin_money);
         back.setOnClickListener(this);
-        title.setText("商品保证金");
+        title.setText("充值卡");
         back.setOnClickListener(this);
         wallet.setOnClickListener(this);
         earningsEntities=new ArrayList<>();
