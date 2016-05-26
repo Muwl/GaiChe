@@ -18,6 +18,7 @@
             android:id="@+id/shipaddress_item_image"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:clickable="true"
             android:src="@mipmap/address_select"/>
 
         <LinearLayout

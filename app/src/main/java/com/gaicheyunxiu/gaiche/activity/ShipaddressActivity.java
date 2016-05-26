@@ -75,6 +75,11 @@ public class ShipaddressActivity extends BaseActivity implements View.OnClickLis
                     }
 
                     break;
+
+                case 5336:
+                    int posi=msg.arg1;
+                    updateAddress(posi);
+                    break;
             }
         }
     };
@@ -104,7 +109,10 @@ public class ShipaddressActivity extends BaseActivity implements View.OnClickLis
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 if (flag==2){
-                    updateAddress(i);
+                    Intent intent=new Intent();
+                    intent.putExtra("entity", adapter.getDatas().get(i));
+                    setResult(RESULT_OK, intent);
+                    finish();
                 }else{
                     Intent intent = new Intent(ShipaddressActivity.this, ShipaddressaddActivity.class);
                     startActivity(intent);

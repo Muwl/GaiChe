@@ -16,6 +16,7 @@ import com.gaicheyunxiu.gaiche.R;
 import com.gaicheyunxiu.gaiche.dialog.PhotoDialog;
 import com.gaicheyunxiu.gaiche.model.PersonDataEntity;
 import com.gaicheyunxiu.gaiche.model.PersonDynamicEntity;
+import com.gaicheyunxiu.gaiche.model.PersonIconState;
 import com.gaicheyunxiu.gaiche.model.RegiterEntity;
 import com.gaicheyunxiu.gaiche.model.ReturnState;
 import com.gaicheyunxiu.gaiche.utils.Constant;
@@ -381,6 +382,10 @@ public class PersonDataActivity extends BaseActivity implements View.OnClickList
                     ReturnState state = gson.fromJson(arg0.result,
                             ReturnState.class);
                     if (Constant.RETURN_OK.equals(state.msg)) {
+                        PersonIconState personIconState=gson.fromJson(arg0.result,PersonIconState.class);
+                        RegiterEntity regiterEntity=ShareDataTool.getRegiterEntity(PersonDataActivity.this);
+                        regiterEntity.icon=personIconState.result.icon;
+                        ShareDataTool.SaveInfo(PersonDataActivity.this,regiterEntity);
                         LogManager.LogShow("-----", arg0.result,
                                 LogManager.ERROR);
                         ToastUtils.displayShortToast(PersonDataActivity.this,"保存成功");

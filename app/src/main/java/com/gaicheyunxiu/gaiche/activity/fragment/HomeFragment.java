@@ -169,6 +169,9 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
         carName= (TextView) view.findViewById(R.id.main_carbrand);
         crowShop1= (ImageView) view.findViewById(R.id.home_shop);
         crowShop2= (ImageView) view.findViewById(R.id.home_shop2);
+
+
+
         lin = (LinearLayout) view.findViewById(R.id.home_lin);
         gallery = (MyGallery) view.findViewById(R.id.gallery);
         galllin = (LinearLayout) view.findViewById(R.id.lin);
@@ -294,6 +297,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
                 }
                 Intent intent1=new Intent(getActivity(), ShopListActivity.class);
                 intent1.putExtra("commodityTypeId",popularCateEntities.get(0).commodityTypeId);
+                intent1.putExtra("comeFlag",6);
                 startActivity(intent1);
                 break;
             case R.id.home_hotshop2:
@@ -302,6 +306,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
                 }
                 Intent intent2=new Intent(getActivity(), ShopListActivity.class);
                 intent2.putExtra("commodityTypeId",popularCateEntities.get(1).commodityTypeId);
+                intent2.putExtra("comeFlag",6);
                 startActivity(intent2);
                 break;
             case R.id.home_hotshop3:
@@ -310,6 +315,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
                 }
                 Intent intent3=new Intent(getActivity(), ShopListActivity.class);
                 intent3.putExtra("commodityTypeId",popularCateEntities.get(2).commodityTypeId);
+                intent3.putExtra("comeFlag",6);
                 startActivity(intent3);
                 break;
             case R.id.home_hotshop4:
@@ -318,6 +324,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
                 }
                 Intent intent4=new Intent(getActivity(), ShopListActivity.class);
                 intent4.putExtra("commodityTypeId",popularCateEntities.get(3).commodityTypeId);
+                intent4.putExtra("comeFlag",6);
                 startActivity(intent4);
                 break;
 

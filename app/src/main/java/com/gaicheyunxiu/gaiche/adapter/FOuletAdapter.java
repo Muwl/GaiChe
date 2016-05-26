@@ -224,7 +224,7 @@ public class FOuletAdapter extends BaseAdapter {
             }
             holder.bar.setClickable(false);
             holder.address.setText(shopEntities.get(position-1).district);
-            holder.distance.setText(shopEntities.get(position-1).distance+"km");
+            holder.distance.setText(shopEntities.get(position-1).distance);
             holder.bar.setLayoutParams(new LinearLayout.LayoutParams((int) (0.30 * width), (int) (0.045 * width)));
         }
 

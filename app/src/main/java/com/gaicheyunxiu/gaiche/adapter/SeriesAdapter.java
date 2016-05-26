@@ -84,9 +84,9 @@ public class SeriesAdapter extends BaseAdapter {
             holder= (ViewHolder) convertView.getTag();
         }
         if ("0".equals(models.get(position).key)){
-            holder.tip.setText("国内");
+            holder.tip.setText("国产");
         }else {
-            holder.tip.setText("国外");
+            holder.tip.setText("进口");
         }
         if (position==0){
             holder.tip.setVisibility(View.VISIBLE);

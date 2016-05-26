@@ -70,6 +70,7 @@ public class ShopOrderAdapter extends BaseAdapter{
         holder.orderno.setText("订单号："+entities.get(position).orderId);
         holder.money.setText("￥"+entities.get(position).price+"元");
         holder.time.setText(entities.get(position).createDate);
+
         if ("0".equals(entities.get(position).orderState)){
             holder.state.setText("代付款");
             holder.money.setVisibility(View.VISIBLE);
@@ -95,14 +96,14 @@ public class ShopOrderAdapter extends BaseAdapter{
                 }
             });
 
-        }else if("2".equals(entities.get(position).orderState)){
+        }else if("1".equals(entities.get(position).orderState)){
             holder.state.setText("待收货");
             holder.money.setVisibility(View.GONE);
             holder.div.setVisibility(View.GONE);
             holder.graybtn.setVisibility(View.GONE);
             holder.orgbtn.setVisibility(View.GONE);
-        }else if("4".equals(entities.get(position).orderState)){
-            holder.state.setText("待评价");
+        }else if("2".equals(entities.get(position).orderState)){
+            holder.state.setText("交易成功");
             holder.money.setVisibility(View.GONE);
             holder.div.setVisibility(View.GONE);
             holder.graybtn.setVisibility(View.VISIBLE);
@@ -115,6 +116,12 @@ public class ShopOrderAdapter extends BaseAdapter{
                     CustomeDialog customeDialog = new CustomeDialog(context, handler, "确定删除订单？", position, -2);
                 }
             });
+        }else if("3".equals(entities.get(position).orderState)){
+            holder.state.setText("已取消");
+            holder.money.setVisibility(View.GONE);
+            holder.div.setVisibility(View.GONE);
+            holder.graybtn.setVisibility(View.GONE);
+            holder.orgbtn.setVisibility(View.GONE);
         }
         List<ShopOrderVo> shopOrderVos=null;
         if ("0".equals(entities.get(position).split)){

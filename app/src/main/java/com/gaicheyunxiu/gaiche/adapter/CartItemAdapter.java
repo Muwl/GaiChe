@@ -73,7 +73,7 @@ public class CartItemAdapter extends BaseAdapter{
             holder= (ViewHolder) convertView.getTag();
         }
 
-//        bitmapUtils.display(holder.icon,entities.get(position).);
+        bitmapUtils.display(holder.icon,entities.get(position).briefImage);
         holder.name.setText(entities.get(position).commodityName);
         holder.money.setText("￥"+entities.get(position).commodityPrice);
         holder.m.setText(entities.get(position).mValue+"M");

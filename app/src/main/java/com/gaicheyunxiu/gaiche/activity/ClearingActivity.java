@@ -96,6 +96,7 @@ public class ClearingActivity extends BaseActivity implements View.OnClickListen
     private ShopCartEntity shopCartEntity;
 
     private TextView outSel;
+    private View outSelView;
 
     private ShopDetailEntity shopDetailEntity;
 
@@ -123,6 +124,7 @@ public class ClearingActivity extends BaseActivity implements View.OnClickListen
                     startActivityForResult(intent3,5664);
                     break;
                 case 90:
+                    outSel.setText("无法确认,暂不选择门店");
                     break;
             }
         }
@@ -150,6 +152,7 @@ public class ClearingActivity extends BaseActivity implements View.OnClickListen
         addressview=findViewById(R.id.clearing_addview);
         delivery= (TextView) findViewById(R.id.clearing_delivery);
         outSel= (TextView) findViewById(R.id.clearing_outsel);
+        outSelView=  findViewById(R.id.clearing_outselview);
         wallet=findViewById(R.id.pay_wallet);
         walletcb= (CheckBox) findViewById(R.id.pay_wallet_cb);
         zhifubao=findViewById(R.id.pay_zhifubao);
@@ -172,7 +175,7 @@ public class ClearingActivity extends BaseActivity implements View.OnClickListen
             title.setText("立即购买");
             outSel.setVisibility(View.VISIBLE);
         }
-        outSel.setOnClickListener(this);
+        outSelView.setOnClickListener(this);
         back.setOnClickListener(this);
         addressview.setOnClickListener(this);
         zhifubao.setOnClickListener(this);
@@ -215,7 +218,7 @@ public class ClearingActivity extends BaseActivity implements View.OnClickListen
             case R.id.title_back:
                 finish();
                 break;
-            case R.id.clearing_outsel:
+            case R.id.clearing_outselview:
                 OutSelDialog dialog=new OutSelDialog(ClearingActivity.this,-1,handler);
 
                 break;

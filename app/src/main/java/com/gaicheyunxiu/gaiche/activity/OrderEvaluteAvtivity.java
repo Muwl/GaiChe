@@ -101,7 +101,7 @@ public class OrderEvaluteAvtivity extends BaseActivity implements View.OnClickLi
         name.setText("【"+entity.name+"】"+entity.businessName);
         num.setText(entity.sales);
         money.setText("￥"+entity.presentPrice+"元");
-        m.setText(entity.mVaule+"M");
+        m.setText(entity.mValue+"M");
 
 
     }

@@ -82,7 +82,7 @@ public class CrowdFundActivity extends BaseActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_crowdfund);
-        projectEntity= (CrowdfundingProjectEntity) getIntent().getSerializableExtra("projectEntity");
+        projectEntity= (CrowdfundingProjectEntity) getIntent().getSerializableExtra("entity");
         initView();
     }
 

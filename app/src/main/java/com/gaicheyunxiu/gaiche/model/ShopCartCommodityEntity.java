@@ -14,4 +14,5 @@ public class ShopCartCommodityEntity implements Serializable{
     public String mValue;
     public String businessName;
     public String amount;
+    public String briefImage;
 }

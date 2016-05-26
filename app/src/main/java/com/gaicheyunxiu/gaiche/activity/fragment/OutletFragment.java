@@ -27,6 +27,7 @@ import com.gaicheyunxiu.gaiche.activity.MainActivity;
 import com.gaicheyunxiu.gaiche.activity.OultSelActivity;
 import com.gaicheyunxiu.gaiche.activity.OutletDetailActivity;
 import com.gaicheyunxiu.gaiche.activity.SerchActivity;
+import com.gaicheyunxiu.gaiche.activity.SerchOuletActivity;
 import com.gaicheyunxiu.gaiche.activity.ServiceArtActivity;
 import com.gaicheyunxiu.gaiche.adapter.FOuletAdapter;
 import com.gaicheyunxiu.gaiche.model.AdState;
@@ -94,7 +95,7 @@ public class OutletFragment extends Fragment implements View.OnClickListener {
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case 16624:
-                    Intent intent11=new Intent(getActivity(), SerchActivity.class);
+                    Intent intent11=new Intent(getActivity(), SerchOuletActivity.class);
                     intent11.putExtra("cityId",cityEntity.id);
                     startActivity(intent11);
                     break;
@@ -280,7 +281,7 @@ public class OutletFragment extends Fragment implements View.OnClickListener {
             rp.addBodyParameter("carTypeId", carEntity.carTypeId);
         }
         rp.addBodyParameter("longitude", String.valueOf(bdLocation.getLongitude()));
-        rp.addBodyParameter("latitude", String.valueOf(bdLocation.getLongitude()));
+        rp.addBodyParameter("latitude", String.valueOf(bdLocation.getLatitude()));
         utils.send(HttpRequest.HttpMethod.POST, Constant.ROOT_PATH
                 + "shop/hotShops", rp, new RequestCallBack<String>() {
             @Override

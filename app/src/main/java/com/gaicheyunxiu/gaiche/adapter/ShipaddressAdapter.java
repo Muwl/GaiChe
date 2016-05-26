@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.nfc.tech.IsoDep;
 import android.os.Handler;
+import android.os.Message;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -62,6 +63,15 @@ public class ShipaddressAdapter extends BaseDataAdapter<AddressVo> {
             @Override
             public void onClick(View v) {
                 CustomeDialog dialog=new CustomeDialog(context,handler,"确定删除此地址?",position,-1);
+            }
+        });
+        holder.imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Message message=new Message();
+                message.what=5336;
+                message.arg1=position;
+                handler.sendMessage(message);
             }
         });
 

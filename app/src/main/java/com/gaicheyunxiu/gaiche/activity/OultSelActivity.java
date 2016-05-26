@@ -132,6 +132,7 @@ public class OultSelActivity extends BaseActivity implements View.OnClickListene
         if (flag==4){
             serchView.setVisibility(View.VISIBLE);
             group.setVisibility(View.GONE);
+            serchText.setText(keyword);
 
         }else{
             serchView.setVisibility(View.GONE);
@@ -397,6 +398,8 @@ public class OultSelActivity extends BaseActivity implements View.OnClickListene
             }
             rp.addBodyParameter("cityId", cityEntity.id);
             url = "shop/search";
+
+            LogManager.LogShow("------",Constant.ROOT_PATH + url+"?longitude="+String.valueOf(bdLocation.getLongitude())+"&latitude="+String.valueOf(bdLocation.getLatitude())+"&keyword="+keyword+"&pageNo="+pageNo+"&carTypeId="+myCarEntity.carTypeId+"&cityId="+cityEntity.id,LogManager.ERROR);
         }
         utils.send(HttpRequest.HttpMethod.POST, Constant.ROOT_PATH
                 + url, rp, new RequestCallBack<String>() {

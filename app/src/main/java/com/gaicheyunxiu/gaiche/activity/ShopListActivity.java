@@ -132,6 +132,7 @@ public class ShopListActivity extends BaseActivity implements View.OnClickListen
         initView();
         if (comeFlag==4){
             serchView.setVisibility(View.VISIBLE);
+            serchText.setText(keywords);
             carLin.setVisibility(View.GONE);
         }else{
             serchView.setVisibility(View.GONE);
@@ -413,6 +414,8 @@ public class ShopListActivity extends BaseActivity implements View.OnClickListen
             }
             rp.addBodyParameter("pageNum", pageNo + "");
             url="commodity/find";
+
+            LogManager.LogShow("----",Constant.ROOT_PATH + url+"?category="+category+"&type="+cattype+"&carTypeId="+carEntity.carTypeId+"&pageNum="+1,LogManager.ERROR);
         }else if(comeFlag==4){
             if (carEntity!=null) {
                 rp.addBodyParameter("carTypeId", carEntity.carTypeId);
@@ -421,8 +424,14 @@ public class ShopListActivity extends BaseActivity implements View.OnClickListen
             if (!ToosUtils.isStringEmpty(sort)){
                 rp.addBodyParameter("sortWay", sort);
             }
+//            if (ToosUtils.isStringEmpty(brandName)){
+//                rp.addBodyParameter("brand","全部");
+//            } else {
+//                rp.addBodyParameter("brand",brandName);
+//            }
             rp.addBodyParameter("pageNum", pageNo + "");
             url="commodity/findByLike";
+            LogManager.LogShow("------",Constant.ROOT_PATH+url+"?carTypeId="+carEntity.carTypeId+"&search="+keywords+"&pageNum="+pageNo+"",LogManager.ERROR);
         }else{
             rp.addBodyParameter("sort", sort);
             if (ToosUtils.isStringEmpty(brandName)){
@@ -451,7 +460,9 @@ public class ShopListActivity extends BaseActivity implements View.OnClickListen
                     rp.addBodyParameter("carTypeId", carEntity.carTypeId);
                 }
                 rp.addBodyParameter("commodityTypeId", commodityTypeId);
-                url="shou/commoditys";
+                url="popularCategories/commoditys";
+
+                LogManager.LogShow("------",Constant.ROOT_PATH+url+"?carTypeId="+carEntity.carTypeId+"&commodityTypeId="+commodityTypeId+"&pageNo="+pageNo+"&brand=全部"+"&sort="+0,LogManager.ERROR);
             }
 
         }

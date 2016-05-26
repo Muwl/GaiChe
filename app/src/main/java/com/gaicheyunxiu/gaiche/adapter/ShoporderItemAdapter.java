@@ -2,6 +2,7 @@ package com.gaicheyunxiu.gaiche.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Paint;
 import android.os.Handler;
 import android.os.Message;
 import android.view.View;
@@ -82,9 +83,10 @@ public class ShoporderItemAdapter  extends BaseAdapter{
         bitmapUtils.display(holder.icon, entities.get(position).briefImage);
         holder.name.setText("【" + entities.get(position).name + "】" + entities.get(position).businessName);
         holder.money.setText("￥" + entities.get(position).presentPrice + "元");
-        holder.m.setText("￥"+entities.get(position).mVaule+"M");
+        holder.m.setText("￥"+entities.get(position).mValue+"M");
         holder.oldmoney.setText("￥" + entities.get(position).originalPrice);
-        holder.m.setText("销量：" + entities.get(position).sales + "件");
+        holder.oldmoney.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG); //中间横线
+        holder.volume.setText("销量：" + entities.get(position).sales + "件");
 //        holder.orgbtn.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View v) {
@@ -99,11 +101,12 @@ public class ShoporderItemAdapter  extends BaseAdapter{
                 context.startActivity(intent);
             }
         });
+        String state=entities.get(position).state;
 
-        if ("0".equals(orderState)){
+        if ("0".equals(state)){
             holder.div.setVisibility(View.GONE);
             holder.lin.setVisibility(View.GONE);
-        }else if("2".equals(orderState)){
+        }else if("1".equals(state)){
             holder.div.setVisibility(View.VISIBLE);
             holder.lin.setVisibility(View.VISIBLE);
             holder.orgbtn.setText("确认收货");
@@ -115,6 +118,7 @@ public class ShoporderItemAdapter  extends BaseAdapter{
                     CustomeConDialog customeConDialog = new CustomeConDialog(context, handler, "确定收货？", position, groupoi, -1);
                 }
             });
+
             holder.graybtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -125,32 +129,109 @@ public class ShoporderItemAdapter  extends BaseAdapter{
                     handler.sendMessage(message);
                 }
             });
-
-
-        }else if("4".equals(orderState)){
+        }else if("2".equals(state)){
             holder.div.setVisibility(View.VISIBLE);
             holder.lin.setVisibility(View.VISIBLE);
-            holder.orgbtn.setText("申请退货");
-            holder.graybtn.setText("评价");
+            holder.orgbtn.setText("\u3000评价\u3000");
+            holder.graybtn.setText("申请退货");
 
-            holder.orgbtn.setOnClickListener(new View.OnClickListener() {
+            holder.graybtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    CustomeConDialog customeConDialog = new CustomeConDialog(context, handler, "确定申请退货？", position, groupoi, -2);
+                    Message message = new Message();
+                    message.what = 1337;
+                    message.arg1 = position;
+                    message.arg2 = groupoi;
+                    handler.sendMessage(message);
                 }
             });
 
             holder.graybtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Message message=new Message();
-                    message.what=1337;
-                    message.arg1=position;
-                    message.arg2=groupoi;
-                    handler.sendMessage(message);
+                    CustomeConDialog customeConDialog = new CustomeConDialog(context, handler, "确定申请退货？", position, groupoi, -2);
                 }
             });
+        }else if("3".equals(state)){
+            holder.div.setVisibility(View.VISIBLE);
+            holder.lin.setVisibility(View.VISIBLE);
+            holder.orgbtn.setVisibility(View.GONE);
+            holder.graybtn.setText("申请退货");
+
+            holder.graybtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    CustomeConDialog customeConDialog = new CustomeConDialog(context, handler, "确定申请退货？", position, groupoi, -2);
+                }
+            });
+        }else if("4".equals(state)){
+            holder.div.setVisibility(View.GONE);
+            holder.lin.setVisibility(View.GONE);
+        }else if("5".equals(state)){
+            holder.div.setVisibility(View.GONE);
+            holder.lin.setVisibility(View.GONE);
+        }else if("6".equals(state)){
+            holder.div.setVisibility(View.GONE);
+            holder.lin.setVisibility(View.GONE);
+        }else if("7".equals(state)){
+            holder.div.setVisibility(View.GONE);
+            holder.lin.setVisibility(View.GONE);
         }
+
+
+//        if ("0".equals(orderState)){
+//            holder.div.setVisibility(View.GONE);
+//            holder.lin.setVisibility(View.GONE);
+//        }else if("2".equals(orderState)){
+//            holder.div.setVisibility(View.VISIBLE);
+//            holder.lin.setVisibility(View.VISIBLE);
+//            holder.orgbtn.setText("确认收货");
+//            holder.graybtn.setText("查看物流");
+//
+//            holder.orgbtn.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    CustomeConDialog customeConDialog = new CustomeConDialog(context, handler, "确定收货？", position, groupoi, -1);
+//                }
+//            });
+//            holder.graybtn.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    Message message=new Message();
+//                    message.what=1336;
+//                    message.arg1=position;
+//                    message.arg2=groupoi;
+//                    handler.sendMessage(message);
+//                }
+//            });
+//
+//
+//        }else if("4".equals(orderState)){
+//            holder.div.setVisibility(View.VISIBLE);
+//            holder.lin.setVisibility(View.VISIBLE);
+//            holder.orgbtn.setText("申请退货");
+//            holder.graybtn.setText("评价");
+//
+//            holder.orgbtn.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    CustomeConDialog customeConDialog = new CustomeConDialog(context, handler, "确定申请退货？", position, groupoi, -2);
+//                }
+//            });
+//
+//
+//
+//            holder.graybtn.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    Message message=new Message();
+//                    message.what=1337;
+//                    message.arg1=position;
+//                    message.arg2=groupoi;
+//                    handler.sendMessage(message);
+//                }
+//            });
+//        }
 
         return convertView;
     }

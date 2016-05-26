@@ -2,6 +2,8 @@ package com.gaicheyunxiu.gaiche.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
@@ -54,6 +56,8 @@ public class SerchOuletActivity extends BaseActivity implements View.OnClickList
 
     private String cityId;
 
+    private String stag;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,13 +86,47 @@ public class SerchOuletActivity extends BaseActivity implements View.OnClickList
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent=new Intent(SerchOuletActivity.this,OultSelActivity.class);
-                intent.putExtra("flag",4);
-                intent.putExtra("keywords",strings.get(position));
+                Intent intent = new Intent(SerchOuletActivity.this, OultSelActivity.class);
+                intent.putExtra("flag", 4);
+                intent.putExtra("keywords", strings.get(position));
                 startActivity(intent);
             }
         });
+
+        textView.addTextChangedListener(new TextWatcher() {
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before,
+                                      int count) {
+                // LogManager.LogShow("--------", "aaaaaaaaaaaaaa",
+                // LogManager.ERROR);
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count,
+                                          int after) {
+                // LogManager
+                // .LogShow("--------", "bbbbbbbbbbbb", LogManager.ERROR);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (ToosUtils.isStringEmpty(s.toString())) {
+                    return;
+                }
+                if (!ToosUtils.isStringEmpty(s.toString())) {
+                    stag = String.valueOf(System.currentTimeMillis());
+                    getShopKeyWords(stag);
+
+                } else {
+                    strings.clear();
+                    adapter.notifyDataSetChanged();
+                }
+
+            }
+        });
     }
+
 
     @Override
     public void onClick(View v) {
@@ -97,7 +135,14 @@ public class SerchOuletActivity extends BaseActivity implements View.OnClickList
                 finish();
                 break;
             case R.id.serch_serch:
-                getShopKeyWords(ToosUtils.getTextContent(textView));
+                if (ToosUtils.isTextEmpty(textView)){
+                    ToastUtils.displayShortToast(SerchOuletActivity.this,"请输入要搜索的门店！");
+                    return;
+                }
+                Intent intent=new Intent(SerchOuletActivity.this,OultSelActivity.class);
+                intent.putExtra("flag",4);
+                intent.putExtra("keywords", ToosUtils.getTextContent(textView));
+                startActivity(intent);
                 break;
             case R.id.serch_cancel:
                 textView.setText("");
@@ -109,24 +154,23 @@ public class SerchOuletActivity extends BaseActivity implements View.OnClickList
     /**
      * 根据商品id查询商品详情
      */
-    private void getShopKeyWords(String keyword) {
+    private void getShopKeyWords(final String tag) {
         RequestParams rp = new RequestParams();
         HttpUtils utils = new HttpUtils();
-        rp.addBodyParameter("keyword", keyword);
+        rp.addBodyParameter("keyword", ToosUtils.getTextContent(textView));
         rp.addBodyParameter("cityId", cityId);
         utils.configTimeout(20000);
-        utils.send(HttpRequest.HttpMethod.POST, Constant.ROOT_PATH
-                + "shop/findKeyword", rp, new RequestCallBack<String>() {
+
+        RequestCallBack<String> requestCallBack =new RequestCallBack<String>() {
             @Override
             public void onStart() {
-                pro.setVisibility(View.VISIBLE);
                 super.onStart();
             }
 
             @Override
             public void onFailure(HttpException arg0, String arg1) {
-                pro.setVisibility(View.GONE);
-                ToastUtils.displayFailureToast(SerchOuletActivity.this);
+//                pro.setVisibility(View.GONE);
+//                ToastUtils.displayFailureToast(SerchActivity.this);
             }
 
             @Override
@@ -135,28 +179,78 @@ public class SerchOuletActivity extends BaseActivity implements View.OnClickList
                 LogManager.LogShow("-----", arg0.result + "=====",
                         LogManager.ERROR);
                 try {
-                    Gson gson = new Gson();
-                    ReturnState state = gson.fromJson(arg0.result,
-                            ReturnState.class);
-                    if (Constant.RETURN_OK.equals(state.msg)) {
-                        SerchState serchState=gson.fromJson(arg0.result,SerchState.class);
-                        for (int i=0;i<serchState.result.size();i++){
-                            strings.add(serchState.result.get(i));
+                    if (stag.equals(userTag)) {
+                        Gson gson = new Gson();
+                        ReturnState state = gson.fromJson(arg0.result,
+                                ReturnState.class);
+                        if (Constant.RETURN_OK.equals(state.msg)) {
+                            strings.clear();
+                            adapter.notifyDataSetChanged();
+                            SerchState serchState = gson.fromJson(arg0.result, SerchState.class);
+                            for (int i = 0; i < serchState.result.size(); i++) {
+                                strings.add(serchState.result.get(i));
+                            }
+                            adapter.notifyDataSetChanged();
+                        } else if (Constant.TOKEN_ERR.equals(state.msg)) {
+                            ToastUtils.displayShortToast(SerchOuletActivity.this,
+                                    "验证错误，请重新登录");
+                            ToosUtils.goReLogin(SerchOuletActivity.this);
+                        } else {
+                            ToastUtils.displayShortToast(SerchOuletActivity.this,
+                                    (String) state.result);
                         }
-                        adapter.notifyDataSetChanged();
-                    } else if (Constant.TOKEN_ERR.equals(state.msg)) {
-                        ToastUtils.displayShortToast(SerchOuletActivity.this,
-                                "验证错误，请重新登录");
-                        ToosUtils.goReLogin(SerchOuletActivity.this);
-                    } else {
-                        ToastUtils.displayShortToast(SerchOuletActivity.this,
-                                (String) state.result);
                     }
                 } catch (Exception e) {
-                    ToastUtils.displaySendFailureToast(SerchOuletActivity.this);
                 }
 
             }
-        });
+        };
+        requestCallBack.setUserTag(tag);
+        utils.send(HttpRequest.HttpMethod.POST, Constant.ROOT_PATH
+                + "shop/findKeyword", rp, requestCallBack);
+//
+//        utils.send(HttpRequest.HttpMethod.POST, Constant.ROOT_PATH
+//                + "shop/findKeyword", rp, new RequestCallBack<String>() {
+//            @Override
+//            public void onStart() {
+//                pro.setVisibility(View.VISIBLE);
+//                super.onStart();
+//            }
+//
+//            @Override
+//            public void onFailure(HttpException arg0, String arg1) {
+//                pro.setVisibility(View.GONE);
+//                ToastUtils.displayFailureToast(SerchOuletActivity.this);
+//            }
+//
+//            @Override
+//            public void onSuccess(ResponseInfo<String> arg0) {
+//                pro.setVisibility(View.GONE);
+//                LogManager.LogShow("-----", arg0.result + "=====",
+//                        LogManager.ERROR);
+//                try {
+//                    Gson gson = new Gson();
+//                    ReturnState state = gson.fromJson(arg0.result,
+//                            ReturnState.class);
+//                    if (Constant.RETURN_OK.equals(state.msg)) {
+//                        SerchState serchState=gson.fromJson(arg0.result,SerchState.class);
+//                        for (int i=0;i<serchState.result.size();i++){
+//                            strings.add(serchState.result.get(i));
+//                        }
+//                        adapter.notifyDataSetChanged();
+//                    } else if (Constant.TOKEN_ERR.equals(state.msg)) {
+//                        ToastUtils.displayShortToast(SerchOuletActivity.this,
+//                                "验证错误，请重新登录");
+//                        ToosUtils.goReLogin(SerchOuletActivity.this);
+//                    } else {
+//                        ToastUtils.displayShortToast(SerchOuletActivity.this,
+//                                (String) state.result);
+//                    }
+//                } catch (Exception e) {
+//                    ToastUtils.displaySendFailureToast(SerchOuletActivity.this);
+//                }
+//
+//            }
+//        });
     }
 }

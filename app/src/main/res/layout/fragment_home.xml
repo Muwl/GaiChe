@@ -119,7 +119,7 @@
                         android:id="@+id/home_shop"
                         android:layout_width="match_parent"
                         android:scaleType="fitXY"
-                        android:layout_height="wrap_content"
+                        android:layout_height="90dp"
                         android:src="@mipmap/home_shop"/>
                 </RelativeLayout>
                 <ImageView
@@ -133,11 +133,17 @@
                     <ImageView
                         android:id="@+id/home_shop2"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="90dp"
                         android:scaleType="fitXY"
                         android:src="@mipmap/home_shop"/>
                 </RelativeLayout>
             </LinearLayout>
+
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="@color/bottom_div"/>
 
 
             <LinearLayout

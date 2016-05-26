@@ -110,11 +110,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
      */
     private boolean checkInput() {
         if (ToosUtils.isTextEmpty(phoneView)) {
-            ToastUtils.displayShortToast(this, "手机号不能为空！");
-            return false;
-        }
-        if (!ToosUtils.MatchPhone(ToosUtils.getTextContent(phoneView))) {
-            ToastUtils.displayShortToast(this, "输入的手机号格式错误！");
+            ToastUtils.displayShortToast(this, "账号不能为空！");
             return false;
         }
         if (ToosUtils.isTextEmpty(pwdView)) {

@@ -356,7 +356,7 @@ public class OutletDetailActivity extends BaseActivity implements View.OnClickLi
                         hbar.setStar(Double.parseDouble(outSelDetailEntity.score));
                         hdiscussnum.setText(outSelDetailEntity.evaluateAmount + "条");
                         haddress.setText(outSelDetailEntity.district);
-                        hdistance.setText(outSelDetailEntity.distance+"km");
+                        hdistance.setText(outSelDetailEntity.distance);
                         hdetailaddress.setText("地址："+outSelDetailEntity.address);
                         phoneNo.setText(outSelDetailEntity.phone);
                         hpingjianum.setText("用户评论（"+outSelDetailEntity.evaluateAmount+"）");

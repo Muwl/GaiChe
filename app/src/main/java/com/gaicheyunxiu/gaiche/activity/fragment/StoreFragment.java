@@ -135,8 +135,8 @@ public class StoreFragment extends Fragment implements View.OnClickListener{
             @Override
             public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
                 Intent intent = new Intent(getActivity(), ShopListActivity.class);
-                intent.putExtra("category",entities.get(groupPosition).name);
-                intent.putExtra("cattype",entities.get(groupPosition).childEntities.get(childPosition).name);
+                intent.putExtra("category",entities.get(groupPosition).id);
+                intent.putExtra("cattype",entities.get(groupPosition).childEntities.get(childPosition).id);
                 intent.putExtra("comeFlag",3);
                 startActivity(intent);
                 return true;

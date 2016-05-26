@@ -124,22 +124,55 @@
                     android:layout_height="1px"
                     android:background="@color/bottom_div" />
 
-                <TextView
-                    android:id="@+id/clearing_outsel"
+                <!--<TextView-->
+                    <!--android:id="@+id/clearing_outsel"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:textColor="#5F5D5D"-->
+                    <!--android:textSize="@dimen/second_font"-->
+                    <!--android:paddingBottom="10dp"-->
+                    <!--android:visibility="gone"-->
+                    <!--android:paddingLeft="18dp"-->
+                    <!--android:drawablePadding="10dp"-->
+                    <!--android:background="@drawable/item_bg"-->
+                    <!--android:text="选择安装门店"-->
+                    <!--android:drawableRight="@mipmap/main_go"-->
+                    <!--android:paddingRight="18dp"-->
+                    <!--android:paddingTop="10dp"-->
+                    <!--/>-->
+
+                <LinearLayout
+                    android:id="@+id/clearing_outselview"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textColor="#5F5D5D"
-                    android:textSize="@dimen/second_font"
-                    android:paddingBottom="10dp"
-                    android:visibility="gone"
+                    android:background="@color/write"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingBottom="13dp"
                     android:paddingLeft="18dp"
-                    android:drawablePadding="10dp"
-                    android:background="@drawable/item_bg"
-                    android:text="选择安装门店"
-                    android:drawableRight="@mipmap/main_go"
                     android:paddingRight="18dp"
-                    android:paddingTop="10dp"
-                    />
+                    android:paddingTop="13dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="15dp"
+                        android:layout_weight="1"
+                        android:text="选择安装门店"
+                        android:textColor="#5F5D5D"
+                        android:textSize="@dimen/second_font" />
+
+                    <TextView
+                        android:id="@+id/clearing_outsel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:drawableRight="@mipmap/main_go"
+                        android:drawablePadding="10dp"
+                        android:textColor="#ED753A"
+                        android:textSize="@dimen/second_font" />
+                </LinearLayout>
+
 
 
 
