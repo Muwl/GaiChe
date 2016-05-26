@@ -96,6 +96,7 @@
     <orderEntry type="library" exported="" name="baidumapapi_search_v3_7_3" level="project" />
     <orderEntry type="library" exported="" name="baidumapapi_base_v3_7_3" level="project" />
     <orderEntry type="library" exported="" name="support-v4-22.2.1" level="project" />
+    <orderEntry type="library" exported="" name="libammsdk" level="project" />
     <orderEntry type="library" exported="" name="baidumapapi_radar_v3_7_3" level="project" />
     <orderEntry type="library" exported="" name="support-annotations-22.2.1" level="project" />
     <orderEntry type="library" exported="" name="zxing" level="project" />
@@ -103,6 +104,7 @@
     <orderEntry type="library" exported="" name="xUtils-2.6.14" level="project" />
     <orderEntry type="library" exported="" name="multidex-1.0.1" level="project" />
     <orderEntry type="library" exported="" name="BaiduLBS_Android" level="project" />
+    <orderEntry type="library" exported="" name="alipaySdk-20160516" level="project" />
     <orderEntry type="library" exported="" name="baidumapapi_map_v3_7_3" level="project" />
     <orderEntry type="module" module-name="library" exported="" />
   </component>

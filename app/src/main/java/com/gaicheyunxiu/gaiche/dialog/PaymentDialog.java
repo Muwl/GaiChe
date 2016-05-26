@@ -114,10 +114,11 @@ public class PaymentDialog extends Dialog implements
 		utils.configTimeout(20000);
 		String url="pay/walletPay";
 //		rp.addBodyParameter("sign", ShareDataTool.getToken(context));
-		rp.addBodyParameter("paySign",payEntity.paySign );
-		rp.addBodyParameter("payType",payEntity.payType );
-		rp.addBodyParameter("payPwd",ToosUtils.getEncrypt(ToosUtils.getTextContent(pwd)));
-		String strUrl=Constant.ROOT_PATH+ url+"?sign="+ ShareDataTool.getToken(context)+ToosUtils.getEncryptto(payEntity.content);
+//		rp.addBodyParameter("paySign",payEntity.paySign );
+//		rp.addBodyParameter("payType",payEntity.payType );
+//		rp.addBodyParameter("payPwd",ToosUtils.getEncrypt(ToosUtils.getTextContent(pwd)));
+//		String strUrl=Constant.ROOT_PATH+ url+"?sign="+ ShareDataTool.getToken(context)+ToosUtils.getEncryptto(payEntity.content);
+		String strUrl=Constant.ROOT_PATH+ url+"?sign="+ ShareDataTool.getToken(context)+"&paySign="+payEntity.paySign+"&payType="+payEntity.payType +"&payPwd="+ToosUtils.getEncrypt(ToosUtils.getTextContent(pwd)) + ToosUtils.getEncryptto(payEntity.content);
 //		rp.addBodyParameter("commodityOrderVosStr", new Gson().toJson(getOrderEntity()));
 		String ss=Constant.ROOT_PATH+ url+"?sign="+ ShareDataTool.getToken(context)+"&paySign="+payEntity.paySign+"&payType="+payEntity.payType +"&payPwd="+ToosUtils.getEncrypt(ToosUtils.getTextContent(pwd)) + ToosUtils.getEncryptto(payEntity.content);
 		LogManager.LogShow("-----", ss,
@@ -147,6 +148,7 @@ public class PaymentDialog extends Dialog implements
 								LogManager.ERROR);
 						dismiss();
 						Intent intent1=new Intent(context, PaySuccessActivity.class);
+						intent1.putExtra("money",smoney);
 						context.startActivity(intent1);
 					} else if (Constant.TOKEN_ERR.equals(state.msg)) {
 						ToastUtils.displayShortToast(context,

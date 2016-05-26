@@ -2,17 +2,24 @@ package com.gaicheyunxiu.gaiche.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.alipay.sdk.app.PayTask;
 import com.gaicheyunxiu.gaiche.R;
 import com.gaicheyunxiu.gaiche.adapter.ServiceOrderAdapter;
 import com.gaicheyunxiu.gaiche.dialog.PaymentDialog;
 import com.gaicheyunxiu.gaiche.model.AddAdressState;
 import com.gaicheyunxiu.gaiche.model.AddressVo;
 import com.gaicheyunxiu.gaiche.model.MyCarEntity;
+import com.gaicheyunxiu.gaiche.model.PayResult;
+import com.gaicheyunxiu.gaiche.model.PayState;
 import com.gaicheyunxiu.gaiche.model.ReturnState;
 import com.gaicheyunxiu.gaiche.model.SerOrderEntity;
 import com.gaicheyunxiu.gaiche.model.ServiceOrderUp;
@@ -95,8 +102,45 @@ public class ServicePayActivity extends  BaseActivity implements View.OnClickLis
 
     private ImageView div2;
 
-//    String strUrl=Constant.ROOT_PATH+ url+"?sign="+ ShareDataTool.getToken(context)+"&paySign="+payEntity.paySign+"&payType="+payEntity.payType +"&payPwd="+ToosUtils.getEncrypt(ToosUtils.getTextContent(pwd) + ToosUtils.getEncryptto(payEntity.content);
+    public static final int SDK_PAY_FLAG = 4462;
 
+//    String strUrl=Constant.ROOT_PATH+ url+"?sign="+ ShareDataTool.getToken(context)+"&paySign="+payEntity.paySign+"&payType="+payEntity.payType +"&payPwd="+ToosUtils.getEncrypt(ToosUtils.getTextContent(pwd) + ToosUtils.getEncryptto(payEntity.content);
+private Handler handler=new Handler(){
+    @Override
+    public void handleMessage(Message msg) {
+        switch (msg.what){
+
+            case SDK_PAY_FLAG:
+                PayResult payResult = new PayResult((String) msg.obj);
+                /**
+                 * 同步返回的结果必须放置到服务端进行验证（验证的规则请看https://doc.open.alipay.com/doc2/
+                 * detail.htm?spm=0.0.0.0.xdvAU6&treeId=59&articleId=103665&
+                 * docType=1) 建议商户依赖异步通知
+                 */
+                String resultInfo = payResult.getResult();// 同步返回需要验证的信息
+
+                String resultStatus = payResult.getResultStatus();
+                // 判断resultStatus 为“9000”则代表支付成功，具体状态码代表含义可参考接口文档
+                if (TextUtils.equals(resultStatus, "9000")) {
+                    Intent intent1=new Intent(ServicePayActivity.this, PaySuccessActivity.class);
+                    intent1.putExtra("money",totalMoney);
+                    startActivity(intent1);
+                } else {
+                    // 判断resultStatus 为非"9000"则代表可能支付失败
+                    // "8000"代表支付结果因为支付渠道原因或者系统原因还在等待支付结果确认，最终交易是否成功以服务端异步通知为准（小概率状态）
+                    if (TextUtils.equals(resultStatus, "8000")) {
+                        Toast.makeText(ServicePayActivity.this, "支付结果确认中", Toast.LENGTH_SHORT).show();
+
+                    } else {
+                        // 其他值就可以判断为支付失败，包括用户主动取消支付，或者系统返回的错误
+                        Toast.makeText(ServicePayActivity.this, "支付失败", Toast.LENGTH_SHORT).show();
+
+                    }
+                }
+                break;
+        }
+    }
+};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -159,6 +203,7 @@ public class ServicePayActivity extends  BaseActivity implements View.OnClickLis
             div2.setVisibility(View.GONE);
             lin.setVisibility(View.GONE);
             lin1.setVisibility(View.GONE);
+            totalMoney= Double.parseDouble(serOrderEntity.totalPrice);
             money.setText("￥" + serOrderEntity.totalPrice);
         }
         if (flag!=2){
@@ -258,7 +303,7 @@ public class ServicePayActivity extends  BaseActivity implements View.OnClickLis
                         AddAdressState addAdressState= gson.fromJson(arg0.result, AddAdressState.class);
                         addressVo=addAdressState.result;
                         person.setText(addressVo.name);
-                        phone.setText(addressVo.phone);
+                        phone.setText(addressVo.mobile);
                     } else if (Constant.TOKEN_ERR.equals(state.msg)) {
                         ToastUtils.displayShortToast(ServicePayActivity.this,
                                 "验证错误，请重新登录");
@@ -335,7 +380,13 @@ public class ServicePayActivity extends  BaseActivity implements View.OnClickLis
                     if (Constant.RETURN_OK.equals(state.msg)) {
                         LogManager.LogShow("-----", arg0.result,
                                 LogManager.ERROR);
-                        PaymentDialog dialog=new PaymentDialog(ServicePayActivity.this,null,null);
+                        PayState payState=gson.fromJson(arg0.result,PayState.class);
+                        if (checkIndex==0){
+                            PaymentDialog dialog=new PaymentDialog(ServicePayActivity.this,payState.result,String.valueOf(totalMoney));
+                        }else if(checkIndex==1){
+                            zhifubaoPay(payState.result.content);
+                        }
+
                     } else if (Constant.TOKEN_ERR.equals(state.msg)) {
                         ToastUtils.displayShortToast(ServicePayActivity.this,
                                 "验证错误，请重新登录");
@@ -366,5 +417,27 @@ public class ServicePayActivity extends  BaseActivity implements View.OnClickLis
         }
         return d;
 
+    }
+
+    private void zhifubaoPay(final String sign){
+        Runnable payRunnable = new Runnable() {
+
+            @Override
+            public void run() {
+                // 构造PayTask 对象
+                PayTask alipay = new PayTask(ServicePayActivity.this);
+                // 调用支付接口，获取支付结果
+                String result = alipay.pay(sign, true);
+
+                Message msg = new Message();
+                msg.what = SDK_PAY_FLAG;
+                msg.obj = result;
+                handler.sendMessage(msg);
+            }
+        };
+
+        // 必须异步调用
+        Thread payThread = new Thread(payRunnable);
+        payThread.start();
     }
 }

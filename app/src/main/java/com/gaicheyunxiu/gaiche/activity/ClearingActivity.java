@@ -4,12 +4,15 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.alipay.sdk.app.PayTask;
 import com.gaicheyunxiu.gaiche.R;
 import com.gaicheyunxiu.gaiche.dialog.OutSelDialog;
 import com.gaicheyunxiu.gaiche.dialog.PaymentDialog;
@@ -20,6 +23,7 @@ import com.gaicheyunxiu.gaiche.model.CommodifyOrderVo;
 import com.gaicheyunxiu.gaiche.model.OrderCommodityDigestEntity;
 import com.gaicheyunxiu.gaiche.model.OrderCommodityVo;
 import com.gaicheyunxiu.gaiche.model.OutSelEntity;
+import com.gaicheyunxiu.gaiche.model.PayResult;
 import com.gaicheyunxiu.gaiche.model.PayState;
 import com.gaicheyunxiu.gaiche.model.ReturnState;
 import com.gaicheyunxiu.gaiche.model.ShopCartCommodityEntity;
@@ -38,6 +42,8 @@ import com.lidroid.xutils.http.RequestParams;
 import com.lidroid.xutils.http.ResponseInfo;
 import com.lidroid.xutils.http.callback.RequestCallBack;
 import com.lidroid.xutils.http.client.HttpRequest;
+import com.tencent.mm.sdk.openapi.IWXAPI;
+import com.tencent.mm.sdk.openapi.WXAPIFactory;
 
 import java.net.ContentHandler;
 import java.util.ArrayList;
@@ -48,6 +54,8 @@ import java.util.List;
  * 结算界面
  */
 public class ClearingActivity extends BaseActivity implements View.OnClickListener{
+
+    public static final int SDK_PAY_FLAG = 4462;
 
     private ImageView back;
 
@@ -108,6 +116,8 @@ public class ClearingActivity extends BaseActivity implements View.OnClickListen
 
     private OutSelEntity outSelEntity;
 
+    private IWXAPI api;
+
     private Handler handler=new Handler(){
         @Override
         public void handleMessage(Message msg) {
@@ -125,6 +135,35 @@ public class ClearingActivity extends BaseActivity implements View.OnClickListen
                     break;
                 case 90:
                     outSel.setText("无法确认,暂不选择门店");
+                    break;
+
+                case SDK_PAY_FLAG:
+                    PayResult payResult = new PayResult((String) msg.obj);
+                    /**
+                     * 同步返回的结果必须放置到服务端进行验证（验证的规则请看https://doc.open.alipay.com/doc2/
+                     * detail.htm?spm=0.0.0.0.xdvAU6&treeId=59&articleId=103665&
+                     * docType=1) 建议商户依赖异步通知
+                     */
+                    String resultInfo = payResult.getResult();// 同步返回需要验证的信息
+
+                    String resultStatus = payResult.getResultStatus();
+                    // 判断resultStatus 为“9000”则代表支付成功，具体状态码代表含义可参考接口文档
+                    if (TextUtils.equals(resultStatus, "9000")) {
+                        Intent intent1=new Intent(ClearingActivity.this, PaySuccessActivity.class);
+                        intent1.putExtra("money",smoney);
+                        startActivity(intent1);
+                    } else {
+                        // 判断resultStatus 为非"9000"则代表可能支付失败
+                        // "8000"代表支付结果因为支付渠道原因或者系统原因还在等待支付结果确认，最终交易是否成功以服务端异步通知为准（小概率状态）
+                        if (TextUtils.equals(resultStatus, "8000")) {
+                            Toast.makeText(ClearingActivity.this, "支付结果确认中", Toast.LENGTH_SHORT).show();
+
+                        } else {
+                            // 其他值就可以判断为支付失败，包括用户主动取消支付，或者系统返回的错误
+                            Toast.makeText(ClearingActivity.this, "支付失败", Toast.LENGTH_SHORT).show();
+
+                        }
+                    }
                     break;
             }
         }
@@ -144,6 +183,7 @@ public class ClearingActivity extends BaseActivity implements View.OnClickListen
     }
 
     private void initView() {
+        api = WXAPIFactory.createWXAPI(this, "wxf85c74c2ef0697bb");
         back= (ImageView) findViewById(R.id.title_back);
         title= (TextView) findViewById(R.id.title_text);
         person= (TextView) findViewById(R.id.clearing_person);
@@ -307,7 +347,7 @@ public class ClearingActivity extends BaseActivity implements View.OnClickListen
                         AddAdressState addAdressState= gson.fromJson(arg0.result, AddAdressState.class);
                         addressVo=addAdressState.result;
                         person.setText("收货人："+addressVo.name);
-                        phone.setText(addressVo.phone);
+                        phone.setText(addressVo.mobile);
                         address.setText("收货地址：" + addressVo.province + addressVo.city + addressVo.district + addressVo.address);
                         getCost();
                     } else if (Constant.TOKEN_ERR.equals(state.msg)) {
@@ -373,6 +413,12 @@ public class ClearingActivity extends BaseActivity implements View.OnClickListen
                         ToastUtils.displayShortToast(ClearingActivity.this, "提交成功！");
                         if (checkIndex==0){
                             PaymentDialog dialog=new PaymentDialog(ClearingActivity.this,payState.result,String.valueOf(smoney));
+                        }else if(checkIndex==1){
+                            zhifubaoPay(payState.result.content);
+                        }else if(checkIndex==2){
+                            LogManager.LogShow("-----", ToosUtils.getEncryptto(arg0.result),
+                                    LogManager.ERROR);
+//                            api.sendReq(req);
                         }
                     } else if (Constant.TOKEN_ERR.equals(state.msg)) {
                         ToastUtils.displayShortToast(ClearingActivity.this,
@@ -455,7 +501,7 @@ public class ClearingActivity extends BaseActivity implements View.OnClickListen
         orderCommodityVo.receiveCity=addressVo.city;
         orderCommodityVo.receiveDistrict=addressVo.district;
         orderCommodityVo.receiveDetail=addressVo.address;
-        orderCommodityVo.shopId="1";
+        orderCommodityVo.shopId="fa95b3bd574341d49dd69cb7fe8c664a";
 
         List<OrderCommodityDigestEntity> commodityDigestEntities=new ArrayList<>();
         if (flag==1){
@@ -486,7 +532,7 @@ public class ClearingActivity extends BaseActivity implements View.OnClickListen
 
             @Override
             public void onFailure(HttpException arg0, String arg1) {
-                ToastUtils.displayFailureToast(ClearingActivity.this);
+//                ToastUtils.displayFailureToast(ClearingActivity.this);
                 pro.setVisibility(View.GONE);
             }
 
@@ -495,6 +541,8 @@ public class ClearingActivity extends BaseActivity implements View.OnClickListen
                 pro.setVisibility(View.GONE);
                 try {
                     Gson gson = new Gson();
+                    LogManager.LogShow("-----", arg0.result,
+                            LogManager.ERROR);
                     ReturnState state = gson.fromJson(arg0.result,
                             ReturnState.class);
                     if (Constant.RETURN_OK.equals(state.msg)) {
@@ -510,7 +558,7 @@ public class ClearingActivity extends BaseActivity implements View.OnClickListen
                                 (String) state.result);
                     }
                 } catch (Exception e) {
-                    ToastUtils.displaySendFailureToast(ClearingActivity.this);
+//                    ToastUtils.displaySendFailureToast(ClearingActivity.this);
                 }
 
             }
@@ -522,7 +570,7 @@ public class ClearingActivity extends BaseActivity implements View.OnClickListen
         if (requestCode==1663 && resultCode==RESULT_OK){
             addressVo= (AddressVo) data.getSerializableExtra("entity");
             person.setText("收货人："+addressVo.name);
-            phone.setText(addressVo.phone);
+            phone.setText(addressVo.mobile);
             address.setText("收货地址：" + addressVo.province + addressVo.city + addressVo.district + addressVo.address);
             getCost();
         }
@@ -531,4 +579,27 @@ public class ClearingActivity extends BaseActivity implements View.OnClickListen
             outSel.setText(outSelEntity.name);
         }
     }
+
+    private void zhifubaoPay(final String sign){
+        Runnable payRunnable = new Runnable() {
+
+            @Override
+            public void run() {
+                // 构造PayTask 对象
+                PayTask alipay = new PayTask(ClearingActivity.this);
+                // 调用支付接口，获取支付结果
+                String result = alipay.pay(sign, true);
+
+                Message msg = new Message();
+                msg.what = SDK_PAY_FLAG;
+                msg.obj = result;
+                handler.sendMessage(msg);
+            }
+        };
+
+        // 必须异步调用
+        Thread payThread = new Thread(payRunnable);
+        payThread.start();
+    }
+
 }
