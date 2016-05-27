@@ -71,30 +71,31 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@mipmap/pay_person"/>
-                <TextView
+                <EditText
                     android:id="@+id/service_pay_person"
                     android:layout_width="wrap_content"
                     android:layout_weight="1"
+                    android:background="@color/write"
                     android:layout_marginLeft="8dp"
                     android:textSize="@dimen/second_font"
                     android:textColor="#5F5D5D"
-                    android:layout_height="wrap_content"
-                    android:text="王小蒙"/>
+                    android:hint="请输入姓名"
+                    android:layout_height="wrap_content"/>
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="8dp"
                     android:src="@mipmap/pay_phone"/>
-                <TextView
+                <EditText
                     android:id="@+id/service_pay_phone"
-                    android:layout_width="wrap_content"
+                    android:layout_width="150dp"
                     android:layout_marginLeft="8dp"
                     android:textSize="@dimen/second_font"
+                    android:background="@color/write"
                     android:textColor="#5F5D5D"
                     android:layout_marginRight="7dp"
-                    android:layout_height="wrap_content"
-                    android:text="1237918273"/>
+                    android:layout_height="wrap_content"/>
             </LinearLayout>
 
             <ImageView

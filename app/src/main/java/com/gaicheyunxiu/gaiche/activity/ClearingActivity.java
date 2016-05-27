@@ -414,10 +414,10 @@ public class ClearingActivity extends BaseActivity implements View.OnClickListen
                         if (checkIndex==0){
                             PaymentDialog dialog=new PaymentDialog(ClearingActivity.this,payState.result,String.valueOf(smoney));
                         }else if(checkIndex==1){
-                            zhifubaoPay(payState.result.content);
+                            zhifubaoPay(ToosUtils.getEncryptto(payState.result.content));
                         }else if(checkIndex==2){
-                            LogManager.LogShow("-----", ToosUtils.getEncryptto(arg0.result),
-                                    LogManager.ERROR);
+//                            LogManager.LogShow("-----", ToosUtils.getEncryptto(arg0.result),
+//                                    LogManager.ERROR);
 //                            api.sendReq(req);
                         }
                     } else if (Constant.TOKEN_ERR.equals(state.msg)) {

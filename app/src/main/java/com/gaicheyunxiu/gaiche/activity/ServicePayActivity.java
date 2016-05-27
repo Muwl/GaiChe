@@ -7,6 +7,7 @@ import android.os.Message;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -52,9 +53,9 @@ public class ServicePayActivity extends  BaseActivity implements View.OnClickLis
 
     private TextView title;
 
-    private TextView person;
+    private EditText person;
 
-    private TextView phone;
+    private EditText phone;
 
     private View lin;
 
@@ -155,8 +156,8 @@ private Handler handler=new Handler(){
         back= (ImageView) findViewById(R.id.title_back);
         title= (TextView) findViewById(R.id.title_text);
         wallet=findViewById(R.id.servicepay_wallet);
-        person= (TextView) findViewById(R.id.service_pay_person);
-        phone= (TextView) findViewById(R.id.service_pay_phone);
+        person= (EditText) findViewById(R.id.service_pay_person);
+        phone= (EditText) findViewById(R.id.service_pay_phone);
         lin1=findViewById(R.id.service_pay_lin1);
         num= (TextView) findViewById(R.id.servicepay_num);
         walletcb= (CheckBox) findViewById(R.id.servicepay_wallet_cb);
@@ -173,6 +174,8 @@ private Handler handler=new Handler(){
         div2= (ImageView) findViewById(R.id.service_pay_div2);
         lin= findViewById(R.id.servicepay_lin);
 
+        phone.setEnabled(false);
+        person.setEnabled(false);
         title.setText("去结算");
         back.setOnClickListener(this);
         lin.setOnClickListener(this);
@@ -309,11 +312,15 @@ private Handler handler=new Handler(){
                                 "验证错误，请重新登录");
                         ToosUtils.goReLogin(ServicePayActivity.this);
                     } else {
+                        phone.setEnabled(true);
+                        person.setEnabled(true);
                         ToastUtils.displayShortToast(ServicePayActivity.this,
                                 (String) state.result);
                     }
                 } catch (Exception e) {
-                    ToastUtils.displaySendFailureToast(ServicePayActivity.this);
+                    phone.setEnabled(true);
+                    person.setEnabled(true);
+//                    ToastUtils.displaySendFailureToast(ServicePayActivity.this);
                 }
 
             }
@@ -332,8 +339,8 @@ private Handler handler=new Handler(){
         rp.addBodyParameter("sign", ShareDataTool.getToken(this));
         String url="serviceOrder/add";
         if (flag==1){
-            if (addressVo==null){
-                ToastUtils.displayShortToast(this,"请选择收货地址！");
+            if (addressVo==null && (ToosUtils.isTextEmpty(person) || ToosUtils.isTextEmpty(phone))){
+                ToastUtils.displayShortToast(this,"请输入收货信息！");
             }
             ServiceOrderUp serviceOrderUp=new ServiceOrderUp();
             serviceOrderUp.shopId=shopId;
@@ -341,7 +348,13 @@ private Handler handler=new Handler(){
             if (myCarEntity!=null){
                 serviceOrderUp.carTypeId=myCarEntity.carTypeId;
             }
-            serviceOrderUp.defAddId=addressVo.id;
+            if (addressVo!=null){
+                serviceOrderUp.defAddId=addressVo.id;
+            }else{
+                serviceOrderUp.name=ToosUtils.getTextContent(person);
+                serviceOrderUp.phone=ToosUtils.getTextContent(phone);
+            }
+
             serviceOrderUp.payment=String.valueOf(checkIndex);
             List<ServiceOrderVo> serviceOrderVos=new ArrayList<>();
             for (int i=0;i<shopServiceEntityList.size();i++){
@@ -384,7 +397,8 @@ private Handler handler=new Handler(){
                         if (checkIndex==0){
                             PaymentDialog dialog=new PaymentDialog(ServicePayActivity.this,payState.result,String.valueOf(totalMoney));
                         }else if(checkIndex==1){
-                            zhifubaoPay(payState.result.content);
+                            zhifubaoPay(ToosUtils.getEncryptto(payState.result.content));
+//                            zhifubaoPay(payState.result.content);
                         }
 
                     } else if (Constant.TOKEN_ERR.equals(state.msg)) {

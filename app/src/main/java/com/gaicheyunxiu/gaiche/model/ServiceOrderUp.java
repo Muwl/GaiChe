@@ -10,6 +10,8 @@ public class ServiceOrderUp implements Serializable {
     public String shopId;
     public String carTypeId;
     public String defAddId;
+    public String name;
+    public String phone;
     public String payment;
     public List<ServiceOrderVo> service;
 }

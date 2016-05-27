@@ -12,6 +12,7 @@ import com.gaicheyunxiu.gaiche.R;
 import com.gaicheyunxiu.gaiche.model.ReturnState;
 import com.gaicheyunxiu.gaiche.utils.Constant;
 import com.gaicheyunxiu.gaiche.utils.LogManager;
+import com.gaicheyunxiu.gaiche.utils.MD5Util;
 import com.gaicheyunxiu.gaiche.utils.ShareDataTool;
 import com.gaicheyunxiu.gaiche.utils.ToastUtils;
 import com.gaicheyunxiu.gaiche.utils.ToosUtils;
@@ -213,11 +214,11 @@ public class PaymentPwdActivity extends BaseActivity implements View.OnClickList
         RequestParams rp = new RequestParams();
         rp.addBodyParameter("sign", ShareDataTool.getToken(this));
         rp.addBodyParameter("username",ToosUtils.getTextContent(phone));
-        rp.addBodyParameter("payPassword", ToosUtils.getTextContent(pwd));
+        rp.addBodyParameter("payPassword", MD5Util.MD5(ToosUtils.getTextContent(pwd)));
         rp.addBodyParameter("authCode", ToosUtils.getTextContent(code));
         HttpUtils utils = new HttpUtils();
         utils.configTimeout(20000);
-//        LogManager.LogShow("-------",Constant.ROOT_PATH + "user/operationPayPwd");
+        LogManager.LogShow("修改密码****-------",MD5Util.MD5(ToosUtils.getTextContent(pwd)),LogManager.ERROR);
         utils.send(HttpRequest.HttpMethod.POST, Constant.ROOT_PATH
                 + "user/operationPayPwd", rp, new RequestCallBack<String>() {
             @Override

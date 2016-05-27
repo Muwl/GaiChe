@@ -21,6 +21,7 @@ import com.gaicheyunxiu.gaiche.model.PayState;
 import com.gaicheyunxiu.gaiche.model.ReturnState;
 import com.gaicheyunxiu.gaiche.utils.Constant;
 import com.gaicheyunxiu.gaiche.utils.LogManager;
+import com.gaicheyunxiu.gaiche.utils.MD5Util;
 import com.gaicheyunxiu.gaiche.utils.ShareDataTool;
 import com.gaicheyunxiu.gaiche.utils.ToastUtils;
 import com.gaicheyunxiu.gaiche.utils.ToosUtils;
@@ -118,11 +119,12 @@ public class PaymentDialog extends Dialog implements
 //		rp.addBodyParameter("payType",payEntity.payType );
 //		rp.addBodyParameter("payPwd",ToosUtils.getEncrypt(ToosUtils.getTextContent(pwd)));
 //		String strUrl=Constant.ROOT_PATH+ url+"?sign="+ ShareDataTool.getToken(context)+ToosUtils.getEncryptto(payEntity.content);
-		String strUrl=Constant.ROOT_PATH+ url+"?sign="+ ShareDataTool.getToken(context)+"&paySign="+payEntity.paySign+"&payType="+payEntity.payType +"&payPwd="+ToosUtils.getEncrypt(ToosUtils.getTextContent(pwd)) + ToosUtils.getEncryptto(payEntity.content);
+		String strUrl=Constant.ROOT_PATH+ url+"?sign="+ ShareDataTool.getToken(context)+"&paySign="+payEntity.paySign+"&payType="+payEntity.payType +"&payPwd="+MD5Util.MD5(ToosUtils.getTextContent(pwd)) + ToosUtils.getEncryptto(payEntity.content);
 //		rp.addBodyParameter("commodityOrderVosStr", new Gson().toJson(getOrderEntity()));
-		String ss=Constant.ROOT_PATH+ url+"?sign="+ ShareDataTool.getToken(context)+"&paySign="+payEntity.paySign+"&payType="+payEntity.payType +"&payPwd="+ToosUtils.getEncrypt(ToosUtils.getTextContent(pwd)) + ToosUtils.getEncryptto(payEntity.content);
+		String ss=Constant.ROOT_PATH+ url+"?sign="+ ShareDataTool.getToken(context)+"&paySign="+payEntity.paySign+"&payType="+payEntity.payType +"&payPwd="+ MD5Util.MD5(ToosUtils.getTextContent(pwd)) + ToosUtils.getEncryptto(payEntity.content);
 		LogManager.LogShow("-----", ss,
 				LogManager.ERROR);
+		LogManager.LogShow("提交****-------", MD5Util.MD5(ToosUtils.getTextContent(pwd)),LogManager.ERROR);
 		utils.send(HttpRequest.HttpMethod.POST, strUrl, rp, new RequestCallBack<String>() {
 			@Override
 			public void onStart() {
