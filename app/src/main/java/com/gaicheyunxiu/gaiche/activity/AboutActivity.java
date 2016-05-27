@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.gaicheyunxiu.gaiche.R;
 import com.gaicheyunxiu.gaiche.utils.Constant;
+import com.gaicheyunxiu.gaiche.utils.LogManager;
 
 /**
  * Created by Administrator on 2016/2/11.
@@ -37,7 +38,9 @@ public class AboutActivity extends BaseActivity implements View.OnClickListener 
         title.setText("关于我们");
         WebSettings wSet = webView.getSettings();
         wSet.setJavaScriptEnabled(true);
-        webView.loadUrl("http://api.gaicheyunxiu.com/api/description/agreementAndAbout?modelType=11");
+        String temp=Constant.ROOT_PATH+"description/agreementAndAbout?modelType=11";
+        LogManager.LogShow("-----",temp,LogManager.ERROR);
+        webView.loadUrl(temp);
 
     }
 

@@ -8,6 +8,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.gaicheyunxiu.gaiche.R;
+import com.gaicheyunxiu.gaiche.utils.Constant;
 
 /**
  * Created by Administrator on 2016/2/11.
@@ -36,7 +37,8 @@ public class ProtocolActivity extends BaseActivity implements View.OnClickListen
         title.setText("用户协议");
         WebSettings wSet = webView.getSettings();
         wSet.setJavaScriptEnabled(true);
-        webView.loadUrl("http://api.gaicheyunxiu.com/api/description/agreementAndAbout?modelType=1");
+        String temp= Constant.ROOT_PATH+"description/agreementAndAbout?modelType=1";
+        webView.loadUrl(temp);
 
     }
 
