@@ -92,12 +92,12 @@
     <orderEntry type="library" exported="" name="baidumapapi_cloud_v3_7_3" level="project" />
     <orderEntry type="library" exported="" name="httpmime-4.1.2" level="project" />
     <orderEntry type="library" exported="" name="gson-2.5" level="project" />
+    <orderEntry type="library" exported="" name="IndoorscapeAlbumPlugin" level="project" />
     <orderEntry type="library" exported="" name="baidumapapi_search_v3_7_3" level="project" />
     <orderEntry type="library" exported="" name="baidumapapi_base_v3_7_3" level="project" />
-    <orderEntry type="library" exported="" name="IndoorscapeAlbumPlugin" level="project" />
     <orderEntry type="library" exported="" name="support-v4-22.2.1" level="project" />
-    <orderEntry type="library" exported="" name="baidumapapi_radar_v3_7_3" level="project" />
     <orderEntry type="library" exported="" name="libammsdk" level="project" />
+    <orderEntry type="library" exported="" name="baidumapapi_radar_v3_7_3" level="project" />
     <orderEntry type="library" exported="" name="support-annotations-22.2.1" level="project" />
     <orderEntry type="library" exported="" name="zxing" level="project" />
     <orderEntry type="library" exported="" name="appcompat-v7-22.2.1" level="project" />
