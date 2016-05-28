@@ -9,11 +9,21 @@
         android:id="@+id/maintain_title"
         layout="@layout/activity_title"/>
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
     <ListView
         android:id="@+id/maintain_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scrollbars="none"
         />
+        <include
+            android:id="@+id/maintain_pro"
+            layout="@layout/pro"
+            android:visibility="gone"
+            />
+    </RelativeLayout>
 
 </LinearLayout>

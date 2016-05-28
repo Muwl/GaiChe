@@ -4,7 +4,8 @@ public class Constant {
 
 
 	/** 根目录 **/
-	 public static final String ROOT_PATH = "http://api.gaicheyunxiu.com:8082/api/";
+//	 public static final String ROOT_PATH = "http://api.gaicheyunxiu.com:8082/api/";
+	 public static final String ROOT_PATH = "http://121.42.202.71/gcyx/api/";
 //	 public static final String ROOT_PATH = "http://192.168.1.10:8080/gcyx/api/";
 	 public static final String APP_ID = "wxf85c74c2ef0697bb";
 //	 public static final String ROOT_PATH = "http://121.42.202.71/gcyx/api/";

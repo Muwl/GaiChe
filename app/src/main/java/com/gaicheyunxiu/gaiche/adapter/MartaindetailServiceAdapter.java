@@ -7,6 +7,9 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.gaicheyunxiu.gaiche.R;
+import com.gaicheyunxiu.gaiche.model.MartainServiceEntity;
+
+import java.util.List;
 
 /**
  * Created by Mu on 2016/1/18.
@@ -15,24 +18,26 @@ import com.gaicheyunxiu.gaiche.R;
 public class MartaindetailServiceAdapter extends BaseAdapter {
 
     private Context context;
+    private List<MartainServiceEntity> entities;
 
-    public MartaindetailServiceAdapter(Context context) {
+    public MartaindetailServiceAdapter(Context context,List<MartainServiceEntity> entities) {
         this.context = context;
+        this.entities=entities;
     }
 
     @Override
     public int getCount() {
-        return 5;
+        return entities.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return null;
+        return entities.get(position);
     }
 
     @Override
     public long getItemId(int position) {
-        return 0;
+        return position;
     }
 
     @Override
@@ -50,6 +55,9 @@ public class MartaindetailServiceAdapter extends BaseAdapter {
         }else{
             holder= (ViewHolder) convertView.getTag();
         }
+        holder.name.setText(entities.get(position).name);
+        holder.money.setText("￥"+entities.get(position).price+"元\u3000\u3000"+entities.get(position).mvalue+"M");
+        holder.bm.setText(entities.get(position).serviceCode);
         return convertView;
     }
     class ViewHolder{

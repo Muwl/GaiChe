@@ -69,7 +69,7 @@
             android:textColor="#A1A1A1"
             android:textSize="@dimen/second_font"
             android:layout_marginLeft="10dp"
-            android:text="未使用"/>
+            android:text="已使用"/>
 
     </LinearLayout>
 </LinearLayout>

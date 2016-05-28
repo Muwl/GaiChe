@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.gaicheyunxiu.gaiche.R;
 import com.gaicheyunxiu.gaiche.adapter.MarginAdapter;
 import com.gaicheyunxiu.gaiche.model.CommodityState;
+import com.gaicheyunxiu.gaiche.model.EarnIncomeEntity;
 import com.gaicheyunxiu.gaiche.model.EarningsEntity;
 import com.gaicheyunxiu.gaiche.model.EarningsState;
 import com.gaicheyunxiu.gaiche.model.MyCarEntity;
@@ -64,6 +65,8 @@ public class MarginActivity extends BaseActivity implements View.OnClickListener
 
     private int pageNo = 1;
 
+    private EarnIncomeEntity incomeEntity;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,6 +75,7 @@ public class MarginActivity extends BaseActivity implements View.OnClickListener
     }
 
     private void initView() {
+        incomeEntity= (EarnIncomeEntity) getIntent().getSerializableExtra("entity");
         back= (ImageView) findViewById(R.id.title_back);
         title= (TextView) findViewById(R.id.title_text);
         no= (TextView) findViewById(R.id.margin_no);
@@ -89,6 +93,8 @@ public class MarginActivity extends BaseActivity implements View.OnClickListener
         listView.setAdapter(adapter);
 
         no.setText(ShareDataTool.getRegiterEntity(this).gcCode);
+        m.setText(incomeEntity.equityMvalue+"M");
+        m.setText(incomeEntity.equityMoney);
 
         listView.setMode(PullToRefreshBase.Mode.BOTH);
         listView.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener<ListView>() {
@@ -196,6 +202,7 @@ public class MarginActivity extends BaseActivity implements View.OnClickListener
             }
         });
     }
+
 
 
 }

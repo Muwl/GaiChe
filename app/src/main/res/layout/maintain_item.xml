@@ -38,8 +38,7 @@
             android:layout_height="wrap_content"
             android:textSize="@dimen/second_font"
             android:layout_marginTop="10dp"
-            android:textColor="#474443"
-            android:text="消息消息消息消息消息"/>
+            android:textColor="#474443"/>
 
 
     </LinearLayout>

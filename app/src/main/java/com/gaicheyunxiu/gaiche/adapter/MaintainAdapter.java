@@ -8,7 +8,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.gaicheyunxiu.gaiche.R;
+import com.gaicheyunxiu.gaiche.model.MaintainEntity;
+import com.lidroid.xutils.BitmapUtils;
 import com.lidroid.xutils.http.client.multipart.content.ContentBody;
+
+import java.util.List;
 
 /**
  * Created by Mu on 2016/1/8.
@@ -17,24 +21,28 @@ import com.lidroid.xutils.http.client.multipart.content.ContentBody;
 public class MaintainAdapter extends BaseAdapter {
 
     private Context context;
+    private List<MaintainEntity> entities;
+    private BitmapUtils bitmapUtils;
 
-    public MaintainAdapter(Context context) {
+    public MaintainAdapter(Context context,List<MaintainEntity> entities) {
         this.context = context;
+        this.entities=entities;
+        bitmapUtils=new BitmapUtils(context);
     }
 
     @Override
     public int getCount() {
-        return 3;
+        return entities.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return null;
+        return entities.get(position);
     }
 
     @Override
     public long getItemId(int position) {
-        return 0;
+        return position;
     }
 
     @Override
@@ -50,6 +58,8 @@ public class MaintainAdapter extends BaseAdapter {
         }else{
             holder= (ViewHolder) convertView.getTag();
         }
+        bitmapUtils.display(holder.imageView, entities.get(position).carBrandLogo);
+        holder.name.setText(entities.get(position).carBrandName+entities.get(position).type+"\u2000"+entities.get(position).displacement+"\u2000"+entities.get(position).productionDate+"\u2000("+entities.get(position).productionPlace+")");
         return convertView;
     }
     class ViewHolder{

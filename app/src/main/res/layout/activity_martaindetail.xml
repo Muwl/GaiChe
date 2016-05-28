@@ -9,25 +9,31 @@
         android:id="@+id/martaindetial_title"
         layout="@layout/activity_title" />
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/activity_bg"
         android:paddingBottom="12dp"
+        android:gravity="center"
         android:paddingTop="12dp">
+
+        <ImageView
+            android:id="@+id/martaindetial_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/maintain_image"/>
 
         <TextView
             android:id="@+id/martaindetial_car"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:drawableLeft="@mipmap/maintain_image"
+            android:layout_marginLeft="12dp"
             android:drawablePadding="8dp"
             android:gravity="center"
-            android:text="奥迪A6 1.8L 2004年生产"
             android:textColor="#5F5D5D"
             android:textSize="@dimen/second_font" />
-    </RelativeLayout>
+    </LinearLayout>
 
     <ImageView
         android:layout_width="match_parent"
@@ -74,14 +80,30 @@
         android:layout_height="1px"
         android:background="@color/bottom_div" />
 
-    <ListView
-        android:id="@+id/martaindetial_list"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:divider="@drawable/dashed_lin"
-        android:dividerHeight="3px"
-        android:scrollbars="none" />
+        android:layout_height="0dp">
+
+        <com.handmark.pulltorefresh.library.PullToRefreshListView
+            android:id="@+id/martaindetial_list"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:cacheColorHint="#00000000"
+            android:fadingEdge="none"
+            android:fastScrollEnabled="false"
+            android:scrollbars="none"
+            android:divider="@drawable/dashed_lin"
+            android:dividerHeight="3px"
+            android:footerDividersEnabled="false"
+            android:headerDividersEnabled="false"
+            android:smoothScrollbar="true" />
+
+        <include
+            android:id="@+id/martaindetial_pro"
+            layout="@layout/pro"
+            android:visibility="gone" />
+    </RelativeLayout>
 
 
     <LinearLayout
@@ -114,7 +136,6 @@
             android:gravity="center"
             android:paddingBottom="15dp"
             android:paddingTop="15dp"
-            android:text="1003.50"
             android:textColor="@color/write"
             android:textSize="@dimen/second_font" />
 

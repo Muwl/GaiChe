@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.gaicheyunxiu.gaiche.R;
 import com.gaicheyunxiu.gaiche.adapter.MarginAdapter;
+import com.gaicheyunxiu.gaiche.model.EarnIncomeEntity;
 import com.gaicheyunxiu.gaiche.model.EarningsEntity;
 import com.gaicheyunxiu.gaiche.model.EarningsState;
 import com.gaicheyunxiu.gaiche.model.ReturnState;
@@ -60,7 +61,7 @@ public class MincomeActivity extends BaseActivity implements View.OnClickListene
 
     private int pageNo = 1;
 
-
+    private EarnIncomeEntity incomeEntity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,6 +71,7 @@ public class MincomeActivity extends BaseActivity implements View.OnClickListene
     }
 
     private void initView() {
+        incomeEntity= (EarnIncomeEntity) getIntent().getSerializableExtra("entity");
         back= (ImageView) findViewById(R.id.title_back);
         title= (TextView) findViewById(R.id.title_text);
         no= (TextView) findViewById(R.id.mincome_no);
@@ -84,7 +86,7 @@ public class MincomeActivity extends BaseActivity implements View.OnClickListene
         earningsEntities=new ArrayList<>();
         adapter=new MarginAdapter(this,earningsEntities);
         no.setText(ShareDataTool.getRegiterEntity(this).gcCode);
-
+        money.setText(incomeEntity.earningsMoney);
         listView.setMode(PullToRefreshBase.Mode.BOTH);
         listView.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener<ListView>() {
             @Override

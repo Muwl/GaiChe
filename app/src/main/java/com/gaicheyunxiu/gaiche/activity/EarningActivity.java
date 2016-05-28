@@ -74,6 +74,8 @@ public class EarningActivity extends BaseActivity implements View.OnClickListene
             ToosUtils.goReLogin(this);
             return;
         }
+
+        getDynamicSync();
     }
 
     @Override
@@ -98,11 +100,13 @@ public class EarningActivity extends BaseActivity implements View.OnClickListene
                 break;
             case R.id.earning_marginlin:
                 Intent intent=new Intent(EarningActivity.this,MarginActivity.class);
+                intent.putExtra("entity",incomeEntity);
                 startActivity(intent);
 
                 break;
             case R.id.earning_mlin:
                 Intent intent2=new Intent(EarningActivity.this,MincomeActivity.class);
+                intent2.putExtra("entity",incomeEntity);
                 startActivity(intent2);
 
                 break;
@@ -161,6 +165,39 @@ public class EarningActivity extends BaseActivity implements View.OnClickListene
                     ToastUtils.displaySendFailureToast(EarningActivity.this);
                 }
 
+            }
+        });
+    }
+
+
+    /**
+     * 同步钱包和商品保证金数据
+     */
+    private void getDynamicSync() {
+        RequestParams rp = new RequestParams();
+        rp.addBodyParameter("sign", ShareDataTool.getToken(this));
+        rp.addBodyParameter("type", String.valueOf(0));
+        HttpUtils utils = new HttpUtils();
+        utils.configTimeout(20000);
+        LogManager.LogShow("-----",  Constant.ROOT_PATH
+                        + "earnings/income?sign="+ShareDataTool.getToken(this),
+                LogManager.ERROR);
+        utils.send(HttpRequest.HttpMethod.POST, Constant.ROOT_PATH
+                + "user/dynamicSync", rp, new RequestCallBack<String>() {
+            @Override
+            public void onStart() {
+                super.onStart();
+            }
+
+            @Override
+            public void onFailure(HttpException arg0, String arg1) {
+                ToastUtils.displayFailureToast(EarningActivity.this);
+            }
+
+            @Override
+            public void onSuccess(ResponseInfo<String> arg0) {
+                LogManager.LogShow("-----", arg0.result,
+                        LogManager.ERROR);
             }
         });
     }
