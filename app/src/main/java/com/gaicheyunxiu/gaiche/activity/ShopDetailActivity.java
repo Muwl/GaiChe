@@ -117,6 +117,8 @@ public class ShopDetailActivity extends BaseActivity implements View.OnClickList
 
     public ImageView add;
 
+    private int flag;//0代表普通商品 1代表众筹商品
+
     private Handler handler = new Handler() {
         public void handleMessage(Message msg) {
             switch (msg.what) {
@@ -142,6 +144,7 @@ public class ShopDetailActivity extends BaseActivity implements View.OnClickList
 
     private void initView() {
         width = DensityUtil.getScreenWidth(this);
+        flag=getIntent().getIntExtra("flag", 0);
         id = getIntent().getStringExtra("id");
         back = (ImageView) findViewById(R.id.title_back);
         title = (TextView) findViewById(R.id.title_text);
@@ -166,7 +169,11 @@ public class ShopDetailActivity extends BaseActivity implements View.OnClickList
         evalnum = (TextView) findViewById(R.id.shopdetail_evalnum);
         evalscore = (TextView) findViewById(R.id.shopdetail_evalscore);
 
-
+        if (flag==0){
+            addCart.setVisibility(View.VISIBLE);
+        }else{
+            addCart.setVisibility(View.GONE);
+        }
         entities = new ArrayList<>();
         adapter = new ShopDetailAdapter(this, entities);
         listView.setAdapter(adapter);
@@ -179,7 +186,12 @@ public class ShopDetailActivity extends BaseActivity implements View.OnClickList
         add.setOnClickListener(this);
         infoView.setOnClickListener(this);
         oldMoney.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
-        getShopDetail(id);
+        if (flag==0){
+            getShopDetail(id);
+        }else if(flag==1){
+
+        }
+
         getEvalute(id);
     }
 
@@ -191,7 +203,11 @@ public class ShopDetailActivity extends BaseActivity implements View.OnClickList
                 break;
             case R.id.shopdetail_info:
                 Intent intent = new Intent(ShopDetailActivity.this, ShopDetailInfoActivity.class);
-                intent.putExtra("url", Constant.ROOT_PATH + "commodity/findIntroduction?id=" + id);
+                if (flag==0){
+                    intent.putExtra("url", Constant.ROOT_PATH + "commodity/findIntroduction?id=" + id);
+                }else{
+                    intent.putExtra("url", Constant.ROOT_PATH + "crowdfundingCommodity/findIntroduction?id=" + id);
+                }
                 startActivity(intent);
                 break;
 
@@ -210,7 +226,11 @@ public class ShopDetailActivity extends BaseActivity implements View.OnClickList
                     return;
                 }
                 Intent intent1=new Intent(ShopDetailActivity.this,ClearingActivity.class);
-                intent1.putExtra("flag",2);
+                if (flag==0){
+                    intent1.putExtra("flag",2);
+                }else{
+                    intent1.putExtra("flag",3);
+                }
                 intent1.putExtra("entity",detailEntity);
                 startActivity(intent1);
                 break;
@@ -242,11 +262,21 @@ public class ShopDetailActivity extends BaseActivity implements View.OnClickList
         RequestParams rp = new RequestParams();
         HttpUtils utils = new HttpUtils();
         rp.addBodyParameter("id", id);
+        if (!ToosUtils.isStringEmpty(ShareDataTool.getToken(this))){
+            rp.addBodyParameter("sign", ShareDataTool.getToken(this));
+        }
         utils.configTimeout(20000);
         LogManager.LogShow("-----", Constant.ROOT_PATH + "commodity/findById?id=" + id,
                 LogManager.ERROR);
+
+        String url="commodity/findById";
+        if (flag==0){
+            url="commodity/findById";
+        }else{
+            url="crowdfundingCommodity/findById";
+        }
         utils.send(HttpRequest.HttpMethod.POST, Constant.ROOT_PATH
-                + "commodity/findById", rp, new RequestCallBack<String>() {
+                + url, rp, new RequestCallBack<String>() {
             @Override
             public void onStart() {
                 pro.setVisibility(View.VISIBLE);
@@ -290,6 +320,7 @@ public class ShopDetailActivity extends BaseActivity implements View.OnClickList
             }
         });
     }
+
 
     private void setValue() {
         name.setText(detailEntity.name);

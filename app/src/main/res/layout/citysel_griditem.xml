@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:background="@color/write">
+
+    <TextView
+        android:id="@+id/griditem_btn"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:paddingBottom="5dp"
+        android:paddingLeft="10dp"
+    android:background="@drawable/hot_city_bg"
+        android:paddingRight="10dp"
+        android:paddingTop="5dp"
+        android:singleLine="true"
+        android:textColor="#5d5d5d"
+        android:textSize="@dimen/second_font"></TextView>
+</LinearLayout>

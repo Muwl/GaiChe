@@ -132,6 +132,12 @@ public class FOuletAdapter extends BaseAdapter {
         }
         if (type == type0) {
             holder1.address.setText(entity.address);
+            holder1.address.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    handler.sendEmptyMessage(2663);
+                }
+            });
             holder1.serch.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

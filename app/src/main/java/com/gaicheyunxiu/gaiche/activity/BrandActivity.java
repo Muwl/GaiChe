@@ -54,7 +54,7 @@ public class BrandActivity extends BaseActivity implements View.OnClickListener 
 
     private String brandName;
 
-    private int comeFlag;//1 代表广告 2 代表热门列表 5代表养修品牌
+    private int comeFlag;//1 代表广告 2 代表热门列表 5代表养修品牌 7代表从众筹进入
 
     private String type;
 
@@ -130,7 +130,7 @@ public class BrandActivity extends BaseActivity implements View.OnClickListener 
     private void getBrands() {
         RequestParams rp = new RequestParams();
         HttpUtils utils = new HttpUtils();
-        String url="advertisement/getBrands";
+        String url="Commodity/getBrand";
         MyCarEntity carEntity= MyApplication.getInstance().getCarEntity();
         if (comeFlag==1){
             rp.addBodyParameter("id", id);
@@ -152,8 +152,6 @@ public class BrandActivity extends BaseActivity implements View.OnClickListener 
             rp.addBodyParameter("ids", supportIds);
             url="maintenance/findBrands";
         }
-        LogManager.LogShow("-----", Constant.ROOT_PATH + url+"?category="+category,
-                LogManager.ERROR);
         utils.configTimeout(20000);
         utils.send(HttpRequest.HttpMethod.POST, Constant.ROOT_PATH
                 + url, rp, new RequestCallBack<String>() {

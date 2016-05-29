@@ -50,4 +50,29 @@ public class CityEntity implements Serializable{
     public double locallongitude;
 
     public double locallatitude;
+
+    @Override
+    public String toString() {
+        return "CityEntity{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", parent_id='" + parent_id + '\'' +
+                ", short_name='" + short_name + '\'' +
+                ", level_type='" + level_type + '\'' +
+                ", city_code='" + city_code + '\'' +
+                ", zip_code='" + zip_code + '\'' +
+                ", merger_name='" + merger_name + '\'' +
+                ", longitude=" + longitude +
+                ", latitude=" + latitude +
+                ", pinyin='" + pinyin + '\'' +
+                ", create_by='" + create_by + '\'' +
+                ", create_date='" + create_date + '\'' +
+                ", update_by='" + update_by + '\'' +
+                ", update_date='" + update_date + '\'' +
+                ", remarks='" + remarks + '\'' +
+                ", del_flag='" + del_flag + '\'' +
+                ", locallongitude=" + locallongitude +
+                ", locallatitude=" + locallatitude +
+                '}';
+    }
 }

@@ -23,6 +23,7 @@ import com.baidu.location.LocationClientOption;
 import com.baidu.location.Poi;
 import com.baidu.mapapi.SDKInitializer;
 import com.gaicheyunxiu.gaiche.R;
+import com.gaicheyunxiu.gaiche.activity.CitySelActivity;
 import com.gaicheyunxiu.gaiche.activity.MainActivity;
 import com.gaicheyunxiu.gaiche.activity.OultSelActivity;
 import com.gaicheyunxiu.gaiche.activity.OutletDetailActivity;
@@ -83,32 +84,23 @@ public class OutletFragment extends Fragment implements View.OnClickListener {
 
     private List<ShopEntity> entities;
 
-    private CityEntity cityEntity;
-
     private View pro;
     private OuletHeadEntity headEntity;
-    private BDLocation bdLocation = null;
-    public LocationClient mLocationClient = null;
-    public BDLocationListener myListener = new MyLocationListener();
 
     private Handler handler = new Handler() {
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case 16624:
                     Intent intent11=new Intent(getActivity(), SerchOuletActivity.class);
-                    intent11.putExtra("cityId",cityEntity.id);
                     startActivity(intent11);
                     break;
                 case HttpPostUtils.FIND_MYCAR:
                     adapter.notifyDataSetChanged();
                     break;
+
                 case NEAR_OULET:
-                    if (cityEntity == null) {
-                        return;
-                    }
                     Intent intent = new Intent(getActivity(), OultSelActivity.class);
                     intent.putExtra("flag", 2);
-                    intent.putExtra("city", cityEntity);
                     startActivity(intent);
                     break;
                 case 1446:
@@ -192,9 +184,6 @@ public class OutletFragment extends Fragment implements View.OnClickListener {
         super.onActivityCreated(savedInstanceState);
         headEntity = new OuletHeadEntity();
         map.setVisibility(View.VISIBLE);
-        mLocationClient = new LocationClient(getActivity().getApplicationContext());     //声明LocationClient类
-        mLocationClient.registerLocationListener(myListener);    //注册监听函数
-        initLocation();
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -210,63 +199,39 @@ public class OutletFragment extends Fragment implements View.OnClickListener {
         if (ToosUtils.goBrand(getActivity(),0)){
             return;
         }
-        mLocationClient.start();
+        cityView.setOnClickListener(this);
+        headEntity.address = MyApplication.getInstance().getBdLocation().getAddrStr();
+        cityView.setText(MyApplication.getInstance().getCityEntity().name);
+        getHotShops();
 
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode==7889 && resultCode==Activity.RESULT_OK){
+            cityView.setText(MyApplication.getInstance().getCityEntity().name);
+            getHotShops();
+        }
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-
-        }
-    }
-
-    private void initLocation() {
-        LocationClientOption option = new LocationClientOption();
-        option.setLocationMode(LocationClientOption.LocationMode.Hight_Accuracy
-        );//可选，默认高精度，设置定位模式，高精度，低功耗，仅设备
-        option.setCoorType("bd09ll");//可选，默认gcj02，设置返回的定位结果坐标系
-        int span = 1000;
-        option.setScanSpan(span);//可选，默认0，即仅定位一次，设置发起定位请求的间隔需要大于等于1000ms才是有效的
-        option.setIsNeedAddress(true);//可选，设置是否需要地址信息，默认不需要
-        option.setOpenGps(true);//可选，默认false,设置是否使用gps
-        option.setLocationNotify(true);//可选，默认false，设置是否当gps有效时按照1S1次频率输出GPS结果
-        option.setIsNeedLocationDescribe(true);//可选，默认false，设置是否需要位置语义化结果，可以在BDLocation.getLocationDescribe里得到，结果类似于“在北京天安门附近”
-        option.setIsNeedLocationPoiList(true);//可选，默认false，设置是否需要POI结果，可以在BDLocation.getPoiList里得到
-        option.setIgnoreKillProcess(false);//可选，默认true，定位SDK内部是一个SERVICE，并放到了独立进程，设置是否在stop的时候杀死这个进程，默认不杀死
-        option.SetIgnoreCacheException(false);//可选，默认false，设置是否收集CRASH信息，默认收集
-        option.setEnableSimulateGps(false);//可选，默认false，设置是否需要过滤gps仿真结果，默认需要
-        mLocationClient.setLocOption(option);
-    }
-
-    public class MyLocationListener implements BDLocationListener {
-
-        @Override
-        public void onReceiveLocation(BDLocation location) {
-            if (location != null) {
-
-                bdLocation = location;
-                headEntity.address = location.getAddrStr();
-                String city = location.getCity();
-                cityEntity = CityDBUtils.getCityIdFromName(getActivity(), city);
-                cityEntity.locallongitude = location.getLongitude();
-                cityEntity.locallatitude = location.getLatitude();
-                cityView.setText(city);
-                getHotShops();
-                mLocationClient.stop();
-            }
-
+            case R.id.title_city:
+                Intent intent10=new Intent(getActivity(), CitySelActivity.class);
+                startActivityForResult(intent10, 7889);
+                break;
         }
     }
 
     @Override
     public void onStop() {
-        mLocationClient.stop();
         super.onStop();
     }
 
     public void onRefush(){
-        mLocationClient.start();
+        getHotShops();
     }
 
     /**
@@ -280,8 +245,8 @@ public class OutletFragment extends Fragment implements View.OnClickListener {
         if (carEntity != null) {
             rp.addBodyParameter("carTypeId", carEntity.carTypeId);
         }
-        rp.addBodyParameter("longitude", String.valueOf(bdLocation.getLongitude()));
-        rp.addBodyParameter("latitude", String.valueOf(bdLocation.getLatitude()));
+        rp.addBodyParameter("longitude", String.valueOf(MyApplication.getInstance().getBdLocation().getLongitude()));
+        rp.addBodyParameter("latitude", String.valueOf(MyApplication.getInstance().getBdLocation().getLatitude()));
         utils.send(HttpRequest.HttpMethod.POST, Constant.ROOT_PATH
                 + "shop/hotShops", rp, new RequestCallBack<String>() {
             @Override

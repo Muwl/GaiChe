@@ -92,10 +92,6 @@ public class OultSelActivity extends BaseActivity implements View.OnClickListene
 
     private int flag;//0代表首页进去 1代表从美容进入 //2附近门店// 3服务项目  //4搜索门店
 
-    private BDLocation bdLocation = null;
-
-    private CityEntity cityEntity;
-
     private String serviceId;
 
     private String keyword;
@@ -103,23 +99,6 @@ public class OultSelActivity extends BaseActivity implements View.OnClickListene
     private View serchView;
 
     private TextView serchText;
-
-    private Handler handler = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-            switch (msg.what) {
-                case LocalUtils.LOCAT_OK:
-                    bdLocation = (BDLocation) msg.obj;
-                    String city=bdLocation.getCity();
-                    titleMap.setText(city);
-                    cityEntity= CityDBUtils.getCityIdFromName(OultSelActivity.this, city);
-                    cityEntity.locallongitude=bdLocation.getLongitude();
-                    cityEntity.locallatitude=bdLocation.getLatitude();
-                    getOulet(1);
-                    break;
-            }
-        }
-    };
 
 
     @Override
@@ -166,34 +145,26 @@ public class OultSelActivity extends BaseActivity implements View.OnClickListene
         listView.setAdapter(adapter);
         group.check(R.id.ouletsel_default);
         back.setOnClickListener(this);
+        titleMap.setOnClickListener(this);
         moods.setOnClickListener(this);
         technology.setOnClickListener(this);
         price.setOnClickListener(this);
         sort = "0";
 
-
+        titleMap.setText(MyApplication.getInstance().getCityEntity().name);
 
         if (flag == 1) {
-            LocalUtils localUtils = new LocalUtils(this, handler);
             serviceIds = getIntent().getStringExtra("ids");
-            localUtils.startLocation();
         }else if(flag==2){
-            cityEntity= (CityEntity) getIntent().getSerializableExtra("city");
             title.setText("附近门店");
             price.setVisibility(View.GONE);
-            titleMap.setText(cityEntity.name);
-            getOulet(1);
         }else if(flag==4){
             keyword=getIntent().getStringExtra("keywords");
             serchText.setText(keyword);
-            LocalUtils localUtils = new LocalUtils(this, handler);
-            localUtils.startLocation();
         }else if(flag==3){
-            LocalUtils localUtils = new LocalUtils(this, handler);
             serviceId=getIntent().getStringExtra("serviceId");
             String stitle=getIntent().getStringExtra("title");
             title.setText(stitle);
-            localUtils.startLocation();
 //            switch (serviceId){
 //                case   OutletFragment.BAOYANG_FLAG:
 //                    title.setText("保养安装");
@@ -218,6 +189,8 @@ public class OultSelActivity extends BaseActivity implements View.OnClickListene
 //                    break;
 //            }
         }
+
+        getOulet(1);
         group.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
@@ -269,7 +242,11 @@ public class OultSelActivity extends BaseActivity implements View.OnClickListene
             case R.id.title_back:
                 finish();
                 break;
-
+            case R.id.title_city:
+                titleMap.setText(MyApplication.getInstance().getCityEntity().name);
+                Intent intent10=new Intent(OultSelActivity.this, CitySelActivity.class);
+                startActivityForResult(intent10, 7889);
+                break;
             case R.id.ouletsel_moods:
                 if ("11".equals(sort)) {
                     sort = "12";
@@ -346,6 +323,14 @@ public class OultSelActivity extends BaseActivity implements View.OnClickListene
 
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode==7889 && resultCode==RESULT_OK){
+            titleMap.setText(MyApplication.getInstance().getCityEntity().name);
+            getOulet(1);
+        }
+    }
 
     /**
      * 获取门店
@@ -362,16 +347,16 @@ public class OultSelActivity extends BaseActivity implements View.OnClickListene
                 rp.addBodyParameter("carTypeId", myCarEntity.carTypeId);
             }
             rp.addBodyParameter("pageNo", pageNo + "");
-            rp.addBodyParameter("longitude", String.valueOf(bdLocation.getLongitude()));
-            rp.addBodyParameter("latitude", String.valueOf(bdLocation.getLatitude()));
+            rp.addBodyParameter("longitude", String.valueOf(MyApplication.getInstance().getBdLocation().getLongitude()));
+            rp.addBodyParameter("latitude", String.valueOf(MyApplication.getInstance().getBdLocation().getLatitude()));
             rp.addBodyParameter("serviceIds", serviceIds);
             LogManager.LogShow("-----", serviceIds, LogManager.ERROR);
             url = "service/shop";
         }else if (flag==2){
             rp.addBodyParameter("sort", sort);
-            rp.addBodyParameter("longitude",String.valueOf(cityEntity.locallongitude));
-            rp.addBodyParameter("latitude", String.valueOf(cityEntity.locallatitude));
-            rp.addBodyParameter("cityId", cityEntity.id);
+            rp.addBodyParameter("longitude",String.valueOf(MyApplication.getInstance().getBdLocation().getLongitude()));
+            rp.addBodyParameter("latitude", String.valueOf(MyApplication.getInstance().getBdLocation().getLatitude()));
+            rp.addBodyParameter("cityId", MyApplication.getInstance().getCityEntity().id);
             if (myCarEntity!=null){
                 rp.addBodyParameter("carTypeId", myCarEntity.carTypeId);
             }
@@ -379,27 +364,27 @@ public class OultSelActivity extends BaseActivity implements View.OnClickListene
             url = "shop/nearShop";
         }else if(flag==3){
             rp.addBodyParameter("sort", sort);
-            rp.addBodyParameter("longitude", String.valueOf(bdLocation.getLongitude()));
-            rp.addBodyParameter("latitude", String.valueOf(bdLocation.getLatitude()));
+            rp.addBodyParameter("longitude", String.valueOf(MyApplication.getInstance().getBdLocation().getLongitude()));
+            rp.addBodyParameter("latitude", String.valueOf(MyApplication.getInstance().getBdLocation().getLatitude()));
             rp.addBodyParameter("serviceId", serviceId);
             rp.addBodyParameter("pageNo", pageNo + "");
             if (myCarEntity!=null){
                 rp.addBodyParameter("carTypeId", myCarEntity.carTypeId);
             }
-            rp.addBodyParameter("cityId", cityEntity.id);
+            rp.addBodyParameter("cityId", MyApplication.getInstance().getCityEntity().id);
             url = "shop/findByService";
         }else if (flag==4){
-            rp.addBodyParameter("longitude", String.valueOf(bdLocation.getLongitude()));
+            rp.addBodyParameter("longitude", String.valueOf(MyApplication.getInstance().getBdLocation().getLongitude()));
             rp.addBodyParameter("keyword", keyword);
-            rp.addBodyParameter("latitude", String.valueOf(bdLocation.getLatitude()));
+            rp.addBodyParameter("latitude", String.valueOf(MyApplication.getInstance().getBdLocation().getLatitude()));
             rp.addBodyParameter("pageNo", pageNo + "");
             if (myCarEntity!=null){
                 rp.addBodyParameter("carTypeId", myCarEntity.carTypeId);
             }
-            rp.addBodyParameter("cityId", cityEntity.id);
+            rp.addBodyParameter("cityId", MyApplication.getInstance().getCityEntity().id);
             url = "shop/search";
 
-            LogManager.LogShow("------",Constant.ROOT_PATH + url+"?longitude="+String.valueOf(bdLocation.getLongitude())+"&latitude="+String.valueOf(bdLocation.getLatitude())+"&keyword="+keyword+"&pageNo="+pageNo+"&carTypeId="+myCarEntity.carTypeId+"&cityId="+cityEntity.id,LogManager.ERROR);
+            LogManager.LogShow("------",Constant.ROOT_PATH + url+"?longitude="+String.valueOf(MyApplication.getInstance().getBdLocation().getLongitude())+"&latitude="+String.valueOf(MyApplication.getInstance().getBdLocation().getLatitude())+"&keyword="+keyword+"&pageNo="+pageNo+"&carTypeId="+myCarEntity.carTypeId+"&cityId="+MyApplication.getInstance().getCityEntity().id,LogManager.ERROR);
         }
         utils.send(HttpRequest.HttpMethod.POST, Constant.ROOT_PATH
                 + url, rp, new RequestCallBack<String>() {

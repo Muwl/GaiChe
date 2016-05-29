@@ -8,6 +8,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.gaicheyunxiu.gaiche.R;
+import com.gaicheyunxiu.gaiche.model.CommdityVo;
 import com.gaicheyunxiu.gaiche.model.CrowCommityEntity;
 import com.lidroid.xutils.BitmapUtils;
 
@@ -21,8 +22,8 @@ public class CrowdfundAdapter extends BaseAdapter {
 
     private Context context;
     private BitmapUtils bitmapUtils;
-    private List<CrowCommityEntity> entities;
-    public CrowdfundAdapter(Context context,List<CrowCommityEntity> entities) {
+    private List<CommdityVo> entities;
+    public CrowdfundAdapter(Context context,List<CommdityVo> entities) {
         this.context = context;
         this.entities=entities;
         bitmapUtils=new BitmapUtils(context);

@@ -1,5 +1,6 @@
 package com.gaicheyunxiu.gaiche.activity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -15,6 +16,7 @@ import com.gaicheyunxiu.gaiche.R;
 import com.gaicheyunxiu.gaiche.adapter.CartAdapter;
 import com.gaicheyunxiu.gaiche.dialog.CustomeDialog;
 import com.gaicheyunxiu.gaiche.model.EarnIncomeState;
+import com.gaicheyunxiu.gaiche.model.OutSelEntity;
 import com.gaicheyunxiu.gaiche.model.ReturnState;
 import com.gaicheyunxiu.gaiche.model.ShopCartEntity;
 import com.gaicheyunxiu.gaiche.model.ShopCartState;
@@ -22,6 +24,7 @@ import com.gaicheyunxiu.gaiche.utils.CityDBUtils;
 import com.gaicheyunxiu.gaiche.utils.Constant;
 import com.gaicheyunxiu.gaiche.utils.LocalUtils;
 import com.gaicheyunxiu.gaiche.utils.LogManager;
+import com.gaicheyunxiu.gaiche.utils.MyApplication;
 import com.gaicheyunxiu.gaiche.utils.ShareDataTool;
 import com.gaicheyunxiu.gaiche.utils.ToastUtils;
 import com.gaicheyunxiu.gaiche.utils.ToosUtils;
@@ -46,6 +49,7 @@ public class CartActivity extends BaseActivity  implements View.OnClickListener 
     private ImageView back;
 
     private TextView title;
+
     private TextView titleCity;
 
     private View map;
@@ -64,7 +68,8 @@ public class CartActivity extends BaseActivity  implements View.OnClickListener 
 
     private List<ShopCartEntity> entities;
 
-    private BDLocation bdLocation = null;
+    private int indexFlag;
+
 
     private Handler handler=new Handler(){
         @Override
@@ -83,21 +88,31 @@ public class CartActivity extends BaseActivity  implements View.OnClickListener 
                 case 1774:
                     adapter.notifyDataSetChanged();
                     break;
-
-                case LocalUtils.LOCAT_OK:
-                    bdLocation = (BDLocation) msg.obj;
-                    String city=bdLocation.getCity();
-                    titleCity.setText(city);
-                    break;
-
                 case 89:
-                    int poi= (int) msg.obj;
-
+                    indexFlag= (int) msg.obj;
+                    Intent intent3=new Intent(CartActivity.this,OultOrderSelActivity.class);
+                    if (entities.get(indexFlag).outSelEntity!=null){
+                        intent3.putExtra("shopId",entities.get(indexFlag).outSelEntity.id);
+                    }
+                    if (MyApplication.getInstance().getCarEntity()!=null){
+                        intent3.putExtra("carTypeId",MyApplication.getInstance().getCarEntity().carTypeId);
+                    }
+                    String ids="";
+                    for (int i=0;i<entities.get(indexFlag).cartCommodityVOs.size();i++){
+                        if (i==entities.get(indexFlag).cartCommodityVOs.size()-1){
+                            ids=ids+entities.get(indexFlag).cartCommodityVOs.get(i).commodityId;
+                        }else{
+                            ids=ids+entities.get(indexFlag).cartCommodityVOs.get(i).commodityId+",";
+                        }
+                    }
+                    intent3.putExtra("commoditys",ids);
+                    startActivityForResult(intent3,5664);
                     break;
 
                 case 90:
                     int poi2= (int) msg.obj;
-
+                    entities.get(poi2).outFlag=2;
+                    adapter.notifyDataSetChanged();
                     break;
             }
         }
@@ -130,9 +145,8 @@ public class CartActivity extends BaseActivity  implements View.OnClickListener 
         back.setOnClickListener(this);
         map.setOnClickListener(this);
         listView.setAdapter(adapter);
-
-        LocalUtils localUtils = new LocalUtils(this, handler);
-        localUtils.startLocation();
+        titleCity.setOnClickListener(this);
+        titleCity.setText(MyApplication.getInstance().getCityEntity().name);
         getCart();
     }
 
@@ -143,9 +157,24 @@ public class CartActivity extends BaseActivity  implements View.OnClickListener 
                 finish();
                 break;
             case R.id.title_map:
+                Intent intent10=new Intent(CartActivity.this, CitySelActivity.class);
+                startActivityForResult(intent10, 7889);
                 break;
         }
 
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode==5664 && resultCode==RESULT_OK){
+            entities.get(indexFlag).outFlag=1;
+            entities.get(indexFlag).outSelEntity= (OutSelEntity) data.getSerializableExtra("entity");
+            adapter.notifyDataSetChanged();
+        }
+
+        if (requestCode==7889 && resultCode== Activity.RESULT_OK){
+            titleCity.setText(MyApplication.getInstance().getCityEntity().name);
+        }
     }
 
     /**

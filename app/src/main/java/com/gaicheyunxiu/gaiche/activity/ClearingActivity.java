@@ -110,7 +110,7 @@ public class ClearingActivity extends BaseActivity implements View.OnClickListen
 
     private int checkIndex=1;//0钱包 1支付宝 2 微信 3银联
 
-    private int flag;//1代表购物车  2代表商城
+    private int flag;//1代表购物车  2代表普通商城  3代表众筹商品
 
     double smoney=0;
 
@@ -260,7 +260,6 @@ public class ClearingActivity extends BaseActivity implements View.OnClickListen
                 break;
             case R.id.clearing_outselview:
                 OutSelDialog dialog=new OutSelDialog(ClearingActivity.this,-1,handler);
-
                 break;
 
             case R.id.clearing_addview:
@@ -370,13 +369,16 @@ public class ClearingActivity extends BaseActivity implements View.OnClickListen
 
 
     /**
-     * 查询默认收货地址
+     * 保存订单
      */
     private void CommiteOrder() {
         RequestParams rp = new RequestParams();
         HttpUtils utils = new HttpUtils();
         utils.configTimeout(20000);
         String url="commodityOrder/save";
+        if (flag==3){
+            url="crowdfundingOrder/save";
+        }
         if (addressVo==null){
             ToastUtils.displayShortToast(this,"请选择收货地址！");
             return;

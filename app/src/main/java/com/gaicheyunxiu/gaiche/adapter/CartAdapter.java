@@ -119,6 +119,14 @@ public class CartAdapter extends BaseAdapter{
         if (entities.get(position).outSelEntity!=null){
             holder.outText.setText(entities.get(position).outSelEntity.name);
         }
+
+        if (entities.get(position).outFlag==0){
+            holder.outText.setText("请选择安装门店");
+        }else if(entities.get(position).outFlag==1 && entities.get(position).outSelEntity!=null){
+            holder.outText.setText(entities.get(position).outSelEntity.name);
+        }else{
+            holder.outText.setText("无法确认,暂不选择门店");
+        }
         holder.num.setText("共"+m+"件商品");
         holder.money.setText("￥"+smoney);
         holder.m.setText(mva+"M");

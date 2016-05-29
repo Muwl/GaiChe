@@ -5,6 +5,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
@@ -13,7 +14,9 @@ import com.gaicheyunxiu.gaiche.activity.fragment.HomeFragment;
 import com.gaicheyunxiu.gaiche.activity.fragment.OutletFragment;
 import com.gaicheyunxiu.gaiche.activity.fragment.PersonFragment;
 import com.gaicheyunxiu.gaiche.activity.fragment.StoreFragment;
+import com.gaicheyunxiu.gaiche.utils.CityEntity;
 import com.gaicheyunxiu.gaiche.utils.FileTool;
+import com.gaicheyunxiu.gaiche.utils.LogManager;
 
 import java.io.IOException;
 
@@ -182,6 +185,7 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+
         if (requestCode==8856 && resultCode==RESULT_OK){
             switch (pageIndex){
                 case 1:
@@ -201,5 +205,13 @@ public class MainActivity extends BaseActivity {
                     break;
             }
         }
+
+//        if (requestCode==7889 && resultCode==RESULT_OK){
+//            LogManager.LogShow("------------","------------------------",LogManager.ERROR);
+//            OutletFragment outletFragment= (OutletFragment) fMgr.findFragmentByTag("OutletFragment");
+////            if (outletFragment!=null){
+//                outletFragment.setCity((CityEntity) data.getSerializableExtra("city"));
+////            }
+//        }
     }
 }

@@ -144,10 +144,10 @@
 
                     <TextView
                         android:id="@+id/crowdfund_hour"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="26dp"
+                        android:layout_height="25dp"
+                        android:gravity="center"
                         android:background="@drawable/time_bg"
-                        android:padding="3dp"
                         android:text="23"
                         android:textColor="@color/write"
                         android:textSize="@dimen/second_font" />
@@ -160,10 +160,10 @@
 
                     <TextView
                         android:id="@+id/crowdfund_minute"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="26dp"
+                        android:layout_height="25dp"
+                        android:gravity="center"
                         android:background="@drawable/time_bg"
-                        android:padding="3dp"
                         android:text="22"
                         android:textColor="@color/write"
                         android:textSize="@dimen/second_font" />
@@ -176,10 +176,10 @@
 
                     <TextView
                         android:id="@+id/crowdfund_sec"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="26dp"
+                        android:layout_height="25dp"
+                        android:gravity="center"
                         android:background="@drawable/time_bg"
-                        android:padding="3dp"
                         android:text="56"
                         android:textColor="@color/write"
                         android:textSize="@dimen/second_font" />
@@ -202,7 +202,6 @@
                         android:id="@+id/crowdfund_day"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="倒计时100天"
                         android:textColor="#e53b28"
                         android:textSize="@dimen/thrid_font" />
 
@@ -222,76 +221,82 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/write"
-
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
 
                 <RadioButton
                     android:id="@+id/crowdfund_default"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:button="@null"
-                    android:gravity="center"
-                    android:paddingBottom="10dp"
-                    android:paddingTop="10dp"
-                    android:text="默认"
                     android:textColor="@color/store_text_rb"
-                    android:textSize="@dimen/second_font" />
+                    android:textSize="@dimen/second_font"
+                    android:gravity="center"
+                    android:paddingTop="10dp"
+                    android:button="@null"
+                    android:paddingBottom="10dp"
+                    android:text="默认"
+                    />
 
                 <ImageView
                     android:layout_width="1px"
                     android:layout_height="match_parent"
-                    android:background="@color/bottom_div" />
-
+                    android:background="@color/bottom_div"/>
                 <RadioButton
                     android:id="@+id/crowdfund_moods"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:button="@null"
                     android:gravity="center"
-                    android:paddingBottom="10dp"
-                    android:paddingTop="10dp"
-                    android:text="人气"
+                    android:paddingLeft="6dp"
+                    android:paddingRight="6dp"
+                    android:drawableRight="@mipmap/sort_nor"
                     android:textColor="@color/store_text_rb"
-                    android:textSize="@dimen/second_font" />
-
+                    android:textSize="@dimen/second_font"
+                    android:paddingTop="10dp"
+                    android:button="@null"
+                    android:paddingBottom="10dp"
+                    android:text="价格"
+                    />
                 <ImageView
                     android:layout_width="1px"
                     android:layout_height="match_parent"
-                    android:background="@color/bottom_div" />
-
+                    android:background="@color/bottom_div"/>
                 <RadioButton
                     android:id="@+id/crowdfund_technology"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:button="@null"
                     android:gravity="center"
-                    android:paddingBottom="10dp"
-                    android:paddingTop="10dp"
-                    android:text="技术"
                     android:textColor="@color/store_text_rb"
-                    android:textSize="@dimen/second_font" />
-
+                    android:textSize="@dimen/second_font"
+                    android:paddingLeft="6dp"
+                    android:paddingRight="6dp"
+                    android:drawableRight="@mipmap/sort_nor"
+                    android:button="@null"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
+                    android:text="销量"
+                    />
                 <ImageView
                     android:layout_width="1px"
                     android:layout_height="match_parent"
-                    android:background="@color/bottom_div" />
-
-                <RadioButton
+                    android:background="@color/bottom_div"/>
+                <TextView
                     android:id="@+id/crowdfund_price"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:textColor="@color/store_text_rb"
+                    android:textSize="@dimen/second_font"
+                    android:paddingTop="10dp"
+                    android:paddingLeft="6dp"
+                    android:paddingRight="6dp"
                     android:button="@null"
                     android:gravity="center"
                     android:paddingBottom="10dp"
-                    android:paddingTop="10dp"
                     android:text="品牌"
-                    android:textColor="@color/store_text_rb"
-                    android:textSize="@dimen/second_font" />
+                    />
             </RadioGroup>
 
 

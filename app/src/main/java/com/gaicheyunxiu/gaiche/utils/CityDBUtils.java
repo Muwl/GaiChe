@@ -24,6 +24,7 @@ public class CityDBUtils {
     }
 
 
+
     /**
      * 根据城市名称获取city
      * @param context
@@ -61,6 +62,56 @@ public class CityDBUtils {
             return  new ArrayList<>();
         }
 
+    }
+
+    /**
+     * 获取shi
+     * @param context
+     * @return
+     */
+    public static List<CityEntity> getCity(Context context){
+        DbUtils dbUtils=instance(context);
+        try {
+            List<CityEntity> cityEntities=dbUtils.findAll(Selector.from(CityEntity.class).where("level_type","=","2"));
+            return  cityEntities;
+        } catch (DbException e) {
+            e.printStackTrace();
+            return  new ArrayList<>();
+        }
+
+    }
+
+    /**
+     * 获取热门市
+     * @param context
+     * @return
+     */
+    public static List<CityEntity> getHotCity(Context context){
+        DbUtils dbUtils=instance(context);
+        try {
+            List<CityEntity> cityEntities=dbUtils.findAll(Selector.from(CityEntity.class).where("level_type", "=", "2").and("name", "=", "日照市").or("name","=","青岛市").or("name", "=", "济南市").or("name", "=", "临沂市").or("name", "=", "北京市").or("name", "=", "上海市").or("name", "=", "广州市"));
+            return  cityEntities;
+        } catch (DbException e) {
+            e.printStackTrace();
+            return  new ArrayList<>();
+        }
+
+    }
+
+    /**
+     * 获取热门市
+     * @param context
+     * @return
+     */
+    public static CityEntity getDefaultCity(Context context){
+        DbUtils dbUtils=instance(context);
+        try {
+            CityEntity cityEntity=dbUtils.findFirst(Selector.from(CityEntity.class).where("level_type", "=", "2").and("name", "=", "日照市"));
+            return  cityEntity;
+        } catch (DbException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     /**

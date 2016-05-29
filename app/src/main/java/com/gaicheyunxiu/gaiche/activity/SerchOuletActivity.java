@@ -17,6 +17,7 @@ import com.gaicheyunxiu.gaiche.model.ReturnState;
 import com.gaicheyunxiu.gaiche.model.SerchState;
 import com.gaicheyunxiu.gaiche.utils.Constant;
 import com.gaicheyunxiu.gaiche.utils.LogManager;
+import com.gaicheyunxiu.gaiche.utils.MyApplication;
 import com.gaicheyunxiu.gaiche.utils.ToastUtils;
 import com.gaicheyunxiu.gaiche.utils.ToosUtils;
 import com.google.gson.Gson;
@@ -54,8 +55,6 @@ public class SerchOuletActivity extends BaseActivity implements View.OnClickList
 
     List<String> strings;
 
-    private String cityId;
-
     private String stag;
 
 
@@ -67,7 +66,6 @@ public class SerchOuletActivity extends BaseActivity implements View.OnClickList
     }
 
     private void initView() {
-        cityId=getIntent().getStringExtra("cityId");
         title= (TextView) findViewById(R.id.title_text);
         back= (ImageView) findViewById(R.id.title_back);
         textView= (EditText) findViewById(R.id.serch_text);
@@ -158,7 +156,7 @@ public class SerchOuletActivity extends BaseActivity implements View.OnClickList
         RequestParams rp = new RequestParams();
         HttpUtils utils = new HttpUtils();
         rp.addBodyParameter("keyword", ToosUtils.getTextContent(textView));
-        rp.addBodyParameter("cityId", cityId);
+        rp.addBodyParameter("cityId", MyApplication.getInstance().getCityEntity().id);
         utils.configTimeout(20000);
 
         RequestCallBack<String> requestCallBack =new RequestCallBack<String>() {

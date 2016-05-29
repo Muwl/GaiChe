@@ -46,6 +46,7 @@ import com.gaicheyunxiu.gaiche.utils.HttpPostUtils;
 import com.gaicheyunxiu.gaiche.utils.LogManager;
 import com.gaicheyunxiu.gaiche.utils.MyApplication;
 import com.gaicheyunxiu.gaiche.utils.ShareDataTool;
+import com.gaicheyunxiu.gaiche.utils.TimeUtils;
 import com.gaicheyunxiu.gaiche.utils.ToastUtils;
 import com.gaicheyunxiu.gaiche.utils.ToosUtils;
 import com.gaicheyunxiu.gaiche.view.MyGallery;
@@ -98,11 +99,33 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
 
     private ImageView crowShop2;
 
+    private View crowShopView1;
+
+    private View crowShopView2;
+
+    private TextView shop1hour;
+
+    private TextView shop1minute;
+
+    private TextView shop1min;
+
+    private TextView shop2hour;
+
+    private TextView shop2minute;
+
+    private TextView shop2min;
+
     private Timer timer;
 
     private TimerTask task;
 
     protected final int UPDATE_GALLERY = 10; // Grallery更新
+
+    private Timer shopTimer;
+
+    private TimerTask shopTask;
+
+    protected final int UPDATE_TIME = 2256; // Grallery更新
 
     private MyGallery gallery = null;
 
@@ -143,6 +166,10 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
                         gallery.setSelection(gallery.getFirstVisiblePosition() + 2);
                     }
                     break;
+
+                case UPDATE_TIME:
+                    setCrowTime();
+                    break;
                 case HttpPostUtils.FIND_MYCAR:
                     MyCarEntity carEntity=MyApplication.getInstance().getCarEntity();
                     if (carEntity!=null){
@@ -181,6 +208,14 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
         hotshop3View = (ImageView) view.findViewById(R.id.home_hotshop3);
         hotshop4View = (ImageView) view.findViewById(R.id.home_hotshop4);
         mylistView = (MyListView) view.findViewById(R.id.home_mylist);
+        crowShopView1 = view.findViewById(R.id.home_shop1_lin);
+        crowShopView2 = view.findViewById(R.id.home_shop2_lin);
+        shop1hour = (TextView) view.findViewById(R.id.home_shop_hour);
+        shop1minute = (TextView) view.findViewById(R.id.home_shop_minute);
+        shop1min = (TextView) view.findViewById(R.id.home_shop_min);
+        shop2hour = (TextView) view.findViewById(R.id.home_shop2_hour);
+        shop2minute = (TextView) view.findViewById(R.id.home_shop2_minute);
+        shop2min = (TextView) view.findViewById(R.id.home_shop2_min);
         code.setVisibility(View.VISIBLE);
         message.setVisibility(View.VISIBLE);
         view.findViewById(R.id.title_back).setVisibility(View.GONE);
@@ -247,6 +282,19 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
                 startActivity(intent);
             }
         });
+
+
+        shopTimer=new Timer();
+
+        shopTask = new TimerTask() {
+            @Override
+            public void run() {
+                Message msg = Message.obtain();
+                msg.what = UPDATE_TIME;
+                handler.sendMessage(msg);
+            }
+        };
+        shopTimer.schedule(shopTask, 1000, 1000);
 
         getAd();
         getHotSale();
@@ -428,11 +476,11 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 if ("1".equals(images.get(position % images.size()).type)) {
-                    ToosUtils.openUrl(getActivity(), Constant.ROOT_PATH+"advertisement/getContent?id="+images.get(position % images.size()).id);
+                    ToosUtils.openUrl(getActivity(), Constant.ROOT_PATH + "advertisement/getContent?id=" + images.get(position % images.size()).id);
                 } else {
-                    Intent intent=new Intent(getActivity(), ShopListActivity.class);
-                    intent.putExtra("id",images.get(position % images.size()).id);
-                    intent.putExtra("comeFlag",1);
+                    Intent intent = new Intent(getActivity(), ShopListActivity.class);
+                    intent.putExtra("id", images.get(position % images.size()).id);
+                    intent.putExtra("comeFlag", 1);
                     getActivity().startActivity(intent);
                 }
             }
@@ -446,7 +494,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
                 int count = lin.getChildCount();
                 for (int i = 0; i < count; i++) {
                     iv = (ImageView) galllin.getChildAt(i);
-                    if (iv!=null){
+                    if (iv != null) {
                         if (i == position % images.size()) {
                             iv.setImageResource(R.mipmap.circle_select);
                         } else {
@@ -473,6 +521,24 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
             }
         };
         timer.schedule(task, 1000, 3000);
+
+
+
+
+    }
+
+    private void setCrowTime(){
+        if (crowdfundingProjectEntities!=null && crowdfundingProjectEntities.size()>0){
+            shop1hour.setText(TimeUtils.getHour(crowdfundingProjectEntities.get(0).endDate));
+            shop1minute.setText(TimeUtils.getMinute(crowdfundingProjectEntities.get(0).endDate));
+            shop1min.setText(TimeUtils.getMin(crowdfundingProjectEntities.get(0).endDate));
+        }
+
+        if (crowdfundingProjectEntities!=null && crowdfundingProjectEntities.size()>1){
+            shop2hour.setText(TimeUtils.getHour(crowdfundingProjectEntities.get(1).endDate));
+            shop2minute.setText(TimeUtils.getMinute(crowdfundingProjectEntities.get(1).endDate));
+            shop2min.setText(TimeUtils.getMin(crowdfundingProjectEntities.get(1).endDate));
+        }
     }
 
     /**
@@ -640,15 +706,21 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
                         if (crowdfundingProjectEntities.size()==0){
                             crowShop1.setVisibility(View.GONE);
                             crowShop2.setVisibility(View.GONE);
+                            crowShopView1.setVisibility(View.GONE);
+                            crowShopView2.setVisibility(View.GONE);
                         }
                         if (crowdfundingProjectEntities.size()>0){
                             bitmapUtils.display(crowShop1,crowdfundingProjectEntities.get(0).mobileImg);
                             crowShop1.setVisibility(View.VISIBLE);
                             crowShop2.setVisibility(View.INVISIBLE);
+                            crowShopView1.setVisibility(View.VISIBLE);
+                            crowShopView2.setVisibility(View.INVISIBLE);
                         }
                         if (crowdfundingProjectEntities.size()>1){
-                            bitmapUtils.display(crowShop2,crowdfundingProjectEntities.get(1).mobileImg);
+                            bitmapUtils.display(crowShop2, crowdfundingProjectEntities.get(1).mobileImg);
                             crowShop2.setVisibility(View.VISIBLE);
+                            crowShopView1.setVisibility(View.VISIBLE);
+                            crowShopView2.setVisibility(View.VISIBLE);
                         }
                     } else if (Constant.TOKEN_ERR.equals(state.msg)) {
                         ToastUtils.displayShortToast(getActivity(),

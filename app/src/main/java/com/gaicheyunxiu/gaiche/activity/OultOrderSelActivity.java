@@ -85,10 +85,6 @@ public class OultOrderSelActivity extends BaseActivity implements View.OnClickLi
 
     private View pro;
 
-    private BDLocation bdLocation = null;
-
-    private CityEntity cityEntity;
-
     private View serchView;
 
     private TextView serchText;
@@ -98,23 +94,6 @@ public class OultOrderSelActivity extends BaseActivity implements View.OnClickLi
     private String carTypeId;
 
     private String commoditys;
-
-    private Handler handler = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-            switch (msg.what) {
-                case LocalUtils.LOCAT_OK:
-                    bdLocation = (BDLocation) msg.obj;
-                    String city = bdLocation.getCity();
-                    titleMap.setText(city);
-                    cityEntity = CityDBUtils.getCityIdFromName(OultOrderSelActivity.this, city);
-                    cityEntity.locallongitude = bdLocation.getLongitude();
-                    cityEntity.locallatitude = bdLocation.getLatitude();
-                    getOulet(1);
-                    break;
-            }
-        }
-    };
 
 
     @Override
@@ -146,6 +125,7 @@ public class OultOrderSelActivity extends BaseActivity implements View.OnClickLi
         serchText = (TextView) findViewById(R.id.ouletsel_serchtext);
         pro = findViewById(R.id.ouletsel_pro);
 
+        titleMap.setText(MyApplication.getInstance().getCityEntity().name);
         back.setOnClickListener(this);
         entities = new ArrayList<>();
 
@@ -159,8 +139,7 @@ public class OultOrderSelActivity extends BaseActivity implements View.OnClickLi
         technology.setOnClickListener(this);
         price.setOnClickListener(this);
         sort = "0";
-        LocalUtils localUtils = new LocalUtils(this, handler);
-        localUtils.startLocation();
+
         group.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
@@ -195,7 +174,7 @@ public class OultOrderSelActivity extends BaseActivity implements View.OnClickLi
             }
         });
 
-
+        getOulet(1);
     }
 
     private void openPro() {
@@ -305,9 +284,9 @@ public class OultOrderSelActivity extends BaseActivity implements View.OnClickLi
             rp.addBodyParameter("carTypeId", carTypeId);
         }
         rp.addBodyParameter("pageNo", pageNo + "");
-        rp.addBodyParameter("longitude", String.valueOf(bdLocation.getLongitude()));
-        rp.addBodyParameter("latitude", String.valueOf(bdLocation.getLatitude()));
-        rp.addBodyParameter("cityId", cityEntity.id);
+        rp.addBodyParameter("longitude", String.valueOf(MyApplication.getInstance().getBdLocation().getLongitude()));
+        rp.addBodyParameter("latitude", String.valueOf(MyApplication.getInstance().getBdLocation().getLatitude()));
+        rp.addBodyParameter("cityId", MyApplication.getInstance().getCityEntity().id);
         rp.addBodyParameter("commoditys", commoditys);
         utils.send(HttpRequest.HttpMethod.POST, Constant.ROOT_PATH
                 + url, rp, new RequestCallBack<String>() {

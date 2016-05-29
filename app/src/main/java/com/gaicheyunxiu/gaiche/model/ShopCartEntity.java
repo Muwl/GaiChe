@@ -16,6 +16,7 @@ public class ShopCartEntity implements Serializable {
     public String productionDate;
     public List<ShopCartCommodityEntity> cartCommodityVOs;
     public OutSelEntity outSelEntity;
+    public int outFlag;//0代表未设置 1代表选择门店  2代表暂不选择门店
 
 
 }
