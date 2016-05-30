@@ -94,27 +94,34 @@
         android:layout_height="wrap_content"
         android:background="@drawable/item_bg"
         android:clickable="true"
-        android:paddingBottom="10dp"
+
         android:paddingLeft="20dp"
         android:paddingRight="20dp"
-        android:paddingTop="10dp">
+        >
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:text="清除缓存"
+            android:paddingBottom="10dp"
+            android:paddingTop="10dp"
             android:textColor="#5F5D5D"
             android:textSize="@dimen/first_font" />
 
         <TextView
             android:id="@+id/setting_catch"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
+            android:gravity="right"
             android:layout_centerVertical="true"
             android:text="5.00M"
+            android:paddingBottom="10dp"
+            android:paddingTop="10dp"
+            android:drawablePadding="10dp"
             android:textColor="#5F5D5D"
+            android:drawableRight="@mipmap/main_go"
             android:textSize="@dimen/first_font" />
 
     </RelativeLayout>

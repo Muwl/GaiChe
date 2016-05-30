@@ -130,7 +130,20 @@ public class ClearingActivity extends BaseActivity implements View.OnClickListen
                     if (MyApplication.getInstance().getCarEntity()!=null){
                         intent3.putExtra("carTypeId",MyApplication.getInstance().getCarEntity().carTypeId);
                     }
-                    intent3.putExtra("commoditys",shopDetailEntity.id);
+                    if (flag==1){
+                        String temp="";
+                        List<ShopCartCommodityEntity> shopCartCommodityEntities=shopCartEntity.cartCommodityVOs;
+                        for (int i=0;i<shopCartCommodityEntities.size();i++){
+                            if (i<shopCartCommodityEntities.size()-1){
+                                temp=temp+shopCartCommodityEntities.get(i).commodityId+",";
+                            }else{
+                                temp=temp+shopCartCommodityEntities.get(i).commodityId;
+                            }
+                        }
+                        intent3.putExtra("commoditys",temp);
+                    }else{
+                        intent3.putExtra("commoditys",shopDetailEntity.id);
+                    }
                     startActivityForResult(intent3,5664);
                     break;
                 case 90:
@@ -418,8 +431,8 @@ public class ClearingActivity extends BaseActivity implements View.OnClickListen
                         }else if(checkIndex==1){
                             zhifubaoPay(ToosUtils.getEncryptto(payState.result.content));
                         }else if(checkIndex==2){
-//                            LogManager.LogShow("-----", ToosUtils.getEncryptto(arg0.result),
-//                                    LogManager.ERROR);
+                            LogManager.LogShow("-----", ToosUtils.getEncryptto(payState.result.content),
+                                    LogManager.ERROR);
 //                            api.sendReq(req);
                         }
                     } else if (Constant.TOKEN_ERR.equals(state.msg)) {

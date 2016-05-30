@@ -245,6 +245,7 @@ public class OutletFragment extends Fragment implements View.OnClickListener {
         if (carEntity != null) {
             rp.addBodyParameter("carTypeId", carEntity.carTypeId);
         }
+        rp.addBodyParameter("cityId", MyApplication.getInstance().getCityEntity().id);
         rp.addBodyParameter("longitude", String.valueOf(MyApplication.getInstance().getBdLocation().getLongitude()));
         rp.addBodyParameter("latitude", String.valueOf(MyApplication.getInstance().getBdLocation().getLatitude()));
         utils.send(HttpRequest.HttpMethod.POST, Constant.ROOT_PATH

@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.gaicheyunxiu.gaiche.R;
+import com.gaicheyunxiu.gaiche.activity.OrderPayActivity;
 import com.gaicheyunxiu.gaiche.activity.ServicePayActivity;
 import com.gaicheyunxiu.gaiche.dialog.CustomeDialog;
 import com.gaicheyunxiu.gaiche.model.SerOrderEntity;
@@ -80,11 +81,11 @@ public class ServiceOrderAdapter extends BaseAdapter {
             holder.div1.setVisibility(View.VISIBLE);
             holder.del.setVisibility(View.VISIBLE);
             holder.del.setText("取消订单");
-            holder.pay.setText("付款");
+            holder.pay.setText("\u3000付款\u3000");
             holder.pay.setVisibility(View.VISIBLE);
         }else if("1".equals(entities.get(position).orderState)){
-            holder.div1.setVisibility(View.VISIBLE);
-            holder.del.setVisibility(View.VISIBLE);
+            holder.div1.setVisibility(View.GONE);
+            holder.del.setVisibility(View.GONE);
             holder.del.setText("取消订单");
             holder.pay.setText("付款");
             holder.pay.setVisibility(View.GONE);
@@ -105,9 +106,10 @@ public class ServiceOrderAdapter extends BaseAdapter {
         holder.pay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(context, ServicePayActivity.class);
-                intent.putExtra("flag",2);
-                intent.putExtra("entity",entities.get(position));
+                Intent intent = new Intent(context, OrderPayActivity.class);
+                intent.putExtra("flag",3);
+                intent.putExtra("money",entities.get(position).totalPrice);
+                intent.putExtra("orderId",entities.get(position).id);
                 context.startActivity(intent);
             }
         });

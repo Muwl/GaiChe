@@ -100,7 +100,11 @@ public class ShopOrderActivity extends  BaseActivity implements View.OnClickList
                 case 1556:
                     //付款
                     int position3=msg.arg1;
-
+                    Intent intent2=new Intent(ShopOrderActivity.this,OrderPayActivity.class);
+                    intent2.putExtra("flag",1);
+                    intent2.putExtra("money",entities.get(position3).price);
+                    intent2.putExtra("orderId",entities.get(position3).orderId);
+                    startActivity(intent2);
                     break;
 
                 case CustomeDialog.RET_OK:
@@ -198,13 +202,13 @@ public class ShopOrderActivity extends  BaseActivity implements View.OnClickList
                     getOrder(1);
                 } else if (checkedId == R.id.shoporder_receiving) {
                     openPro();
-                    orderState="2";
+                    orderState="1";
                     entities.clear();
                     adapter.notifyDataSetChanged();
                     getOrder(1);
                 } else if (checkedId == R.id.shoporder_evaluating) {
                     openPro();
-                    orderState="4";
+                    orderState="2";
                     entities.clear();
                     adapter.notifyDataSetChanged();
                     getOrder(1);

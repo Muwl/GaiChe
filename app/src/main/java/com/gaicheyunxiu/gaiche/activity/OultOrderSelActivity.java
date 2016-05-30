@@ -127,6 +127,7 @@ public class OultOrderSelActivity extends BaseActivity implements View.OnClickLi
 
         titleMap.setText(MyApplication.getInstance().getCityEntity().name);
         back.setOnClickListener(this);
+        titleMap.setOnClickListener(this);
         entities = new ArrayList<>();
 
         map.setVisibility(View.VISIBLE);
@@ -187,11 +188,22 @@ public class OultOrderSelActivity extends BaseActivity implements View.OnClickLi
 
 
     @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode==7889 && resultCode==RESULT_OK){
+            titleMap.setText(MyApplication.getInstance().getCityEntity().name);
+        }
+    }
+
+    @Override
     public void onClick(View view) {
 
         switch (view.getId()) {
             case R.id.title_back:
                 finish();
+                break;
+            case R.id.title_city:
+                Intent intent10=new Intent(OultOrderSelActivity.this, CitySelActivity.class);
+                startActivityForResult(intent10, 7889);
                 break;
 
             case R.id.ouletsel_moods:

@@ -10,7 +10,9 @@ import android.widget.TextView;
 
 import com.gaicheyunxiu.gaiche.R;
 import com.gaicheyunxiu.gaiche.dialog.CustomeDialog;
+import com.gaicheyunxiu.gaiche.utils.DataCleanManager;
 import com.gaicheyunxiu.gaiche.utils.ToosUtils;
+import com.lidroid.xutils.BitmapUtils;
 
 /**
  * Created by Administrator on 2016/2/11.
@@ -32,6 +34,8 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
 
     private View logout;
 
+    private BitmapUtils bitmapUtils;
+
     private Handler handler=new Handler(){
         @Override
         public void handleMessage(Message msg) {
@@ -41,7 +45,10 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
                     if (flag==-5){
                         ToosUtils.goReLogin(SettingActivity.this);
                     }else if(flag==-2){
-
+                        DataCleanManager.cleanInternalCache(SettingActivity.this);
+                        bitmapUtils.clearCache();
+                        bitmapUtils.clearDiskCache();
+                        bitmapUtils.clearMemoryCache();
                     }
                     break;
             }
@@ -63,7 +70,7 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
         clear= (TextView) findViewById(R.id.setting_catch);
         about=findViewById(R.id.setting_about);
         logout=findViewById(R.id.setting_logout);
-
+        bitmapUtils = new BitmapUtils(this);
         back.setOnClickListener(this);
         title.setText("设置");
         back.setOnClickListener(this);
