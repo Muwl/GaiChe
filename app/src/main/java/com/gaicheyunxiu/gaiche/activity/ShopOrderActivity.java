@@ -162,7 +162,6 @@ public class ShopOrderActivity extends  BaseActivity implements View.OnClickList
         pro= findViewById(R.id.shoporder_pro);
 
         title.setText("商品订单");
-        group.check(R.id.shoporder_all);
         back.setOnClickListener(this);
         entities=new ArrayList<>();
         adapter=new ShopOrderAdapter(this,entities,handler);

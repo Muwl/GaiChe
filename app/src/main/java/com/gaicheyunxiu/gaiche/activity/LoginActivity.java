@@ -1,5 +1,6 @@
 package com.gaicheyunxiu.gaiche.activity;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -23,6 +24,12 @@ import com.lidroid.xutils.http.RequestParams;
 import com.lidroid.xutils.http.ResponseInfo;
 import com.lidroid.xutils.http.callback.RequestCallBack;
 import com.lidroid.xutils.http.client.HttpRequest;
+import com.umeng.socialize.Config;
+import com.umeng.socialize.UMAuthListener;
+import com.umeng.socialize.UMShareAPI;
+import com.umeng.socialize.bean.SHARE_MEDIA;
+
+import java.util.Map;
 
 /**
  * Created by Administrator on 2016/4/19.
@@ -39,11 +46,13 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     private TextView forgetPwdView;
     private TextView weixinView;
     private View pro;
+    private UMShareAPI mShareAPI;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        mShareAPI = UMShareAPI.get(this);
         initView();
     }
 
@@ -64,6 +73,14 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         registerView.setOnClickListener(this);
         forgetPwdView.setOnClickListener(this);
         weixinView.setOnClickListener(this);
+
+        Dialog progressDialog = new Dialog(this,R.style.progress_dialog);
+        progressDialog.setContentView(R.layout.dialog);
+        progressDialog.setCancelable(true);
+        progressDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        Config.dialog=progressDialog;
+
+
 
 
     }
@@ -88,19 +105,42 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                     sendLog();
                 }
                 break;
+
+            case R.id.login_weixin:
+                SHARE_MEDIA platform = SHARE_MEDIA.WEIXIN;
+                mShareAPI.doOauthVerify(this, platform, umAuthListener);
+                break;
         }
     }
+    private UMAuthListener umAuthListener = new UMAuthListener() {
+        @Override
+        public void onComplete(SHARE_MEDIA platform, int action, Map<String, String> data) {
+            ToastUtils.displayShortToast(LoginActivity.this, "认证成功！");
+            LogManager.LogShow("-------------", data.toString(), LogManager.ERROR);
+        }
+
+        @Override
+        public void onError(SHARE_MEDIA platform, int action, Throwable t) {
+            ToastUtils.displayShortToast(LoginActivity.this, "认证失败！");
+        }
+
+        @Override
+        public void onCancel(SHARE_MEDIA platform, int action) {
+
+        }
+    };
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (resultCode!=RESULT_OK){
+        super.onActivityResult(requestCode, resultCode, data);
+        if ((requestCode==FORGETPWD_RETURN || requestCode==REGISTER_RETURN ) && resultCode==RESULT_OK){
+            Intent intent=new Intent();
+            setResult(RESULT_OK, intent);
+            finish();
             return;
         }
-        if (requestCode==FORGETPWD_RETURN || requestCode==REGISTER_RETURN){
-            Intent intent=new Intent();
-            setResult(RESULT_OK,intent);
-            finish();
-        }
+
+        mShareAPI.onActivityResult(requestCode, resultCode, data);
     }
 
     /**

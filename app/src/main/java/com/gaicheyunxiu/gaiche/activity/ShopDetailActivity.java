@@ -186,12 +186,7 @@ public class ShopDetailActivity extends BaseActivity implements View.OnClickList
         add.setOnClickListener(this);
         infoView.setOnClickListener(this);
         oldMoney.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
-        if (flag==0){
-            getShopDetail(id);
-        }else if(flag==1){
-
-        }
-
+        getShopDetail(id);
         getEvalute(id);
     }
 

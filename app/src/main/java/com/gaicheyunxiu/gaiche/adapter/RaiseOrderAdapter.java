@@ -1,6 +1,8 @@
 package com.gaicheyunxiu.gaiche.adapter;
 
 import android.content.Context;
+import android.graphics.Paint;
+import android.os.Handler;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -8,6 +10,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.gaicheyunxiu.gaiche.R;
+import com.gaicheyunxiu.gaiche.model.ShopOrderEntity;
+import com.gaicheyunxiu.gaiche.model.ShopOrderVo;
+import com.lidroid.xutils.BitmapUtils;
+
+import java.util.List;
 
 /**
  * Created by Mu on 2016/1/18.
@@ -16,24 +23,30 @@ import com.gaicheyunxiu.gaiche.R;
 public class RaiseOrderAdapter extends BaseAdapter{
 
     private Context context;
+    private List<ShopOrderEntity> entities;
+    private Handler handler;
+    private BitmapUtils bitmapUtils;
 
-    public RaiseOrderAdapter(Context context) {
+    public RaiseOrderAdapter(Context context, List<ShopOrderEntity> entities, Handler handler) {
         this.context = context;
+        this.entities = entities;
+        this.handler = handler;
+        bitmapUtils=new BitmapUtils(context);
     }
 
     @Override
     public int getCount() {
-        return 5;
+        return entities.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return null;
+        return entities.get(position);
     }
 
     @Override
     public long getItemId(int position) {
-        return 0;
+        return position;
     }
 
     @Override
@@ -58,6 +71,28 @@ public class RaiseOrderAdapter extends BaseAdapter{
         }else{
             holder= (ViewHolder) convertView.getTag();
         }
+        ShopOrderEntity shopOrderEntity=entities.get(position);
+        holder.no.setText("订单号："+shopOrderEntity.orderId);
+        holder.time.setText(shopOrderEntity.createDate);
+        if ("0".equals(shopOrderEntity.orderState)){
+            holder.state.setText("未支付");
+        }else if("1".equals(shopOrderEntity.orderState)){
+            holder.state.setText("已支付");
+        }else if("2".equals(shopOrderEntity.orderState)){
+            holder.state.setText("已完成");
+        }else if("3".equals(shopOrderEntity.orderState)){
+            holder.state.setText("已取消");
+        }
+        if (shopOrderEntity.vos!=null && shopOrderEntity.vos.size()>0){
+            ShopOrderVo shopOrderVo=shopOrderEntity.vos.get(0);
+            bitmapUtils.display(holder.imageView,shopOrderVo.briefImage);
+            holder.name.setText(shopOrderVo.name);
+            holder.money.setText("￥" + shopOrderVo.presentPrice + "元");
+            holder.m.setText(shopOrderVo.mValue + "M");
+            holder.oldmoney.setText("￥"+shopOrderVo.originalPrice);
+            holder.oldmoney.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG); //中间横线
+        }
+
         return convertView;
     }
     class ViewHolder{

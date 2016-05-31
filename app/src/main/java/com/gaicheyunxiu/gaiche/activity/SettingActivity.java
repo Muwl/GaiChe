@@ -45,10 +45,16 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
                     if (flag==-5){
                         ToosUtils.goReLogin(SettingActivity.this);
                     }else if(flag==-2){
-                        DataCleanManager.cleanInternalCache(SettingActivity.this);
+                        DataCleanManager.clearAllCache(SettingActivity.this);
                         bitmapUtils.clearCache();
                         bitmapUtils.clearDiskCache();
                         bitmapUtils.clearMemoryCache();
+
+                        try {
+                            clear.setText(DataCleanManager.getTotalCacheSize(SettingActivity.this));
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
                     }
                     break;
             }
@@ -79,6 +85,12 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
         clear.setOnClickListener(this);
         about.setOnClickListener(this);
         logout.setOnClickListener(this);
+        try {
+            clear.setText(DataCleanManager.getTotalCacheSize(this));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
 
     @Override
