@@ -115,8 +115,9 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     private UMAuthListener umAuthListener = new UMAuthListener() {
         @Override
         public void onComplete(SHARE_MEDIA platform, int action, Map<String, String> data) {
-            ToastUtils.displayShortToast(LoginActivity.this, "认证成功！");
+//            ToastUtils.displayShortToast(LoginActivity.this, "认证成功！");
             LogManager.LogShow("-------------", data.toString(), LogManager.ERROR);
+            sendThirdLog(data.get("access_token"));
         }
 
         @Override
@@ -175,6 +176,60 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         HttpUtils utils = new HttpUtils();
         utils.configTimeout(20000);
         utils.send(HttpRequest.HttpMethod.POST, Constant.ROOT_PATH + "user/login",
+                rp, new RequestCallBack<String>() {
+                    @Override
+                    public void onStart() {
+                        pro.setVisibility(View.VISIBLE);
+                        super.onStart();
+                    }
+
+                    @Override
+                    public void onFailure(HttpException arg0, String arg1) {
+                        pro.setVisibility(View.GONE);
+                        ToastUtils.displayFailureToast(LoginActivity.this);
+                    }
+
+                    @Override
+                    public void onSuccess(ResponseInfo<String> arg0) {
+                        pro.setVisibility(View.GONE);
+                        try {
+                            Gson gson = new Gson();
+                            LogManager.LogShow("----", arg0.result,
+                                    LogManager.ERROR);
+                            ReturnState state = gson.fromJson(arg0.result,
+                                    ReturnState.class);
+                            if (Constant.RETURN_OK.equals(state.msg)) {
+                                RegisterState registerState=gson.fromJson(arg0.result,RegisterState.class);
+                                registerState.result.phone=ToosUtils.getTextContent(phoneView);
+                                ShareDataTool.SaveInfo(LoginActivity.this, registerState.result);
+                                Intent intent=new Intent();
+                                setResult(RESULT_OK,intent);
+                                finish();
+                            } else {
+                                ToastUtils.displayShortToast(
+                                        LoginActivity.this,
+                                        (String) state.result);
+                            }
+                        } catch (Exception e) {
+                            ToastUtils
+                                    .displaySendFailureToast(LoginActivity.this);
+                        }
+
+                    }
+                });
+
+    }
+
+
+    /**
+     * 联网注册
+     */
+    private void sendThirdLog(String tokenId) {
+        RequestParams rp = new RequestParams();
+        rp.addBodyParameter("username", ToosUtils.getEncrypt(tokenId));
+        HttpUtils utils = new HttpUtils();
+        utils.configTimeout(20000);
+        utils.send(HttpRequest.HttpMethod.POST, Constant.ROOT_PATH + "user/thirdLogin",
                 rp, new RequestCallBack<String>() {
                     @Override
                     public void onStart() {

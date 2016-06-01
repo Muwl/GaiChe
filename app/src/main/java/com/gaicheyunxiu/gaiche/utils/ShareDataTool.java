@@ -88,6 +88,33 @@ public class ShareDataTool {
         }
     }
 
+    /**
+     * 保存是否为第一次启动
+     *
+     * @param flag
+     *            0第一次启动 1 以后启动
+     * @return
+     */
+    public static boolean saveStart(Context context, int flag) {
+        SharedPreferences sp = context.getSharedPreferences("start",
+                Context.MODE_PRIVATE);
+        Editor e = sp.edit();
+        e.putInt("flag", flag);
+        return e.commit();
+    }
+
+    /**
+     * 获取是否为第一次启动
+     *
+     * @param context
+     * @return
+     */
+    public static int getStart(Context context) {
+        return context.getSharedPreferences("start", Context.MODE_PRIVATE)
+                .getInt("flag", 0);
+    }
+
+
 
 
 }

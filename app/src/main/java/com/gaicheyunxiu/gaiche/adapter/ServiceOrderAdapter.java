@@ -3,6 +3,7 @@ package com.gaicheyunxiu.gaiche.adapter;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Handler;
+import android.os.Message;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
@@ -111,6 +112,17 @@ public class ServiceOrderAdapter extends BaseAdapter {
                 intent.putExtra("money",entities.get(position).totalPrice);
                 intent.putExtra("orderId",entities.get(position).id);
                 context.startActivity(intent);
+            }
+        });
+
+        holder.gps.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Message message=new Message();
+                message.what=15520;
+                message.obj=position;
+                handler.sendMessage(message);
+
             }
         });
 
