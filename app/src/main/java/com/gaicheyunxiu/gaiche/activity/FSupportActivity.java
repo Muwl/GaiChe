@@ -53,6 +53,9 @@ public class FSupportActivity extends BaseActivity  implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_support);
         initView();
+        if (ToosUtils.goBrand(this,0)){
+            return;
+        }
     }
 
     private void initView() {
@@ -98,6 +101,13 @@ public class FSupportActivity extends BaseActivity  implements View.OnClickListe
         }
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode!=RESULT_OK){
+            finish();
+        }
+    }
 
     /**
      * 查询所有品牌

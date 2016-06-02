@@ -34,7 +34,7 @@ public class PaymentPwdActivity extends BaseActivity implements View.OnClickList
 
     private TextView title;
 
-    private TextView phone;
+    private EditText phone;
 
     private EditText code;
 
@@ -50,10 +50,18 @@ public class PaymentPwdActivity extends BaseActivity implements View.OnClickList
 
     private TimeCount time;
 
+    private int flag=0;//0代表普通  1代表从扫码进入
+
+    private String sphone;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_loginpwd);
+        flag=getIntent().getIntExtra("flag",0);
+        if (flag==1){
+            sphone=getIntent().getStringExtra("phone");
+        }
         initView();
 
     }
@@ -62,7 +70,7 @@ public class PaymentPwdActivity extends BaseActivity implements View.OnClickList
         time = new TimeCount(60000, 1000);
         back= (ImageView) findViewById(R.id.title_back);
         title= (TextView) findViewById(R.id.title_text);
-        phone= (TextView) findViewById(R.id.loginpwd_phone);
+        phone= (EditText) findViewById(R.id.loginpwd_phone);
         code= (EditText) findViewById(R.id.loginpwd_code);
         getCode= (TextView) findViewById(R.id.loginpwd_getcode);
         pwd= (EditText) findViewById(R.id.loginpwd_pwd);
@@ -73,7 +81,14 @@ public class PaymentPwdActivity extends BaseActivity implements View.OnClickList
         title.setText("修改支付密码");
         getCode.setOnClickListener(this);
         submit.setOnClickListener(this);
-        phone.setText(ShareDataTool.getRegiterEntity(this).mobile);
+        if (flag==1 && "0".equals(sphone)){
+            phone.setText("");
+            phone.setEnabled(true);
+        }else{
+            phone.setEnabled(false);
+            phone.setText(ShareDataTool.getRegiterEntity(this).mobile);
+        }
+
     }
 
     @Override
@@ -103,7 +118,14 @@ public class PaymentPwdActivity extends BaseActivity implements View.OnClickList
      */
     private boolean checkInput() {
 //        String temp = codeView.getText().toString().trim();
-
+        if (ToosUtils.isTextEmpty(phone)) {
+            ToastUtils.displayShortToast(this, "手机号不能为空！");
+            return false;
+        }
+        if (!ToosUtils.MatchPhone(ToosUtils.getTextContent(phone))) {
+            ToastUtils.displayShortToast(this, "输入的手机号格式错误！");
+            return false;
+        }
         if (ToosUtils.isTextEmpty(code)) {
             ToastUtils.displayShortToast(this, "验证码不能为空！");
             return false;

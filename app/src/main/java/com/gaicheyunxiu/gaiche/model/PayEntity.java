@@ -7,6 +7,11 @@ import java.io.Serializable;
  */
 public class PayEntity implements Serializable {
 
+    public  String parentId;
+    public  String appid;
+    public  String prepayid;
+    public  String noncestr;
+    public  String timestamp;
     public  String returnCode;
     public  String content;
     public  String paySign;

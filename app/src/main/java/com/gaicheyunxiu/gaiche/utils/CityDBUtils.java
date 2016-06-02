@@ -38,11 +38,11 @@ public class CityDBUtils {
             if (cityEntities!=null && cityEntities.size()>0){
                 return cityEntities.get(0);
             }else{
-                return null;
+                return getDefaultCity(context);
             }
         } catch (DbException e) {
             e.printStackTrace();
-            return null;
+            return  getDefaultCity(context);
         }
 
     }

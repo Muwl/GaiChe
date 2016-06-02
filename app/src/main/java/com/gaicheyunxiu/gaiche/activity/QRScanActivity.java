@@ -30,6 +30,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.gaicheyunxiu.gaiche.R;
+import com.gaicheyunxiu.gaiche.utils.LogManager;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.Result;
 import com.mining.app.zxing.camera.CameraManager;
@@ -248,7 +249,7 @@ public class QRScanActivity extends BaseActivity implements Callback {
 					Toast.LENGTH_SHORT).show();
 		} else {
 			Intent intent=new Intent(QRScanActivity.this, QRpayActivity.class);
-			intent.putExtra("qr", resultString);
+			intent.putExtra("gc", resultString);
 			startActivity(intent);
 			finish();
 //			ToastUtils.displaLongToast(this, resultString);
@@ -423,11 +424,11 @@ public class QRScanActivity extends BaseActivity implements Callback {
 			canvas.drawRect(frame.right - CORNER_WIDTH, frame.bottom
 					- ScreenRate, frame.right, frame.bottom, paint);
 			slideTop += SPEEN_DISTANCE;
-			if (slideTop >= frame.bottom) {
+			if (slideTop >= frame.bottom || slideTop<0) {
 				slideTop = frame.top;
 			}
 			canvas.drawRect(frame.left + MIDDLE_LINE_PADDING, slideTop
-					- MIDDLE_LINE_WIDTH / 2, frame.right - MIDDLE_LINE_PADDING,
+							- MIDDLE_LINE_WIDTH / 2, frame.right - MIDDLE_LINE_PADDING,
 					slideTop + MIDDLE_LINE_WIDTH / 2, paint);
 			paint.setColor(Color.WHITE);
 			paint.setTextSize(TEXT_SIZE * density);

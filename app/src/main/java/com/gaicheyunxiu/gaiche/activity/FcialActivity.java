@@ -56,6 +56,10 @@ public class FcialActivity extends BaseActivity  implements View.OnClickListener
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_facial);
         initView();
+
+        if (ToosUtils.goBrand(this,0)){
+            return;
+        }
     }
 
     private void initView() {
@@ -98,6 +102,14 @@ public class FcialActivity extends BaseActivity  implements View.OnClickListener
         }
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode!=RESULT_OK){
+            finish();
+        }
+    }
+
 
     /**
      * 查询所有品牌
@@ -107,7 +119,7 @@ public class FcialActivity extends BaseActivity  implements View.OnClickListener
         HttpUtils utils = new HttpUtils();
         utils.configTimeout(20000);
         utils.send(HttpRequest.HttpMethod.POST, Constant.ROOT_PATH
-                + "maintenance/findMaintenance", rp, new RequestCallBack<String>() {
+                + "service/beautyService", rp, new RequestCallBack<String>() {
             @Override
             public void onStart() {
                 pro.setVisibility(View.VISIBLE);

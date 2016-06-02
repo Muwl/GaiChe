@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.gaicheyunxiu.gaiche.R;
 import com.gaicheyunxiu.gaiche.activity.CarmanagerActivity;
 import com.gaicheyunxiu.gaiche.activity.MainActivity;
+import com.gaicheyunxiu.gaiche.activity.QRScanActivity;
 import com.gaicheyunxiu.gaiche.activity.SerchActivity;
 import com.gaicheyunxiu.gaiche.activity.fragment.OutletFragment;
 import com.gaicheyunxiu.gaiche.model.MyCarEntity;
@@ -160,6 +161,13 @@ public class FOuletAdapter extends BaseAdapter {
                 public void onClick(View v) {
                     Intent intent1=new Intent(context, CarmanagerActivity.class);
                     ((MainActivity)context).startActivityForResult(intent1, 8856);
+                }
+            });
+            holder1.payCode.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent=new Intent(context, QRScanActivity.class);
+                    context.startActivity(intent);
                 }
             });
 

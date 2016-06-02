@@ -42,6 +42,7 @@ import com.lidroid.xutils.http.RequestParams;
 import com.lidroid.xutils.http.ResponseInfo;
 import com.lidroid.xutils.http.callback.RequestCallBack;
 import com.lidroid.xutils.http.client.HttpRequest;
+import com.tencent.mm.sdk.modelpay.PayReq;
 import com.tencent.mm.sdk.openapi.IWXAPI;
 import com.tencent.mm.sdk.openapi.WXAPIFactory;
 
@@ -187,6 +188,8 @@ public class ClearingActivity extends BaseActivity implements View.OnClickListen
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_clearing);
         flag=getIntent().getIntExtra("flag",0);
+        api = WXAPIFactory.createWXAPI(this, Constant.APP_ID);
+        api.registerApp(Constant.APP_ID);
         if (flag==1){
             shopCartEntity= (ShopCartEntity) getIntent().getSerializableExtra("entity");
         }else if(flag==2){
@@ -431,9 +434,18 @@ public class ClearingActivity extends BaseActivity implements View.OnClickListen
                         }else if(checkIndex==1){
                             zhifubaoPay(ToosUtils.getEncryptto(payState.result.content));
                         }else if(checkIndex==2){
+                            MyApplication.getInstance().setWeixinmoney(String.valueOf(smoney));
+                            PayReq request = new PayReq();
+                            request.appId = payState.result.appid;
+                            request.partnerId =  payState.result.parentId;
+                            request.prepayId= ToosUtils.getEncryptto(payState.result.content);
+                            request.packageValue = "Sign=WXPay";
+                            request.nonceStr= payState.result.noncestr;
+                            request.timeStamp= payState.result.timestamp;
+                            request.sign= payState.result.paySign;
+                            api.sendReq(request);
                             LogManager.LogShow("-----", ToosUtils.getEncryptto(payState.result.content),
                                     LogManager.ERROR);
-//                            api.sendReq(req);
                         }
                     } else if (Constant.TOKEN_ERR.equals(state.msg)) {
                         ToastUtils.displayShortToast(ClearingActivity.this,

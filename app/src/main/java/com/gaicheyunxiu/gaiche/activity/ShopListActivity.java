@@ -45,7 +45,7 @@ import java.util.List;
  * Created by Administrator on 2016/3/14.
  * 配件列表页面
  */
-public class ShopListActivity extends BaseActivity implements View.OnClickListener{
+public class  ShopListActivity extends BaseActivity implements View.OnClickListener{
 
     private ImageView back;
 

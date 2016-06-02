@@ -6,6 +6,8 @@ import android.os.Message;
 
 import com.baidu.location.BDLocation;
 import com.gaicheyunxiu.gaiche.model.MyCarEntity;
+import com.tencent.mm.sdk.openapi.IWXAPI;
+import com.tencent.mm.sdk.openapi.WXAPIFactory;
 import com.umeng.socialize.PlatformConfig;
 
 import java.io.IOException;
@@ -23,6 +25,9 @@ public class MyApplication extends Application {
 
     private BDLocation bdLocation;
 
+    private String weixinmoney;
+
+
     private Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -38,9 +43,19 @@ public class MyApplication extends Application {
         return instance;
     }
 
+
+    public String getWeixinmoney() {
+        return weixinmoney;
+    }
+
+    public void setWeixinmoney(String weixinmoney) {
+        this.weixinmoney = weixinmoney;
+    }
+
     public void onCreate() {
         super.onCreate();
         instance = this;
+
         try {
             FileTool.copyAssetFileToDatabase(this, "city.db","city.db");
         } catch (IOException e) {
@@ -50,6 +65,8 @@ public class MyApplication extends Application {
         localUtils.startLocation();
 
         PlatformConfig.setWeixin("wxf85c74c2ef0697bb", "bd6560ed816488efba483183342b449a");
+
+
         //微信 appid appsecret
         PlatformConfig.setSinaWeibo("490536809", "fdedda70cb18b2bdc493d0367a89b8ee");
         //新浪微博 appkey appsecret

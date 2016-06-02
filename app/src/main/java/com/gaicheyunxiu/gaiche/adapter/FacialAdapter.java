@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.gaicheyunxiu.gaiche.R;
 import com.gaicheyunxiu.gaiche.model.ButyServiceEntity;
 import com.gaicheyunxiu.gaiche.model.SupportEntity;
+import com.gaicheyunxiu.gaiche.utils.LogManager;
 
 import java.util.List;
 
@@ -52,7 +53,7 @@ public class FacialAdapter extends BaseAdapter {
             holder.content= (TextView) convertView.findViewById(R.id.facial_item_content);
             convertView.setTag(holder);
         }else{
-            holder=new ViewHolder();
+            holder= (ViewHolder) convertView.getTag();
         }
         holder.name.setText(entities.get(position).name);
         holder.checkBox.setChecked(entities.get(position).isSelect);
