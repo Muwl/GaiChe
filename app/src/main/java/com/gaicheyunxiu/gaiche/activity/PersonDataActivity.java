@@ -73,8 +73,6 @@ public class PersonDataActivity extends BaseActivity implements View.OnClickList
 
     private View passwordView;
 
-    private File tempFile;
-
     public final int PHOTO_PICKED_WITH_DATA = 3021;
 
     public final int CAMERA_WITH_DATA = 3023;
@@ -83,6 +81,8 @@ public class PersonDataActivity extends BaseActivity implements View.OnClickList
 
     private static final String PHOTO_FILE_NAME = "temp_photo.jpg";
 
+    private File tempFile;
+
     private Bitmap bitmap = null;
 
     private BitmapUtils bitmapUtils;
@@ -90,8 +90,6 @@ public class PersonDataActivity extends BaseActivity implements View.OnClickList
     private View gv;
 
     private View pro;
-
-
 
 
     private Handler handler = new Handler() {

@@ -350,6 +350,7 @@ public class OultSelActivity extends BaseActivity implements View.OnClickListene
             rp.addBodyParameter("longitude", String.valueOf(MyApplication.getInstance().getBdLocation().getLongitude()));
             rp.addBodyParameter("latitude", String.valueOf(MyApplication.getInstance().getBdLocation().getLatitude()));
             rp.addBodyParameter("serviceIds", serviceIds);
+            rp.addBodyParameter("city", MyApplication.getInstance().getCityEntity().id);
             LogManager.LogShow("-----", serviceIds, LogManager.ERROR);
             url = "service/shop";
         }else if (flag==2){

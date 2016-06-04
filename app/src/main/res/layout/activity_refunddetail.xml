@@ -8,6 +8,10 @@
         android:id="@+id/refunddetail_title"
         layout="@layout/activity_title"/>
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -156,5 +160,9 @@
 
         </LinearLayout>
     </ScrollView>
-
+        <include
+            android:id="@+id/refunddetail_pro"
+            layout="@layout/pro"
+            android:visibility="gone" />
+    </RelativeLayout>
 </LinearLayout>

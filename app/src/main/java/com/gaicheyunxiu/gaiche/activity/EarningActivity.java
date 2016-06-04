@@ -75,7 +75,7 @@ public class EarningActivity extends BaseActivity implements View.OnClickListene
             return;
         }
 
-        getDynamicSync();
+
     }
 
     @Override
@@ -89,6 +89,7 @@ public class EarningActivity extends BaseActivity implements View.OnClickListene
             return;
         }
         flag=1;
+        getDynamicSync();
         getIncome();
     }
 

@@ -15,4 +15,18 @@ public class CrowdfundingProjectEntity implements Serializable {
     public String pcImg;
     public String expectMoney;
     public String completeMoney;
+
+    @Override
+    public String toString() {
+        return "CrowdfundingProjectEntity{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", startDate='" + startDate + '\'' +
+                ", endDate='" + endDate + '\'' +
+                ", mobileImg='" + mobileImg + '\'' +
+                ", pcImg='" + pcImg + '\'' +
+                ", expectMoney='" + expectMoney + '\'' +
+                ", completeMoney='" + completeMoney + '\'' +
+                '}';
+    }
 }

@@ -268,10 +268,10 @@ public class  ShopListActivity extends BaseActivity implements View.OnClickListe
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode!=RESULT_OK && requestCode==8856 ){
+        if (resultCode!=Activity.RESULT_OK && requestCode==8856 ){
             finish();
         }
-        if (resultCode!=RESULT_OK){
+        if (resultCode!=Activity.RESULT_OK){
             return;
         }
         if (requestCode==1116){
@@ -301,17 +301,26 @@ public class  ShopListActivity extends BaseActivity implements View.OnClickListe
                 break;
 
             case R.id.part_carlin:
+
                 MyCarEntity carEntity= MyApplication.getInstance().getCarEntity();
                 if (carEntity==null){
-                    Intent intent2=new Intent(ShopListActivity.this, CarbrandActivity.class);
-                    startActivityForResult(intent2, 1224);
+                    ToosUtils.goBrand(ShopListActivity.this,1);
                 }else{
-
+                    Intent intent1=new Intent(ShopListActivity.this, CarmanagerActivity.class);
+                    startActivityForResult(intent1, 8856);
                 }
+//                if (carEntity==null){
+//                    Intent intent2=new Intent(ShopListActivity.this, CarbrandActivity.class);
+//                    startActivityForResult(intent2, 1224);
+//                }else{
+//
+//                }
+                break;
 
             case R.id.part_serchview:
                     Intent intent2=new Intent(ShopListActivity.this, SerchActivity.class);
                     startActivity(intent2);
+                break;
             case R.id.part_technology:
                 if ("11".equals(sort)){
                     sort="12";
@@ -397,8 +406,8 @@ public class  ShopListActivity extends BaseActivity implements View.OnClickListe
         }
         MyCarEntity carEntity= MyApplication.getInstance().getCarEntity();
         if (comeFlag==3){
-            if (!ToosUtils.isStringEmpty(sort)){
-                rp.addBodyParameter("sortWay", sort);
+            if (!ToosUtils.isStringEmpty(sortWay)){
+                rp.addBodyParameter("sortWay", sortWay);
             }
             rp.addBodyParameter("type", cattype);
 
@@ -408,11 +417,11 @@ public class  ShopListActivity extends BaseActivity implements View.OnClickListe
             rp.addBodyParameter("category", category);
 
             if (ToosUtils.isStringEmpty(brandName)){
-                rp.addBodyParameter("brand","全部");
+
             }else{
                 rp.addBodyParameter("brand",brandName);
             }
-            rp.addBodyParameter("pageNum", pageNo + "");
+            rp.addBodyParameter("pageNum", String.valueOf(page));
             url="commodity/find";
 
             LogManager.LogShow("----",Constant.ROOT_PATH + url+"?category="+category+"&type="+cattype+"&carTypeId="+carEntity.carTypeId+"&pageNum="+1,LogManager.ERROR);
@@ -429,7 +438,7 @@ public class  ShopListActivity extends BaseActivity implements View.OnClickListe
 //            } else {
 //                rp.addBodyParameter("brand",brandName);
 //            }
-            rp.addBodyParameter("pageNum", pageNo + "");
+            rp.addBodyParameter("pageNum", String.valueOf(page));
             url="commodity/findByLike";
             LogManager.LogShow("------",Constant.ROOT_PATH+url+"?carTypeId="+carEntity.carTypeId+"&search="+keywords+"&pageNum="+pageNo+"",LogManager.ERROR);
         }else{
@@ -439,7 +448,7 @@ public class  ShopListActivity extends BaseActivity implements View.OnClickListe
             } else {
                 rp.addBodyParameter("brand",brandName);
             }
-            rp.addBodyParameter("pageNo", pageNo + "");
+            rp.addBodyParameter("pageNo", String.valueOf(page));
             if (comeFlag==1){
                 rp.addBodyParameter("id", id);
                 url="advertisement/detail";

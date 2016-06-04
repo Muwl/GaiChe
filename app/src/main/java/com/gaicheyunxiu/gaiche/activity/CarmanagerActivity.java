@@ -1,5 +1,6 @@
 package com.gaicheyunxiu.gaiche.activity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -102,7 +103,8 @@ public class CarmanagerActivity extends BaseActivity implements View.OnClickList
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 MyCarEntity myCarEntity = entities.get(position);
                 MyApplication.getInstance().setCarEntity(myCarEntity);
-                setResult(RESULT_OK);
+                Intent intent=new Intent();
+                setResult(Activity.RESULT_OK,intent);
                 finish();
             }
         });

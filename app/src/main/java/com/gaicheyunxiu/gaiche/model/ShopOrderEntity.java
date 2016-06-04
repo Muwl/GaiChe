@@ -8,6 +8,7 @@ import java.util.List;
  */
 public class ShopOrderEntity implements Serializable{
     public String orderId;
+    public String orderNo;
     public String price;
     public String createDate;
     public String orderState;

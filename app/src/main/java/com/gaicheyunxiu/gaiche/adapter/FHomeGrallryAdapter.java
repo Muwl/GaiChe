@@ -13,6 +13,7 @@ import com.gaicheyunxiu.gaiche.R;
 import com.gaicheyunxiu.gaiche.activity.EarningActivity;
 import com.gaicheyunxiu.gaiche.activity.FSupportActivity;
 import com.gaicheyunxiu.gaiche.activity.FcialActivity;
+import com.gaicheyunxiu.gaiche.activity.NavitaActivity;
 import com.gaicheyunxiu.gaiche.activity.ShopListActivity;
 import com.gaicheyunxiu.gaiche.utils.DensityUtil;
 import com.gaicheyunxiu.gaiche.utils.ToosUtils;
@@ -158,6 +159,12 @@ public class FHomeGrallryAdapter extends BaseAdapter implements View.OnClickList
                 intent3.putExtra("comeFlag",2);
                 intent3.putExtra("type","1");
                 context.startActivity(intent3);
+                break;
+
+
+            case R.id.home_gps:
+                Intent intent36=new Intent(context, NavitaActivity.class);
+                context.startActivity(intent36);
                 break;
 
             case R.id.home_brake:

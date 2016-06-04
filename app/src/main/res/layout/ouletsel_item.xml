@@ -62,7 +62,10 @@
                 android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
                 android:rating="5"
-                android:clickable="true"
+                android:clickable="false"
+                android:focusable="false"
+                android:isIndicator="false"
+                hedgehog:clickable="false"
                 hedgehog:starEmpty="@mipmap/ratbar_normal"
                 hedgehog:starFill="@mipmap/ratbar_checked"
                 android:layout_gravity="center"
@@ -82,9 +85,11 @@
 
 
         <LinearLayout
+            android:id="@+id/outletsel_item_lin"
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_marginTop="5dp"
+            android:visibility="gone"
             android:layout_height="wrap_content">
             <TextView
                 android:layout_width="wrap_content"

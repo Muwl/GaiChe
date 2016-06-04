@@ -40,6 +40,9 @@ import com.lidroid.xutils.http.RequestParams;
 import com.lidroid.xutils.http.ResponseInfo;
 import com.lidroid.xutils.http.callback.RequestCallBack;
 import com.lidroid.xutils.http.client.HttpRequest;
+import com.tencent.mm.sdk.modelpay.PayReq;
+import com.tencent.mm.sdk.openapi.IWXAPI;
+import com.tencent.mm.sdk.openapi.WXAPIFactory;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -105,6 +108,8 @@ public class ServicePayActivity extends  BaseActivity implements View.OnClickLis
 
     public static final int SDK_PAY_FLAG = 4462;
 
+    private IWXAPI api;
+
 //    String strUrl=Constant.ROOT_PATH+ url+"?sign="+ ShareDataTool.getToken(context)+"&paySign="+payEntity.paySign+"&payType="+payEntity.payType +"&payPwd="+ToosUtils.getEncrypt(ToosUtils.getTextContent(pwd) + ToosUtils.getEncryptto(payEntity.content);
 private Handler handler=new Handler(){
     @Override
@@ -147,12 +152,13 @@ private Handler handler=new Handler(){
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_servicepay);
+        api = WXAPIFactory.createWXAPI(this, Constant.APP_ID);
+        api.registerApp(Constant.APP_ID);
         initView();
     }
 
     private void initView() {
         flag=getIntent().getIntExtra("flag",0);
-
         back= (ImageView) findViewById(R.id.title_back);
         title= (TextView) findViewById(R.id.title_text);
         wallet=findViewById(R.id.servicepay_wallet);
@@ -398,7 +404,19 @@ private Handler handler=new Handler(){
                             PaymentDialog dialog=new PaymentDialog(ServicePayActivity.this,payState.result,String.valueOf(totalMoney));
                         }else if(checkIndex==1){
                             zhifubaoPay(ToosUtils.getEncryptto(payState.result.content));
-//                            zhifubaoPay(payState.result.content);
+                        }else if(checkIndex==2){
+                            MyApplication.getInstance().setWeixinmoney(String.valueOf(totalMoney));
+                            PayReq request = new PayReq();
+                            request.appId = payState.result.appid;
+                            request.partnerId =  payState.result.parentId;
+                            request.prepayId= ToosUtils.getEncryptto(payState.result.content);
+                            request.packageValue = "Sign=WXPay";
+                            request.nonceStr= payState.result.noncestr;
+                            request.timeStamp= payState.result.timestamp;
+                            request.sign= payState.result.paySign;
+                            api.sendReq(request);
+                            LogManager.LogShow("-----", ToosUtils.getEncryptto(payState.result.content),
+                                    LogManager.ERROR);
                         }
 
                     } else if (Constant.TOKEN_ERR.equals(state.msg)) {

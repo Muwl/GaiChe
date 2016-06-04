@@ -119,6 +119,8 @@ public class ShopDetailActivity extends BaseActivity implements View.OnClickList
 
     private int flag;//0代表普通商品 1代表众筹商品
 
+    private String projectId;
+
     private Handler handler = new Handler() {
         public void handleMessage(Message msg) {
             switch (msg.what) {
@@ -146,6 +148,9 @@ public class ShopDetailActivity extends BaseActivity implements View.OnClickList
         width = DensityUtil.getScreenWidth(this);
         flag=getIntent().getIntExtra("flag", 0);
         id = getIntent().getStringExtra("id");
+        if (flag==1){
+            projectId=getIntent().getStringExtra("projectId");
+        }
         back = (ImageView) findViewById(R.id.title_back);
         title = (TextView) findViewById(R.id.title_text);
         gallery = (MyGallery) findViewById(R.id.shopdetail_gallery);

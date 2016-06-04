@@ -1,6 +1,7 @@
 package com.gaicheyunxiu.gaiche.adapter;
 
 import android.content.Context;
+import android.graphics.Paint;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -63,9 +64,11 @@ public class CrowdfundAdapter extends BaseAdapter {
 
         bitmapUtils.display(holder.imageView,entities.get(position).briefImage);
         holder.name.setText(entities.get(position).name);
-        holder.newPrice.setText(entities.get(position).presentPrice);
-        holder.m.setText(entities.get(position).mValue);
-        holder.oldPrice.setText(entities.get(position).originalPrice);
+        holder.newPrice.setText("￥" + entities.get(position).presentPrice + "元");
+        holder.m.setText(entities.get(position).mValue+"M");
+        holder.oldPrice.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG); //中间横线
+        holder.oldPrice.setText("￥"+entities.get(position).originalPrice);
+        holder.volume.setText(entities.get(position).earnings);
         return convertView;
     }
     class ViewHolder{

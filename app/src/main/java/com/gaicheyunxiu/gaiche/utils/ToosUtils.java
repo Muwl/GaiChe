@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Environment;
 import android.widget.TextView;
@@ -181,8 +182,85 @@ public class ToosUtils {
 
 	}
 
+	/**
+	 * 将bitmap转换成file 并进行压缩
+	 *
+	 * @param bmp
+	 * @return
+	 */
+	public static File compressBmpToFile(Bitmap bmp) {
+		File file = null;
+		if (Environment.getExternalStorageState().equals(
+				android.os.Environment.MEDIA_MOUNTED)) {
+			String ss = Environment.getExternalStorageDirectory()
+					+ "/gaiche/"
+					+ String.valueOf(System.currentTimeMillis()) + ".JPEG";
+			file = createFile(ss);
+			ByteArrayOutputStream baos = new ByteArrayOutputStream();
+			int options = 100;// 个人喜欢从80开始,
+			bmp.compress(Bitmap.CompressFormat.JPEG, options, baos);
+			while (baos.toByteArray().length / 1024 > 200) {
+				baos.reset();
+				options -= 10;
+				bmp.compress(Bitmap.CompressFormat.JPEG, options, baos);
+			}
+			try {
+				FileOutputStream fos = new FileOutputStream(file);
+				fos.write(baos.toByteArray());
+				fos.flush();
+				fos.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return file;
+	}
 
+	/**
+	 * 图片压缩
+	 *
+	 * @param srcPath
+	 * @return
+	 */
+	public static File compressImageFromFile(String srcPath) {
+		BitmapFactory.Options newOpts = new BitmapFactory.Options();
+		newOpts.inJustDecodeBounds = true;// 只读边,不读内容
+		Bitmap bitmap = BitmapFactory.decodeFile(srcPath, newOpts);
 
+		newOpts.inJustDecodeBounds = false;
+		int w = newOpts.outWidth;
+		int h = newOpts.outHeight;
+		float hh = 800f;//
+		float ww = 480f;//
+		int be = 1;
+		if (w > h && w > ww) {
+			be = (int) (newOpts.outWidth / ww);
+		} else if (w < h && h > hh) {
+			be = (int) (newOpts.outHeight / hh);
+		}
+		if (be <= 0)
+			be = 1;
+		newOpts.inSampleSize = be;// 设置采样率
+
+		newOpts.inPreferredConfig = Bitmap.Config.ARGB_8888;// 该模式是默认的,可不设
+		newOpts.inPurgeable = true;// 同时设置才会有效
+		newOpts.inInputShareable = true;// 。当系统内存不够时候图片自动被回收
+
+		bitmap = BitmapFactory.decodeFile(srcPath, newOpts);
+		return compressBmpToFile(bitmap);
+	}
+
+	/**
+	 * 获取机型号是否为魅族mx3
+	 */
+	public static boolean getMobileIsMX3() {
+		String s = android.os.Build.MODEL;
+		if ("M351".equals(s)) {
+			return true;
+		} else {
+			return false;
+		}
+	}
 
 
 }

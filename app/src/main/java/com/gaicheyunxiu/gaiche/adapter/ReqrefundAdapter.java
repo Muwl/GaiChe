@@ -5,8 +5,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import com.gaicheyunxiu.gaiche.R;
+import com.gaicheyunxiu.gaiche.utils.DensityUtil;
+import com.lidroid.xutils.BitmapUtils;
+
+import java.io.File;
+import java.util.List;
 
 /**
  * Created by Administrator on 2015/12/30.
@@ -16,15 +22,22 @@ public class ReqrefundAdapter extends BaseAdapter {
 
     private Context context;
     private int width;
-
-    public ReqrefundAdapter(Context context, int width) {
+    private List<File> files;
+    private BitmapUtils bitmapUtils;
+    public ReqrefundAdapter(Context context,List<File> files, int width) {
         this.context = context;
+        this.files=files;
         this.width = width;
+        bitmapUtils=new BitmapUtils(context);
     }
 
     @Override
     public int getCount() {
-        return 1;
+        if (files.size()<3){
+            return files.size()+1;
+        }else{
+            return 3;
+        }
     }
 
     @Override
@@ -47,6 +60,16 @@ public class ReqrefundAdapter extends BaseAdapter {
             convertView.setTag(holder);
         }else{
             holder= (ViewHolder) convertView.getTag();
+        }
+
+        LinearLayout.LayoutParams layoutParams= (LinearLayout.LayoutParams) holder.imageView.getLayoutParams();
+        layoutParams.width=(width- DensityUtil.dip2px(context,40))/3;
+        layoutParams.height=(width- DensityUtil.dip2px(context,40))/3;
+        holder.imageView.setLayoutParams(layoutParams);
+        if (position<files.size()){
+            bitmapUtils.display(holder.imageView,files.get(position).getAbsolutePath());
+        }else{
+            holder.imageView.setImageResource(R.drawable.refund_add_btn);
         }
         
         return convertView;

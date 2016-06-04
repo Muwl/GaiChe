@@ -78,6 +78,7 @@
                     android:background="@color/write"
                     android:layout_marginLeft="8dp"
                     android:textSize="@dimen/second_font"
+                    android:maxLength="20"
                     android:textColor="#5F5D5D"
                     android:hint="请输入姓名"
                     android:layout_height="wrap_content"/>
@@ -93,6 +94,7 @@
                     android:layout_marginLeft="8dp"
                     android:textSize="@dimen/second_font"
                     android:background="@color/write"
+                    android:maxLength="11"
                     android:textColor="#5F5D5D"
                     android:layout_marginRight="7dp"
                     android:layout_height="wrap_content"/>

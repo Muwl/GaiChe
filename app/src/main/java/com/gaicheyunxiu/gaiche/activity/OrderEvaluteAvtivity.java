@@ -95,7 +95,7 @@ public class OrderEvaluteAvtivity extends BaseActivity implements View.OnClickLi
         back.setOnClickListener(this);
         title.setText("评价商品订单");
         ok.setOnClickListener(this);
-        orderNo.setText("订单号" + orderId);
+        orderNo.setText("订单号" + orderNo);
         time.setText(createDate);
         bitmapUtils.display(imageView,entity.briefImage);
         name.setText("【"+entity.name+"】"+entity.businessName);
@@ -130,10 +130,10 @@ public class OrderEvaluteAvtivity extends BaseActivity implements View.OnClickLi
         RequestParams rp = new RequestParams();
         HttpUtils utils = new HttpUtils();
         rp.addBodyParameter("sign", ShareDataTool.getToken(this));
-        rp.addBodyParameter("shopId",orderId);
+        rp.addBodyParameter("orderId",orderId);
         rp.addBodyParameter("commodityId",entity.id);
-        rp.addBodyParameter("serviceScore", String.valueOf(bar.getStar()));
-        rp.addBodyParameter("content", ToosUtils.getTextContent(evalute));
+        rp.addBodyParameter("score", String.valueOf(bar.getStar()));
+        rp.addBodyParameter("evaluation", ToosUtils.getTextContent(evalute));
         if (cb.isChecked()){
             rp.addBodyParameter("anonymous", "1");
         }else{

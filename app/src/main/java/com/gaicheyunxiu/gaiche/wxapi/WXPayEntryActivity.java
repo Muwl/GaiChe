@@ -6,6 +6,7 @@ import com.gaicheyunxiu.gaiche.activity.MainActivity;
 import com.gaicheyunxiu.gaiche.utils.Constant;
 import com.gaicheyunxiu.gaiche.utils.LogManager;
 import com.gaicheyunxiu.gaiche.utils.MyApplication;
+import com.gaicheyunxiu.gaiche.utils.ToastUtils;
 import com.gaicheyunxiu.gaiche.utils.ToosUtils;
 import com.tencent.mm.sdk.constants.ConstantsAPI;
 import com.tencent.mm.sdk.modelbase.BaseReq;
@@ -68,6 +69,11 @@ public class WXPayEntryActivity extends BaseActivity implements IWXAPIEventHandl
 	public void onResp(BaseResp resp) {
 
 		if(resp.getType()== ConstantsAPI.COMMAND_PAY_BY_WX){
+
+			if (0!=resp.errCode){
+				ToastUtils.displayShortToast(this,"支付失败");
+				finish();
+			}
 			LogManager.LogShow("------------支付---", "onPayFinish,errCode=" + resp.errCode+"-----------"+resp.errStr, LogManager.ERROR);
 		}
 	}

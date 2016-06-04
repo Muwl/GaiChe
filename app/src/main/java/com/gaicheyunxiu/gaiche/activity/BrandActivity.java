@@ -62,6 +62,8 @@ public class BrandActivity extends BaseActivity implements View.OnClickListener 
 
     private String supportIds;
 
+    private String projectId;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -79,6 +81,8 @@ public class BrandActivity extends BaseActivity implements View.OnClickListener 
             category=getIntent().getStringExtra("category");
         }else if(comeFlag==5){
             supportIds=getIntent().getStringExtra("ids");
+        }else if (comeFlag==7){
+            projectId=getIntent().getStringExtra("id");
         }
         brandName=getIntent().getStringExtra("name");
         entities=new ArrayList<>();
@@ -130,7 +134,7 @@ public class BrandActivity extends BaseActivity implements View.OnClickListener 
     private void getBrands() {
         RequestParams rp = new RequestParams();
         HttpUtils utils = new HttpUtils();
-        String url="Commodity/getBrand";
+        String url="commodity/getBrand";
         MyCarEntity carEntity= MyApplication.getInstance().getCarEntity();
         if (comeFlag==1){
             rp.addBodyParameter("id", id);
@@ -151,6 +155,9 @@ public class BrandActivity extends BaseActivity implements View.OnClickListener 
             }
             rp.addBodyParameter("ids", supportIds);
             url="maintenance/findBrands";
+        }else if (comeFlag==7){
+            url="crowdfundingCommodity/getBrand";
+            rp.addBodyParameter("projectId", projectId);
         }
         utils.configTimeout(20000);
         utils.send(HttpRequest.HttpMethod.POST, Constant.ROOT_PATH
@@ -177,15 +184,15 @@ public class BrandActivity extends BaseActivity implements View.OnClickListener 
                     if (Constant.RETURN_OK.equals(state.msg)) {
                         LogManager.LogShow("-----", arg0.result,
                                 LogManager.ERROR);
-                        if (comeFlag!=3){
-                            BrandState brandState=gson.fromJson(arg0.result,BrandState.class);
-                            for (int i=0;i<brandState.result.size();i++){
-                                if (!ToosUtils.isStringEmpty(brandName) && brandName.equals(brandState.result.get(i).name)){
-                                    brandState.result.get(i).isSel=true;
-                                }
-                                entities.add(brandState.result.get(i));
-                            }
-                        }else{
+//                        if (comeFlag!=3){
+//                            BrandState brandState=gson.fromJson(arg0.result,BrandState.class);
+//                            for (int i=0;i<brandState.result.size();i++){
+//                                if (!ToosUtils.isStringEmpty(brandName) && brandName.equals(brandState.result.get(i).name)){
+//                                    brandState.result.get(i).isSel=true;
+//                                }
+//                                entities.add(brandState.result.get(i));
+//                            }
+//                        }else{
                             BrandCatyState brandCatyState=gson.fromJson(arg0.result,BrandCatyState.class);
                             for (int i=0;i<brandCatyState.result.size();i++){
                                 BrandEntity entity=new BrandEntity();
@@ -194,7 +201,7 @@ public class BrandActivity extends BaseActivity implements View.OnClickListener 
                                     entity.isSel=true;
                                 }
                                 entities.add(entity);
-                            }
+//                            }
 
                         }
 

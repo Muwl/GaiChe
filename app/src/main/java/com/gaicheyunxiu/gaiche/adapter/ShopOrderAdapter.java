@@ -67,7 +67,7 @@ public class ShopOrderAdapter extends BaseAdapter{
         }else{
             holder= (ViewHolder) convertView.getTag();
         }
-        holder.orderno.setText("订单号："+entities.get(position).orderId);
+        holder.orderno.setText("订单号："+entities.get(position).orderNo);
         holder.money.setText("￥"+entities.get(position).price+"元");
         holder.time.setText(entities.get(position).createDate);
 
@@ -120,8 +120,15 @@ public class ShopOrderAdapter extends BaseAdapter{
             holder.state.setText("已取消");
             holder.money.setVisibility(View.GONE);
             holder.div.setVisibility(View.GONE);
-            holder.graybtn.setVisibility(View.GONE);
+            holder.graybtn.setVisibility(View.VISIBLE);
             holder.orgbtn.setVisibility(View.GONE);
+            holder.graybtn.setText("删除订单");
+            holder.graybtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    CustomeDialog customeDialog = new CustomeDialog(context, handler, "确定删除订单？", position, -2);
+                }
+            });
         }
         List<ShopOrderVo> shopOrderVos=null;
         if ("0".equals(entities.get(position).split)){

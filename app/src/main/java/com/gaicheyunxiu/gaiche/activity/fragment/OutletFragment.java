@@ -196,11 +196,16 @@ public class OutletFragment extends Fragment implements View.OnClickListener {
             }
         });
 
-        if (ToosUtils.goBrand(getActivity(),0)){
+        if (ToosUtils.goBrand(getActivity(), 0)){
             return;
         }
         cityView.setOnClickListener(this);
-        headEntity.address = MyApplication.getInstance().getBdLocation().getAddrStr();
+        if (ToosUtils.isStringEmpty(MyApplication.getInstance().getBdLocation().getAddrStr())){
+            headEntity.address = "无法获取位置信息";
+        }else{
+            headEntity.address = MyApplication.getInstance().getBdLocation().getAddrStr();
+        }
+
         cityView.setText(MyApplication.getInstance().getCityEntity().name);
         getHotShops();
 

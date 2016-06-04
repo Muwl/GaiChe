@@ -8,9 +8,11 @@ import android.os.Message;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.gaicheyunxiu.gaiche.R;
@@ -26,6 +28,7 @@ import com.gaicheyunxiu.gaiche.model.CrowdfundingProjectState;
 import com.gaicheyunxiu.gaiche.model.MyCarEntity;
 import com.gaicheyunxiu.gaiche.model.ReturnState;
 import com.gaicheyunxiu.gaiche.utils.Constant;
+import com.gaicheyunxiu.gaiche.utils.DensityUtil;
 import com.gaicheyunxiu.gaiche.utils.HttpPostUtils;
 import com.gaicheyunxiu.gaiche.utils.LogManager;
 import com.gaicheyunxiu.gaiche.utils.MyApplication;
@@ -118,6 +121,7 @@ public class CrowdFundActivity extends BaseActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_crowdfund);
         projectEntity= (CrowdfundingProjectEntity) getIntent().getSerializableExtra("entity");
+        LogManager.LogShow("=-----",projectEntity.toString(),LogManager.ERROR);
         initView();
     }
 
@@ -179,12 +183,33 @@ public class CrowdFundActivity extends BaseActivity implements View.OnClickListe
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent=new Intent(CrowdFundActivity.this,ShopDetailActivity.class);
-                intent.putExtra("id",entities.get(position-1).id);
-                intent.putExtra("flag",1);
+                Intent intent = new Intent(CrowdFundActivity.this, ShopDetailActivity.class);
+                intent.putExtra("id", entities.get(position).id);
+                intent.putExtra("projectId", projectEntity.id);
+                intent.putExtra("flag", 1);
                 startActivity(intent);
             }
         });
+
+
+
+        int with= DensityUtil.getScreenWidth(this)-DensityUtil.dip2px(this,60);
+        double comed= Double.parseDouble(projectEntity.completeMoney);
+        double total= Double.parseDouble(projectEntity.expectMoney);
+
+        double min=comed/total;
+
+        int swith= (int) (min*with);
+        RelativeLayout.LayoutParams layoutParams= (RelativeLayout.LayoutParams) schedule.getLayoutParams();
+        layoutParams.width=swith;
+        layoutParams.height=DensityUtil.dip2px(this,15);
+        schedule.setLayoutParams(layoutParams);
+
+        double smin=min*100;
+        java.text.DecimalFormat   df   =new   java.text.DecimalFormat("################################0.00");
+        String smins=df.format(smin);
+
+        bartext.setText(smins+ "%");
         getFundProjectList();
 
     }
@@ -256,6 +281,7 @@ public class CrowdFundActivity extends BaseActivity implements View.OnClickListe
             case R.id.crowdfund_price:
                 Intent intent = new Intent(CrowdFundActivity.this, BrandActivity.class);
                 intent.putExtra("comeFlag",7);
+                intent.putExtra("id", projectEntity.id);
                 if (!ToosUtils.isStringEmpty(brandName)) {
                     intent.putExtra("name", brandName);
                 }
@@ -283,14 +309,11 @@ public class CrowdFundActivity extends BaseActivity implements View.OnClickListe
         RequestParams rp = new RequestParams();
         HttpUtils utils = new HttpUtils();
         utils.configTimeout(20000);
-        if (!ToosUtils.isStringEmpty(ShareDataTool.getToken(this))){
-            rp.addBodyParameter("sign",ShareDataTool.getToken(this));
-        }
         if (!ToosUtils.isStringEmpty(sort)){
             rp.addBodyParameter("sort",sort);
         }
         if (ToosUtils.isStringEmpty(brandName)){
-            rp.addBodyParameter("brand","全部");
+
         }else{
             rp.addBodyParameter("brand",brandName);
         }

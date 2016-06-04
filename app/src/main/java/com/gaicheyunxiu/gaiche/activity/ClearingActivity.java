@@ -20,6 +20,8 @@ import com.gaicheyunxiu.gaiche.model.AddAdressState;
 import com.gaicheyunxiu.gaiche.model.AddressVo;
 import com.gaicheyunxiu.gaiche.model.CommodifyOrderEntity;
 import com.gaicheyunxiu.gaiche.model.CommodifyOrderVo;
+import com.gaicheyunxiu.gaiche.model.CostEntity;
+import com.gaicheyunxiu.gaiche.model.CostState;
 import com.gaicheyunxiu.gaiche.model.OrderCommodityDigestEntity;
 import com.gaicheyunxiu.gaiche.model.OrderCommodityVo;
 import com.gaicheyunxiu.gaiche.model.OutSelEntity;
@@ -119,6 +121,10 @@ public class ClearingActivity extends BaseActivity implements View.OnClickListen
 
     private IWXAPI api;
 
+    private CostEntity costEntity;
+
+    private String projectId;
+
     private Handler handler=new Handler(){
         @Override
         public void handleMessage(Message msg) {
@@ -192,14 +198,16 @@ public class ClearingActivity extends BaseActivity implements View.OnClickListen
         api.registerApp(Constant.APP_ID);
         if (flag==1){
             shopCartEntity= (ShopCartEntity) getIntent().getSerializableExtra("entity");
-        }else if(flag==2){
+        }else if(flag==2 ){
             shopDetailEntity= (ShopDetailEntity) getIntent().getSerializableExtra("entity");
+        }else if(flag==3){
+            shopDetailEntity= (ShopDetailEntity) getIntent().getSerializableExtra("entity");
+            projectId=getIntent().getStringExtra("projectId");
         }
         initView();
     }
 
     private void initView() {
-        api = WXAPIFactory.createWXAPI(this, "wxf85c74c2ef0697bb");
         back= (ImageView) findViewById(R.id.title_back);
         title= (TextView) findViewById(R.id.title_text);
         person= (TextView) findViewById(R.id.clearing_person);
@@ -226,10 +234,25 @@ public class ClearingActivity extends BaseActivity implements View.OnClickListen
 
         if (flag==1){
             title.setText("去结算");
-            outSel.setVisibility(View.GONE);
-        }else{
+            outSelView.setVisibility(View.GONE);
+        }else if(flag==2){
             title.setText("立即购买");
             outSel.setVisibility(View.VISIBLE);
+            if ("0".equals(shopDetailEntity.distributionType)){
+                delivery.setText("物流");
+            } else{
+                delivery.setText("自主配送");
+            }
+        }else if(flag==3){
+            title.setText("立即购买");
+            outSelView.setVisibility(View.GONE);
+            installcost.setVisibility(View.GONE);
+            if ("0".equals(shopDetailEntity.distributionType)){
+                delivery.setText("物流");
+            }else{
+                delivery.setText("自主配送");
+            }
+
         }
         outSelView.setOnClickListener(this);
         back.setOnClickListener(this);
@@ -255,15 +278,17 @@ public class ClearingActivity extends BaseActivity implements View.OnClickListen
                 m = m + num;
                 smoney = smoney + Double.valueOf(shopCartEntity.cartCommodityVOs.get(i).commodityPrice) * num;
             }
-        }else if(flag==2){
-            m=shopDetailEntity.num;
-            smoney =  Double.valueOf(shopDetailEntity.presentPrice) * m;
+            shopPrice.setText("商品价格￥"+smoney);
+            installcost.setText("安装费￥"+0);
+            freightcost.setText("运费￥"+0);
+            money.setText("￥"+smoney);
         }
+//        else if(flag==2){
+//            m=shopDetailEntity.num;
+//            smoney =  Double.valueOf(shopDetailEntity.presentPrice) * m;
+//        }
 
-        shopPrice.setText("商品价格￥"+smoney);
-        installcost.setText("安装费￥"+0);
-        freightcost.setText("运费￥"+0);
-        money.setText("￥"+smoney);
+
         getDefaultAddress();
     }
 
@@ -388,12 +413,17 @@ public class ClearingActivity extends BaseActivity implements View.OnClickListen
      * 保存订单
      */
     private void CommiteOrder() {
+        if (costEntity==null){
+            ToastUtils.displayShortToast(this,"请获取信息");
+            return;
+        }
         RequestParams rp = new RequestParams();
         HttpUtils utils = new HttpUtils();
         utils.configTimeout(20000);
         String url="commodityOrder/save";
         if (flag==3){
             url="crowdfundingOrder/save";
+            rp.addBodyParameter("projectId", projectId);
         }
         if (addressVo==null){
             ToastUtils.displayShortToast(this,"请选择收货地址！");
@@ -465,7 +495,6 @@ public class ClearingActivity extends BaseActivity implements View.OnClickListen
     }
 
     public CommodifyOrderEntity getOrderEntity(){
-
         CommodifyOrderEntity commodifyOrderEntity=new CommodifyOrderEntity();
         commodifyOrderEntity.payWay= String.valueOf(checkIndex);
         commodifyOrderEntity.receiveProvince=addressVo.province;
@@ -475,6 +504,7 @@ public class ClearingActivity extends BaseActivity implements View.OnClickListen
         commodifyOrderEntity.name=addressVo.name;
         commodifyOrderEntity.mobile=addressVo.mobile;
         commodifyOrderEntity.isShoppingCart= String.valueOf(flag);
+        commodifyOrderEntity.shopServicePrice= costEntity.shopServicePrice;
         if (outSelEntity!=null){
             commodifyOrderEntity.shopId=outSelEntity.id;
         }
@@ -482,6 +512,7 @@ public class ClearingActivity extends BaseActivity implements View.OnClickListen
             commodifyOrderEntity.carTypeId=shopCartEntity.carTypeId;
             List<CommodifyOrderVo> commodifyOrderVos=new ArrayList<>();
             for (int i=0;i<shopCartEntity.cartCommodityVOs.size();i++){
+                commodifyOrderEntity.isShoppingCart="0";
                 ShopCartCommodityEntity shopCartCommodityEntity=shopCartEntity.cartCommodityVOs.get(i);
                 CommodifyOrderVo commodifyOrderVo=new CommodifyOrderVo();
                 commodifyOrderVo.commodityId=shopCartCommodityEntity.commodityId;
@@ -489,21 +520,28 @@ public class ClearingActivity extends BaseActivity implements View.OnClickListen
                 commodifyOrderVo.mVaule=shopCartCommodityEntity.mValue;
                 commodifyOrderVo.num= Double.parseDouble(shopCartCommodityEntity.amount);
                 commodifyOrderVo.freight= "0";
+                for (int j=0;j<costEntity.freightVo.size();j++){
+                    if (commodifyOrderVo.commodityId.equals(costEntity.freightVo.get(j).commodityId)){
+                        commodifyOrderVo.freight=  String.valueOf(costEntity.freightVo.get(j).freight);
+                    }
+                }
+
                 commodifyOrderVos.add(commodifyOrderVo);
             }
             commodifyOrderEntity.vos=commodifyOrderVos;
-        }else if(flag==2){
+        }else{
             if (MyApplication.getInstance().getCarEntity()!=null) {
                 commodifyOrderEntity.carTypeId = MyApplication.getInstance().getCarEntity().carTypeId;
             }
                 List<CommodifyOrderVo> commodifyOrderVos=new ArrayList<>();
                 CommodifyOrderVo commodifyOrderVo=new CommodifyOrderVo();
                 commodifyOrderVo.commodityId=shopDetailEntity.id;
+                commodifyOrderEntity.isShoppingCart="1";
                 commodifyOrderVo.merchantId=shopDetailEntity.merchantId;
                 commodifyOrderVo.price= String.valueOf(shopDetailEntity.presentPrice);
                 commodifyOrderVo.mVaule= String.valueOf(shopDetailEntity.MValue);
                 commodifyOrderVo.num= shopDetailEntity.num;
-                commodifyOrderVo.freight= "0";
+                commodifyOrderVo.freight= String.valueOf(costEntity.freight);
                 commodifyOrderVos.add(commodifyOrderVo);
 
             commodifyOrderEntity.vos=commodifyOrderVos;
@@ -521,6 +559,10 @@ public class ClearingActivity extends BaseActivity implements View.OnClickListen
         HttpUtils utils = new HttpUtils();
         utils.configTimeout(20000);
         String url="commodityOrder/getCost";
+        if (flag==3){
+            url="crowdfundingOrder/getCost";
+            rp.addBodyParameter("projectId",projectId);
+        }
         rp.addBodyParameter("sign", ShareDataTool.getToken(this));
 
         OrderCommodityVo orderCommodityVo=new OrderCommodityVo();
@@ -528,8 +570,9 @@ public class ClearingActivity extends BaseActivity implements View.OnClickListen
         orderCommodityVo.receiveCity=addressVo.city;
         orderCommodityVo.receiveDistrict=addressVo.district;
         orderCommodityVo.receiveDetail=addressVo.address;
-        orderCommodityVo.shopId="fa95b3bd574341d49dd69cb7fe8c664a";
-
+        if (outSelEntity!=null){
+            orderCommodityVo.shopId=outSelEntity.id;
+        }
         List<OrderCommodityDigestEntity> commodityDigestEntities=new ArrayList<>();
         if (flag==1){
             for (int i=0;i<shopCartEntity.cartCommodityVOs.size();i++) {
@@ -575,7 +618,18 @@ public class ClearingActivity extends BaseActivity implements View.OnClickListen
                     if (Constant.RETURN_OK.equals(state.msg)) {
                         LogManager.LogShow("-----", arg0.result,
                                 LogManager.ERROR);
-
+                        CostState costState=gson.fromJson(arg0.result,CostState.class);
+                        costEntity=costState.result;
+                        smoney=costState.result.price+costState.result.freight+costState.result.shopServicePrice;
+                        if (costEntity.freight==0){
+                            delivery.setText("包邮");
+                        }else{
+                            delivery.setText(costEntity.freight+"元");
+                        }
+                        shopPrice.setText("商品价格￥"+costState.result.price);
+                        installcost.setText("安装费￥"+costState.result.shopServicePrice);
+                        freightcost.setText("运费￥"+costState.result.freight);
+                        money.setText("￥"+smoney);
                     } else if (Constant.TOKEN_ERR.equals(state.msg)) {
                         ToastUtils.displayShortToast(ClearingActivity.this,
                                 "验证错误，请重新登录");

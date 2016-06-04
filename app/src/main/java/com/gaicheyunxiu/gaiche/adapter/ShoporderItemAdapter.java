@@ -109,6 +109,8 @@ public class ShoporderItemAdapter  extends BaseAdapter{
         }else if("1".equals(state)){
             holder.div.setVisibility(View.VISIBLE);
             holder.lin.setVisibility(View.VISIBLE);
+            holder.orgbtn.setVisibility(View.VISIBLE);
+            holder.graybtn.setVisibility(View.VISIBLE);
             holder.orgbtn.setText("确认收货");
             holder.graybtn.setText("查看物流");
 
@@ -132,6 +134,8 @@ public class ShoporderItemAdapter  extends BaseAdapter{
         }else if("2".equals(state)){
             holder.div.setVisibility(View.VISIBLE);
             holder.lin.setVisibility(View.VISIBLE);
+            holder.orgbtn.setVisibility(View.VISIBLE);
+            holder.graybtn.setVisibility(View.VISIBLE);
             holder.orgbtn.setText("\u3000评价\u3000");
             holder.graybtn.setText("申请退货");
 
@@ -156,6 +160,7 @@ public class ShoporderItemAdapter  extends BaseAdapter{
             holder.div.setVisibility(View.VISIBLE);
             holder.lin.setVisibility(View.VISIBLE);
             holder.orgbtn.setVisibility(View.GONE);
+            holder.graybtn.setVisibility(View.VISIBLE);
             holder.graybtn.setText("申请退货");
 
             holder.graybtn.setOnClickListener(new View.OnClickListener() {
@@ -169,13 +174,40 @@ public class ShoporderItemAdapter  extends BaseAdapter{
             holder.lin.setVisibility(View.GONE);
         }else if("5".equals(state)){
             holder.div.setVisibility(View.GONE);
-            holder.lin.setVisibility(View.GONE);
+            holder.lin.setVisibility(View.VISIBLE);
+            holder.orgbtn.setVisibility(View.GONE);
+            holder.graybtn.setVisibility(View.VISIBLE);
+            holder.graybtn.setText("钱款去向");
+            holder.graybtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Message message = new Message();
+                    message.what = 1339;
+                    message.arg1 = position;
+                    message.arg2 = groupoi;
+                    handler.sendMessage(message);
+                }
+            });
         }else if("6".equals(state)){
             holder.div.setVisibility(View.GONE);
             holder.lin.setVisibility(View.GONE);
         }else if("7".equals(state)){
             holder.div.setVisibility(View.GONE);
-            holder.lin.setVisibility(View.GONE);
+            holder.lin.setVisibility(View.VISIBLE);
+            holder.orgbtn.setVisibility(View.GONE);
+            holder.graybtn.setVisibility(View.VISIBLE);
+            holder.graybtn.setText("钱款去向");
+
+            holder.graybtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Message message = new Message();
+                    message.what = 1339;
+                    message.arg1 = position;
+                    message.arg2 = groupoi;
+                    handler.sendMessage(message);
+                }
+            });
         }
 
 

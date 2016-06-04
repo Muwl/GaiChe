@@ -1,133 +1,144 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
     android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:background="@color/write"
-    android:layout_height="match_parent">
+    android:orientation="vertical">
 
     <include
         android:id="@+id/reqrefund_title"
-        layout="@layout/activity_title"/>
+        layout="@layout/activity_title" />
 
-    <ScrollView
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fillViewport="true">
+        android:layout_height="match_parent">
 
-        <LinearLayout
+        <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:padding="10dp"
-                android:layout_marginTop="15dp"
-                android:background="@drawable/refund_input_bg"
-                android:gravity="center_vertical">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="#8B8B8C"
-                    android:textSize="@dimen/first_font"
-                    android:text="申请服务"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="25dp"
-                    android:textSize="@dimen/second_font"
-                    android:textColor="#474443"
-                    android:text="退货申请"/>
-            </LinearLayout>
-
+            android:fillViewport="true">
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:padding="10dp"
-                android:layout_marginTop="15dp"
-                android:background="@drawable/refund_input_bg"
-                android:gravity="center_vertical">
-                <TextView
-                    android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textColor="#8B8B8C"
-                    android:textSize="@dimen/first_font"
-                    android:text="退款金额"/>
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="15dp"
+                    android:background="@drawable/refund_input_bg"
+                    android:gravity="center_vertical"
+                    android:padding="10dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="申请服务"
+                        android:textColor="#8B8B8C"
+                        android:textSize="@dimen/first_font" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="25dp"
+                        android:text="退货申请"
+                        android:textColor="#474443"
+                        android:textSize="@dimen/second_font" />
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="15dp"
+                    android:background="@drawable/refund_input_bg"
+                    android:gravity="center_vertical"
+                    android:padding="10dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="退款金额"
+                        android:textColor="#8B8B8C"
+                        android:textSize="@dimen/first_font" />
+
+                    <TextView
+                        android:id="@+id/reqrefund_money"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="25dp"
+                        android:text="￥0.00"
+                        android:textColor="#474443"
+                        android:textSize="@dimen/first_font" />
+                </LinearLayout>
+
+                <EditText
+                    android:id="@+id/reqrefund_reason"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="15dp"
+                    android:background="@drawable/refund_input_bg"
+                    android:gravity="top"
+                    android:hint="退货原因"
+                    android:lines="4"
+                    android:padding="10dp"
+                    android:textColor="#8B8B8C" />
+
+                <EditText
+                    android:id="@+id/reqrefund_info"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="15dp"
+                    android:background="@drawable/refund_input_bg"
+                    android:gravity="top"
+                    android:hint="退货说明（可不填）"
+                    android:lines="3"
+                    android:padding="10dp"
+                    android:textColor="#8B8B8C" />
+
+                <com.gaicheyunxiu.gaiche.view.MyGridView
+                    android:id="@+id/reqrefund_grid"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="15dp"
+                    android:horizontalSpacing="10dp"
+                    android:numColumns="3" />
 
                 <TextView
-                    android:id="@+id/reqrefund_money"
-                    android:layout_width="wrap_content"
+                    android:id="@+id/reqrefund_ok"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="25dp"
-                    android:textSize="@dimen/first_font"
-                    android:textColor="#474443"
-                    android:text="￥110.00"/>
+                    android:layout_marginBottom="20dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="15dp"
+                    android:background="@drawable/dialog_ok_btn"
+                    android:clickable="true"
+                    android:gravity="center"
+                    android:paddingBottom="12dp"
+                    android:paddingTop="12dp"
+                    android:text="提交"
+                    android:textColor="@color/write"
+                    android:textSize="@dimen/first_font" />
+
             </LinearLayout>
 
-            <EditText
-                android:id="@+id/reqrefund_reason"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:padding="10dp"
-                android:layout_marginTop="15dp"
-                android:gravity="top"
-                android:textColor="#8B8B8C"
-                android:background="@drawable/refund_input_bg"
-                android:lines="4"
-                android:hint="退货原因"
-                />
+        </ScrollView>
 
-            <EditText
-                android:id="@+id/reqrefund_info"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:padding="10dp"
-                android:layout_marginTop="15dp"
-                android:gravity="top"
-                android:textColor="#8B8B8C"
-                android:background="@drawable/refund_input_bg"
-                android:lines="3"
-                android:hint="退货说明（可不填）"
-                />
-
-            <com.gaicheyunxiu.gaiche.view.MyGridView
-                android:id="@+id/reqrefund_grid"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:numColumns="3"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:horizontalSpacing="10dp"
-                android:layout_marginTop="15dp"/>
-
-            <TextView
-                android:id="@+id/reqrefund_ok"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:textColor="@color/write"
-                android:background="@drawable/dialog_ok_btn"
-                android:paddingTop="12dp"
-                android:paddingBottom="12dp"
-                android:gravity="center"
-                android:layout_marginBottom="20dp"
-                android:clickable="true"
-                android:textSize="@dimen/first_font"
-                android:text="提交"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"/>
-
-        </LinearLayout>
-
-    </ScrollView>
+        <include
+            android:id="@+id/reqrefund_pro"
+            layout="@layout/pro"
+            android:visibility="gone" />
+    </RelativeLayout>
 </LinearLayout>

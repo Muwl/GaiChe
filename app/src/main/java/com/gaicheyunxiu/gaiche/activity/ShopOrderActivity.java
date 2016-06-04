@@ -35,6 +35,8 @@ import com.lidroid.xutils.http.RequestParams;
 import com.lidroid.xutils.http.ResponseInfo;
 import com.lidroid.xutils.http.callback.RequestCallBack;
 import com.lidroid.xutils.http.client.HttpRequest;
+import com.tencent.mm.sdk.openapi.IWXAPI;
+import com.tencent.mm.sdk.openapi.WXAPIFactory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -73,6 +75,8 @@ public class ShopOrderActivity extends  BaseActivity implements View.OnClickList
 
     private List<ShopOrderEntity> entities;
 
+
+
     private Handler handler=new Handler(){
         @Override
         public void handleMessage(Message msg) {
@@ -81,6 +85,34 @@ public class ShopOrderActivity extends  BaseActivity implements View.OnClickList
                     //查看物流
                     int groupPoi=msg.arg2;
                     int position=msg.arg1;
+                    Intent intent8 = new Intent(ShopOrderActivity.this, ReqrefundActivity.class);
+                    intent8.putExtra("orderId",entities.get(groupPoi).orderId);
+                    if ("0".equals(entities.get(groupPoi).split)){
+                        intent8.putExtra("commodityId", entities.get(groupPoi).orderListVos.get(position).id);
+                        intent8.putExtra("money",Double.valueOf(entities.get(groupPoi).orderListVos.get(position).presentPrice)*Double.valueOf(entities.get(groupPoi).orderListVos.get(position).sales));
+                    }else{
+                        intent8.putExtra("commodityId", entities.get(groupPoi).vos.get(position).id);
+                        intent8.putExtra("money",Double.valueOf(entities.get(groupPoi).orderListVos.get(position).presentPrice)*Double.valueOf(entities.get(groupPoi).orderListVos.get(position).sales));
+                    }
+                    startActivity(intent8);
+                    break;
+
+                case 1339:
+                    //钱款去向
+                    int groupPoi5=msg.arg2;
+                    int position5=msg.arg1;
+                    Intent intent9 = new Intent(ShopOrderActivity.this, AfterSaleActivity.class);
+                    intent9.putExtra("flag",0);
+                    intent9.putExtra("orderId",entities.get(groupPoi5).orderId);
+                    intent9.putExtra("orderNo",entities.get(groupPoi5).orderNo);
+                    if ("0".equals(entities.get(groupPoi5).split)){
+                        intent9.putExtra("entity", entities.get(groupPoi5).orderListVos.get(position5));
+                        intent9.putExtra("money",Double.valueOf(entities.get(groupPoi5).orderListVos.get(position5).presentPrice)*Double.valueOf(entities.get(groupPoi5).orderListVos.get(position5).sales));
+                    }else{
+                        intent9.putExtra("entity", entities.get(groupPoi5).vos.get(position5));
+                        intent9.putExtra("money",Double.valueOf(entities.get(groupPoi5).orderListVos.get(position5).presentPrice)*Double.valueOf(entities.get(groupPoi5).orderListVos.get(position5).sales));
+                    }
+                    startActivity(intent9);
                     break;
                 case 1337:
                     //评价

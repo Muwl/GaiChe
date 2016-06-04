@@ -11,6 +11,8 @@ import android.widget.TextView;
 
 import com.gaicheyunxiu.gaiche.R;
 import com.gaicheyunxiu.gaiche.activity.RefunddetailActivity;
+import com.gaicheyunxiu.gaiche.model.ShopOrderVo;
+import com.lidroid.xutils.BitmapUtils;
 
 /**
  * Created by Administrator on 2015/12/30.
@@ -19,9 +21,21 @@ import com.gaicheyunxiu.gaiche.activity.RefunddetailActivity;
 public class AfterSaleAdapter extends BaseAdapter{
 
     private Context context;
+    private BitmapUtils bitmapUtils;
+    private ShopOrderVo entity;
+    private String orderNo;
+    private String smoney;
+    private String orderId;
+    private int flag;
 
-    public AfterSaleAdapter(Context context) {
+    public AfterSaleAdapter(Context context,String orderId,ShopOrderVo entity,String orderNo,String smoney,int flag) {
         this.context = context;
+        this.orderId = orderId;
+        this.entity=entity;
+        this.orderNo=orderNo;
+        this.smoney=smoney;
+        this.flag=flag;
+        bitmapUtils=new BitmapUtils(context);
     }
 
     @Override
@@ -57,10 +71,26 @@ public class AfterSaleAdapter extends BaseAdapter{
         }else{
             holder= (ViewHolder) convertView.getTag();
         }
+        holder.orderNo.setText("订单号：" + orderNo);
+        bitmapUtils.display(holder.imageView, entity.briefImage);
+        holder.name.setText(entity.name);
+        holder.num.setText(entity.sales);
+        holder.money.setText("￥" + entity.presentPrice);
+        if ("5".equals(entity.state)){
+            holder.state.setText("已退款");
+        }else if("7".equals(entity.state)){
+            holder.state.setText("退款中");
+        }
+
+
         holder.detail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent=new Intent(context, RefunddetailActivity.class);
+                intent.putExtra("orderId",orderId);
+                intent.putExtra("flag",flag);
+                intent.putExtra("entity",entity);
+                intent.putExtra("smoney",smoney);
                 context.startActivity(intent);
             }
         });

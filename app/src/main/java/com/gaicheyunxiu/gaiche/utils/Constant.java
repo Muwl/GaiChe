@@ -8,6 +8,7 @@ public class Constant {
 //	 public static final String ROOT_PATH = "http://121.42.202.71/gcyx/api/";
 //	 public static final String ROOT_PATH = "http://192.168.1.10:8080/gcyx/api/";
 	 public static final String APP_ID = "wxf85c74c2ef0697bb";
+	 public  static  final String SECRET="DAEERW332@@#$$5533225%%@FAC#$@43";
 //	 public static final String ROOT_PATH = "http://121.42.202.71/gcyx/api/";
 //	public static final String ROOT_PATH = "http://103.244.165.163:8081/louyu";
 

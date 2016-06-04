@@ -10,6 +10,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.alipay.security.mobile.module.commonutils.LOG;
 import com.gaicheyunxiu.gaiche.R;
 import com.gaicheyunxiu.gaiche.activity.PaySuccessActivity;
 import com.gaicheyunxiu.gaiche.activity.PaymentPwdActivity;
@@ -21,6 +22,7 @@ import com.gaicheyunxiu.gaiche.utils.MD5Util;
 import com.gaicheyunxiu.gaiche.utils.ShareDataTool;
 import com.gaicheyunxiu.gaiche.utils.ToastUtils;
 import com.gaicheyunxiu.gaiche.utils.ToosUtils;
+import com.gaicheyunxiu.gaiche.utils.WalletPay;
 import com.google.gson.Gson;
 import com.lidroid.xutils.HttpUtils;
 import com.lidroid.xutils.exception.HttpException;
@@ -28,6 +30,9 @@ import com.lidroid.xutils.http.RequestParams;
 import com.lidroid.xutils.http.ResponseInfo;
 import com.lidroid.xutils.http.callback.RequestCallBack;
 import com.lidroid.xutils.http.client.HttpRequest;
+
+import java.util.HashMap;
+import java.util.Map;
 
 
 /**
@@ -72,7 +77,7 @@ public class PaymentQRDialog extends Dialog implements
         name = (TextView) findViewById(R.id.dialog_pay_name);
         ok = (TextView) findViewById(R.id.dialog_pay_ok);
         pro = findViewById(R.id.dialog_pay_pro);
-        money.setText(smoney);
+        money.setText("￥"+smoney);
         ok.setOnClickListener(this);
         close.setOnClickListener(this);
         forgetpwd.setOnClickListener(this);
@@ -113,12 +118,28 @@ public class PaymentQRDialog extends Dialog implements
         HttpUtils utils = new HttpUtils();
         utils.configTimeout(20000);
         String url = "user/pay";
-		rp.addBodyParameter("sign", ShareDataTool.getToken(context));
-		rp.addBodyParameter("shopId",shopId);
-		rp.addBodyParameter("money",smoney);
-		rp.addBodyParameter("payPwd",ToosUtils.getEncrypt(ToosUtils.getTextContent(pwd)));
-		rp.addBodyParameter("payDescribe",payInfo);
-        LogManager.LogShow("提交****-------", MD5Util.MD5(ToosUtils.getTextContent(pwd)), LogManager.ERROR);
+
+        long timeStamp= System.currentTimeMillis();
+        String nonce= WalletPay.getNonceStr();
+        Map<String,String> map=new HashMap<>();
+        map.put("shopId",shopId);
+        map.put("money", smoney);
+        map.put("payPwd", ToosUtils.getEncrypt(ToosUtils.getTextContent(pwd)));
+        map.put("payDescribe", payInfo);
+        String paySign=WalletPay.generateSign(map,timeStamp,nonce);
+
+        rp.addBodyParameter("sign", ShareDataTool.getToken(context));
+        rp.addBodyParameter("shopId", shopId);
+        rp.addBodyParameter("money", smoney);
+        rp.addBodyParameter("payPwd",ToosUtils.getEncrypt(ToosUtils.getTextContent(pwd)));
+        rp.addBodyParameter("payDescribe",payInfo);
+        rp.addBodyParameter("timeStamp", String.valueOf(timeStamp));
+        rp.addBodyParameter("nonce", nonce);
+        rp.addBodyParameter("paySign", paySign);
+
+        LogManager.LogShow("--------------------------",Constant.ROOT_PATH+url+"?sign="+ShareDataTool.getToken(context)+"&shopId="+shopId+"&money="+smoney+"&payPwd="+ToosUtils.getEncrypt(ToosUtils.getTextContent(pwd))+"&payDescribe="+payInfo+"&timeStamp="+String.valueOf(timeStamp)+"&nonce="+nonce+"&paySign="+paySign,LogManager.ERROR);
+
+
         utils.send(HttpRequest.HttpMethod.POST, Constant.ROOT_PATH+url, rp, new RequestCallBack<String>() {
             @Override
             public void onStart() {

@@ -61,6 +61,7 @@ public class OuletSelAdapter extends BaseAdapter {
             holder.bar= (RatingBar) convertView.findViewById(R.id.outlet_item_bar);
             holder.num= (TextView) convertView.findViewById(R.id.outlet_item_discussnum);
             holder.money= (TextView) convertView.findViewById(R.id.outlet_item_money);
+            holder.lin=  convertView.findViewById(R.id.outletsel_item_lin);
             holder.m= (TextView) convertView.findViewById(R.id.outlet_item_m);
             holder.address= (TextView) convertView.findViewById(R.id.outlet_item_address);
             holder.distance= (TextView) convertView.findViewById(R.id.outlet_item_distance);
@@ -86,6 +87,7 @@ public class OuletSelAdapter extends BaseAdapter {
         public TextView name;
         public RatingBar bar;
         public TextView num;
+        public View lin;
         public TextView money;
         public TextView m;
         public TextView address;
