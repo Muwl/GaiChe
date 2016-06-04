@@ -8,6 +8,9 @@ import android.widget.TextView;
 
 import com.gaicheyunxiu.gaiche.R;
 import com.gaicheyunxiu.gaiche.activity.BaseActivity;
+import com.gaicheyunxiu.gaiche.model.ReFundDetailVo;
+
+import java.util.List;
 
 /**
  * Created by Administrator on 2015/12/30.
@@ -16,24 +19,26 @@ import com.gaicheyunxiu.gaiche.activity.BaseActivity;
 public class RefunddetailAdapter  extends BaseAdapter{
 
     private Context context;
+    private List<ReFundDetailVo> vos;
 
-    public RefunddetailAdapter(Context context) {
+    public RefunddetailAdapter(Context context,List<ReFundDetailVo> vos) {
         this.context = context;
+        this.vos=vos;
     }
 
     @Override
     public int getCount() {
-        return 3;
+        return vos.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return null;
+        return vos.get(position);
     }
 
     @Override
     public long getItemId(int position) {
-        return 0;
+        return position;
     }
 
     @Override
@@ -49,6 +54,9 @@ public class RefunddetailAdapter  extends BaseAdapter{
         }else{
             holder= (ViewHolder) convertView.getTag();
         }
+        holder.state.setText(vos.get(position).description);
+        holder.content.setText(vos.get(position).remarks);
+        holder.time.setText(vos.get(position).createDate);
         return convertView;
     }
     class ViewHolder{

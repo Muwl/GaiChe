@@ -81,6 +81,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
+                    android:visibility="gone"
                     android:gravity="center_vertical">
                     <TextView
                         android:layout_width="wrap_content"
@@ -130,8 +131,9 @@
                     android:textColor="#474443"/>
 
                 <TextView
+                    android:id="@+id/refunddetail_help"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:text="退款帮助"
                     android:textColor="#757475"
                     android:textSize="@dimen/second_font"
