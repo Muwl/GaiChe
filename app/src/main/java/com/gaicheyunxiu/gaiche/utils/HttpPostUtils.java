@@ -28,6 +28,10 @@ public class HttpPostUtils {
     public static void getMyCar(Context context, final Handler handler){
         RequestParams rp = new RequestParams();
         if (ToosUtils.isStringEmpty(ShareDataTool.getToken(context))){
+            MyCarEntityUtils carEntityUtils=new MyCarEntityUtils(context);
+            MyCarEntity myCarEntity= carEntityUtils.getDefault();
+            MyApplication.getInstance().setCarEntity(myCarEntity);
+            handler.sendEmptyMessage(FIND_MYCAR);
             return;
         }
         if (MyApplication.getInstance().getCarEntity()!=null){

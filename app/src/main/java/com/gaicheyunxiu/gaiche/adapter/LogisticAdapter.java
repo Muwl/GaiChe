@@ -1,6 +1,7 @@
 package com.gaicheyunxiu.gaiche.adapter;
 
 import android.content.Context;
+import android.os.Handler;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -8,6 +9,10 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.gaicheyunxiu.gaiche.R;
+import com.gaicheyunxiu.gaiche.model.ShopOrderEntity;
+import com.gaicheyunxiu.gaiche.model.ShopOrderVo;
+
+import java.util.List;
 
 /**
  * Created by Mu on 2016/1/18.
@@ -16,19 +21,23 @@ import com.gaicheyunxiu.gaiche.R;
 public class LogisticAdapter  extends BaseAdapter{
 
     private Context context;
+    private List<ShopOrderEntity> entities;
+    private Handler handler;
 
-    public LogisticAdapter(Context context) {
+    public LogisticAdapter(Context context, List<ShopOrderEntity> entities, Handler handler) {
         this.context = context;
+        this.entities = entities;
+        this.handler = handler;
     }
 
     @Override
     public int getCount() {
-        return 6;
+        return entities.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return null;
+        return entities.get(position);
     }
 
     @Override
@@ -48,9 +57,16 @@ public class LogisticAdapter  extends BaseAdapter{
         }else{
             holder= (ViewHolder) convertView.getTag();
         }
-        LogisticItemAdapter adapter=new LogisticItemAdapter(context);
-        holder.listView.setAdapter(adapter);
 
+        holder.name.setText("订单号："+entities.get(position).orderNo);
+        List<ShopOrderVo> shopOrderVos=null;
+        if ("0".equals(entities.get(position).split)){
+            shopOrderVos=entities.get(position).orderListVos;
+        }else{
+            shopOrderVos=entities.get(position).vos;
+        }
+        LogisticItemAdapter adapter=new LogisticItemAdapter(context,shopOrderVos,position,handler);
+        holder.listView.setAdapter(adapter);
         return convertView;
     }
 

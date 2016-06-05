@@ -20,6 +20,7 @@ import com.gaicheyunxiu.gaiche.model.ReturnState;
 import com.gaicheyunxiu.gaiche.utils.Constant;
 import com.gaicheyunxiu.gaiche.utils.LogManager;
 import com.gaicheyunxiu.gaiche.utils.MyApplication;
+import com.gaicheyunxiu.gaiche.utils.MyCarEntityUtils;
 import com.gaicheyunxiu.gaiche.utils.ShareDataTool;
 import com.gaicheyunxiu.gaiche.utils.ToastUtils;
 import com.gaicheyunxiu.gaiche.utils.ToosUtils;
@@ -53,6 +54,8 @@ public class CarmanagerActivity extends BaseActivity implements View.OnClickList
 
     private View pro;
 
+    MyCarEntityUtils utils;
+
     private Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -70,6 +73,7 @@ public class CarmanagerActivity extends BaseActivity implements View.OnClickList
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_carmanager);
+        utils=new MyCarEntityUtils(this);
         initView();
     }
 
@@ -103,12 +107,26 @@ public class CarmanagerActivity extends BaseActivity implements View.OnClickList
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 MyCarEntity myCarEntity = entities.get(position);
                 MyApplication.getInstance().setCarEntity(myCarEntity);
-                Intent intent=new Intent();
-                setResult(Activity.RESULT_OK,intent);
+                Intent intent = new Intent();
+                setResult(Activity.RESULT_OK, intent);
                 finish();
             }
         });
-        getMyCal();
+
+        if (ToosUtils.isStringEmpty(ShareDataTool.getToken(this))){
+            List<MyCarEntity> tempEntities= utils.getAllMyCar();
+            if (tempEntities==null){
+                tempEntities=new ArrayList<>();
+            }
+            entities.clear();
+            for (int i = 0; i < tempEntities.size(); i++) {
+                entities.add(tempEntities.get(i));
+            }
+            adapter.notifyDataSetChanged();
+        }else {
+            getMyCal();
+        }
+
     }
 
     @Override
@@ -128,7 +146,19 @@ public class CarmanagerActivity extends BaseActivity implements View.OnClickList
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 12240 && resultCode == RESULT_OK) {
-            getMyCal();
+            if (ToosUtils.isStringEmpty(ShareDataTool.getToken(this))){
+                List<MyCarEntity> tempEntities= utils.getAllMyCar();
+                if (tempEntities==null){
+                    tempEntities=new ArrayList<>();
+                }
+                entities.clear();
+                for (int i = 0; i < tempEntities.size(); i++) {
+                    entities.add(tempEntities.get(i));
+                }
+                adapter.notifyDataSetChanged();
+            }else {
+                getMyCal();
+            }
         }
     }
 
@@ -191,6 +221,14 @@ public class CarmanagerActivity extends BaseActivity implements View.OnClickList
      * 删除我的爱车
      */
     private void delMyCal(final int position) {
+        if (ToosUtils.isStringEmpty(ShareDataTool.getToken(this))){
+            utils.delMyCar(entities.get(position));
+            ToastUtils.displayShortToast(CarmanagerActivity.this,
+                    "删除成功！");
+            entities.remove(position);
+            adapter.notifyDataSetChanged();
+            return;
+        }
         RequestParams rp = new RequestParams();
         HttpUtils utils = new HttpUtils();
         rp.addBodyParameter("sign", ShareDataTool.getToken(this));

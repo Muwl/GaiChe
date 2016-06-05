@@ -81,7 +81,7 @@ public class ShoporderItemAdapter  extends BaseAdapter{
         }
 
         bitmapUtils.display(holder.icon, entities.get(position).briefImage);
-        holder.name.setText("【" + entities.get(position).name + "】" + entities.get(position).businessName);
+        holder.name.setText(entities.get(position).name);
         holder.money.setText("￥" + entities.get(position).presentPrice + "元");
         holder.m.setText("￥"+entities.get(position).mValue+"M");
         holder.oldmoney.setText("￥" + entities.get(position).originalPrice);

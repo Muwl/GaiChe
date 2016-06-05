@@ -85,16 +85,8 @@ public class ShopOrderActivity extends  BaseActivity implements View.OnClickList
                     //查看物流
                     int groupPoi=msg.arg2;
                     int position=msg.arg1;
-                    Intent intent8 = new Intent(ShopOrderActivity.this, ReqrefundActivity.class);
-                    intent8.putExtra("orderId",entities.get(groupPoi).orderId);
-                    if ("0".equals(entities.get(groupPoi).split)){
-                        intent8.putExtra("commodityId", entities.get(groupPoi).orderListVos.get(position).id);
-                        intent8.putExtra("money",Double.valueOf(entities.get(groupPoi).orderListVos.get(position).presentPrice)*Double.valueOf(entities.get(groupPoi).orderListVos.get(position).sales));
-                    }else{
-                        intent8.putExtra("commodityId", entities.get(groupPoi).vos.get(position).id);
-                        intent8.putExtra("money",Double.valueOf(entities.get(groupPoi).orderListVos.get(position).presentPrice)*Double.valueOf(entities.get(groupPoi).orderListVos.get(position).sales));
-                    }
-                    startActivity(intent8);
+                    Intent intent11=new Intent(ShopOrderActivity.this, LogisticDetailActivity.class);
+                    startActivity(intent11);
                     break;
 
                 case 1339:
@@ -165,7 +157,19 @@ public class ShopOrderActivity extends  BaseActivity implements View.OnClickList
                         //申请退货
                         int groupPoi4=msg.arg2;
                         int position4=msg.arg1;
-                        refundOrder(groupPoi4,position4);
+
+                        Intent intent8 = new Intent(ShopOrderActivity.this, ReqrefundActivity.class);
+                        intent8.putExtra("orderId", entities.get(groupPoi4).orderId);
+                        if ("0".equals(entities.get(groupPoi4).split)){
+                            intent8.putExtra("commodityId", entities.get(groupPoi4).orderListVos.get(position4).id);
+                            intent8.putExtra("money",Double.valueOf(entities.get(groupPoi4).orderListVos.get(position4).presentPrice)*Double.valueOf(entities.get(groupPoi4).orderListVos.get(position4).sales));
+                        }else{
+                            intent8.putExtra("commodityId", entities.get(groupPoi4).vos.get(position4).id);
+                            intent8.putExtra("money",Double.valueOf(entities.get(groupPoi4).orderListVos.get(position4).presentPrice)*Double.valueOf(entities.get(groupPoi4).orderListVos.get(position4).sales));
+                        }
+                        startActivity(intent8);
+
+//                        refundOrder(groupPoi4,position4);
 
                     }
 

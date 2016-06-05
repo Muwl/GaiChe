@@ -112,6 +112,7 @@
                     />
 
                 <TextView
+                    android:id="@+id/person_cartno"
                     android:layout_width="12dp"
                     android:layout_height="12dp"
                     android:gravity="center"
@@ -175,6 +176,7 @@
                     />
 
                 <TextView
+                    android:id="@+id/person_ordertno"
                     android:layout_width="12dp"
                     android:layout_height="12dp"
                     android:gravity="center"
@@ -190,6 +192,7 @@
                     />
 
                 <ImageView
+
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
@@ -238,6 +241,7 @@
                     />
 
                 <TextView
+                    android:id="@+id/person_serviceno"
                     android:layout_width="12dp"
                     android:layout_height="12dp"
                     android:gravity="center"
@@ -301,6 +305,7 @@
                     />
 
                 <TextView
+                    android:id="@+id/person_earningno"
                     android:layout_width="12dp"
                     android:layout_height="12dp"
                     android:gravity="center"
@@ -365,6 +370,7 @@
                     />
 
                 <TextView
+                    android:id="@+id/person_moneyno"
                     android:layout_width="12dp"
                     android:layout_height="12dp"
                     android:gravity="center"
@@ -748,6 +754,7 @@
                     />
 
                 <TextView
+                    android:id="@+id/person_crowdorderno"
                     android:layout_width="12dp"
                     android:layout_height="12dp"
                     android:gravity="center"

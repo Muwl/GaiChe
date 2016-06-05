@@ -20,6 +20,7 @@ import com.gaicheyunxiu.gaiche.model.SeriesEntity;
 import com.gaicheyunxiu.gaiche.utils.Constant;
 import com.gaicheyunxiu.gaiche.utils.LogManager;
 import com.gaicheyunxiu.gaiche.utils.MyApplication;
+import com.gaicheyunxiu.gaiche.utils.MyCarEntityUtils;
 import com.gaicheyunxiu.gaiche.utils.ShareDataTool;
 import com.gaicheyunxiu.gaiche.utils.ToastUtils;
 import com.gaicheyunxiu.gaiche.utils.ToosUtils;
@@ -56,10 +57,13 @@ public class CarTimeActivity extends BaseActivity implements View.OnClickListene
 
     private VolumeAdapter adapter;
 
+    MyCarEntityUtils carEntityUtils;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_series);
+        carEntityUtils=new MyCarEntityUtils(this);
         initView();
     }
 
@@ -204,7 +208,8 @@ public class CarTimeActivity extends BaseActivity implements View.OnClickListene
                             myCarEntity.type=typeEntity.type;
                             myCarEntity.displacement=typeEntity.displacement;
                             myCarEntity.productionDate=typeEntity.productionDate;
-                            ShareDataTool.saveCar(CarTimeActivity.this,myCarEntity);
+
+                            carEntityUtils.saveMyCar(myCarEntity);
                             ((MyApplication) getApplication()).setCarEntity(myCarEntity);
                             Intent intent=new Intent();
                             setResult(RESULT_OK,intent);

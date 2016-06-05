@@ -92,7 +92,7 @@ public class AddbrandcheckActivity extends BaseActivity implements View.OnClickL
     private void checkPwd() {
         RequestParams rp = new RequestParams();
         rp.addBodyParameter("sign", ShareDataTool.getToken(this));
-        rp.addBodyParameter("payPwd",ToosUtils.getTextContent(pwd));
+        rp.addBodyParameter("payPwd",MD5Util.MD5(ToosUtils.getTextContent(pwd)));
         HttpUtils utils = new HttpUtils();
         utils.configTimeout(20000);
         LogManager.LogShow("-----", Constant.ROOT_PATH + "user/authentication?sign="+ShareDataTool.getToken(this)+"&payPwd="+ ToosUtils.getTextContent(pwd),

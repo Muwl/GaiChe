@@ -10,10 +10,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.gaicheyunxiu.gaiche.R;
+import com.gaicheyunxiu.gaiche.model.CarUp;
+import com.gaicheyunxiu.gaiche.model.MyCarEntity;
 import com.gaicheyunxiu.gaiche.model.RegisterState;
 import com.gaicheyunxiu.gaiche.model.ReturnState;
 import com.gaicheyunxiu.gaiche.utils.Constant;
 import com.gaicheyunxiu.gaiche.utils.LogManager;
+import com.gaicheyunxiu.gaiche.utils.MyCarEntityUtils;
 import com.gaicheyunxiu.gaiche.utils.ShareDataTool;
 import com.gaicheyunxiu.gaiche.utils.ToastUtils;
 import com.gaicheyunxiu.gaiche.utils.ToosUtils;
@@ -29,6 +32,8 @@ import com.umeng.socialize.UMAuthListener;
 import com.umeng.socialize.UMShareAPI;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -47,12 +52,14 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     private TextView weixinView;
     private View pro;
     private UMShareAPI mShareAPI;
+    private MyCarEntityUtils carEntityUtils;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         mShareAPI = UMShareAPI.get(this);
+        carEntityUtils=new MyCarEntityUtils(this);
         initView();
     }
 
@@ -199,9 +206,11 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                             ReturnState state = gson.fromJson(arg0.result,
                                     ReturnState.class);
                             if (Constant.RETURN_OK.equals(state.msg)) {
+
                                 RegisterState registerState=gson.fromJson(arg0.result,RegisterState.class);
                                 registerState.result.phone=ToosUtils.getTextContent(phoneView);
                                 ShareDataTool.SaveInfo(LoginActivity.this, registerState.result);
+                                updateCar();
                                 Intent intent=new Intent();
                                 setResult(RESULT_OK,intent);
                                 finish();
@@ -253,9 +262,11 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                             ReturnState state = gson.fromJson(arg0.result,
                                     ReturnState.class);
                             if (Constant.RETURN_OK.equals(state.msg)) {
+
                                 RegisterState registerState=gson.fromJson(arg0.result,RegisterState.class);
                                 registerState.result.phone=ToosUtils.getTextContent(phoneView);
                                 ShareDataTool.SaveInfo(LoginActivity.this, registerState.result);
+                                updateCar();
                                 Intent intent=new Intent();
                                 setResult(RESULT_OK,intent);
                                 finish();
@@ -273,4 +284,71 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 });
 
     }
+
+
+
+    /**
+     * 同步我的爱车
+     */
+    private void updateCar() {
+        List<MyCarEntity> myCarEntities=carEntityUtils.getAllMyCar();
+        if (myCarEntities==null || myCarEntities.size()==0){
+            return;
+        }
+        List<CarUp> carUps=new ArrayList<>();
+        for (int i=0;i<myCarEntities.size();i++){
+            CarUp carUp=new CarUp();
+            carUp.carTypeId=myCarEntities.get(i).carTypeId;
+            carUp.isDefault=myCarEntities.get(i).isDefault;
+            carUps.add(carUp);
+        }
+        RequestParams rp = new RequestParams();
+        rp.addBodyParameter("sign",ShareDataTool.getToken(this));
+        rp.addBodyParameter("carTypes",new Gson().toJson(carUps));
+        HttpUtils utils = new HttpUtils();
+        utils.configTimeout(20000);
+        LogManager.LogShow("------------------", Constant.ROOT_PATH + "myCar/sync?sign=" + ShareDataTool.getToken(this) + "&carTypes=" + new Gson().toJson(carUps), LogManager.ERROR);
+        utils.send(HttpRequest.HttpMethod.POST, Constant.ROOT_PATH + "myCar/sync",
+                rp, new RequestCallBack<String>() {
+                    @Override
+                    public void onStart() {
+                        super.onStart();
+                    }
+
+                    @Override
+                    public void onFailure(HttpException arg0, String arg1) {
+//                        ToastUtils.displayFailureToast(LoginActivity.this);
+                    }
+
+                    @Override
+                    public void onSuccess(ResponseInfo<String> arg0) {
+                        carEntityUtils.removeAllCar();
+                        try {
+                            Gson gson = new Gson();
+                            LogManager.LogShow("----(((((****", arg0.result,
+                                    LogManager.ERROR);
+                            ReturnState state = gson.fromJson(arg0.result,
+                                    ReturnState.class);
+                            if (Constant.RETURN_OK.equals(state.msg)) {
+//                                RegisterState registerState=gson.fromJson(arg0.result,RegisterState.class);
+//                                registerState.result.phone=ToosUtils.getTextContent(phoneView);
+//                                ShareDataTool.SaveInfo(LoginActivity.this, registerState.result);
+//                                Intent intent=new Intent();
+//                                setResult(RESULT_OK,intent);
+//                                finish();
+                            } else {
+//                                ToastUtils.displayShortToast(
+//                                        LoginActivity.this,
+//                                        (String) state.result);
+                            }
+                        } catch (Exception e) {
+//                            ToastUtils
+//                                    .displaySendFailureToast(LoginActivity.this);
+                        }
+
+                    }
+                });
+
+    }
+
 }

@@ -66,27 +66,27 @@ public class ShareDataTool {
         return regiterEntity;
     }
 
-    public static boolean saveCar(Context context, MyCarEntity myCarEntity) {
-        SharedPreferences sp = context.getSharedPreferences("sp",
-                Context.MODE_PRIVATE);
-        Editor e = sp.edit();
-        if (myCarEntity!=null){
-            Gson gson=new Gson();
-            e.putString("mycar", gson.toJson(myCarEntity));
-            return e.commit();
-        }
-        return false;
-    }
-
-    public static MyCarEntity getCar(Context context){
-        String s=context.getSharedPreferences("mycar", Context.MODE_PRIVATE).getString("token", "");
-        Gson gson=new Gson();
-        try {
-            return gson.fromJson(s,MyCarEntity.class);
-        }catch (Exception e){
-            return null;
-        }
-    }
+//    public static boolean saveCar(Context context, MyCarEntity myCarEntity) {
+//        SharedPreferences sp = context.getSharedPreferences("sp",
+//                Context.MODE_PRIVATE);
+//        Editor e = sp.edit();
+//        if (myCarEntity!=null){
+//            Gson gson=new Gson();
+//            e.putString("mycar", gson.toJson(myCarEntity));
+//            return e.commit();
+//        }
+//        return false;
+//    }
+//
+//    public static MyCarEntity getCar(Context context){
+//        String s=context.getSharedPreferences("mycar", Context.MODE_PRIVATE).getString("token", "");
+//        Gson gson=new Gson();
+//        try {
+//            return gson.fromJson(s,MyCarEntity.class);
+//        }catch (Exception e){
+//            return null;
+//        }
+//    }
 
     /**
      * 保存是否为第一次启动

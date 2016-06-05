@@ -96,6 +96,13 @@ public class PersonFragment extends Fragment implements View.OnClickListener{
 
     private BitmapUtils bitmapUtils;
 
+    private TextView cartNo;
+    private TextView orderNo;
+    private TextView serveNo;
+    private TextView earingNo;
+    private TextView moneyNo;
+    private TextView crowdNo;
+
 
     @Nullable
     @Override
@@ -120,6 +127,14 @@ public class PersonFragment extends Fragment implements View.OnClickListener{
         logisticsView=view.findViewById(R.id.person_logistics);
         crowdorderView=view.findViewById(R.id.person_crowdorder);
         settingView=view.findViewById(R.id.person_setting);
+
+        cartNo= (TextView) view.findViewById(R.id.person_cartno);
+        orderNo= (TextView) view.findViewById(R.id.person_ordertno);
+        serveNo= (TextView) view.findViewById(R.id.person_serviceno);
+        earingNo= (TextView) view.findViewById(R.id.person_earningno);
+        moneyNo= (TextView) view.findViewById(R.id.person_moneyno);
+        crowdNo= (TextView) view.findViewById(R.id.person_crowdorderno);
+
         view.findViewById(R.id.title_back).setVisibility(View.GONE);
         title.setText("我的");
         return view;
@@ -323,5 +338,49 @@ public class PersonFragment extends Fragment implements View.OnClickListener{
 
     private void setvalue(PersonDynamicEntity.ResultBean resultBean){
         balance.setText("余额：￥"+resultBean.balance);
+        if ("0".equals(resultBean.shoppingCartNum)){
+            cartNo.setVisibility(View.GONE);
+        }else{
+            cartNo.setVisibility(View.VISIBLE);
+            cartNo.setText(resultBean.shoppingCartNum);
+        }
+        int order=Integer.valueOf(resultBean.commodityToPayOrderNum)+Integer.valueOf(resultBean.commodityToReceiveNum)+Integer.valueOf(resultBean.commodityToEvaluateNum);
+        if (order==0){
+            orderNo.setVisibility(View.GONE);
+        }else{
+            orderNo.setVisibility(View.VISIBLE);
+            orderNo.setText(order+"");
+        }
+
+        int ser=Integer.valueOf(resultBean.serviceToPayOrderNum)+Integer.valueOf(resultBean.serviceToUseNum)+Integer.valueOf(resultBean.serviceToEvaluateNum);
+        if (ser==0){
+            serveNo.setVisibility(View.GONE);
+        }else{
+            serveNo.setVisibility(View.VISIBLE);
+            serveNo.setText(ser+"");
+        }
+
+        int crw=Integer.valueOf(resultBean.crowdfundingToPayOrderNum)+Integer.valueOf(resultBean.crowdfundingToReceiveNum)+Integer.valueOf(resultBean.crowdfundingToEvaluateNum);
+        if (ser==0){
+            crowdNo.setVisibility(View.GONE);
+        }else{
+            crowdNo.setVisibility(View.VISIBLE);
+            crowdNo.setText(crw+"");
+        }
+
+        if ("0".equals(resultBean.earings)){
+            earingNo.setVisibility(View.GONE);
+        }else{
+            earingNo.setVisibility(View.VISIBLE);
+            earingNo.setText(resultBean.earings);
+        }
+
+        if ("0".equals(resultBean.wallet)){
+            moneyNo.setVisibility(View.GONE);
+        }else{
+            moneyNo.setVisibility(View.VISIBLE);
+            moneyNo.setText(resultBean.wallet);
+        }
+
     }
 }
