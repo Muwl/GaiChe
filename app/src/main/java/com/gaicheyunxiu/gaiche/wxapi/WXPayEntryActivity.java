@@ -3,6 +3,7 @@ package com.gaicheyunxiu.gaiche.wxapi;
 import com.gaicheyunxiu.gaiche.R;
 import com.gaicheyunxiu.gaiche.activity.BaseActivity;
 import com.gaicheyunxiu.gaiche.activity.MainActivity;
+import com.gaicheyunxiu.gaiche.activity.RechargeSucActivity;
 import com.gaicheyunxiu.gaiche.utils.Constant;
 import com.gaicheyunxiu.gaiche.utils.LogManager;
 import com.gaicheyunxiu.gaiche.utils.MyApplication;
@@ -73,6 +74,13 @@ public class WXPayEntryActivity extends BaseActivity implements IWXAPIEventHandl
 			if (0!=resp.errCode){
 				ToastUtils.displayShortToast(this,"支付失败");
 				finish();
+			}else{
+				if (MyApplication.getInstance().getPayFlag()==1){
+					Intent intent=new Intent(WXPayEntryActivity.this, RechargeSucActivity.class);
+					startActivity(intent);
+					MyApplication.getInstance().setPayFlag(0);
+					finish();
+				}
 			}
 			LogManager.LogShow("------------支付---", "onPayFinish,errCode=" + resp.errCode+"-----------"+resp.errStr, LogManager.ERROR);
 		}

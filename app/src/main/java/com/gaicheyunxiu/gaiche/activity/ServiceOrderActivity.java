@@ -543,7 +543,7 @@ public class ServiceOrderActivity extends BaseActivity implements View.OnClickLi
 
 
     /**
-     * 取消服务订单
+     * 删除服务订单
      */
     private void delOrder(final int position) {
         RequestParams rp = new RequestParams();

@@ -146,6 +146,11 @@ public class ShipaddressaddActivity extends BaseActivity implements View.OnClick
             ToastUtils.displayShortToast(this,"详情地址不能空！");
             return false;
         }
+
+        if (ToosUtils.isTextEmpty(code)){
+            ToastUtils.displayShortToast(this,"邮编不能空！");
+            return false;
+        }
         return true;
     }
 

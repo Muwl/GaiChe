@@ -1,5 +1,6 @@
 package com.gaicheyunxiu.gaiche.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -13,6 +14,8 @@ import android.widget.TextView;
 import com.gaicheyunxiu.gaiche.R;
 import com.gaicheyunxiu.gaiche.adapter.RaiseOrderAdapter;
 import com.gaicheyunxiu.gaiche.adapter.ShopOrderAdapter;
+import com.gaicheyunxiu.gaiche.dialog.CustomeConDialog;
+import com.gaicheyunxiu.gaiche.dialog.CustomeDialog;
 import com.gaicheyunxiu.gaiche.model.ReturnState;
 import com.gaicheyunxiu.gaiche.model.ShopOrderEntity;
 import com.gaicheyunxiu.gaiche.model.ShopOrderState;
@@ -71,7 +74,97 @@ public class RaiseOrderActivity extends BaseActivity implements View.OnClickList
     private Handler handler=new Handler(){
         @Override
         public void handleMessage(Message msg) {
+            switch (msg.what){
+                case 1336:
+                    //查看物流
+                    int groupPoi=msg.arg2;
+                    int position=msg.arg1;
+                    Intent intent8 = new Intent(RaiseOrderActivity.this, ReqrefundActivity.class);
+                    intent8.putExtra("orderId",entities.get(groupPoi).orderId);
+                    if ("0".equals(entities.get(groupPoi).split)){
+                        intent8.putExtra("commodityId", entities.get(groupPoi).orderListVos.get(position).id);
+                        intent8.putExtra("money",Double.valueOf(entities.get(groupPoi).orderListVos.get(position).presentPrice)*Double.valueOf(entities.get(groupPoi).orderListVos.get(position).sales));
+                    }else{
+                        intent8.putExtra("commodityId", entities.get(groupPoi).vos.get(position).id);
+                        intent8.putExtra("money",Double.valueOf(entities.get(groupPoi).orderListVos.get(position).presentPrice)*Double.valueOf(entities.get(groupPoi).orderListVos.get(position).sales));
+                    }
+                    startActivity(intent8);
+                    break;
 
+                case 1339:
+                    //钱款去向
+                    int groupPoi5=msg.arg2;
+                    int position5=msg.arg1;
+                    Intent intent9 = new Intent(RaiseOrderActivity.this, AfterSaleActivity.class);
+                    intent9.putExtra("flag",1);
+                    intent9.putExtra("orderId",entities.get(groupPoi5).orderId);
+                    intent9.putExtra("orderNo",entities.get(groupPoi5).orderNo);
+                    if ("0".equals(entities.get(groupPoi5).split)){
+                        intent9.putExtra("entity", entities.get(groupPoi5).orderListVos.get(position5));
+                        intent9.putExtra("money",Double.valueOf(entities.get(groupPoi5).orderListVos.get(position5).presentPrice)*Double.valueOf(entities.get(groupPoi5).orderListVos.get(position5).sales));
+                    }else{
+                        intent9.putExtra("entity", entities.get(groupPoi5).vos.get(position5));
+                        intent9.putExtra("money",Double.valueOf(entities.get(groupPoi5).orderListVos.get(position5).presentPrice)*Double.valueOf(entities.get(groupPoi5).orderListVos.get(position5).sales));
+                    }
+                    startActivity(intent9);
+                    break;
+                case 1337:
+                    //评价
+                    int groupPoi1=msg.arg2;
+                    int position1=msg.arg1;
+
+                    Intent intent = new Intent(RaiseOrderActivity.this, OrderEvaluteAvtivity.class);
+                    intent.putExtra("orderId",entities.get(groupPoi1).orderId);
+                    intent.putExtra("createDate", entities.get(groupPoi1).createDate);
+                    if ("0".equals(entities.get(groupPoi1).split)){
+                        intent.putExtra("entity", entities.get(groupPoi1).orderListVos.get(position1));
+                    }else{
+                        intent.putExtra("entity", entities.get(groupPoi1).vos.get(position1));
+                    }
+                    startActivity(intent);
+                    break;
+                case 1556:
+                    //付款
+                    int position3=msg.arg1;
+                    Intent intent2=new Intent(RaiseOrderActivity.this,OrderPayActivity.class);
+                    intent2.putExtra("flag",2);
+                    intent2.putExtra("money",entities.get(position3).price);
+                    intent2.putExtra("orderId",entities.get(position3).orderId);
+                    startActivity(intent2);
+                    break;
+
+                case CustomeDialog.RET_OK:
+                    int flag2=msg.arg2;
+                    if (flag2==-1){
+                        //确定取消订单
+//                        int position2=msg.arg1;
+//                        cancelOrder(position2);
+                    }else if(flag2==-2){
+                        //确定删除订单
+                        int position2=msg.arg1;
+                        delOrder(position2);
+                    }
+
+                    break;
+
+                case CustomeConDialog.RET__OK:
+                    int flag= (int) msg.obj;
+                    if (flag==-1){
+                        //确定收货
+                        int groupPoi4=msg.arg2;
+                        int position4=msg.arg1;
+                        confirmOrder(groupPoi4,position4);
+
+                    }else if(flag==-2){
+                        //申请退货
+                        int groupPoi4=msg.arg2;
+                        int position4=msg.arg1;
+                        refundOrder(groupPoi4,position4);
+
+                    }
+
+                    break;
+            }
         }
     };
 
@@ -179,7 +272,7 @@ public class RaiseOrderActivity extends BaseActivity implements View.OnClickList
         rp.addBodyParameter("sign", ShareDataTool.getToken(this));
         rp.addBodyParameter("pageNum", String.valueOf(page));
         if (!ToosUtils.isStringEmpty(orderState)){
-            rp.addBodyParameter("orderState",orderState);
+            rp.addBodyParameter("state",orderState);
         }
         utils.send(HttpRequest.HttpMethod.POST, Constant.ROOT_PATH
                 + "crowdfundingOrder/findByState", rp, new RequestCallBack<String>() {
@@ -219,6 +312,178 @@ public class RaiseOrderActivity extends BaseActivity implements View.OnClickList
                             entities.add(shopOrderState.result.get(i));
                         }
                         adapter.notifyDataSetChanged();
+                    } else if (Constant.TOKEN_ERR.equals(state.msg)) {
+                        ToastUtils.displayShortToast(RaiseOrderActivity.this,
+                                "验证错误，请重新登录");
+                        ToosUtils.goReLogin(RaiseOrderActivity.this);
+                    } else {
+                        ToastUtils.displayShortToast(RaiseOrderActivity.this,
+                                (String) state.result);
+                    }
+                } catch (Exception e) {
+                    ToastUtils.displaySendFailureToast(RaiseOrderActivity.this);
+                }
+
+            }
+        });
+    }
+
+
+
+    /**
+     *删除订单
+     */
+    private void delOrder(final int position) {
+        RequestParams rp = new RequestParams();
+        HttpUtils utils = new HttpUtils();
+        utils.configTimeout(20000);
+        rp.addBodyParameter("sign", ShareDataTool.getToken(this));
+        rp.addBodyParameter("orderId",entities.get(position).orderId);
+        utils.send(HttpRequest.HttpMethod.POST, Constant.ROOT_PATH
+                + "crowdfundingOrder/del", rp, new RequestCallBack<String>() {
+            @Override
+            public void onStart() {
+                super.onStart();
+                pro.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void onFailure(HttpException arg0, String arg1) {
+                ToastUtils.displayFailureToast(RaiseOrderActivity.this);
+                pro.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onSuccess(ResponseInfo<String> arg0) {
+                pro.setVisibility(View.GONE);
+                try {
+                    Gson gson = new Gson();
+                    ReturnState state = gson.fromJson(arg0.result,
+                            ReturnState.class);
+                    if (Constant.RETURN_OK.equals(state.msg)) {
+                        LogManager.LogShow("-----***111", arg0.result,
+                                LogManager.ERROR);
+                        ToastUtils.displayShortToast(RaiseOrderActivity.this,
+                                "删除成功！");
+                        entities.remove(position);
+                        adapter.notifyDataSetChanged();
+                    } else if (Constant.TOKEN_ERR.equals(state.msg)) {
+                        ToastUtils.displayShortToast(RaiseOrderActivity.this,
+                                "验证错误，请重新登录");
+                        ToosUtils.goReLogin(RaiseOrderActivity.this);
+                    } else {
+                        ToastUtils.displayShortToast(RaiseOrderActivity.this,
+                                (String) state.result);
+                    }
+                } catch (Exception e) {
+                    ToastUtils.displaySendFailureToast(RaiseOrderActivity.this);
+                }
+
+            }
+        });
+    }
+
+
+    /**
+     *申请退货
+     */
+    private void refundOrder(final int position,int poi) {
+        RequestParams rp = new RequestParams();
+        HttpUtils utils = new HttpUtils();
+        utils.configTimeout(20000);
+        rp.addBodyParameter("sign", ShareDataTool.getToken(this));
+        rp.addBodyParameter("orderId",entities.get(position).orderId);
+        if ("0".equals(entities.get(position).split)){
+            rp.addBodyParameter("commodityId",entities.get(position).orderListVos.get(poi).id);
+        } else {
+            rp.addBodyParameter("commodityId",entities.get(position).vos.get(poi).id);
+        }
+
+        utils.send(HttpRequest.HttpMethod.POST, Constant.ROOT_PATH
+                + "commodityOrder/applyRefund", rp, new RequestCallBack<String>() {
+            @Override
+            public void onStart() {
+                super.onStart();
+                pro.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void onFailure(HttpException arg0, String arg1) {
+                ToastUtils.displayFailureToast(RaiseOrderActivity.this);
+                pro.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onSuccess(ResponseInfo<String> arg0) {
+                pro.setVisibility(View.GONE);
+                try {
+                    Gson gson = new Gson();
+                    ReturnState state = gson.fromJson(arg0.result,
+                            ReturnState.class);
+                    if (Constant.RETURN_OK.equals(state.msg)) {
+                        LogManager.LogShow("-----***111", arg0.result,
+                                LogManager.ERROR);
+                        ToastUtils.displayShortToast(RaiseOrderActivity.this,
+                                "退货申请成功！");
+
+                    } else if (Constant.TOKEN_ERR.equals(state.msg)) {
+                        ToastUtils.displayShortToast(RaiseOrderActivity.this,
+                                "验证错误，请重新登录");
+                        ToosUtils.goReLogin(RaiseOrderActivity.this);
+                    } else {
+                        ToastUtils.displayShortToast(RaiseOrderActivity.this,
+                                (String) state.result);
+                    }
+                } catch (Exception e) {
+                    ToastUtils.displaySendFailureToast(RaiseOrderActivity.this);
+                }
+
+            }
+        });
+    }
+
+    /**
+     *商品确认收货
+     */
+    private void confirmOrder(final int position,int poi) {
+        RequestParams rp = new RequestParams();
+        HttpUtils utils = new HttpUtils();
+        utils.configTimeout(20000);
+        rp.addBodyParameter("sign", ShareDataTool.getToken(this));
+        rp.addBodyParameter("orderId",entities.get(position).orderId);
+        if ("0".equals(entities.get(position).split)){
+            rp.addBodyParameter("commodityId",entities.get(position).orderListVos.get(poi).id);
+        } else {
+            rp.addBodyParameter("commodityId",entities.get(position).vos.get(poi).id);
+        }
+
+        utils.send(HttpRequest.HttpMethod.POST, Constant.ROOT_PATH
+                + "crowdfundingOrder/confirmReceipt", rp, new RequestCallBack<String>() {
+            @Override
+            public void onStart() {
+                super.onStart();
+                pro.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void onFailure(HttpException arg0, String arg1) {
+                ToastUtils.displayFailureToast(RaiseOrderActivity.this);
+                pro.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onSuccess(ResponseInfo<String> arg0) {
+                pro.setVisibility(View.GONE);
+                try {
+                    Gson gson = new Gson();
+                    ReturnState state = gson.fromJson(arg0.result,
+                            ReturnState.class);
+                    if (Constant.RETURN_OK.equals(state.msg)) {
+                        LogManager.LogShow("-----***111", arg0.result,
+                                LogManager.ERROR);
+                        ToastUtils.displayShortToast(RaiseOrderActivity.this,
+                                "确认收货成功！");
+
                     } else if (Constant.TOKEN_ERR.equals(state.msg)) {
                         ToastUtils.displayShortToast(RaiseOrderActivity.this,
                                 "验证错误，请重新登录");

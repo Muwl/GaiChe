@@ -11,6 +11,7 @@ import com.gaicheyunxiu.gaiche.R;
 import com.gaicheyunxiu.gaiche.model.ReturnState;
 import com.gaicheyunxiu.gaiche.utils.Constant;
 import com.gaicheyunxiu.gaiche.utils.LogManager;
+import com.gaicheyunxiu.gaiche.utils.MD5Util;
 import com.gaicheyunxiu.gaiche.utils.ShareDataTool;
 import com.gaicheyunxiu.gaiche.utils.ToastUtils;
 import com.gaicheyunxiu.gaiche.utils.ToosUtils;
@@ -77,9 +78,9 @@ public class AddbrandcheckActivity extends BaseActivity implements View.OnClickL
                     ToastUtils.displayShortToast(AddbrandcheckActivity.this,"请输入支付密码！");
                     return;
                 }
-                Intent intent1=new Intent(AddbrandcheckActivity.this,AddbrandActivity.class);
-                startActivityForResult(intent1, 15576);
-//                checkPwd();
+//                Intent intent1=new Intent(AddbrandcheckActivity.this,AddbrandActivity.class);
+//                startActivityForResult(intent1, 15576);
+                checkPwd();
                 break;
         }
     }
@@ -91,7 +92,7 @@ public class AddbrandcheckActivity extends BaseActivity implements View.OnClickL
     private void checkPwd() {
         RequestParams rp = new RequestParams();
         rp.addBodyParameter("sign", ShareDataTool.getToken(this));
-        rp.addBodyParameter("payPwd", ToosUtils.getTextContent(pwd));
+        rp.addBodyParameter("payPwd",ToosUtils.getTextContent(pwd));
         HttpUtils utils = new HttpUtils();
         utils.configTimeout(20000);
         LogManager.LogShow("-----", Constant.ROOT_PATH + "user/authentication?sign="+ShareDataTool.getToken(this)+"&payPwd="+ ToosUtils.getTextContent(pwd),

@@ -139,7 +139,7 @@ public class ShoporderItemAdapter  extends BaseAdapter{
             holder.orgbtn.setText("\u3000评价\u3000");
             holder.graybtn.setText("申请退货");
 
-            holder.graybtn.setOnClickListener(new View.OnClickListener() {
+            holder.orgbtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Message message = new Message();

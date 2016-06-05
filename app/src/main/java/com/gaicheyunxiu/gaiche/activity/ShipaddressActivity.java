@@ -297,6 +297,8 @@ public class ShipaddressActivity extends BaseActivity implements View.OnClickLis
         }
         HttpUtils utils = new HttpUtils();
         utils.configTimeout(20000);
+
+        LogManager.LogShow("-------",Constant.ROOT_PATH + "address/isDefault?sign="+ShareDataTool.getToken(this)+"&id="+adapter.getDatas().get(position).getId()+"&oldId="+oldId,LogManager.ERROR);
         utils.send(HttpRequest.HttpMethod.POST, Constant.ROOT_PATH + "address/isDefault",
                 rp, new RequestCallBack<String>() {
                     @Override

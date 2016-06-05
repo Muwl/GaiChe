@@ -27,6 +27,8 @@ public class MyApplication extends Application {
 
     private String weixinmoney;
 
+    private int payFlag=0;//0代表微信支付  1代表微信充值
+
 
     private Handler handler = new Handler() {
         @Override
@@ -50,6 +52,14 @@ public class MyApplication extends Application {
 
     public void setWeixinmoney(String weixinmoney) {
         this.weixinmoney = weixinmoney;
+    }
+
+    public int getPayFlag() {
+        return payFlag;
+    }
+
+    public void setPayFlag(int payFlag) {
+        this.payFlag = payFlag;
     }
 
     public void onCreate() {
