@@ -71,7 +71,7 @@ public class RaiseOrderAdapter extends BaseAdapter{
             holder.lin= convertView.findViewById(R.id.raiseorder_item_lin);
             holder.delbtn= (TextView) convertView.findViewById(R.id.raiseorder_item_delbtn);
             holder.graybtn= (TextView) convertView.findViewById(R.id.raiseorder_item_gradbtn);
-            holder.organbtn= (TextView) convertView.findViewById(R.id.shoporder_item_orangebtn);
+            holder.organbtn= (TextView) convertView.findViewById(R.id.raiseorder_item_orangebtn);
             convertView.setTag(holder);
         }else{
             holder= (ViewHolder) convertView.getTag();
