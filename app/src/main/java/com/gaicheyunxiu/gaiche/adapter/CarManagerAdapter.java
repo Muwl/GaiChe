@@ -66,7 +66,7 @@ public class CarManagerAdapter extends BaseAdapter {
         }else{
             temp="进口";
         }
-        holder.cb.setClickable(entities.get(position).isDefault);
+        holder.cb.setChecked(entities.get(position).isDefault);
         holder.name.setText(entities.get(position).carBrandName+"\u2000"+entities.get(position).displacement+"\u2000"+entities.get(position).productionDate+"\n（"+temp+"）");
 
         return convertView;

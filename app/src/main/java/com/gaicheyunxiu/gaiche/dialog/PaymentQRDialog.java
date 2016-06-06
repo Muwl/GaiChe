@@ -124,7 +124,7 @@ public class PaymentQRDialog extends Dialog implements
         Map<String,String> map=new HashMap<>();
         map.put("shopId",shopId);
         map.put("money", smoney);
-        map.put("payPwd", ToosUtils.getEncrypt(ToosUtils.getTextContent(pwd)));
+        map.put("payPwd", MD5Util.MD5(ToosUtils.getTextContent(pwd)));
         map.put("payDescribe", payInfo);
         String paySign=WalletPay.generateSign(map,timeStamp,nonce);
 

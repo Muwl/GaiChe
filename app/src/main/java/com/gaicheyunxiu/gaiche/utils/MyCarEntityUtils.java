@@ -77,7 +77,9 @@ public class MyCarEntityUtils {
         String sql="UPDATE mycar SET isdefault=0";
         try {
             db.execNonQuery(sql);
-            db.update(carEntity);
+
+            String sql2="UPDATE mycar SET isdefault=1 WHERE cartypeid=\'"+carEntity.carTypeId+"\'";
+            db.execNonQuery(sql2);
         } catch (DbException e) {
             e.printStackTrace();
         }

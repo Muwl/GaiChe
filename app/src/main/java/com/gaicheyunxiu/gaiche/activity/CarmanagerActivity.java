@@ -105,6 +105,7 @@ public class CarmanagerActivity extends BaseActivity implements View.OnClickList
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                setDefault(position);
                 MyCarEntity myCarEntity = entities.get(position);
                 MyApplication.getInstance().setCarEntity(myCarEntity);
                 Intent intent = new Intent();
@@ -122,6 +123,7 @@ public class CarmanagerActivity extends BaseActivity implements View.OnClickList
             for (int i = 0; i < tempEntities.size(); i++) {
                 entities.add(tempEntities.get(i));
             }
+            LogManager.LogShow("-----------",entities.toString(),LogManager.ERROR);
             adapter.notifyDataSetChanged();
         }else {
             getMyCal();
@@ -161,6 +163,9 @@ public class CarmanagerActivity extends BaseActivity implements View.OnClickList
             }
         }
     }
+
+
+
 
     /**
      * 查询我的爱车
@@ -216,6 +221,86 @@ public class CarmanagerActivity extends BaseActivity implements View.OnClickList
         });
     }
 
+    /**
+     * 设置默认爱车
+     */
+    private void setDefault(final int position) {
+        String tempid="";
+        for (int i=0;i<entities.size();i++){
+            if (entities.get(i).isDefault  && i!=position){
+                tempid=entities.get(i).carTypeId;
+            }
+        }
+        if (ToosUtils.isStringEmpty(ShareDataTool.getToken(this))){
+            utils.updateDefault(entities.get(position));
+            for (int i=0;i<entities.size();i++){
+                if (i==position){
+                    entities.get(i).isDefault=true;
+                }else{
+                    entities.get(i).isDefault=false;
+                }
+            }
+            adapter.notifyDataSetChanged();
+            return;
+        }
+        RequestParams rp = new RequestParams();
+        HttpUtils utils = new HttpUtils();
+        rp.addBodyParameter("sign", ShareDataTool.getToken(this));
+        rp.addBodyParameter("carTypeId", entities.get(position).carTypeId);
+        if (ToosUtils.isStringEmpty(tempid)){
+            rp.addBodyParameter("oldDefaultId", tempid);
+        }
+        utils.configTimeout(20000);
+
+        LogManager.LogShow("--------", Constant.ROOT_PATH + "myCar/setDefaultCarType?sign="+ShareDataTool.getToken(this)+"&carTypeId="+entities.get(position).carTypeId,LogManager.ERROR);
+        utils.send(HttpRequest.HttpMethod.POST, Constant.ROOT_PATH
+                + "myCar/setDefaultCarType", rp, new RequestCallBack<String>() {
+            @Override
+            public void onStart() {
+                pro.setVisibility(View.VISIBLE);
+                super.onStart();
+            }
+
+            @Override
+            public void onFailure(HttpException arg0, String arg1) {
+                pro.setVisibility(View.GONE);
+                ToastUtils.displayFailureToast(CarmanagerActivity.this);
+            }
+
+            @Override
+            public void onSuccess(ResponseInfo<String> arg0) {
+                pro.setVisibility(View.GONE);
+                try {
+                    Gson gson = new Gson();
+                    ReturnState state = gson.fromJson(arg0.result,
+                            ReturnState.class);
+                    if (Constant.RETURN_OK.equals(state.msg)) {
+                        LogManager.LogShow("-----", arg0.result,
+                                LogManager.ERROR);
+                        for (int i=0;i<entities.size();i++){
+                            if (i==position){
+                                entities.get(i).isDefault=true;
+                            }else{
+                                entities.get(i).isDefault=false;
+                            }
+                        }
+                        adapter.notifyDataSetChanged();
+                    } else if (Constant.TOKEN_ERR.equals(state.msg)) {
+                        ToastUtils.displayShortToast(CarmanagerActivity.this,
+                                "验证错误，请重新登录");
+                        ToosUtils.goReLogin(CarmanagerActivity.this);
+                    } else {
+                        ToastUtils.displayShortToast(CarmanagerActivity.this,
+                                (String) state.result);
+                    }
+                } catch (Exception e) {
+                    ToastUtils.displaySendFailureToast(CarmanagerActivity.this);
+                }
+
+            }
+        });
+    }
+
 
     /**
      * 删除我的爱车
@@ -235,7 +320,7 @@ public class CarmanagerActivity extends BaseActivity implements View.OnClickList
         rp.addBodyParameter("id", entities.get(position).carTypeId);
         utils.configTimeout(20000);
         utils.send(HttpRequest.HttpMethod.POST, Constant.ROOT_PATH
-                + "myCar/findAll", rp, new RequestCallBack<String>() {
+                + "myCar/del", rp, new RequestCallBack<String>() {
             @Override
             public void onStart() {
                 pro.setVisibility(View.VISIBLE);

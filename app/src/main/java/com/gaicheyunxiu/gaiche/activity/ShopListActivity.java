@@ -187,7 +187,7 @@ public class  ShopListActivity extends BaseActivity implements View.OnClickListe
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(ShopListActivity.this, ShopDetailActivity.class);
-                intent.putExtra("id", commodityEntityList.get(position).id);
+                intent.putExtra("id", commodityEntityList.get(position-1).id);
                 startActivity(intent);
             }
         });

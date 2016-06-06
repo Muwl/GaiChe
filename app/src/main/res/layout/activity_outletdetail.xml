@@ -221,7 +221,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="8dp"
-                    android:singleLine="true"
                     android:text="地址：山东省日照市"
                     android:textColor="#5F5D5D"
                     android:textSize="@dimen/second_font" />

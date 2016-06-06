@@ -220,7 +220,7 @@ public class OultSelActivity extends BaseActivity implements View.OnClickListene
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(OultSelActivity.this, OutletDetailActivity.class);
-                intent.putExtra("shopId", entities.get(position).id);
+                intent.putExtra("shopId", entities.get(position-1).id);
                 startActivity(intent);
             }
         });
