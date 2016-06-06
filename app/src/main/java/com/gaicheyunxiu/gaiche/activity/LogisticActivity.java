@@ -138,9 +138,8 @@ public class LogisticActivity extends BaseActivity implements View.OnClickListen
         utils.configTimeout(20000);
         rp.addBodyParameter("sign", ShareDataTool.getToken(this));
         rp.addBodyParameter("pageNum", String.valueOf(page));
-        rp.addBodyParameter("orderState","1");
         utils.send(HttpRequest.HttpMethod.POST, Constant.ROOT_PATH
-                + "commodityOrder/find", rp, new RequestCallBack<String>() {
+                + "logistics/find", rp, new RequestCallBack<String>() {
             @Override
             public void onStart() {
                 super.onStart();

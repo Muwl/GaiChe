@@ -1,5 +1,6 @@
 package com.gaicheyunxiu.gaiche.activity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -30,6 +31,7 @@ import com.gaicheyunxiu.gaiche.utils.CityDBUtils;
 import com.gaicheyunxiu.gaiche.utils.CityEntity;
 import com.gaicheyunxiu.gaiche.utils.Constant;
 import com.gaicheyunxiu.gaiche.utils.DensityUtil;
+import com.gaicheyunxiu.gaiche.utils.HttpPostUtils;
 import com.gaicheyunxiu.gaiche.utils.LocalUtils;
 import com.gaicheyunxiu.gaiche.utils.LogManager;
 import com.gaicheyunxiu.gaiche.utils.MyApplication;
@@ -190,7 +192,7 @@ public class OultSelActivity extends BaseActivity implements View.OnClickListene
 //            }
         }
 
-        getOulet(1);
+
         group.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
@@ -218,10 +220,15 @@ public class OultSelActivity extends BaseActivity implements View.OnClickListene
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(OultSelActivity.this, OutletDetailActivity.class);
-                intent.putExtra("shopId",entities.get(position).id);
+                intent.putExtra("shopId", entities.get(position).id);
                 startActivity(intent);
             }
         });
+
+        if (ToosUtils.goBrand(OultSelActivity.this,0)){
+            return;
+        }
+        getOulet(1);
 
 
     }
@@ -328,6 +335,16 @@ public class OultSelActivity extends BaseActivity implements View.OnClickListene
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode==7889 && resultCode==RESULT_OK){
             titleMap.setText(MyApplication.getInstance().getCityEntity().name);
+            getOulet(1);
+            return;
+        }
+
+        if (resultCode!= Activity.RESULT_OK && requestCode==8856 ){
+            finish();
+            return;
+        }
+
+        if (requestCode==8856 && resultCode== Activity.RESULT_OK){
             getOulet(1);
         }
     }

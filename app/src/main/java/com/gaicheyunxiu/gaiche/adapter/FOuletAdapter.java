@@ -152,13 +152,17 @@ public class FOuletAdapter extends BaseAdapter {
                 bitmapUtils.display(holder1.carImage,carEntity.carBrandLogo);
                 holder1.carAddImage.setVisibility(View.GONE);
                 holder1.carName.setText(carEntity.carBrandName+carEntity.displacement+carEntity.productionDate);
-            }else{
-                HttpPostUtils.getMyCar(context, handler);
             }
+//            else{
+//                HttpPostUtils.getMyCar(context, handler);
+//            }
 
-            holder1.carName.setOnClickListener(new View.OnClickListener() {
+            holder1.brandlin.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    if (ToosUtils.goBrand(context,0)){
+                        return;
+                    }
                     Intent intent1=new Intent(context, CarmanagerActivity.class);
                     ((MainActivity)context).startActivityForResult(intent1, 8856);
                 }

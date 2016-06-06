@@ -82,20 +82,31 @@ public class FSupportActivity extends BaseActivity  implements View.OnClickListe
                 break;
 
             case R.id.fsupport_ok:
-                StringBuffer id=new StringBuffer();
+//                StringBuffer id=new StringBuffer();
+//                for (int i=0;i<entities.size();i++){
+//                    if (entities.get(i).isSelect){
+//                        id.append(entities.get(i).id);
+//                    }
+//                }
+
+//                if (ToosUtils.isStringEmpty(id.toString())){
+//                    ToastUtils.displayShortToast(FSupportActivity.this,"请选择养修项目！");
+//                    return;
+//                }
+                Intent intent=new Intent(FSupportActivity.this,YxListActivity.class);
+                String ids="";
                 for (int i=0;i<entities.size();i++){
-                    if (entities.get(i).isSelect){
-                        id.append(entities.get(i).id);
+                    if (entities.get(i).isSelect) {
+                        ids = ids + entities.get(i).id + ",";
                     }
                 }
-
-                if (ToosUtils.isStringEmpty(id.toString())){
+                if (ids.length()>0){
+                    ids=ids.substring(0,(ids.length()-1));
+                }else{
                     ToastUtils.displayShortToast(FSupportActivity.this,"请选择养修项目！");
                     return;
                 }
-                Intent intent=new Intent(FSupportActivity.this,ShopListActivity.class);
-                intent.putExtra("comeFlag",5);
-                intent.putExtra("id",id.toString());
+                intent.putExtra("ids",ids);
                 startActivity(intent);
                 break;
         }

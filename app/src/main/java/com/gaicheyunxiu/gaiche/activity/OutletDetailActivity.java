@@ -1,5 +1,6 @@
 package com.gaicheyunxiu.gaiche.activity;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -113,7 +114,7 @@ public class OutletDetailActivity extends BaseActivity implements View.OnClickLi
     private OutletdetailpinjiaAdapter pinjiaAdapter;
 
     private String shopId;//门店id
-    private BDLocation bdLocation = null;
+//    private BDLocation bdLocation = null;
     private BitmapUtils bitmapUtils;
     private List<ShopServiceEntity> yxentities;
     private List<ShopServiceEntity> mrentities;
@@ -124,10 +125,10 @@ public class OutletDetailActivity extends BaseActivity implements View.OnClickLi
         @Override
         public void handleMessage(Message msg) {
             switch (msg.what) {
-                case LocalUtils.LOCAT_OK:
-                    bdLocation = (BDLocation) msg.obj;
-                    getshopDetail();
-                    break;
+//                case LocalUtils.LOCAT_OK:
+//                    bdLocation = (BDLocation) msg.obj;
+//                    getshopDetail();
+//                    break;
                 case 1001:
                     setMoney();
                     break;
@@ -173,13 +174,7 @@ public class OutletDetailActivity extends BaseActivity implements View.OnClickLi
         webView= (WebView) findViewById(R.id.outletdetail_webview);
         WebSettings wSet = webView.getSettings();
         wSet.setJavaScriptEnabled(true);
-        webView.loadUrl(Constant.ROOT_PATH+"/shop/intro?shopId="+shopId);
-//        infoimage= (ImageView) findViewById(R.id.outletdetail_infoimage);
-//        infoname= (TextView) findViewById(R.id.outletdetail_infoname);
-//        infobar= (RatingBar) findViewById(R.id.outletdetail_infobar);
-//        infoscore= (TextView) findViewById(R.id.outletdetail_infoscore);
-//        infoContent= (TextView) findViewById(R.id.outletdetail_infocontent);
-//        imagecontent= (ImageView) findViewById(R.id.outletdetail_imagecontent);
+        webView.loadUrl(Constant.ROOT_PATH + "/shop/intro?shopId=" + shopId);
 
 
         serview= findViewById(R.id.outletdetail_serview);
@@ -266,8 +261,26 @@ public class OutletDetailActivity extends BaseActivity implements View.OnClickLi
         });
 
         pinjialist.setVisibility(View.GONE);
+
+        if (ToosUtils.goBrand(OutletDetailActivity.this,0)){
+            return;
+        }
+        getshopDetail();
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (resultCode!= Activity.RESULT_OK && requestCode==8856 ){
+            finish();
+            return;
+        }
+
+        if (requestCode==8856 && resultCode== Activity.RESULT_OK){
+            getshopDetail();
+        }
+    }
     @Override
     public void onClick(View v) {
         switch (v.getId()){
@@ -321,8 +334,8 @@ public class OutletDetailActivity extends BaseActivity implements View.OnClickLi
         HttpUtils utils = new HttpUtils();
         utils.configTimeout(20000);
         rp.addBodyParameter("shopId", shopId);
-        rp.addBodyParameter("longitude", String.valueOf(bdLocation.getLongitude()));
-        rp.addBodyParameter("latitude", String.valueOf(bdLocation.getLatitude()));
+        rp.addBodyParameter("longitude", String.valueOf(MyApplication.getInstance().getBdLocation().getLongitude()));
+        rp.addBodyParameter("latitude", String.valueOf(MyApplication.getInstance().getBdLocation().getLatitude()));
         utils.send(HttpRequest.HttpMethod.POST, Constant.ROOT_PATH
                 + "user/shopDetail", rp, new RequestCallBack<String>() {
             @Override

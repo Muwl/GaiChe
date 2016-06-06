@@ -217,12 +217,19 @@ public class ShopDetailActivity extends BaseActivity implements View.OnClickList
                     ToosUtils.goReLogin(ShopDetailActivity.this);
                     return;
                 }
+
+                if (ToosUtils.goBrand(ShopDetailActivity.this, 0)){
+                    return;
+                }
                 addshoppingCart();
                 break;
             case R.id.shopdetail_buy:
                 if (ToosUtils.isStringEmpty(ShareDataTool.getToken(ShopDetailActivity.this))){
                     ToastUtils.displayShortToast(ShopDetailActivity.this,"请登录！");
                     ToosUtils.goReLogin(ShopDetailActivity.this);
+                    return;
+                }
+                if (ToosUtils.goBrand(ShopDetailActivity.this, 0)){
                     return;
                 }
                 Intent intent1=new Intent(ShopDetailActivity.this,ClearingActivity.class);

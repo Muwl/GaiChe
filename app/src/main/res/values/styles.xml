@@ -39,4 +39,9 @@
         <item name="android:windowBackground">@null</item>
         <item name="android:backgroundDimEnabled">false</item>
     </style>
+
+    <style name="Theme.Start" parent="android:Theme">
+        <item name="android:windowBackground">@mipmap/welcome</item>
+        <item name="android:windowNoTitle">true</item>
+    </style>
 </resources>

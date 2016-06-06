@@ -9,8 +9,8 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:gravity="top"
-        android:paddingLeft="3dp"
-        android:paddingRight="3dp"
+        android:paddingLeft="6dp"
+        android:paddingRight="6dp"
         android:paddingTop="22dp">
 
         <LinearLayout
