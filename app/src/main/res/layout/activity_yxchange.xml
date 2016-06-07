@@ -47,6 +47,11 @@
 
     </LinearLayout>
 
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="3dp"
+        android:background="@color/activity_bg" />
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -92,6 +97,53 @@
                 android:layout_width="match_parent"
                 android:layout_height="3dp"
                 android:background="@color/activity_bg" />
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="@color/bottom_div" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <RadioGroup
+                    android:id="@+id/yxlist_group"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:id="@+id/yxlist_shoprb"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:button="@null"
+                        android:textSize="@dimen/second_font"
+                        android:paddingLeft="12dp"
+                        android:paddingRight="12dp"
+                        android:paddingTop="6dp"
+                        android:paddingBottom="6dp"
+                        android:text="可更换商品列表"
+                        android:textColor="@color/bottom_text_bn"/>
+
+                    <ImageView
+                        android:layout_width="1px"
+                        android:layout_height="match_parent"
+                        android:background="@color/bottom_div"/>
+                    <RadioButton
+                        android:id="@+id/yxlist_brandrb"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:paddingLeft="12dp"
+                        android:button="@null"
+                        android:textSize="@dimen/second_font"
+                        android:paddingRight="12dp"
+                        android:paddingTop="6dp"
+                        android:text="品牌"
+                        android:textColor="@color/bottom_text_bn"
+                        android:paddingBottom="6dp"/>
+                </RadioGroup>
+            </LinearLayout>
 
             <ListView
                 android:id="@+id/yxlist_list"

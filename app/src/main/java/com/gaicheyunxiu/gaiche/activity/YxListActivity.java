@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.gaicheyunxiu.gaiche.R;
 import com.gaicheyunxiu.gaiche.adapter.YxListAdapter;
+import com.gaicheyunxiu.gaiche.model.CommodityEntity;
 import com.gaicheyunxiu.gaiche.model.CommodityState;
 import com.gaicheyunxiu.gaiche.model.MyCarEntity;
 import com.gaicheyunxiu.gaiche.model.ReturnState;
@@ -33,6 +34,7 @@ import com.lidroid.xutils.http.ResponseInfo;
 import com.lidroid.xutils.http.callback.RequestCallBack;
 import com.lidroid.xutils.http.client.HttpRequest;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -86,6 +88,12 @@ public class YxListActivity extends BaseActivity implements View.OnClickListener
                     break;
 
                 case 1662:
+                    Intent intent=new Intent(YxListActivity.this,YxListEditActivity.class);
+                    int poi= (int) msg.obj;
+                    intent.putExtra("position",poi);
+                    intent.putExtra("name",entities.get(poi).name);
+                    intent.putExtra("entity", (Serializable) entities.get(poi).vos);
+                    startActivityForResult(intent,7884);
 
                     break;
             }
@@ -160,7 +168,20 @@ public class YxListActivity extends BaseActivity implements View.OnClickListener
         if (requestCode==8856){
             getAdShop();
         }
+
+        if (requestCode==7884 && resultCode==RESULT_OK){
+            int posi=data.getIntExtra("position",0);
+            List<CommodityEntity> commodityEntities= (List<CommodityEntity>) data.getSerializableExtra("entity");
+            entities.get(posi).vos.clear();
+            for (int i=0;i<commodityEntities.size();i++){
+                entities.get(posi).vos.add(commodityEntities.get(i));
+            }
+            listAdapter.notifyDataSetChanged();
+            setMoney();
+        }
     }
+
+
 
     @Override
     public void onClick(View v) {
