@@ -149,9 +149,9 @@ public class FOuletAdapter extends BaseAdapter {
 
             MyCarEntity carEntity= MyApplication.getInstance().getCarEntity();
             if (carEntity!=null){
-                bitmapUtils.display(holder1.carImage,carEntity.carBrandLogo);
+                bitmapUtils.display(holder1.carImage, carEntity.carBrandLogo);
                 holder1.carAddImage.setVisibility(View.GONE);
-                holder1.carName.setText(carEntity.carBrandName+carEntity.displacement+carEntity.productionDate);
+                holder1.carName.setText(carEntity.carBrandName + carEntity.type + carEntity.displacement + carEntity.productionDate+"年产");
             }
 //            else{
 //                HttpPostUtils.getMyCar(context, handler);

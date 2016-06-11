@@ -133,7 +133,7 @@ public class CartActivity extends BaseActivity  implements View.OnClickListener 
         listView= (ListView) findViewById(R.id.cart_list);
         empty=findViewById(R.id.cart_empty);
         goSale= (TextView) findViewById(R.id.cart_gosale);
-        goCulture= (TextView) findViewById(R.id.cart_gosale);
+        goCulture= (TextView) findViewById(R.id.cart_goculture);
         pro=  findViewById(R.id.cart_pro);
 
         entities=new ArrayList<>();
@@ -144,8 +144,9 @@ public class CartActivity extends BaseActivity  implements View.OnClickListener 
         map.setVisibility(View.VISIBLE);
         back.setOnClickListener(this);
         map.setOnClickListener(this);
+        goSale.setOnClickListener(this);
+        goCulture.setOnClickListener(this);
         listView.setAdapter(adapter);
-        titleCity.setOnClickListener(this);
         titleCity.setText(MyApplication.getInstance().getCityEntity().name);
         getCart();
     }
@@ -159,6 +160,16 @@ public class CartActivity extends BaseActivity  implements View.OnClickListener 
             case R.id.title_map:
                 Intent intent10=new Intent(CartActivity.this, CitySelActivity.class);
                 startActivityForResult(intent10, 7889);
+                break;
+
+            case R.id.cart_gosale:
+                Intent intent=new Intent(CartActivity.this,MainActivity.class);
+                startActivity(intent);
+
+                break;
+            case R.id.cart_goculture:
+                Intent intent2=new Intent(CartActivity.this,FSupportActivity.class);
+                startActivity(intent2);
                 break;
         }
 

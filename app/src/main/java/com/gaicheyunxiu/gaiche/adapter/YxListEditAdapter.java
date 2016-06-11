@@ -29,6 +29,7 @@ public class YxListEditAdapter extends BaseAdapter {
         this.context = context;
         this.entities = entities;
         this.handler = handler;
+        bitmapUtils=new BitmapUtils(context);
     }
 
     @Override
@@ -64,12 +65,12 @@ public class YxListEditAdapter extends BaseAdapter {
         }
 
         bitmapUtils.display(holder.imageView, entities.get(position).briefImage);
-        holder.num.setText(entities.get(position).sales);
+        holder.num.setText(entities.get(position).num+"");
 
         holder.add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                entities.get(position).sales = Integer.valueOf(entities.get(position).sales) + 1 + "";
+                entities.get(position).num = Integer.valueOf(entities.get(position).num) + 1 ;
                 notifyDataSetChanged();
             }
         });
@@ -77,8 +78,8 @@ public class YxListEditAdapter extends BaseAdapter {
         holder.num.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (Integer.valueOf(entities.get(position).sales) > 1) {
-                    entities.get(position).sales = Integer.valueOf(entities.get(position).sales) - 1 + "";
+                if (Integer.valueOf(entities.get(position).num) > 1) {
+                    entities.get(position).num = Integer.valueOf(entities.get(position).num) - 1;
                     notifyDataSetChanged();
                 }
             }
@@ -97,12 +98,12 @@ public class YxListEditAdapter extends BaseAdapter {
             public void onClick(View v) {
                 Message message=new Message();
                 message.what=4546;
-                message.what=position;
+                message.obj=position;
                 handler.sendMessage(message);
             }
         });
 
-        return null;
+        return convertView;
     }
 
     class ViewHolder {

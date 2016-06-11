@@ -148,10 +148,10 @@
                     android:background="@color/write"
                     android:gravity="center_vertical"
                     android:orientation="horizontal"
-                    android:paddingBottom="13dp"
+                    android:paddingBottom="10dp"
                     android:paddingLeft="18dp"
                     android:paddingRight="18dp"
-                    android:paddingTop="13dp">
+                    android:paddingTop="10dp">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -187,10 +187,10 @@
                     android:background="@color/write"
                     android:gravity="center_vertical"
                     android:orientation="horizontal"
-                    android:paddingBottom="13dp"
+                    android:paddingBottom="10dp"
                     android:paddingLeft="18dp"
                     android:paddingRight="18dp"
-                    android:paddingTop="13dp">
+                    android:paddingTop="10dp">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -216,6 +216,42 @@
                     android:layout_height="1px"
                     android:background="@color/bottom_div" />
 
+                <LinearLayout
+                    android:id="@+id/clearing_shoplist"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/write"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:visibility="gone"
+                    android:paddingBottom="10dp"
+                    android:paddingLeft="18dp"
+                    android:paddingRight="18dp"
+                    android:paddingTop="10dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="15dp"
+                        android:layout_weight="1"
+                        android:text="商品清单"
+                        android:textColor="#5F5D5D"
+                        android:textSize="@dimen/second_font" />
+
+                    <TextView
+                        android:id="@+id/clearing_shopnum"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:drawableRight="@mipmap/main_go"
+                        android:drawablePadding="10dp"
+                        android:textColor="#5F5D5D"
+                        android:textSize="@dimen/second_font" />
+                </LinearLayout>
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:background="@color/bottom_div" />
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -226,11 +262,6 @@
                     android:text="请选择支付方式"
                     android:textColor="#5F5D5D"
                     android:textSize="@dimen/thrid_font" />
-
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="1px"
-                    android:background="@color/bottom_div" />
 
                 <LinearLayout
                     android:id="@+id/pay_wallet"

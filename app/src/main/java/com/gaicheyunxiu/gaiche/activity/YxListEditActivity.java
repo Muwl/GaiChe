@@ -48,10 +48,22 @@ public class YxListEditActivity extends BaseActivity implements View.OnClickList
 
     private String serName;
 
+    private String ids;
+
+
+
     private Handler handler=new Handler(){
         @Override
         public void handleMessage(Message msg) {
-
+            switch (msg.what){
+                case 4546:
+                    int poi= (int) msg.obj;
+                    Intent intent=new Intent(YxListEditActivity.this,YxListChangeActivity.class);
+                    intent.putExtra("position",poi);
+                    intent.putExtra("id",ids);
+                    startActivityForResult(intent, 4715);
+                    break;
+            }
         }
     };
 
@@ -84,7 +96,7 @@ public class YxListEditActivity extends BaseActivity implements View.OnClickList
         MyCarEntity carEntity= MyApplication.getInstance().getCarEntity();
 
         bitmapUtils.display(carImage, carEntity.carBrandLogo);
-        carName.setText(carEntity.carBrandName);
+        carName.setText(carEntity.carBrandName+carEntity.type +carEntity.displacement+carEntity.productionDate+"年产");
         serviceName.setText(serName);
 
         adapter=new YxListEditAdapter(this,commodityEntities,handler);
@@ -106,6 +118,26 @@ public class YxListEditActivity extends BaseActivity implements View.OnClickList
                 setResult(RESULT_OK,intent);
                 finish();
                 break;
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode==4715 && resultCode==RESULT_OK){
+            int poi=data.getIntExtra("position",0);
+            if (poi==-1){
+                Intent intent=new Intent();
+                intent.putExtra("position",position);
+                intent.putExtra("entity", (Serializable) commodityEntities);
+                setResult(RESULT_OK,intent);
+                finish();
+            }else{
+                CommodityEntity commodityEntity= (CommodityEntity) getIntent().getSerializableExtra("entity");
+                commodityEntities.set(poi,commodityEntity);
+                adapter.notifyDataSetChanged();
+            }
+
         }
     }
 }

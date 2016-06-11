@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="300dp"
+    android:layout_height="wrap_content"
+    android:background="@drawable/logistic_dialog_bg"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/dialog_logistic_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="10dp"
+        android:singleLine="true"
+        android:text="awjdlkwadj"
+        android:textColor="@color/write"
+        android:textSize="@dimen/first_font" />
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/write" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/logistic_dialog_lef"
+            android:gravity="center"
+            android:padding="10dp"
+            android:text="车牌号"
+            android:textColor="@color/write"
+            android:textSize="@dimen/first_font" />
+
+        <ImageView
+            android:layout_width="1px"
+            android:layout_height="match_parent"
+            android:background="@color/write" />
+        <TextView
+            android:id="@+id/dialog_logistic_carno"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/logistic_dialog_lef"
+            android:gravity="center"
+            android:padding="10dp"
+            android:singleLine="true"
+            android:text="16545165"
+            android:textColor="@color/write"
+            android:textSize="@dimen/first_font" />
+    </LinearLayout>
+</LinearLayout>

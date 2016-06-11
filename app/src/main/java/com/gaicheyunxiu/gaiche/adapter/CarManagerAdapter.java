@@ -67,7 +67,7 @@ public class CarManagerAdapter extends BaseAdapter {
             temp="进口";
         }
         holder.cb.setChecked(entities.get(position).isDefault);
-        holder.name.setText(entities.get(position).carBrandName+"\u2000"+entities.get(position).displacement+"\u2000"+entities.get(position).productionDate+"\n（"+temp+"）");
+        holder.name.setText(entities.get(position).carBrandName+entities.get(position).type+"\u2000"+entities.get(position).displacement+"\u2000"+entities.get(position).productionDate+"年产"+"\n（"+temp+"）");
 
         return convertView;
     }

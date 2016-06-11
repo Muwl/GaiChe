@@ -575,11 +575,16 @@
                         android:layout_height="wrap_content"
                         android:singleLine="true"
                         android:layout_marginLeft="10dp"
-                        android:text="养修项目（3项）"
+                        android:text="养修项目（0项）"
                         android:textColor="#1b7ac0"
                         android:textSize="@dimen/second_font" />
 
                 </LinearLayout>
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:background="@color/bottom_div"/>
 
                 <com.gaicheyunxiu.gaiche.view.MyListView
                     android:id="@+id/outletdetail_seryangxiulist"
@@ -611,6 +616,11 @@
                         android:textSize="@dimen/second_font" />
 
                 </LinearLayout>
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:background="@color/bottom_div"/>
 
                 <com.gaicheyunxiu.gaiche.view.MyListView
                     android:id="@+id/outletdetail_sermeironglist"

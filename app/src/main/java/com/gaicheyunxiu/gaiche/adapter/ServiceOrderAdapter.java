@@ -97,8 +97,8 @@ public class ServiceOrderAdapter extends BaseAdapter {
             holder.pay.setText("付款");
             holder.pay.setVisibility(View.GONE);
         }else if("3".equals(entities.get(position).orderState)){
-            holder.div1.setVisibility(View.GONE);
-            holder.del.setVisibility(View.GONE);
+            holder.div1.setVisibility(View.VISIBLE);
+            holder.del.setVisibility(View.VISIBLE);
             holder.del.setText("删除订单");
             holder.pay.setText("付款");
             holder.pay.setVisibility(View.GONE);
@@ -129,7 +129,7 @@ public class ServiceOrderAdapter extends BaseAdapter {
         holder.del.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if("2".equals(entities.get(position).orderState)){
+                if("2".equals(entities.get(position).orderState) || "3".equals(entities.get(position).orderState)){
                     CustomeDialog customeDialog=new CustomeDialog(context,handler,"确定要删除此订单？",position,-1);
                 }else{
                     CustomeDialog customeDialog=new CustomeDialog(context,handler,"确定要取消此订单？",position,-2);

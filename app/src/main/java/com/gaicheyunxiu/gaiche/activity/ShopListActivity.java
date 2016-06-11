@@ -117,7 +117,7 @@ public class  ShopListActivity extends BaseActivity implements View.OnClickListe
                     if (carEntity!=null){
                         bitmapUtils.display(carImage,carEntity.carBrandLogo);
                         carAddImage.setVisibility(View.GONE);
-                        carName.setText(carEntity.carBrandName+carEntity.displacement+carEntity.productionDate);
+                        carName.setText(carEntity.carBrandName+carEntity.type +carEntity.displacement+carEntity.productionDate+"年产");
                     }
                     break;
             }
@@ -138,8 +138,10 @@ public class  ShopListActivity extends BaseActivity implements View.OnClickListe
             serchView.setVisibility(View.GONE);
             carLin.setVisibility(View.VISIBLE);
         }
-        if (ToosUtils.goBrand(ShopListActivity.this,0)){
-            return;
+        if (comeFlag!=6){
+            if (ToosUtils.goBrand(ShopListActivity.this,0)){
+                return;
+            }
         }
         getAdShop(1);
     }
@@ -260,7 +262,7 @@ public class  ShopListActivity extends BaseActivity implements View.OnClickListe
         if (carEntity!=null){
             bitmapUtils.display(carImage,carEntity.carBrandLogo);
             carAddImage.setVisibility(View.GONE);
-            carName.setText(carEntity.carBrandName+carEntity.displacement+carEntity.productionDate);
+            carName.setText(carEntity.carBrandName+carEntity.type +carEntity.displacement+carEntity.productionDate+"年产");
         }else{
             HttpPostUtils.getMyCar(this, handler);
         }
@@ -276,6 +278,9 @@ public class  ShopListActivity extends BaseActivity implements View.OnClickListe
         }
         if (requestCode==1116){
             brandName=data.getStringExtra("brandName");
+            if ("全部".equals(brandName)){
+                brandName="";
+            }
             getAdShop(1);
         }
 
@@ -287,7 +292,7 @@ public class  ShopListActivity extends BaseActivity implements View.OnClickListe
             if (carEntity!=null){
                 bitmapUtils.display(carImage,carEntity.carBrandLogo);
                 carAddImage.setVisibility(View.GONE);
-                carName.setText(carEntity.carBrandName+carEntity.type+carEntity.displacement+carEntity.productionDate);
+                carName.setText(carEntity.carBrandName+carEntity.type+carEntity.displacement+carEntity.productionDate+"年产");
             }
             LogManager.LogShow("----------**&&", carEntity.toString(), LogManager.ERROR);
         }
@@ -471,7 +476,7 @@ public class  ShopListActivity extends BaseActivity implements View.OnClickListe
                 rp.addBodyParameter("commodityTypeId", commodityTypeId);
                 url="popularCategories/commoditys";
 
-                LogManager.LogShow("------",Constant.ROOT_PATH+url+"?carTypeId="+carEntity.carTypeId+"&commodityTypeId="+commodityTypeId+"&pageNo="+pageNo+"&brand=全部"+"&sort="+0,LogManager.ERROR);
+//                LogManager.LogShow("------",Constant.ROOT_PATH+url+"?carTypeId="+carEntity.carTypeId+"&commodityTypeId="+commodityTypeId+"&pageNo="+pageNo+"&brand=全部"+"&sort="+0,LogManager.ERROR);
             }
 
         }

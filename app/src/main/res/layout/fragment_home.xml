@@ -90,6 +90,7 @@
             <com.gaicheyunxiu.gaiche.view.MyGallery
                 android:id="@+id/home_grally"
                 android:layout_width="match_parent"
+                android:spacing="3dp"
                 android:layout_height="250dp"
                 android:padding="0dp" />
                 <LinearLayout

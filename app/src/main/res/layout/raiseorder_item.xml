@@ -48,7 +48,7 @@
             android:layout_height="match_parent"
             android:gravity="center"
             android:paddingRight="12dp"
-            android:text="代发货"
+            android:text="待发货"
             android:textColor="#5F5D5D"
             android:textSize="@dimen/first_font" />
     </LinearLayout>

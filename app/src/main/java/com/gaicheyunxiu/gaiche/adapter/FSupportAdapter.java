@@ -56,7 +56,7 @@ public class FSupportAdapter extends BaseAdapter {
         }else{
             holder=new ViewHolder();
         }
-        holder.name.setText(entities.get(position).name);
+        holder.name.setText((position+1)+"."+entities.get(position).name);
         holder.cycle.setText(entities.get(position).cycle);
         holder.checkBox.setChecked(entities.get(position).isSelect);
         holder.content.setText(entities.get(position).remarks);

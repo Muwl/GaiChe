@@ -49,6 +49,10 @@
 
     <ImageView
         android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/bottom_div"/>
+    <ImageView
+        android:layout_width="match_parent"
         android:layout_height="3dp"
         android:background="@color/activity_bg" />
 
@@ -145,11 +149,24 @@
                 </RadioGroup>
             </LinearLayout>
 
-            <ListView
-                android:id="@+id/yxlist_list"
+            <ImageView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:scrollbars="none" />
+                android:layout_height="1px"
+                android:background="@color/bottom_div"/>
+
+            <com.handmark.pulltorefresh.library.PullToRefreshListView
+                android:id="@+id/yxlist_list"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:cacheColorHint="#00000000"
+                android:fadingEdge="none"
+                android:fastScrollEnabled="false"
+                android:scrollbars="none"
+                android:footerDividersEnabled="false"
+                android:headerDividersEnabled="false"
+                android:smoothScrollbar="true" />
+
+
         </LinearLayout>
 
 

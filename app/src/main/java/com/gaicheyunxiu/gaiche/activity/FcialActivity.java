@@ -90,7 +90,9 @@ public class FcialActivity extends BaseActivity  implements View.OnClickListener
                 intent.putExtra("flag",1);
                 String ids="";
                 for (int i=0;i<entities.size();i++){
-                    ids=ids+entities.get(i).id+",";
+                    if (entities.get(i).isSelect){
+                        ids=ids+entities.get(i).id+",";
+                    }
                 }
                 if (ids.length()>0){
                     ids=ids.substring(0,(ids.length()-1));

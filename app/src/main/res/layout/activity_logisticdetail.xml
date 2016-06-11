@@ -9,6 +9,15 @@
         android:id="@+id/logistic_title"
         layout="@layout/activity_title"/>
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -81,4 +90,12 @@
         android:scrollbars="none" />
 
 
+        </LinearLayout>
+
+        <include
+            android:id="@+id/logisticdetail_pro"
+            layout="@layout/pro"
+            android:visibility="gone"
+            />
+    </RelativeLayout>
 </LinearLayout>

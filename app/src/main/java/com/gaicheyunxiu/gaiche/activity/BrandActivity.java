@@ -202,9 +202,14 @@ public class BrandActivity extends BaseActivity implements View.OnClickListener 
                                 }
                                 entities.add(entity);
 //                            }
-
+                            }
+                        BrandEntity entity=new BrandEntity();
+                        entity.name="全部";
+                        if (ToosUtils.isStringEmpty(brandName) || "全部".equals(brandName)){
+                            entity.isSel=true;
+                        }else{
+                            entity.isSel=false;
                         }
-
                         adapter.notifyDataSetChanged();
 
                     } else if (Constant.TOKEN_ERR.equals(state.msg)) {

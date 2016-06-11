@@ -91,8 +91,13 @@ public class DepositActivity  extends BaseActivity implements View.OnClickListen
                 adapter.notifyDataSetChanged();
             }
         });
-        money.setHint("当前收益余额"+smoney+"元");
+        money.setHint("当前收益余额" + smoney + "元");
         getDefaultAddress();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
 
     }
 
@@ -169,12 +174,18 @@ public class DepositActivity  extends BaseActivity implements View.OnClickListen
                                 LogManager.ERROR);
                         entities.clear();
                         adapter.notifyDataSetChanged();
-                        MyWalletState walletState=gson.fromJson(arg0.result,MyWalletState.class);
-                        for (int i=0;i<walletState.result.bankCards.size();i++){
-                            walletState.result.bankCards.get(i).isCheck=false;
+                        MyWalletState walletState = gson.fromJson(arg0.result, MyWalletState.class);
+                        for (int i = 0; i < walletState.result.bankCards.size(); i++) {
+                            walletState.result.bankCards.get(i).isCheck = false;
                             entities.add(walletState.result.bankCards.get(i));
                         }
                         adapter.notifyDataSetChanged();
+
+                        if (entities.size() == 0) {
+                            ToastUtils.displayShortToast(DepositActivity.this,"请添加银行卡！");
+                            Intent intent = new Intent(DepositActivity.this, AddbrandActivity.class);
+                            startActivityForResult(intent, 1552);
+                        }
                     } else if (Constant.INFO_NOCOM.equals(state.msg)) {
 
                     } else if (Constant.TOKEN_ERR.equals(state.msg)) {
@@ -191,6 +202,14 @@ public class DepositActivity  extends BaseActivity implements View.OnClickListen
 
             }
         });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode==1552 && resultCode==RESULT_OK){
+            getDefaultAddress();
+        }
     }
 
     /**
@@ -254,5 +273,7 @@ public class DepositActivity  extends BaseActivity implements View.OnClickListen
             }
         });
     }
+
+
 
 }

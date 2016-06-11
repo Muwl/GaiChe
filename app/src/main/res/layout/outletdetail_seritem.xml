@@ -8,10 +8,10 @@
     <TextView
         android:id="@+id/outletdetail_seritem_name"
         android:layout_width="match_parent"
-        android:textColor="#5F5D5D"
+        android:textColor="#332c2b"
         android:padding="8dp"
         android:text="更换安慰了贷款"
-        android:textSize="@dimen/first_font"
+        android:textSize="@dimen/second_font"
         android:layout_height="wrap_content" />
 
     <ImageView
@@ -30,7 +30,7 @@
             android:id="@+id/outletdetail_seritem_monney"
             android:layout_width="0dp"
             android:layout_weight="1"
-            android:textColor="#5F5D5D"
+            android:textColor="#332c2b"
             android:text="￥：10远 0.25M"
             android:padding="8dp"
             android:textSize="@dimen/second_font"
@@ -49,7 +49,7 @@
             android:layout_width="23dp"
             android:layout_height="23dp"
             android:background="@drawable/num_bg"
-            android:textColor="#5F5D5D"
+            android:textColor="#332c2b"
             android:layout_marginLeft="8dp"
             android:gravity="center"
             android:textSize="@dimen/second_font"
@@ -80,10 +80,10 @@
     <TextView
         android:id="@+id/outletdetail_seritem_content"
         android:layout_width="match_parent"
-        android:textColor="#5F5D5D"
+        android:textColor="#706f6f"
         android:padding="8dp"
         android:text="七座一下。。。"
-        android:textSize="@dimen/first_font"
+        android:textSize="@dimen/second_font"
         android:layout_height="wrap_content" />
 
     <ImageView

@@ -87,7 +87,7 @@ public class StoreFragment extends Fragment implements View.OnClickListener{
                     if (carEntity!=null){
                         bitmapUtils.display(carImage,carEntity.carBrandLogo);
                         carAddImage.setVisibility(View.GONE);
-                        carName.setText(carEntity.carBrandName+carEntity.displacement+carEntity.productionDate);
+                        carName.setText(carEntity.carBrandName+carEntity.type +carEntity.displacement+carEntity.productionDate+"年产");
                     }
                     break;
             }
@@ -152,7 +152,7 @@ public class StoreFragment extends Fragment implements View.OnClickListener{
         if (carEntity!=null){
             bitmapUtils.display(carImage,carEntity.carBrandLogo);
             carAddImage.setVisibility(View.GONE);
-            carName.setText(carEntity.carBrandName+carEntity.displacement+carEntity.productionDate);
+            carName.setText(carEntity.carBrandName+carEntity.type +carEntity.displacement+carEntity.productionDate+"年产");
         }else{
             HttpPostUtils.getMyCar(getActivity(), handler);
         }
@@ -184,7 +184,7 @@ public class StoreFragment extends Fragment implements View.OnClickListener{
         if (carEntity!=null){
             bitmapUtils.display(carImage,carEntity.carBrandLogo);
             carAddImage.setVisibility(View.GONE);
-            carName.setText(carEntity.carBrandName+carEntity.type+carEntity.displacement+carEntity.productionDate);
+            carName.setText(carEntity.carBrandName+carEntity.type+carEntity.displacement+carEntity.productionDate+"年产");
         }
     }
 

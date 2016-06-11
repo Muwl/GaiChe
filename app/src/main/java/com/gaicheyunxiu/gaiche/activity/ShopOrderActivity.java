@@ -16,11 +16,14 @@ import com.gaicheyunxiu.gaiche.R;
 import com.gaicheyunxiu.gaiche.adapter.ShopOrderAdapter;
 import com.gaicheyunxiu.gaiche.dialog.CustomeConDialog;
 import com.gaicheyunxiu.gaiche.dialog.CustomeDialog;
+import com.gaicheyunxiu.gaiche.dialog.LogisticDialog;
 import com.gaicheyunxiu.gaiche.model.CrowCommityState;
 import com.gaicheyunxiu.gaiche.model.ReturnState;
 import com.gaicheyunxiu.gaiche.model.ShopOrderEntity;
 import com.gaicheyunxiu.gaiche.model.ShopOrderState;
 import com.gaicheyunxiu.gaiche.model.ShopOrderVo;
+import com.gaicheyunxiu.gaiche.model.WLlogistic;
+import com.gaicheyunxiu.gaiche.model.ZHlogistic;
 import com.gaicheyunxiu.gaiche.utils.Constant;
 import com.gaicheyunxiu.gaiche.utils.LogManager;
 import com.gaicheyunxiu.gaiche.utils.ShareDataTool;
@@ -40,6 +43,7 @@ import com.tencent.mm.sdk.openapi.WXAPIFactory;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Administrator on 2015/12/29.
@@ -85,8 +89,30 @@ public class ShopOrderActivity extends  BaseActivity implements View.OnClickList
                     //查看物流
                     int groupPoi=msg.arg2;
                     int position=msg.arg1;
-                    Intent intent11=new Intent(ShopOrderActivity.this, LogisticDetailActivity.class);
-                    startActivity(intent11);
+                    ShopOrderVo shopOrderVo=null;
+                    if ("0".equals(entities.get(groupPoi).split)){
+                        shopOrderVo=entities.get(groupPoi).orderListVos.get(position);
+                    }else{
+                        shopOrderVo=entities.get(groupPoi).vos.get(position);
+                    }
+                    Gson gson=new Gson();
+                    if ("0".equals(shopOrderVo.distributionType)){
+                        Map<String,String> logmaps=shopOrderVo.distributionDetail;
+                        if (!ToosUtils.isStringEmpty(logmaps.get("LPN")) && !ToosUtils.isStringEmpty(logmaps.get("mobile"))){
+                            LogisticDialog dialog=new LogisticDialog(ShopOrderActivity.this,logmaps.get("LPN"),logmaps.get("mobile"));
+                        }
+
+                    }else{
+                        Intent intent11=new Intent(ShopOrderActivity.this, LogisticDetailActivity.class);
+                        Map<String,String> logmaps=shopOrderVo.distributionDetail;
+                        intent11.putExtra("expressNo",logmaps.get("LPN"));
+                        intent11.putExtra("expressCompany",logmaps.get("mobile"));
+                        intent11.putExtra("orderId",entities.get(groupPoi).orderId);
+                        intent11.putExtra("commodityId",shopOrderVo.id);
+                        startActivity(intent11);
+                    }
+
+
                     break;
 
                 case 1339:
@@ -102,7 +128,7 @@ public class ShopOrderActivity extends  BaseActivity implements View.OnClickList
                         intent9.putExtra("money",Double.valueOf(entities.get(groupPoi5).orderListVos.get(position5).presentPrice)*Double.valueOf(entities.get(groupPoi5).orderListVos.get(position5).sales));
                     }else{
                         intent9.putExtra("entity", entities.get(groupPoi5).vos.get(position5));
-                        intent9.putExtra("money",Double.valueOf(entities.get(groupPoi5).orderListVos.get(position5).presentPrice)*Double.valueOf(entities.get(groupPoi5).orderListVos.get(position5).sales));
+                        intent9.putExtra("money",Double.valueOf(entities.get(groupPoi5).vos.get(position5).presentPrice)*Double.valueOf(entities.get(groupPoi5).vos.get(position5).sales));
                     }
                     startActivity(intent9);
                     break;
@@ -165,7 +191,7 @@ public class ShopOrderActivity extends  BaseActivity implements View.OnClickList
                             intent8.putExtra("money",Double.valueOf(entities.get(groupPoi4).orderListVos.get(position4).presentPrice)*Double.valueOf(entities.get(groupPoi4).orderListVos.get(position4).sales));
                         }else{
                             intent8.putExtra("commodityId", entities.get(groupPoi4).vos.get(position4).id);
-                            intent8.putExtra("money",Double.valueOf(entities.get(groupPoi4).orderListVos.get(position4).presentPrice)*Double.valueOf(entities.get(groupPoi4).orderListVos.get(position4).sales));
+                            intent8.putExtra("money",Double.valueOf(entities.get(groupPoi4).vos.get(position4).presentPrice)*Double.valueOf(entities.get(groupPoi4).vos.get(position4).sales));
                         }
                         startActivity(intent8);
 

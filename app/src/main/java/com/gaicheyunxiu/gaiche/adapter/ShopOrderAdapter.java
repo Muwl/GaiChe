@@ -72,7 +72,7 @@ public class ShopOrderAdapter extends BaseAdapter{
         holder.time.setText(entities.get(position).createDate);
 
         if ("0".equals(entities.get(position).orderState)){
-            holder.state.setText("代付款");
+            holder.state.setText("待付款");
             holder.money.setVisibility(View.VISIBLE);
             holder.div.setVisibility(View.VISIBLE);
             holder.graybtn.setVisibility(View.VISIBLE);

@@ -35,6 +35,16 @@ public class TimeUtils {
 
 	}
 
+
+	public static int getDay(String data){
+		Date date=getDateByStr(data);
+		Date nowdata=new Date();
+		long cur=date.getTime()-nowdata.getTime();
+		int m= (int) (cur/(1000*60*60*24));
+		return m;
+
+	}
+
 	public static String getMinute(String data){
 		Date date=getDateByStr(data);
 		Date nowdata=new Date();

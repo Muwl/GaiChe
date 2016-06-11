@@ -41,6 +41,7 @@ public class MainActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        pageIndex=getIntent().getIntExtra("flag", 1);
 
         try {
             FileTool.copyAssetFileToDatabase(this, "city.db","city.db");
@@ -128,6 +129,20 @@ public class MainActivity extends BaseActivity {
             }
         });
 
+//        if (pageIndex==2){
+//            group.check(R.id.main_bottom_store);
+//        }
+
+
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        int flag=intent.getIntExtra("flag",1);
+        if (flag==2){
+            checkIndex(1);
+        }
 
     }
 

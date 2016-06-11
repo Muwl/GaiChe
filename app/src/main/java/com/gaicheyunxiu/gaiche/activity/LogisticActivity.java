@@ -12,9 +12,11 @@ import android.widget.TextView;
 import com.gaicheyunxiu.gaiche.R;
 import com.gaicheyunxiu.gaiche.adapter.LogisticAdapter;
 import com.gaicheyunxiu.gaiche.adapter.ShopOrderAdapter;
+import com.gaicheyunxiu.gaiche.dialog.LogisticDialog;
 import com.gaicheyunxiu.gaiche.model.ReturnState;
 import com.gaicheyunxiu.gaiche.model.ShopOrderEntity;
 import com.gaicheyunxiu.gaiche.model.ShopOrderState;
+import com.gaicheyunxiu.gaiche.model.ShopOrderVo;
 import com.gaicheyunxiu.gaiche.utils.Constant;
 import com.gaicheyunxiu.gaiche.utils.LogManager;
 import com.gaicheyunxiu.gaiche.utils.ShareDataTool;
@@ -32,6 +34,7 @@ import com.lidroid.xutils.http.client.HttpRequest;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Mu on 2016/1/18.
@@ -63,8 +66,32 @@ public class LogisticActivity extends BaseActivity implements View.OnClickListen
                     //查看物流
                     int groupPoi=msg.arg2;
                     int position=msg.arg1;
-                    Intent intent11=new Intent(LogisticActivity.this, LogisticDetailActivity.class);
-                    startActivity(intent11);
+
+                    ShopOrderVo shopOrderVo=null;
+                    if ("0".equals(entities.get(groupPoi).split)){
+                        shopOrderVo=entities.get(groupPoi).orderListVos.get(position);
+                    }else{
+                        shopOrderVo=entities.get(groupPoi).vos.get(position);
+                    }
+                    Gson gson=new Gson();
+                    if ("0".equals(shopOrderVo.distributionType)){
+                        Map<String,String> logmaps=shopOrderVo.distributionDetail;
+                        if (!ToosUtils.isStringEmpty(logmaps.get("LPN")) && !ToosUtils.isStringEmpty(logmaps.get("mobile"))){
+                            LogisticDialog dialog=new LogisticDialog(LogisticActivity.this,logmaps.get("LPN"),logmaps.get("mobile"));
+                        }
+
+                    }else{
+                        Intent intent11=new Intent(LogisticActivity.this, LogisticDetailActivity.class);
+                        Map<String,String> logmaps=shopOrderVo.distributionDetail;
+                        intent11.putExtra("expressNo",logmaps.get("LPN"));
+                        intent11.putExtra("expressCompany",logmaps.get("mobile"));
+                        intent11.putExtra("orderId",entities.get(groupPoi).orderId);
+                        intent11.putExtra("commodityId",shopOrderVo.id);
+                        startActivity(intent11);
+                    }
+
+//                    Intent intent11=new Intent(LogisticActivity.this, LogisticDetailActivity.class);
+//                    startActivity(intent11);
                     break;
             }
 

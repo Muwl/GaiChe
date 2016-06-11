@@ -16,9 +16,11 @@ import com.gaicheyunxiu.gaiche.adapter.RaiseOrderAdapter;
 import com.gaicheyunxiu.gaiche.adapter.ShopOrderAdapter;
 import com.gaicheyunxiu.gaiche.dialog.CustomeConDialog;
 import com.gaicheyunxiu.gaiche.dialog.CustomeDialog;
+import com.gaicheyunxiu.gaiche.dialog.LogisticDialog;
 import com.gaicheyunxiu.gaiche.model.ReturnState;
 import com.gaicheyunxiu.gaiche.model.ShopOrderEntity;
 import com.gaicheyunxiu.gaiche.model.ShopOrderState;
+import com.gaicheyunxiu.gaiche.model.ShopOrderVo;
 import com.gaicheyunxiu.gaiche.utils.Constant;
 import com.gaicheyunxiu.gaiche.utils.LogManager;
 import com.gaicheyunxiu.gaiche.utils.ShareDataTool;
@@ -36,6 +38,7 @@ import com.lidroid.xutils.http.client.HttpRequest;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Mu on 2016/1/18.
@@ -79,16 +82,28 @@ public class RaiseOrderActivity extends BaseActivity implements View.OnClickList
                     //查看物流
                     int groupPoi=msg.arg2;
                     int position=msg.arg1;
-                    Intent intent8 = new Intent(RaiseOrderActivity.this, ReqrefundActivity.class);
-                    intent8.putExtra("orderId",entities.get(groupPoi).orderId);
+                    ShopOrderVo shopOrderVo=null;
                     if ("0".equals(entities.get(groupPoi).split)){
-                        intent8.putExtra("commodityId", entities.get(groupPoi).orderListVos.get(position).id);
-                        intent8.putExtra("money",Double.valueOf(entities.get(groupPoi).orderListVos.get(position).presentPrice)*Double.valueOf(entities.get(groupPoi).orderListVos.get(position).sales));
+                        shopOrderVo=entities.get(groupPoi).orderListVos.get(position);
                     }else{
-                        intent8.putExtra("commodityId", entities.get(groupPoi).vos.get(position).id);
-                        intent8.putExtra("money",Double.valueOf(entities.get(groupPoi).orderListVos.get(position).presentPrice)*Double.valueOf(entities.get(groupPoi).orderListVos.get(position).sales));
+                        shopOrderVo=entities.get(groupPoi).vos.get(position);
                     }
-                    startActivity(intent8);
+                    Gson gson=new Gson();
+                    if ("0".equals(shopOrderVo.distributionType)){
+                        Map<String,String> logmaps=shopOrderVo.distributionDetail;
+                        if (!ToosUtils.isStringEmpty(logmaps.get("LPN")) && !ToosUtils.isStringEmpty(logmaps.get("mobile"))){
+                            LogisticDialog dialog=new LogisticDialog(RaiseOrderActivity.this,logmaps.get("LPN"),logmaps.get("mobile"));
+                        }
+
+                    }else{
+                        Intent intent11=new Intent(RaiseOrderActivity.this, LogisticDetailActivity.class);
+                        Map<String,String> logmaps=shopOrderVo.distributionDetail;
+                        intent11.putExtra("expressNo",logmaps.get("LPN"));
+                        intent11.putExtra("expressCompany",logmaps.get("mobile"));
+                        intent11.putExtra("orderId",entities.get(groupPoi).orderId);
+                        intent11.putExtra("commodityId",shopOrderVo.id);
+                        startActivity(intent11);
+                    }
                     break;
 
                 case 1339:
@@ -159,7 +174,17 @@ public class RaiseOrderActivity extends BaseActivity implements View.OnClickList
                         //申请退货
                         int groupPoi4=msg.arg2;
                         int position4=msg.arg1;
-                        refundOrder(groupPoi4,position4);
+
+                        Intent intent15 = new Intent(RaiseOrderActivity.this, ReqrefundActivity.class);
+                        intent15.putExtra("orderId", entities.get(groupPoi4).orderId);
+                        if ("0".equals(entities.get(groupPoi4).split)){
+                            intent15.putExtra("commodityId", entities.get(groupPoi4).orderListVos.get(position4).id);
+                            intent15.putExtra("money",Double.valueOf(entities.get(groupPoi4).orderListVos.get(position4).presentPrice)*Double.valueOf(entities.get(groupPoi4).orderListVos.get(position4).sales));
+                        }else{
+                            intent15.putExtra("commodityId", entities.get(groupPoi4).vos.get(position4).id);
+                            intent15.putExtra("money",Double.valueOf(entities.get(groupPoi4).vos.get(position4).presentPrice)*Double.valueOf(entities.get(groupPoi4).vos.get(position4).sales));
+                        }
+                        startActivity(intent15);
 
                     }
 

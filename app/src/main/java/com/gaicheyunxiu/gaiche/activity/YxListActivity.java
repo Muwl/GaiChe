@@ -83,7 +83,7 @@ public class YxListActivity extends BaseActivity implements View.OnClickListener
                     if (carEntity!=null){
                         bitmapUtils.display(carImage,carEntity.carBrandLogo);
                         carAddImage.setVisibility(View.GONE);
-                        carName.setText(carEntity.carBrandName+carEntity.displacement+carEntity.productionDate);
+                        carName.setText(carEntity.carBrandName+carEntity.type +carEntity.displacement+carEntity.productionDate+"年产");
                     }
                     break;
 
@@ -92,6 +92,7 @@ public class YxListActivity extends BaseActivity implements View.OnClickListener
                     int poi= (int) msg.obj;
                     intent.putExtra("position",poi);
                     intent.putExtra("name",entities.get(poi).name);
+                    intent.putExtra("ids",entities.get(poi).id);
                     intent.putExtra("entity", (Serializable) entities.get(poi).vos);
                     startActivityForResult(intent,7884);
 
@@ -133,6 +134,7 @@ public class YxListActivity extends BaseActivity implements View.OnClickListener
         title.setText("养修");
         back.setOnClickListener(this);
         carLin.setOnClickListener(this);
+        ok.setOnClickListener(this);
 
     }
 
@@ -143,7 +145,7 @@ public class YxListActivity extends BaseActivity implements View.OnClickListener
         if (carEntity!=null){
             bitmapUtils.display(carImage,carEntity.carBrandLogo);
             carAddImage.setVisibility(View.GONE);
-            carName.setText(carEntity.carBrandName+carEntity.displacement+carEntity.productionDate);
+            carName.setText(carEntity.carBrandName+carEntity.type +carEntity.displacement+carEntity.productionDate+"年产");
         }else{
             HttpPostUtils.getMyCar(this, handler);
         }
@@ -160,7 +162,7 @@ public class YxListActivity extends BaseActivity implements View.OnClickListener
             if (carEntity!=null){
                 bitmapUtils.display(carImage,carEntity.carBrandLogo);
                 carAddImage.setVisibility(View.GONE);
-                carName.setText(carEntity.carBrandName+carEntity.type+carEntity.displacement+carEntity.productionDate);
+                carName.setText(carEntity.carBrandName+carEntity.type+carEntity.displacement+carEntity.productionDate+"年产");
             }
             LogManager.LogShow("----------**&&", carEntity.toString(), LogManager.ERROR);
         }
@@ -199,6 +201,20 @@ public class YxListActivity extends BaseActivity implements View.OnClickListener
                     Intent intent1=new Intent(YxListActivity.this, CarmanagerActivity.class);
                     startActivityForResult(intent1, 8856);
                 }
+                break;
+
+            case R.id.yxlist_serok:
+                Intent intent=new Intent(YxListActivity.this,ClearingActivity.class);
+
+                List<CommodityEntity> commodityEntities=new ArrayList<>();
+                for (int i=0;i<entities.size();i++){
+                    for (int j=0;j<entities.get(i).vos.size();j++){
+                        commodityEntities.add(entities.get(i).vos.get(j));
+                    }
+                }
+                intent.putExtra("entity", (Serializable) commodityEntities);
+                intent.putExtra("flag", 4);
+                startActivity(intent);
                 break;
         }
     }
@@ -272,7 +288,7 @@ public class YxListActivity extends BaseActivity implements View.OnClickListener
         for (int i=0;i<entities.size();i++){
             for (int j=0;j<entities.get(i).vos.size();j++){
                 double m= Double.parseDouble(entities.get(i).vos.get(j).presentPrice);
-                int num=Integer.valueOf(entities.get(i).vos.get(j).sales);
+                int num=Integer.valueOf(entities.get(i).vos.get(j).num);
                 totalMon=totalMon+m*num;
             }
         }

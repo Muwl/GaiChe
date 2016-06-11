@@ -77,7 +77,6 @@
             android:layout_height="match_parent"
             android:layout_alignParentRight="true"
             android:src="@drawable/title_map_btn"
-            android:clickable="true"
             />
         <TextView
             android:id="@+id/title_city"

@@ -38,6 +38,7 @@
                         android:id="@+id/shopdetail_gallery"
                         android:layout_width="match_parent"
                         android:layout_height="360dp"
+                        android:spacing="3dp"
                         android:layout_alignParentTop="true"
                         android:padding="0dp" />
 

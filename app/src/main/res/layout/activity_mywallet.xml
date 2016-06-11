@@ -136,7 +136,7 @@
                     android:layout_marginLeft="35dp"
                     android:layout_marginRight="35dp"
                     android:layout_marginTop="25dp"
-                    android:text="支付密码和绑定手机的双重保障了解更多"
+                    android:text="支付密码和绑定手机的双重保障"
                     android:textColor="#5F5D5D"
                     android:textSize="@dimen/second_font" />
 

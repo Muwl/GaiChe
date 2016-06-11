@@ -74,12 +74,18 @@
             </com.gaicheyunxiu.gaiche.view.RatingBar>
 
             <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"/>
+
+            <TextView
                 android:id="@+id/outlet_item_discussnum"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="#5F5D5D"
                 android:text="868条"
-                android:layout_marginLeft="15dp"
+                android:singleLine="true"
+                android:layout_marginLeft="10dp"
                 android:textSize="@dimen/thrid_font"/>
         </LinearLayout>
 

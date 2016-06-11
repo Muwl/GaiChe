@@ -168,7 +168,7 @@ public class OultOrderSelActivity extends BaseActivity implements View.OnClickLi
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent();
-                intent.putExtra("entity", entities.get(position));
+                intent.putExtra("entity", entities.get(position-1));
                 setResult(RESULT_OK, intent);
                 finish();
 

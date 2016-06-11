@@ -55,7 +55,7 @@ public class FacialAdapter extends BaseAdapter {
         }else{
             holder= (ViewHolder) convertView.getTag();
         }
-        holder.name.setText(entities.get(position).name);
+        holder.name.setText((position+1)+"."+entities.get(position).name);
         holder.checkBox.setChecked(entities.get(position).isSelect);
         holder.content.setText(entities.get(position).remarks);
 

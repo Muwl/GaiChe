@@ -199,6 +199,8 @@ public class CrowdFundActivity extends BaseActivity implements View.OnClickListe
 
         double min=comed/total;
 
+        day.setText("倒计时"+TimeUtils.getDay(projectEntity.endDate)+"天");
+
         int swith= (int) (min*with);
         RelativeLayout.LayoutParams layoutParams= (RelativeLayout.LayoutParams) schedule.getLayoutParams();
         layoutParams.width=swith;

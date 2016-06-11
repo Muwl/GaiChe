@@ -20,6 +20,7 @@ import android.widget.Toast;
 
 import com.baidu.location.BDLocation;
 import com.baidu.mapapi.map.GroundOverlayOptions;
+import com.baidu.navisdk.adapter.BNOuterLogUtil;
 import com.baidu.navisdk.adapter.BNOuterTTSPlayerCallback;
 import com.baidu.navisdk.adapter.BNRoutePlanNode;
 import com.baidu.navisdk.adapter.BNaviSettingManager;
@@ -64,6 +65,7 @@ import com.lidroid.xutils.http.callback.RequestCallBack;
 import com.lidroid.xutils.http.client.HttpRequest;
 import com.mining.app.zxing.decoding.Intents;
 
+import java.io.File;
 import java.io.Serializable;
 import java.security.acl.Group;
 import java.util.ArrayList;
@@ -138,6 +140,8 @@ public class OutletDetailActivity extends BaseActivity implements View.OnClickLi
     public static List<Activity> activityList = new LinkedList<Activity>();
     private static final String APP_FOLDER_NAME = "BNSDKSimpleDemo";
 
+    private String type="2";
+
     private Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -150,6 +154,13 @@ public class OutletDetailActivity extends BaseActivity implements View.OnClickLi
                     setMoney();
                     break;
 
+                case 1235:
+                    BNOuterLogUtil.setLogSwitcher(true);
+                    if (initDirs()) {
+                        initNavi();
+                    }
+                    break;
+
             }
         }
     };
@@ -159,6 +170,7 @@ public class OutletDetailActivity extends BaseActivity implements View.OnClickLi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_outletdetail);
         initView();
+        handler.sendEmptyMessageDelayed(1235,100);
     }
 
     private void initView() {
@@ -228,6 +240,7 @@ public class OutletDetailActivity extends BaseActivity implements View.OnClickLi
 
         serok.setOnClickListener(this);
         hyangxiu.setOnClickListener(this);
+        hpingjianum.setOnClickListener(this);
         hmeirong.setOnClickListener(this);
         map.setOnClickListener(this);
         hphoneView.setOnClickListener(this);
@@ -250,6 +263,9 @@ public class OutletDetailActivity extends BaseActivity implements View.OnClickLi
                     serview.setVisibility(View.GONE);
                     pinjialist.setVisibility(View.GONE);
                 } else if (checkedId == R.id.outletdetail_service) {
+                    if (serviceRb.isPressed()==true){
+                        type="2";
+                    }
                     homeView.setVisibility(View.GONE);
                     infoview.setVisibility(View.GONE);
                     serview.setVisibility(View.VISIBLE);
@@ -304,24 +320,30 @@ public class OutletDetailActivity extends BaseActivity implements View.OnClickLi
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.outletdetail_hyangxiu:
+                type="0";
                 group.check(R.id.outletdetail_service);
                 break;
             case R.id.outletdetail_hmeirong:
+                type="1";
                 group.check(R.id.outletdetail_service);
                 break;
 
             case R.id.outletdetail_map:
-//                BNRoutePlanNode sNode = new BNRoutePlanNode(MyApplication.getInstance().getBdLocation().getLongitude(), MyApplication.getInstance().getBdLocation().getLatitude(), "我的位置", null, BNRoutePlanNode.CoordinateType.BD09LL);
-////                BNRoutePlanNode eNode = new BNRoutePlanNode(Double.valueOf(outSelDetailEntity.longitude), Double.valueOf(entities.get(poi).latitude), entities.get(poi).shopName, null, BNRoutePlanNode.CoordinateType.BD09LL);
-//                if (sNode != null && eNode != null) {
-//                    List<BNRoutePlanNode> list = new ArrayList<BNRoutePlanNode>();
-//                    list.add(sNode);
-//                    list.add(eNode);
-//                    BaiduNaviManager.getInstance().launchNavigator(OutletDetailActivity.this, list, 1, true, new DemoRoutePlanListener(sNode));
-//                }
+                BNRoutePlanNode sNode = new BNRoutePlanNode(MyApplication.getInstance().getBdLocation().getLongitude(), MyApplication.getInstance().getBdLocation().getLatitude(), "我的位置", null, BNRoutePlanNode.CoordinateType.BD09LL);
+                BNRoutePlanNode eNode = new BNRoutePlanNode(Double.valueOf(outSelDetailEntity.longitude), Double.valueOf(outSelDetailEntity.latitude), outSelDetailEntity.name, null, BNRoutePlanNode.CoordinateType.BD09LL);
+                if (sNode != null && eNode != null) {
+                    List<BNRoutePlanNode> list = new ArrayList<BNRoutePlanNode>();
+                    list.add(sNode);
+                    list.add(eNode);
+                    BaiduNaviManager.getInstance().launchNavigator(OutletDetailActivity.this, list, 1, true, new DemoRoutePlanListener(sNode));
+                }
                 break;
             case R.id.title_back:
                 finish();
+                break;
+
+            case R.id.outletdetail_hpingjianum:
+                group.check(R.id.outletdetail_plave);
                 break;
             case R.id.outletdetail_hphone:
                 ToosUtils.callPhone(OutletDetailActivity.this,outSelDetailEntity.phone);
@@ -337,7 +359,6 @@ public class OutletDetailActivity extends BaseActivity implements View.OnClickLi
                         entityList.add(yxentities.get(i));
                     }
                 }
-
                 for (int i=0;i<mrentities.size();i++){
                     if (mrentities.get(i).flag){
                         entityList.add(mrentities.get(i));
@@ -433,7 +454,7 @@ public class OutletDetailActivity extends BaseActivity implements View.OnClickLi
         HttpUtils utils = new HttpUtils();
         utils.configTimeout(20000);
         rp.addBodyParameter("shopId", shopId);
-        rp.addBodyParameter("type", "2");
+        rp.addBodyParameter("type", type);
         MyCarEntity myCarEntity=MyApplication.getInstance().getCarEntity();
         if (myCarEntity!=null){
             rp.addBodyParameter("carTypeId",myCarEntity.carTypeId);
@@ -462,14 +483,16 @@ public class OutletDetailActivity extends BaseActivity implements View.OnClickLi
                             ReturnState.class);
                     if (Constant.RETURN_OK.equals(state.msg)) {
                         ShopServiceState shopServiceState=gson.fromJson(arg0.result,ShopServiceState.class);
+                        mrentities.clear();
+                        yxentities.clear();
                         for (int i=0;i<shopServiceState.result.beautyList.size();i++){
                             shopServiceState.result.beautyList.get(i).num=1;
-                            shopServiceState.result.beautyList.get(i).flag=true;
+                            shopServiceState.result.beautyList.get(i).flag=false;
                             mrentities.add(shopServiceState.result.beautyList.get(i));
                         }
                         for (int i=0;i<shopServiceState.result.repairList.size();i++){
                             shopServiceState.result.repairList.get(i).num=1;
-                            shopServiceState.result.repairList.get(i).flag=true;
+                            shopServiceState.result.repairList.get(i).flag=false;
                             yxentities.add(shopServiceState.result.repairList.get(i));
                         }
                         sermrAdapter.notifyDataSetChanged();
@@ -556,7 +579,7 @@ public class OutletDetailActivity extends BaseActivity implements View.OnClickLi
                             }
                             pinjiaAdapter.notifyDataSetChanged();
                         }
-                        LogManager.LogShow("-------","**********"+evaluationEntities.toString(),LogManager.ERROR);
+                        LogManager.LogShow("-------", "**********" + evaluationEntities.toString(), LogManager.ERROR);
 
                     } else if (Constant.TOKEN_ERR.equals(state.msg)) {
                         ToastUtils.displayShortToast(OutletDetailActivity.this,
@@ -572,6 +595,23 @@ public class OutletDetailActivity extends BaseActivity implements View.OnClickLi
 
             }
         });
+    }
+
+    private boolean initDirs() {
+        mSDCardPath = getSdcardDir();
+        if (mSDCardPath == null) {
+            return false;
+        }
+        File f = new File(mSDCardPath, APP_FOLDER_NAME);
+        if (!f.exists()) {
+            try {
+                f.mkdir();
+            } catch (Exception e) {
+                e.printStackTrace();
+                return false;
+            }
+        }
+        return true;
     }
 
     private void initNavi() {

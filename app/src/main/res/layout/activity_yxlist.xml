@@ -9,125 +9,130 @@
         android:id="@+id/yxlist_title"
         layout="@layout/activity_title" />
 
-            <LinearLayout
-                android:id="@+id/yxlist_carlin"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/item_bg"
-                android:clickable="true"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:padding="10dp">
+    <LinearLayout
+        android:id="@+id/yxlist_carlin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/item_bg"
+        android:clickable="true"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="10dp">
 
-                <ImageView
-                    android:id="@+id/yxlist_carimage"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@mipmap/main_car" />
-
-
-                <ImageView
-                    android:id="@+id/yxlist_caraddimage"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="8dp"
-                    android:layout_marginRight="8dp"
-                    android:src="@mipmap/main_add" />
-
-                <TextView
-                    android:id="@+id/yxlist_carbrand"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="10dp"
-                    android:layout_weight="1"
-                    android:text="添加我的爱车"
-                    android:textColor="#5F5D5D"
-                    android:textSize="@dimen/second_font" />
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@mipmap/main_go" />
-            </LinearLayout>
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:background="@color/write">
+        <ImageView
+            android:id="@+id/yxlist_carimage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/main_car" />
 
 
-                <ListView
-                    android:id="@+id/yxlist_lisview"
-                    android:layout_width="fill_parent"
-                    android:layout_height="fill_parent"
-                    android:divider="@color/activity_bg"
-                    android:dividerHeight="3dp"
-                    android:scrollbars="none" />
+        <ImageView
+            android:id="@+id/yxlist_caraddimage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:src="@mipmap/main_add" />
 
-                <include
-                    android:id="@+id/yxlist_pro"
-                    layout="@layout/pro"
-                    android:visibility="gone" />
+        <TextView
+            android:id="@+id/yxlist_carbrand"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
+            android:layout_weight="1"
+            android:text="添加我的爱车"
+            android:textColor="#5F5D5D"
+            android:textSize="@dimen/second_font" />
 
-            </RelativeLayout>
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/main_go" />
+    </LinearLayout>
 
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="1px"
-                android:background="@color/bottom_div" />
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/bottom_div" />
 
-            <LinearLayout
-                android:id="@+id/yxlist_bom"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:background="@color/write"
-                android:gravity="center_vertical">
-
-                <TextView
-                    android:id="@+id/yxlist_sermoney"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:paddingBottom="12dp"
-                    android:paddingTop="12dp"
-                    android:singleLine="true"
-                    android:text="￥130.00"
-                    android:textColor="#ed753a"
-                    android:textSize="@dimen/first_font" />
-
-                <ImageView
-                    android:layout_width="1px"
-                    android:layout_height="match_parent"
-                    android:background="@color/bottom_div" />
-
-                <TextView
-                    android:id="@+id/yxlist_serkehu"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:drawableTop="@mipmap/service"
-                    android:gravity="center"
-                    android:padding="4dp"
-                    android:text="客服"
-                    android:textColor="#5F5D5D"
-                    android:textSize="@dimen/second_font" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="@color/write">
 
 
-                <TextView
-                    android:id="@+id/yxlist_serok"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:background="@drawable/pay_ok_bg_btn"
-                    android:gravity="center_horizontal"
-                    android:paddingBottom="12dp"
-                    android:paddingTop="12dp"
-                    android:text="结算"
-                    android:textColor="@color/write"
-                    android:textSize="@dimen/first_font" />
-            </LinearLayout>
+        <ListView
+            android:id="@+id/yxlist_lisview"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:divider="@color/activity_bg"
+            android:dividerHeight="3dp"
+            android:scrollbars="none" />
+
+        <include
+            android:id="@+id/yxlist_pro"
+            layout="@layout/pro"
+            android:visibility="gone" />
+
+    </RelativeLayout>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/bottom_div" />
+
+    <LinearLayout
+        android:id="@+id/yxlist_bom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@color/write"
+        android:gravity="center_vertical">
+
+        <TextView
+            android:id="@+id/yxlist_sermoney"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:paddingBottom="12dp"
+            android:paddingTop="12dp"
+            android:singleLine="true"
+            android:text="￥130.00"
+            android:textColor="#ed753a"
+            android:textSize="@dimen/first_font" />
+
+        <ImageView
+            android:layout_width="1px"
+            android:layout_height="match_parent"
+            android:background="@color/bottom_div" />
+
+        <TextView
+            android:id="@+id/yxlist_serkehu"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:drawableTop="@mipmap/service"
+            android:gravity="center"
+            android:padding="4dp"
+            android:text="客服"
+            android:textColor="#5F5D5D"
+            android:textSize="@dimen/second_font" />
+
+
+        <TextView
+            android:id="@+id/yxlist_serok"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/pay_ok_bg_btn"
+            android:gravity="center_horizontal"
+            android:paddingBottom="12dp"
+            android:paddingTop="12dp"
+            android:text="结算"
+            android:textColor="@color/write"
+            android:textSize="@dimen/first_font" />
+    </LinearLayout>
 
 </LinearLayout>

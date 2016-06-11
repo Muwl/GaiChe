@@ -32,8 +32,8 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="8dp"
             android:layout_marginRight="8dp"
-            android:visibility="gone"
-            android:src="@mipmap/main_add" />
+            android:src="@mipmap/main_add"
+            android:visibility="gone" />
 
         <TextView
             android:id="@+id/yxlist_carbrand"
@@ -46,6 +46,11 @@
             android:textSize="@dimen/second_font" />
 
     </LinearLayout>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/bottom_div" />
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -107,7 +112,6 @@
             android:visibility="gone" />
 
     </RelativeLayout>
-
 
 
 </LinearLayout>

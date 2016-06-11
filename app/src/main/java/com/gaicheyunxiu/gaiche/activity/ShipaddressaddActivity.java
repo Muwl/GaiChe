@@ -107,6 +107,10 @@ public class ShipaddressaddActivity extends BaseActivity implements View.OnClick
             area.setText(addressVo.getProvince()+"/"+addressVo.getCity()+"/"+addressVo.getDistrict());
             address.setText(addressVo.getAddress());
             telphone.setText(addressVo.getPhone());
+            addressStrs=new String[3];
+            addressStrs[0]=addressVo.getProvince();
+            addressStrs[1]=addressVo.getCity();
+            addressStrs[2]=addressVo.getDistrict();
         }
     }
 

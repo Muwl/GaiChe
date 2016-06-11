@@ -74,7 +74,7 @@ public class YxListItemAdapter extends BaseAdapter{
         holder.m.setText("￥"+entities.get(position).mValue+"M");
         holder.oldmoney.setText("￥" + entities.get(position).originalPrice);
         holder.oldmoney.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG); //中间横线
-        holder.volume.setText("销量：" + entities.get(position).sales + "件");
+        holder.volume.setText("销量：" + entities.get(position).num + "件");
 
         return convertView;
     }

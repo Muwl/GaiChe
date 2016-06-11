@@ -135,10 +135,10 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
      */
     private boolean checkInput() {
 //        String temp = codeView.getText().toString().trim();
-        if (!sphone.equals(ToosUtils.getTextContent(phoneView))) {
-            ToastUtils.displayShortToast(RegisterActivity.this, "请输入正确的验证码");
-            return false;
-        }
+//        if (!sphone.equals(ToosUtils.getTextContent(phoneView))) {
+//            ToastUtils.displayShortToast(RegisterActivity.this, "请输入正确的验证码");
+//            return false;
+//        }
         if (ToosUtils.isTextEmpty(phoneView)) {
             ToastUtils.displayShortToast(this, "手机号不能为空！");
             return false;
@@ -232,7 +232,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
         Gson gson = new Gson();
         rp.addBodyParameter("username",ToosUtils.getTextContent(phoneView));
         rp.addBodyParameter("password",ToosUtils.getTextContent(pwdView));
-        rp.addBodyParameter("authCode",ToosUtils.getTextContent(codeView));
+//        rp.addBodyParameter("authCode",ToosUtils.getTextContent(codeView));
         if (!ToosUtils.isTextEmpty(gcView)){
             rp.addBodyParameter("recommendGc", ToosUtils.getTextContent(gcView));
         }

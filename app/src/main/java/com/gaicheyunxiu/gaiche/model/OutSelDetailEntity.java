@@ -15,4 +15,7 @@ public class OutSelDetailEntity implements Serializable {
     public String distance;
     public String address;
     public String phone;
+    public String imUsername;
+    public String longitude;
+    public String latitude;
 }
