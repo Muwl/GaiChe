@@ -39,6 +39,8 @@ public class MyCarEntity implements Serializable {
     @Column(column = "isdefault")
     public boolean isDefault;
 
+    public String myCarId;
+
     @Override
     public String toString() {
         return "MyCarEntity{" +

@@ -306,18 +306,25 @@ public class CarmanagerActivity extends BaseActivity implements View.OnClickList
      * 删除我的爱车
      */
     private void delMyCal(final int position) {
+        String id=null;
         if (ToosUtils.isStringEmpty(ShareDataTool.getToken(this))){
+            id=entities.get(position).carTypeId;
             utils.delMyCar(entities.get(position));
             ToastUtils.displayShortToast(CarmanagerActivity.this,
                     "删除成功！");
             entities.remove(position);
             adapter.notifyDataSetChanged();
+            if (entities.size()==0){
+                MyApplication.getInstance().setCarEntity(null);
+            }else if (entities.size()>0 &&MyApplication.getInstance().getCarEntity()!=null &&MyApplication.getInstance().getCarEntity().carTypeId.equals(id)){
+                MyApplication.getInstance().setCarEntity(entities.get(0));
+            }
             return;
         }
         RequestParams rp = new RequestParams();
         HttpUtils utils = new HttpUtils();
         rp.addBodyParameter("sign", ShareDataTool.getToken(this));
-        rp.addBodyParameter("id", entities.get(position).carTypeId);
+        rp.addBodyParameter("myCarId", entities.get(position).myCarId);
         utils.configTimeout(20000);
         utils.send(HttpRequest.HttpMethod.POST, Constant.ROOT_PATH
                 + "myCar/del", rp, new RequestCallBack<String>() {
