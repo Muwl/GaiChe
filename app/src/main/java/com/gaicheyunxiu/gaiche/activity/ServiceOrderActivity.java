@@ -180,16 +180,16 @@ public class ServiceOrderActivity extends BaseActivity implements View.OnClickLi
             }
 
             public void initSuccess() {
-//                Toast.makeText(BNDemoMainActivity.this, "百度导航引擎初始化成功", Toast.LENGTH_SHORT).show();
+                Toast.makeText(ServiceOrderActivity.this, "百度导航引擎初始化成功", Toast.LENGTH_SHORT).show();
                 initSetting();
             }
 
             public void initStart() {
-//                Toast.makeText(BNDemoMainActivity.this, "百度导航引擎初始化开始", Toast.LENGTH_SHORT).show();
+                Toast.makeText(ServiceOrderActivity.this, "百度导航引擎初始化开始", Toast.LENGTH_SHORT).show();
             }
 
             public void initFailed() {
-//                Toast.makeText(BNDemoMainActivity.this, "百度导航引擎初始化失败", Toast.LENGTH_SHORT).show();
+                Toast.makeText(ServiceOrderActivity.this, "百度导航引擎初始化失败", Toast.LENGTH_SHORT).show();
             }
 
 
