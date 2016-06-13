@@ -287,7 +287,7 @@ public class YxListActivity extends BaseActivity implements View.OnClickListener
         double totalMon=0;
         for (int i=0;i<entities.size();i++){
             for (int j=0;j<entities.get(i).vos.size();j++){
-                double m= Double.parseDouble(entities.get(i).vos.get(j).presentPrice);
+                double m= Double.parseDouble(entities.get(i).vos.get(j).originalPrice);
                 int num=Integer.valueOf(entities.get(i).vos.get(j).num);
                 totalMon=totalMon+m*num;
             }

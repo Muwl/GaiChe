@@ -131,7 +131,7 @@ public class PaymentQRDialog extends Dialog implements
         rp.addBodyParameter("sign", ShareDataTool.getToken(context));
         rp.addBodyParameter("shopId", shopId);
         rp.addBodyParameter("money", smoney);
-        rp.addBodyParameter("payPwd",ToosUtils.getEncrypt(ToosUtils.getTextContent(pwd)));
+        rp.addBodyParameter("payPwd",MD5Util.MD5(ToosUtils.getTextContent(pwd)));
         rp.addBodyParameter("payDescribe",payInfo);
         rp.addBodyParameter("timeStamp", String.valueOf(timeStamp));
         rp.addBodyParameter("nonce", nonce);

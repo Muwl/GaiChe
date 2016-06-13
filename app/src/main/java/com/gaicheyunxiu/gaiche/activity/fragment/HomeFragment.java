@@ -400,6 +400,10 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
             bitmapUtils.display(carImage,carEntity.carBrandLogo);
             carAddImage.setVisibility(View.GONE);
             carName.setText(carEntity.carBrandName+carEntity.type+carEntity.displacement+carEntity.productionDate+"年产");
+        }else{
+            carImage.setImageResource(R.mipmap.main_car);
+            carAddImage.setVisibility(View.VISIBLE);
+            carName.setText("添加我爱车");
         }
     }
 

@@ -19,6 +19,7 @@ import com.gaicheyunxiu.gaiche.dialog.PaymentDialog;
 import com.gaicheyunxiu.gaiche.model.AddAdressState;
 import com.gaicheyunxiu.gaiche.model.AddressVo;
 import com.gaicheyunxiu.gaiche.model.MyCarEntity;
+import com.gaicheyunxiu.gaiche.model.OutSelEntity;
 import com.gaicheyunxiu.gaiche.model.PayResult;
 import com.gaicheyunxiu.gaiche.model.PayState;
 import com.gaicheyunxiu.gaiche.model.ReturnState;
@@ -56,9 +57,9 @@ public class ServicePayActivity extends  BaseActivity implements View.OnClickLis
 
     private TextView title;
 
-    private EditText person;
+    private TextView person;
 
-    private EditText phone;
+    private TextView phone;
 
     private View lin;
 
@@ -162,8 +163,8 @@ private Handler handler=new Handler(){
         back= (ImageView) findViewById(R.id.title_back);
         title= (TextView) findViewById(R.id.title_text);
         wallet=findViewById(R.id.servicepay_wallet);
-        person= (EditText) findViewById(R.id.service_pay_person);
-        phone= (EditText) findViewById(R.id.service_pay_phone);
+        person= (TextView) findViewById(R.id.service_pay_person);
+        phone= (TextView) findViewById(R.id.service_pay_phone);
         lin1=findViewById(R.id.service_pay_lin1);
         num= (TextView) findViewById(R.id.servicepay_num);
         walletcb= (CheckBox) findViewById(R.id.servicepay_wallet_cb);
@@ -183,6 +184,7 @@ private Handler handler=new Handler(){
         phone.setEnabled(false);
         person.setEnabled(false);
         title.setText("去结算");
+        lin1.setOnClickListener(this);
         back.setOnClickListener(this);
         lin.setOnClickListener(this);
         zhifubao.setOnClickListener(this);
@@ -227,6 +229,12 @@ private Handler handler=new Handler(){
         switch (view.getId()) {
             case R.id.title_back:
                 finish();
+                break;
+            case R.id.service_pay_lin1:
+                Intent intent2=new Intent(ServicePayActivity.this,ShipaddressActivity.class);
+                intent2.putExtra("flag",2);
+                startActivityForResult(intent2, 1663);
+
                 break;
 
             case R.id.servicepay_lin:
@@ -273,6 +281,16 @@ private Handler handler=new Handler(){
 //                PaymentDialog dialog=new PaymentDialog(ServicePayActivity.this);
                 break;
         }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode==1663 && resultCode==RESULT_OK){
+            addressVo= (AddressVo) data.getSerializableExtra("entity");
+            person.setText(addressVo.name);
+            phone.setText(addressVo.mobile);
+        }
+
     }
 
 

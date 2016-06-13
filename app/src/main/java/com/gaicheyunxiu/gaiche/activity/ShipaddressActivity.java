@@ -114,23 +114,23 @@ public class ShipaddressActivity extends BaseActivity implements View.OnClickLis
                     setResult(RESULT_OK, intent);
                     finish();
                 }else{
-                    Intent intent = new Intent(ShipaddressActivity.this, ShipaddressaddActivity.class);
-                    startActivity(intent);
+//                    Intent intent = new Intent(ShipaddressActivity.this, ShipaddressaddActivity.class);
+//                    startActivity(intent);
                 }
 
             }
         });
 
 
-        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
-                if (!adapter.getDatas().get(i).isDefault()){
-                    CustomeDialog dialog = new CustomeDialog(ShipaddressActivity.this, handler,"确定要修改此地址为默认地址",i,-2);
-                }
-                return true;
-            }
-        });
+//        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+//            @Override
+//            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
+//                if (!adapter.getDatas().get(i).isDefault()){
+//                    CustomeDialog dialog = new CustomeDialog(ShipaddressActivity.this, handler,"确定要修改此地址为默认地址",i,-2);
+//                }
+//                return true;
+//            }
+//        });
         getAddressList();
     }
 

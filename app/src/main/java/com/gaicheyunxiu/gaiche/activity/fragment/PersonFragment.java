@@ -161,10 +161,11 @@ public class PersonFragment extends Fragment implements View.OnClickListener{
         settingView.setOnClickListener(this);
         bitmapUtils=new BitmapUtils(getActivity());
 
-        if (ToosUtils.isStringEmpty(ShareDataTool.getToken(getActivity()))){
-            ToosUtils.goReLogin(getActivity());
-            return;
-        }
+//        if (ToosUtils.isStringEmpty(ShareDataTool.getToken(getActivity()))){
+//            ToosUtils.goReLogin(getActivity());
+//            return;
+//        }
+        reFushPersonInfo();
     }
 
     @Override
@@ -179,6 +180,7 @@ public class PersonFragment extends Fragment implements View.OnClickListener{
                 if(ToosUtils.isStringEmpty(ShareDataTool.getToken(getActivity()))){
                     Intent intent=new Intent(getActivity(), LoginActivity.class);
                     startActivityForResult(intent, LOGIN_RETURN);
+                    return;
                 }else{
                     Intent intent=new Intent(getActivity(), PersonDataActivity.class);
                     startActivity(intent);
@@ -188,29 +190,54 @@ public class PersonFragment extends Fragment implements View.OnClickListener{
                 break;
 
             case R.id.person_cart:
+                if(ToosUtils.isStringEmpty(ShareDataTool.getToken(getActivity()))){
+                    Intent intent=new Intent(getActivity(), LoginActivity.class);
+                    startActivityForResult(intent, LOGIN_RETURN);
+                    return;
+                }
                 Intent intent2=new Intent(getActivity(), CartActivity.class);
                 startActivity(intent2);
 
                 break;
 
             case R.id.person_order:
+                if(ToosUtils.isStringEmpty(ShareDataTool.getToken(getActivity()))){
+                    Intent intent=new Intent(getActivity(), LoginActivity.class);
+                    startActivityForResult(intent, LOGIN_RETURN);
+                    return;
+                }
                 Intent intent3=new Intent(getActivity(), ShopOrderActivity.class);
                 startActivity(intent3);
                 break;
 
 
             case R.id.person_serviceorder:
+                if(ToosUtils.isStringEmpty(ShareDataTool.getToken(getActivity()))){
+                    Intent intent=new Intent(getActivity(), LoginActivity.class);
+                    startActivityForResult(intent, LOGIN_RETURN);
+                    return;
+                }
                 Intent intent4=new Intent(getActivity(), ServiceOrderActivity.class);
                 startActivity(intent4);
 
                 break;
 
             case R.id.person_earnings:
+                if(ToosUtils.isStringEmpty(ShareDataTool.getToken(getActivity()))){
+                    Intent intent=new Intent(getActivity(), LoginActivity.class);
+                    startActivityForResult(intent, LOGIN_RETURN);
+                    return;
+                }
                 Intent intent5=new Intent(getActivity(), EarningActivity.class);
                 startActivity(intent5);
                 break;
 
             case R.id.person_money:
+                if(ToosUtils.isStringEmpty(ShareDataTool.getToken(getActivity()))){
+                    Intent intent=new Intent(getActivity(), LoginActivity.class);
+                    startActivityForResult(intent, LOGIN_RETURN);
+                    return;
+                }
                 Intent intent6=new Intent(getActivity(),  MywalletActivity.class);
                 startActivity(intent6);
                 break;
@@ -220,6 +247,11 @@ public class PersonFragment extends Fragment implements View.OnClickListener{
                 break;
 
             case R.id.person_address:
+                if(ToosUtils.isStringEmpty(ShareDataTool.getToken(getActivity()))){
+                    Intent intent=new Intent(getActivity(), LoginActivity.class);
+                    startActivityForResult(intent, LOGIN_RETURN);
+                    return;
+                }
                 Intent intent8=new Intent(getActivity(), ShipaddressActivity.class);
                 startActivity(intent8);
 
@@ -230,23 +262,43 @@ public class PersonFragment extends Fragment implements View.OnClickListener{
                 break;
 
             case R.id.person_maintain:
+                if(ToosUtils.isStringEmpty(ShareDataTool.getToken(getActivity()))){
+                    Intent intent=new Intent(getActivity(), LoginActivity.class);
+                    startActivityForResult(intent, LOGIN_RETURN);
+                    return;
+                }
                 Intent intent9=new Intent(getActivity(), MaintainActivity.class);
                 startActivity(intent9);
 
                 break;
 
             case R.id.person_logistics:
+                if(ToosUtils.isStringEmpty(ShareDataTool.getToken(getActivity()))){
+                    Intent intent=new Intent(getActivity(), LoginActivity.class);
+                    startActivityForResult(intent, LOGIN_RETURN);
+                    return;
+                }
                 Intent intent10=new Intent(getActivity(), LogisticActivity.class);
                 startActivity(intent10);
 
                 break;
 
             case R.id.person_crowdorder:
+                if(ToosUtils.isStringEmpty(ShareDataTool.getToken(getActivity()))){
+                    Intent intent=new Intent(getActivity(), LoginActivity.class);
+                    startActivityForResult(intent, LOGIN_RETURN);
+                    return;
+                }
                 Intent intent11=new Intent(getActivity(), RaiseOrderActivity.class);
                 startActivity(intent11);
                 break;
 
             case R.id.person_setting:
+                if(ToosUtils.isStringEmpty(ShareDataTool.getToken(getActivity()))){
+                    Intent intent=new Intent(getActivity(), LoginActivity.class);
+                    startActivityForResult(intent, LOGIN_RETURN);
+                    return;
+                }
                 Intent intent12=new Intent(getActivity(), SettingActivity.class);
                 startActivity(intent12);
 
@@ -267,12 +319,19 @@ public class PersonFragment extends Fragment implements View.OnClickListener{
 
     public void reFushPersonInfo(){
         RegiterEntity regiterEntity=ShareDataTool.getRegiterEntity(getActivity());
-        if (regiterEntity!=null){
+        if (regiterEntity!=null && !ToosUtils.isStringEmpty(regiterEntity.token)){
             bitmapUtils.display(icon, regiterEntity.icon);
             RegiterEntity entity=ShareDataTool.getRegiterEntity(getActivity());
             no.setText(entity.gcCode);
             name.setText(entity.nickname);
+            no.setVisibility(View.VISIBLE);
+            balance.setVisibility(View.VISIBLE);
 
+        }else{
+            icon.setImageResource(R.mipmap.person_icon);
+            name.setText("未登录");
+            no.setVisibility(View.INVISIBLE);
+            balance.setVisibility(View.INVISIBLE);
         }
     }
 
@@ -361,7 +420,7 @@ public class PersonFragment extends Fragment implements View.OnClickListener{
         }
 
         int crw=Integer.valueOf(resultBean.crowdfundingToPayOrderNum)+Integer.valueOf(resultBean.crowdfundingToReceiveNum)+Integer.valueOf(resultBean.crowdfundingToEvaluateNum);
-        if (ser==0){
+        if (crw==0){
             crowdNo.setVisibility(View.GONE);
         }else{
             crowdNo.setVisibility(View.VISIBLE);

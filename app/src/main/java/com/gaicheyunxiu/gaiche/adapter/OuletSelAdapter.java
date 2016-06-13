@@ -26,11 +26,13 @@ public class OuletSelAdapter extends BaseAdapter {
     private List<OutSelEntity> entities;
     private int width;
     private BitmapUtils bitmapUtils;
+    private int flag;
 
-    public OuletSelAdapter(Context context,List<OutSelEntity> entities,int width) {
+    public OuletSelAdapter(Context context,List<OutSelEntity> entities,int width,int flag) {
         this.context = context;
         this.width=width;
         this.entities=entities;
+        this.flag=flag;
         bitmapUtils=new BitmapUtils(context);
     }
 
@@ -70,9 +72,12 @@ public class OuletSelAdapter extends BaseAdapter {
             holder= (ViewHolder) convertView.getTag();
         }
 
-        bitmapUtils.display(holder.imageView,entities.get(position).icon);
+        bitmapUtils.display(holder.imageView, entities.get(position).icon);
         holder.name.setText(entities.get(position).name);
         holder.bar.setStar(Float.valueOf(entities.get(position).score));
+        if (flag==1){
+            holder.lin.setVisibility(View.VISIBLE);
+        }
         holder.bar.setLayoutParams(new LinearLayout.LayoutParams((int) (0.30 * width), (int) (0.045 * width)));
         holder.num.setText(entities.get(position).evaluateAmount + "条");
         holder.money.setText(entities.get(position).sumPrice+"元");

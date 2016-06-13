@@ -14,7 +14,6 @@ public class CommodityEntity implements Serializable {
     public String presentPrice;
     public String mValue;
     public String sales;
-
     public int num=1;
 
 }

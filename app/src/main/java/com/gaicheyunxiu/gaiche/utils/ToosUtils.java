@@ -108,6 +108,7 @@ public class ToosUtils {
 	public static void goReLogin(Context context) {
 		Intent intent = new Intent(context, LoginActivity.class);
 		ShareDataTool.SaveInfo(context,null);
+		MyApplication.getInstance().setCarEntity(null);
 		context.startActivity(intent);
 	}
 

@@ -55,7 +55,10 @@ public class LocalUtils {
 
         @Override
         public void onReceiveLocation(BDLocation location) {
+
+            LogManager.LogShow("----------------",location+"====================",LogManager.ERROR);
             if (location!=null){
+                LogManager.LogShow("----------------","wadawd====================",LogManager.ERROR);
                 Message message=new Message();
                 message.what=LOCAT_OK;
                 message.obj=location;
@@ -64,5 +67,6 @@ public class LocalUtils {
             }
 
         }
+
     }
 }

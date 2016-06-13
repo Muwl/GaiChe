@@ -222,6 +222,7 @@ public class CrowdFundActivity extends BaseActivity implements View.OnClickListe
             hour.setText(TimeUtils.getHour(projectEntity.endDate));
             minute.setText(TimeUtils.getMinute(projectEntity.endDate));
             sec.setText(TimeUtils.getMin(projectEntity.endDate));
+            day.setText("倒计时"+TimeUtils.getDay(projectEntity.endDate)+"天");
         }
     }
 

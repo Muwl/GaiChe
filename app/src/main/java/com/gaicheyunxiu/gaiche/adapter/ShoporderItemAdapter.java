@@ -104,8 +104,21 @@ public class ShoporderItemAdapter  extends BaseAdapter{
         String state=entities.get(position).state;
 
         if ("0".equals(state)){
-            holder.div.setVisibility(View.GONE);
-            holder.lin.setVisibility(View.GONE);
+            holder.div.setVisibility(View.VISIBLE);
+            holder.lin.setVisibility(View.VISIBLE);
+            holder.orgbtn.setVisibility(View.GONE);
+            holder.graybtn.setVisibility(View.VISIBLE);
+            holder.graybtn.setText("查看物流");
+            holder.graybtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Message message = new Message();
+                    message.what = 1336;
+                    message.arg1 = position;
+                    message.arg2 = groupoi;
+                    handler.sendMessage(message);
+                }
+            });
         }else if("1".equals(state)){
             holder.div.setVisibility(View.VISIBLE);
             holder.lin.setVisibility(View.VISIBLE);

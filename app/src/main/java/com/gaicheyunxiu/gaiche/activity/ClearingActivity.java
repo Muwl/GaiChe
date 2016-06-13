@@ -217,6 +217,10 @@ public class ClearingActivity extends BaseActivity implements View.OnClickListen
         api.registerApp(Constant.APP_ID);
         if (flag==1){
             shopCartEntity= (ShopCartEntity) getIntent().getSerializableExtra("entity");
+            if (shopCartEntity.outSelEntity!=null){
+                outSelEntity=shopCartEntity.outSelEntity;
+            }
+
         }else if(flag==2 ){
             shopDetailEntity= (ShopDetailEntity) getIntent().getSerializableExtra("entity");
         }else if(flag==3){
@@ -573,7 +577,7 @@ public class ClearingActivity extends BaseActivity implements View.OnClickListen
                 commodifyOrderVo.commodityId=commodityEntities.get(i).id;
                 commodifyOrderVo.price=commodityEntities.get(i).presentPrice;
                 commodifyOrderVo.mVaule=commodityEntities.get(i).mValue;
-                commodifyOrderVo.num= Double.parseDouble(commodityEntities.get(i).sales);
+                commodifyOrderVo.num= commodityEntities.get(i).num;
                 commodifyOrderVo.freight= "0";
                 for (int j=0;j<costEntity.freightVo.size();j++){
                     if (commodifyOrderVo.commodityId.equals(costEntity.freightVo.get(j).commodityId)){
@@ -642,7 +646,7 @@ public class ClearingActivity extends BaseActivity implements View.OnClickListen
             for (int i=0;i<commodityEntities.size();i++) {
                 OrderCommodityDigestEntity digestEntity=new OrderCommodityDigestEntity();
                 digestEntity.commodityId=commodityEntities.get(i).id;
-                digestEntity.num=commodityEntities.get(i).sales;
+                digestEntity.num= String.valueOf(commodityEntities.get(i).num);
                 commodityDigestEntities.add(digestEntity);
             }
         }else{
@@ -721,6 +725,7 @@ public class ClearingActivity extends BaseActivity implements View.OnClickListen
         if (requestCode==5664 && resultCode==RESULT_OK){
             outSelEntity= (OutSelEntity) data.getSerializableExtra("entity");
             outSel.setText(outSelEntity.name);
+            getCost();
         }
     }
 

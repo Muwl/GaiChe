@@ -240,7 +240,6 @@ public class FOuletAdapter extends BaseAdapter {
             if (!ToosUtils.isStringEmpty(shopEntities.get(position-1).score)){
                 holder.bar.setStar(Double.parseDouble(shopEntities.get(position-1).score));
             }
-            holder.bar.setClickable(false);
             holder.address.setText(shopEntities.get(position-1).district);
             holder.distance.setText(shopEntities.get(position-1).distance);
             holder.bar.setLayoutParams(new LinearLayout.LayoutParams((int) (0.30 * width), (int) (0.045 * width)));

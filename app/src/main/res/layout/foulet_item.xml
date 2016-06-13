@@ -62,7 +62,6 @@
                 android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
                 android:rating="5"
-                android:clickable="true"
                 hedgehog:starEmpty="@mipmap/ratbar_normal"
                 hedgehog:starFill="@mipmap/ratbar_checked"
                 android:layout_gravity="center"

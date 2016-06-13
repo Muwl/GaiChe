@@ -143,7 +143,7 @@ public class OultSelActivity extends BaseActivity implements View.OnClickListene
 
         map.setVisibility(View.VISIBLE);
         map.setOnClickListener(this);
-        adapter = new OuletSelAdapter(this, entities, width);
+        adapter = new OuletSelAdapter(this, entities, width,flag);
         listView.setAdapter(adapter);
         group.check(R.id.ouletsel_default);
         back.setOnClickListener(this);

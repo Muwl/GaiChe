@@ -181,11 +181,7 @@ public class DepositActivity  extends BaseActivity implements View.OnClickListen
                         }
                         adapter.notifyDataSetChanged();
 
-                        if (entities.size() == 0) {
-                            ToastUtils.displayShortToast(DepositActivity.this,"请添加银行卡！");
-                            Intent intent = new Intent(DepositActivity.this, AddbrandActivity.class);
-                            startActivityForResult(intent, 1552);
-                        }
+
                     } else if (Constant.INFO_NOCOM.equals(state.msg)) {
 
                     } else if (Constant.TOKEN_ERR.equals(state.msg)) {

@@ -75,7 +75,7 @@ public class YxListEditAdapter extends BaseAdapter {
             }
         });
 
-        holder.num.setOnClickListener(new View.OnClickListener() {
+        holder.incream.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (Integer.valueOf(entities.get(position).num) > 1) {

@@ -164,6 +164,7 @@ public class CartActivity extends BaseActivity  implements View.OnClickListener 
 
             case R.id.cart_gosale:
                 Intent intent=new Intent(CartActivity.this,MainActivity.class);
+                intent.putExtra("flag",2);
                 startActivity(intent);
 
                 break;

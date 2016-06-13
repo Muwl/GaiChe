@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.gaicheyunxiu.gaiche.R;
+import com.gaicheyunxiu.gaiche.utils.LogManager;
 
 import java.math.BigDecimal;
 
@@ -67,23 +68,30 @@ public class RatingBar extends LinearLayout {
         starCount = mTypedArray.getInteger(R.styleable.RatingBar_starCount, 5);
         starEmptyDrawable = mTypedArray.getDrawable(R.styleable.RatingBar_starEmpty);
         starFillDrawable = mTypedArray.getDrawable(R.styleable.RatingBar_starFill);
-        mClickable=mTypedArray.getBoolean(R.styleable.RatingBar_clickable,true);
+        mClickable=mTypedArray.getBoolean(R.styleable.RatingBar_clickable, true);
+        LogManager.LogShow("---------------",mClickable+"-----------",LogManager.ERROR);
         for (int i = 0; i < starCount; ++i) {
             ImageView imageView = getStarImageView(context, attrs);
-            imageView.setOnClickListener(
-                    new OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            if (mClickable) {
-                                setStar(indexOfChild(v) + 1);
-                                if (onRatingChangeListener != null) {
-                                    onRatingChangeListener.onRatingChange(indexOfChild(v) + 1);
-                                }
-                            }
+            if (mClickable){
+                imageView.setOnClickListener(
+                        new OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                    setStar(indexOfChild(v) + 1);
+                                    if (onRatingChangeListener != null) {
+                                        onRatingChangeListener.onRatingChange(indexOfChild(v) + 1);
+                                    }
 
+
+                            }
                         }
-                    }
-            );
+                );
+            }else {
+                imageView.setClickable(false);
+                imageView.setEnabled(false);
+                imageView.setFocusable(false);
+            }
+
             addView(imageView);
         }
     }

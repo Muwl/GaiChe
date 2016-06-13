@@ -40,7 +40,7 @@ import java.util.List;
  * Created by Mu on 2016/1/6.
  * 我的钱包页面
  */
-public class MywalletActivity  extends BaseActivity implements View.OnClickListener{
+public class MywalletActivity extends BaseActivity implements View.OnClickListener {
 
     private TextView title;
 
@@ -62,14 +62,17 @@ public class MywalletActivity  extends BaseActivity implements View.OnClickListe
 
     private List<BankCardEntity> entities;
 
-    private  MyWalletState walletState;
+    private MyWalletState walletState;
 
-    private Handler handler=new Handler(){
+
+
+
+    private Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
-            switch (msg.what){
+            switch (msg.what) {
                 case 89:
-                    int position=msg.arg1;
+                    int position = msg.arg1;
                     delBankCard(position);
                     break;
             }
@@ -85,28 +88,29 @@ public class MywalletActivity  extends BaseActivity implements View.OnClickListe
     }
 
     private void initView() {
-        back= (ImageView) findViewById(R.id.title_back);
-        title= (TextView) findViewById(R.id.title_text);
-        walletlin=findViewById(R.id.mywallet_wallet);
-        money= (TextView) findViewById(R.id.mywallet_money);
-        listView= (MyListView) findViewById(R.id.mywallet_list);
-        div= (ImageView) findViewById(R.id.mywallet_div);
-        addBrandlin=findViewById(R.id.mywallet_addbrandlin);
-        pro=findViewById(R.id.mywallet_pro);
+
+        back = (ImageView) findViewById(R.id.title_back);
+        title = (TextView) findViewById(R.id.title_text);
+        walletlin = findViewById(R.id.mywallet_wallet);
+        money = (TextView) findViewById(R.id.mywallet_money);
+        listView = (MyListView) findViewById(R.id.mywallet_list);
+        div = (ImageView) findViewById(R.id.mywallet_div);
+        addBrandlin = findViewById(R.id.mywallet_addbrandlin);
+        pro = findViewById(R.id.mywallet_pro);
 
         back.setOnClickListener(this);
         title.setText("我的钱包");
         walletlin.setOnClickListener(this);
         addBrandlin.setOnClickListener(this);
 
-        entities=new ArrayList<>();
-        adapter=new MywalletAdapter(this,entities);
+        entities = new ArrayList<>();
+        adapter = new MywalletAdapter(this, entities);
         listView.setAdapter(adapter);
 
         listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
-                BrandDelDialog dialog = new BrandDelDialog(MywalletActivity.this, handler,i);
+                BrandDelDialog dialog = new BrandDelDialog(MywalletActivity.this, handler, i);
                 return true;
             }
         });
@@ -121,15 +125,18 @@ public class MywalletActivity  extends BaseActivity implements View.OnClickListe
                 finish();
                 break;
             case R.id.mywallet_addbrandlin:
-                Intent intent1=new Intent(MywalletActivity.this,AddbrandcheckActivity.class);
+                Intent intent1 = new Intent(MywalletActivity.this, AddbrandcheckActivity.class);
                 startActivityForResult(intent1, 1338);
                 break;
             case R.id.mywallet_wallet:
-                if (walletState==null){
+                if (walletState == null) {
                     return;
                 }
-                Intent intent=new Intent(MywalletActivity.this,WalletActivity.class);
-                intent.putExtra("money",walletState.result.balance);
+                Intent intent = new Intent(MywalletActivity.this, WalletActivity.class);
+                intent.putExtra("money", walletState.result.balance);
+                if (entities.size()==0){
+                    intent.putExtra("flag", 1);
+                }
                 startActivity(intent);
                 break;
         }
@@ -137,13 +144,13 @@ public class MywalletActivity  extends BaseActivity implements View.OnClickListe
 
 
     /**
-     *获取钱包余额和银行卡信息
+     * 获取钱包余额和银行卡信息
      */
     private void getDefaultAddress() {
         RequestParams rp = new RequestParams();
         HttpUtils utils = new HttpUtils();
         utils.configTimeout(20000);
-        String url="user/wallet";
+        String url = "user/wallet";
         rp.addBodyParameter("sign", ShareDataTool.getToken(this));
         utils.send(HttpRequest.HttpMethod.POST, Constant.ROOT_PATH
                 + url, rp, new RequestCallBack<String>() {
@@ -173,26 +180,26 @@ public class MywalletActivity  extends BaseActivity implements View.OnClickListe
                                 LogManager.ERROR);
                         entities.clear();
                         adapter.notifyDataSetChanged();
-                       walletState=gson.fromJson(arg0.result,MyWalletState.class);
+                        walletState = gson.fromJson(arg0.result, MyWalletState.class);
                         money.setText("￥" + walletState.result.balance);
-                        for (int i=0;i<walletState.result.bankCards.size();i++){
+                        for (int i = 0; i < walletState.result.bankCards.size(); i++) {
                             entities.add(walletState.result.bankCards.get(i));
                         }
                         adapter.notifyDataSetChanged();
                     } else if (Constant.INFO_NOCOM.equals(state.msg)) {
-                        WalletNoComState noComState=gson.fromJson(arg0.result,WalletNoComState.class);
-                        if (ToosUtils.isStringEmpty(noComState.result.isHaveMobile) || "0".equals(noComState.result.isHaveMobile)){
-                            Intent intent=new Intent(MywalletActivity.this,UpdatePhoneActivity.class);
-                            intent.putExtra("flag",1);
+                        WalletNoComState noComState = gson.fromJson(arg0.result, WalletNoComState.class);
+                        if (ToosUtils.isStringEmpty(noComState.result.isHaveMobile) || "0".equals(noComState.result.isHaveMobile)) {
+                            Intent intent = new Intent(MywalletActivity.this, UpdatePhoneActivity.class);
+                            intent.putExtra("flag", 1);
                             startActivityForResult(intent, 1336);
-                            ToastUtils.displayShortToast(MywalletActivity.this,"请先绑定手机号！");
+                            ToastUtils.displayShortToast(MywalletActivity.this, "请先绑定手机号！");
                             return;
                         }
 
-                        if (ToosUtils.isStringEmpty(noComState.result.isHavePayPwd) || "0".equals(noComState.result.isHavePayPwd)){
-                            Intent intent=new Intent(MywalletActivity.this,PaymentPwdActivity.class);
+                        if (ToosUtils.isStringEmpty(noComState.result.isHavePayPwd) || "0".equals(noComState.result.isHavePayPwd)) {
+                            Intent intent = new Intent(MywalletActivity.this, PaymentPwdActivity.class);
                             startActivityForResult(intent, 1337);
-                            ToastUtils.displayShortToast(MywalletActivity.this,"请先设置支付密码！");
+                            ToastUtils.displayShortToast(MywalletActivity.this, "请先设置支付密码！");
                             return;
                         }
 
@@ -268,14 +275,14 @@ public class MywalletActivity  extends BaseActivity implements View.OnClickListe
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (resultCode!=RESULT_OK){
+        if (resultCode != RESULT_OK) {
             return;
         }
-        if (requestCode==1336){
+        if (requestCode == 1336) {
             getDefaultAddress();
-        }else if(requestCode==1337){
+        } else if (requestCode == 1337) {
             getDefaultAddress();
-        }else if (requestCode==1338){
+        } else if (requestCode == 1338) {
             getDefaultAddress();
         }
 

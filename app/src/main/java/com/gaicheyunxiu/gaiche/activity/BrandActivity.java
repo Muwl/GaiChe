@@ -210,6 +210,7 @@ public class BrandActivity extends BaseActivity implements View.OnClickListener 
                         }else{
                             entity.isSel=false;
                         }
+                        entities.add(0,entity);
                         adapter.notifyDataSetChanged();
 
                     } else if (Constant.TOKEN_ERR.equals(state.msg)) {

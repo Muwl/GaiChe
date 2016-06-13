@@ -275,7 +275,6 @@ public class QRScanActivity extends BaseActivity implements Callback {
 //			application.setCodes(codes);
 //			startActivity(intent);
 		}
-		QRScanActivity.this.finish();
 	}
 
 	private void initCamera(SurfaceHolder surfaceHolder) {

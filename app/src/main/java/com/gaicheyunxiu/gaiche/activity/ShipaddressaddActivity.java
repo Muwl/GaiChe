@@ -174,11 +174,12 @@ public class ShipaddressaddActivity extends BaseActivity implements View.OnClick
         jsonObject.addProperty("mobile", ToosUtils.getTextContent(phone));
         jsonObject.addProperty("phone", ToosUtils.getTextContent(telphone));
         jsonObject.addProperty("address", ToosUtils.getTextContent(address));
+        jsonObject.addProperty("postcode", ToosUtils.getTextContent(code));
         jsonObject.addProperty("province", addressStrs[0]);
         jsonObject.addProperty("city", addressStrs[1]);
         jsonObject.addProperty("district", addressStrs[2]);
         rp.addBodyParameter("addressStr", jsonObject.toString());
-        LogManager.LogShow("-----",Constant.ROOT_PATH + "address/save?token="+ShareDataTool.getToken(this)+"&addressStr="+jsonObject.toString(),LogManager.ERROR);
+        LogManager.LogShow("-----",Constant.ROOT_PATH + "address/save?sign="+ShareDataTool.getToken(this)+"&addressStr="+jsonObject.toString(),LogManager.ERROR);
         HttpUtils utils = new HttpUtils();
         utils.configTimeout(20000);
         utils.send(HttpRequest.HttpMethod.POST, Constant.ROOT_PATH

@@ -26,7 +26,7 @@ public class TimeUtils {
 		Date date=getDateByStr(data);
 		Date nowdata=new Date();
 		long cur=date.getTime()-nowdata.getTime();
-		int m= (int) (cur/(1000*60*60));
+		int m= (int) ((cur%(1000*60*60*24))/(1000*60*60));
 		if (m<10){
 			return "0"+m;
 		}else{

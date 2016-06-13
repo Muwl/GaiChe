@@ -7,6 +7,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.gaicheyunxiu.gaiche.R;
+import com.gaicheyunxiu.gaiche.utils.ToastUtils;
 
 /**
  * Created by Mu on 2016/1/6.
@@ -28,6 +29,7 @@ public class WalletActivity extends BaseActivity implements View.OnClickListener
 
     private String smoney;
 
+    private int flag;//0代表以有银行卡  1代表无银行卡
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +41,7 @@ public class WalletActivity extends BaseActivity implements View.OnClickListener
     }
 
     private void initView() {
+        flag=getIntent().getIntExtra("flag",0);
         back= (ImageView) findViewById(R.id.title_back);
         title= (TextView) findViewById(R.id.title_text);
         detail= (TextView) findViewById(R.id.title_service);
@@ -71,6 +74,12 @@ public class WalletActivity extends BaseActivity implements View.OnClickListener
                 startActivity(intent1);
                 break;
             case R.id.wallet_deposit:
+                if (flag == 1) {
+                    ToastUtils.displayShortToast(WalletActivity.this, "请添加银行卡！");
+                    Intent intent3 = new Intent(WalletActivity.this, AddbrandActivity.class);
+                    startActivityForResult(intent3, 1552);
+                    break;
+                }
                 Intent intent2=new Intent(WalletActivity.this,DepositActivity.class);
                 intent2.putExtra("money",smoney);
                 startActivity(intent2);

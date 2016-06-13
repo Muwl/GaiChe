@@ -246,10 +246,7 @@ public class CarmanagerActivity extends BaseActivity implements View.OnClickList
         RequestParams rp = new RequestParams();
         HttpUtils utils = new HttpUtils();
         rp.addBodyParameter("sign", ShareDataTool.getToken(this));
-        rp.addBodyParameter("carTypeId", entities.get(position).carTypeId);
-        if (ToosUtils.isStringEmpty(tempid)){
-            rp.addBodyParameter("oldDefaultId", tempid);
-        }
+        rp.addBodyParameter("myCarId", entities.get(position).myCarId);
         utils.configTimeout(20000);
 
         LogManager.LogShow("--------", Constant.ROOT_PATH + "myCar/setDefaultCarType?sign="+ShareDataTool.getToken(this)+"&carTypeId="+entities.get(position).carTypeId,LogManager.ERROR);

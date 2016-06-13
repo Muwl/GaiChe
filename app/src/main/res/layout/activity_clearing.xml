@@ -29,7 +29,7 @@
                 android:gravity="center"
                 android:paddingBottom="12dp"
                 android:paddingTop="12dp"
-                android:text="￥130.00"
+                android:text="￥0.00"
                 android:textColor="#ED753A"
                 android:textSize="@dimen/first_font" />
 
@@ -125,21 +125,21 @@
                     android:background="@color/bottom_div" />
 
                 <!--<TextView-->
-                    <!--android:id="@+id/clearing_outsel"-->
-                    <!--android:layout_width="match_parent"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:textColor="#5F5D5D"-->
-                    <!--android:textSize="@dimen/second_font"-->
-                    <!--android:paddingBottom="10dp"-->
-                    <!--android:visibility="gone"-->
-                    <!--android:paddingLeft="18dp"-->
-                    <!--android:drawablePadding="10dp"-->
-                    <!--android:background="@drawable/item_bg"-->
-                    <!--android:text="选择安装门店"-->
-                    <!--android:drawableRight="@mipmap/main_go"-->
-                    <!--android:paddingRight="18dp"-->
-                    <!--android:paddingTop="10dp"-->
-                    <!--/>-->
+                <!--android:id="@+id/clearing_outsel"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:textColor="#5F5D5D"-->
+                <!--android:textSize="@dimen/second_font"-->
+                <!--android:paddingBottom="10dp"-->
+                <!--android:visibility="gone"-->
+                <!--android:paddingLeft="18dp"-->
+                <!--android:drawablePadding="10dp"-->
+                <!--android:background="@drawable/item_bg"-->
+                <!--android:text="选择安装门店"-->
+                <!--android:drawableRight="@mipmap/main_go"-->
+                <!--android:paddingRight="18dp"-->
+                <!--android:paddingTop="10dp"-->
+                <!--/>-->
 
                 <LinearLayout
                     android:id="@+id/clearing_outselview"
@@ -167,13 +167,11 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
-                        android:drawableRight="@mipmap/main_go"
                         android:drawablePadding="10dp"
+                        android:drawableRight="@mipmap/main_go"
                         android:textColor="#ED753A"
                         android:textSize="@dimen/second_font" />
                 </LinearLayout>
-
-
 
 
                 <ImageView
@@ -223,11 +221,11 @@
                     android:background="@color/write"
                     android:gravity="center_vertical"
                     android:orientation="horizontal"
-                    android:visibility="gone"
                     android:paddingBottom="10dp"
                     android:paddingLeft="18dp"
                     android:paddingRight="18dp"
-                    android:paddingTop="10dp">
+                    android:paddingTop="10dp"
+                    android:visibility="gone">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -243,15 +241,17 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
-                        android:drawableRight="@mipmap/main_go"
                         android:drawablePadding="10dp"
+                        android:drawableRight="@mipmap/main_go"
                         android:textColor="#5F5D5D"
                         android:textSize="@dimen/second_font" />
                 </LinearLayout>
+
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="1px"
                     android:background="@color/bottom_div" />
+
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -419,7 +419,7 @@
                     android:layout_marginRight="22dp"
                     android:layout_marginTop="8dp"
                     android:gravity="right"
-                    android:text="安装费：￥10.00"
+                    android:text="安装费：￥0.00"
                     android:textColor="#5F5D5D"
                     android:textSize="@dimen/second_font" />
 
@@ -431,7 +431,7 @@
                     android:layout_marginRight="22dp"
                     android:layout_marginTop="10dp"
                     android:gravity="right"
-                    android:text="商品价格：￥10.00"
+                    android:text="商品价格：￥0.00"
                     android:textColor="#5F5D5D"
                     android:textSize="@dimen/second_font" />
 
@@ -443,7 +443,7 @@
                     android:layout_marginRight="22dp"
                     android:layout_marginTop="10dp"
                     android:gravity="right"
-                    android:text="运费：￥10.00"
+                    android:text="运费：￥0.00"
                     android:textColor="#5F5D5D"
                     android:textSize="@dimen/second_font" />
 

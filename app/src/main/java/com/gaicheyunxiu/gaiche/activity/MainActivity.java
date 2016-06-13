@@ -1,6 +1,9 @@
 package com.gaicheyunxiu.gaiche.activity;
 
 import android.content.Intent;
+import android.os.Handler;
+import android.os.Message;
+import android.support.annotation.UiThread;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
@@ -36,6 +39,17 @@ public class MainActivity extends BaseActivity {
     private RadioGroup group;
 
     private int pageIndex = 1;// 1首页 2商城 3门店 4我的
+
+    private Handler handler=new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what){
+                case 2554:
+                    group.check(R.id.main_bottom_store);
+                    break;
+            }
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -129,19 +143,22 @@ public class MainActivity extends BaseActivity {
             }
         });
 
-//        if (pageIndex==2){
-//            group.check(R.id.main_bottom_store);
-//        }
+        LogManager.LogShow("----------------",pageIndex+"-----------",LogManager.ERROR);
+
+        if (pageIndex==2){
+            handler.sendEmptyMessageDelayed(2554, 50);
+
+        }
 
 
     }
 
     @Override
-    protected void onNewIntent(Intent intent) {
-        super.onNewIntent(intent);
-        int flag=intent.getIntExtra("flag",1);
-        if (flag==2){
-            checkIndex(1);
+    protected void onResume() {
+        super.onResume();
+        HomeFragment homeFragment= (HomeFragment) fMgr.findFragmentByTag("HomeFragment");
+        if (homeFragment!=null){
+            homeFragment.onRefush();
         }
 
     }
@@ -195,7 +212,6 @@ public class MainActivity extends BaseActivity {
     public void onBackPressed() {
         moveTaskToBack(true);
     }
-
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
