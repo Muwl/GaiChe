@@ -122,7 +122,7 @@ public class PaymentQRDialog extends Dialog implements
         long timeStamp= System.currentTimeMillis();
         String nonce= WalletPay.getNonceStr();
         Map<String,String> map=new HashMap<>();
-        int monfen=(int)(Double.valueOf(smoney)*10);
+        int monfen=(int)(Double.valueOf(smoney)*100);
         map.put("shopId",shopId);
         map.put("money", String.valueOf(monfen));
         map.put("payPwd", MD5Util.MD5(ToosUtils.getTextContent(pwd)));
