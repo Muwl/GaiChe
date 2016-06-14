@@ -208,8 +208,9 @@ public class CarTimeActivity extends BaseActivity implements View.OnClickListene
                             myCarEntity.type=typeEntity.type;
                             myCarEntity.displacement=typeEntity.displacement;
                             myCarEntity.productionDate=typeEntity.productionDate;
-
+                            myCarEntity.isDefault=true;
                             carEntityUtils.saveMyCar(myCarEntity);
+                            carEntityUtils.updateDefault(myCarEntity);
                             ((MyApplication) getApplication()).setCarEntity(myCarEntity);
                             Intent intent=new Intent();
                             setResult(RESULT_OK,intent);

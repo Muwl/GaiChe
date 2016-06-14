@@ -185,24 +185,24 @@ public class BrandActivity extends BaseActivity implements View.OnClickListener 
                         LogManager.LogShow("-----", arg0.result,
                                 LogManager.ERROR);
 //                        if (comeFlag!=3){
-//                            BrandState brandState=gson.fromJson(arg0.result,BrandState.class);
-//                            for (int i=0;i<brandState.result.size();i++){
-//                                if (!ToosUtils.isStringEmpty(brandName) && brandName.equals(brandState.result.get(i).name)){
-//                                    brandState.result.get(i).isSel=true;
-//                                }
-//                                entities.add(brandState.result.get(i));
-//                            }
-//                        }else{
-                            BrandCatyState brandCatyState=gson.fromJson(arg0.result,BrandCatyState.class);
-                            for (int i=0;i<brandCatyState.result.size();i++){
-                                BrandEntity entity=new BrandEntity();
-                                entity.name=brandCatyState.result.get(i);
-                                if (!ToosUtils.isStringEmpty(brandName) && brandName.equals(brandCatyState.result.get(i))){
-                                    entity.isSel=true;
+                            BrandState brandState=gson.fromJson(arg0.result,BrandState.class);
+                            for (int i=0;i<brandState.result.size();i++){
+                                if (!ToosUtils.isStringEmpty(brandName) && brandName.equals(brandState.result.get(i).name)){
+                                    brandState.result.get(i).isSel=true;
                                 }
-                                entities.add(entity);
-//                            }
+                                entities.add(brandState.result.get(i));
                             }
+//                        }else{
+//                            BrandCatyState brandCatyState=gson.fromJson(arg0.result,BrandCatyState.class);
+//                            for (int i=0;i<brandCatyState.result.size();i++){
+//                                BrandEntity entity=new BrandEntity();
+//                                entity.name=brandCatyState.result.get(i);
+//                                if (!ToosUtils.isStringEmpty(brandName) && brandName.equals(brandCatyState.result.get(i))){
+//                                    entity.isSel=true;
+//                                }
+//                                entities.add(entity);
+////                            }
+//                            }
                         BrandEntity entity=new BrandEntity();
                         entity.name="全部";
                         if (ToosUtils.isStringEmpty(brandName) || "全部".equals(brandName)){

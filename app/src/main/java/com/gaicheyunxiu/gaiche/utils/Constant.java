@@ -15,11 +15,11 @@ public class Constant {
 //	 public static final String ROOT_PATH = "http://192.168.1.10:8080/louyu";
 
 	// 锁，是否关闭Log日志输出
-	public static final boolean LOGOFF = false;
+	public static final boolean LOGOFF = true;
 	// 是否关闭VERBOSE输出
-	public static final boolean LOGOFF_VERBOSE = false;
+	public static final boolean LOGOFF_VERBOSE = true;
 	// 是否关闭debug输出
-	public static final boolean LOGOFF_DEBUG = false;
+	public static final boolean LOGOFF_DEBUG = true;
 
 	// 联网返回成功
 	public static final String RETURN_OK = "200";

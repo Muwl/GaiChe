@@ -16,6 +16,7 @@ public class AddressVo implements Serializable{
     public String city;
     public String district;
     public String address;
+    public String postcode;
     public  boolean isDefault;
 
     public String getId() {

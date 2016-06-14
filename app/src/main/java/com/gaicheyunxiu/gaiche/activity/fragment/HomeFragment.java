@@ -217,7 +217,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
         shop2minute = (TextView) view.findViewById(R.id.home_shop2_minute);
         shop2min = (TextView) view.findViewById(R.id.home_shop2_min);
         code.setVisibility(View.VISIBLE);
-        message.setVisibility(View.VISIBLE);
+        message.setVisibility(View.GONE);
         view.findViewById(R.id.title_back).setVisibility(View.GONE);
         title.setText("盖车云修");
         return view;

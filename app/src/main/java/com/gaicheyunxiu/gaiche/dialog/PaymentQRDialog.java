@@ -122,22 +122,23 @@ public class PaymentQRDialog extends Dialog implements
         long timeStamp= System.currentTimeMillis();
         String nonce= WalletPay.getNonceStr();
         Map<String,String> map=new HashMap<>();
+        int monfen=(int)(Double.valueOf(smoney)*10);
         map.put("shopId",shopId);
-        map.put("money", smoney);
+        map.put("money", String.valueOf(monfen));
         map.put("payPwd", MD5Util.MD5(ToosUtils.getTextContent(pwd)));
         map.put("payDescribe", payInfo);
         String paySign=WalletPay.generateSign(map,timeStamp,nonce);
 
         rp.addBodyParameter("sign", ShareDataTool.getToken(context));
         rp.addBodyParameter("shopId", shopId);
-        rp.addBodyParameter("money", smoney);
+        rp.addBodyParameter("money", String.valueOf(monfen));
         rp.addBodyParameter("payPwd",MD5Util.MD5(ToosUtils.getTextContent(pwd)));
         rp.addBodyParameter("payDescribe",payInfo);
         rp.addBodyParameter("timeStamp", String.valueOf(timeStamp));
         rp.addBodyParameter("nonce", nonce);
         rp.addBodyParameter("paySign", paySign);
 
-        LogManager.LogShow("--------------------------",Constant.ROOT_PATH+url+"?sign="+ShareDataTool.getToken(context)+"&shopId="+shopId+"&money="+smoney+"&payPwd="+ToosUtils.getEncrypt(ToosUtils.getTextContent(pwd))+"&payDescribe="+payInfo+"&timeStamp="+String.valueOf(timeStamp)+"&nonce="+nonce+"&paySign="+paySign,LogManager.ERROR);
+        LogManager.LogShow("--------------------------",Constant.ROOT_PATH+url+"?sign="+ShareDataTool.getToken(context)+"&shopId="+shopId+"&money="+monfen+"&payPwd="+MD5Util.MD5(ToosUtils.getTextContent(pwd))+"&payDescribe="+payInfo+"&timeStamp="+String.valueOf(timeStamp)+"&nonce="+nonce+"&paySign="+paySign,LogManager.ERROR);
 
 
         utils.send(HttpRequest.HttpMethod.POST, Constant.ROOT_PATH+url, rp, new RequestCallBack<String>() {

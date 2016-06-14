@@ -22,6 +22,7 @@ import com.baidu.navisdk.adapter.BNaviSettingManager;
 import com.baidu.navisdk.adapter.BaiduNaviManager;
 import com.gaicheyunxiu.gaiche.R;
 import com.gaicheyunxiu.gaiche.adapter.ServiceOrderAdapter;
+import com.gaicheyunxiu.gaiche.dialog.BaiduDialog;
 import com.gaicheyunxiu.gaiche.dialog.CustomeDialog;
 import com.gaicheyunxiu.gaiche.model.CommodityState;
 import com.gaicheyunxiu.gaiche.model.MyCarEntity;
@@ -97,6 +98,8 @@ public class ServiceOrderActivity extends BaseActivity implements View.OnClickLi
     public static final String RESET_END_NODE = "resetEndNode";
     public static final String VOID_MODE = "voidMode";
 
+    private BaiduDialog baiduDialog;
+
     private Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -113,6 +116,7 @@ public class ServiceOrderActivity extends BaseActivity implements View.OnClickLi
 
                 case 15520:
                     int poi= (int) msg.obj;
+                    baiduDialog=new BaiduDialog(ServiceOrderActivity.this);
                     BNRoutePlanNode sNode = new BNRoutePlanNode(MyApplication.getInstance().getBdLocation().getLongitude(), MyApplication.getInstance().getBdLocation().getLatitude(), "我的位置", null, BNRoutePlanNode.CoordinateType.BD09LL);
                     BNRoutePlanNode eNode = new BNRoutePlanNode(Double.valueOf(entities.get(poi).longitude), Double.valueOf(entities.get(poi).latitude), entities.get(poi).shopName, null, BNRoutePlanNode.CoordinateType.BD09LL);
                     if (sNode != null && eNode != null) {
@@ -180,16 +184,16 @@ public class ServiceOrderActivity extends BaseActivity implements View.OnClickLi
             }
 
             public void initSuccess() {
-                Toast.makeText(ServiceOrderActivity.this, "百度导航引擎初始化成功", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(ServiceOrderActivity.this, "百度导航引擎初始化成功", Toast.LENGTH_SHORT).show();
                 initSetting();
             }
 
             public void initStart() {
-                Toast.makeText(ServiceOrderActivity.this, "百度导航引擎初始化开始", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(ServiceOrderActivity.this, "百度导航引擎初始化开始", Toast.LENGTH_SHORT).show();
             }
 
             public void initFailed() {
-                Toast.makeText(ServiceOrderActivity.this, "百度导航引擎初始化失败", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(ServiceOrderActivity.this, "百度导航引擎初始化失败", Toast.LENGTH_SHORT).show();
             }
 
 
@@ -247,6 +251,9 @@ public class ServiceOrderActivity extends BaseActivity implements View.OnClickLi
                     return;
                 }
             }
+            if (baiduDialog!=null){
+                baiduDialog.dismiss();
+            }
             Intent intent = new Intent(ServiceOrderActivity.this, BNDemoGuideActivity.class);
             Bundle bundle = new Bundle();
             bundle.putSerializable(ROUTE_PLAN_NODE, (BNRoutePlanNode) mBNRoutePlanNode);
@@ -258,6 +265,9 @@ public class ServiceOrderActivity extends BaseActivity implements View.OnClickLi
         @Override
         public void onRoutePlanFailed() {
             // TODO Auto-generated method stub
+            if (baiduDialog!=null){
+                baiduDialog.dismiss();
+            }
             Toast.makeText(ServiceOrderActivity.this, "算路失败", Toast.LENGTH_SHORT).show();
         }
     }

@@ -124,9 +124,9 @@ public class ServiceEvaluteActivity extends BaseActivity implements View.OnClick
         rp.addBodyParameter("sign", ShareDataTool.getToken(this));
         rp.addBodyParameter("shopId",shopId);
         rp.addBodyParameter("serviceId",serviceId);
-        rp.addBodyParameter("serviceScore", String.valueOf(bar1.getStar()));
-        rp.addBodyParameter("technologyScore", String.valueOf(bar2.getStar()));
-        rp.addBodyParameter("environmentScore", String.valueOf(bar3.getStar()));
+        rp.addBodyParameter("serviceScore", String.valueOf((int)(bar1.getStar())));
+        rp.addBodyParameter("technologyScore", String.valueOf((int)(bar2.getStar())));
+        rp.addBodyParameter("environmentScore", String.valueOf((int)(bar3.getStar())));
         rp.addBodyParameter("content", ToosUtils.getTextContent(content));
         if (cb.isChecked()){
             rp.addBodyParameter("anonymous", "1");

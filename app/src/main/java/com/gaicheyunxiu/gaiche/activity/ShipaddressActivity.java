@@ -292,9 +292,9 @@ public class ShipaddressActivity extends BaseActivity implements View.OnClickLis
         RequestParams rp = new RequestParams();
         rp.addBodyParameter("sign", ShareDataTool.getToken(ShipaddressActivity.this));
         rp.addBodyParameter("id", adapter.getDatas().get(position).getId());
-        if (!ToosUtils.isStringEmpty(oldId)){
-            rp.addBodyParameter("oldId", oldId);
-        }
+//        if (!ToosUtils.isStringEmpty(oldId)){
+//            rp.addBodyParameter("oldId", oldId);
+//        }
         HttpUtils utils = new HttpUtils();
         utils.configTimeout(20000);
 

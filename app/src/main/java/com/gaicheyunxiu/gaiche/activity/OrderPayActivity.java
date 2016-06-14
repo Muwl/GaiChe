@@ -54,9 +54,9 @@ public class OrderPayActivity extends  BaseActivity implements View.OnClickListe
 
     private TextView title;
 
-    private EditText person;
+    private TextView person;
 
-    private EditText phone;
+    private TextView phone;
 
     private View lin;
 
@@ -156,8 +156,8 @@ public class OrderPayActivity extends  BaseActivity implements View.OnClickListe
         back= (ImageView) findViewById(R.id.title_back);
         title= (TextView) findViewById(R.id.title_text);
         wallet=findViewById(R.id.servicepay_wallet);
-        person= (EditText) findViewById(R.id.service_pay_person);
-        phone= (EditText) findViewById(R.id.service_pay_phone);
+        person= (TextView) findViewById(R.id.service_pay_person);
+        phone= (TextView) findViewById(R.id.service_pay_phone);
         lin1=findViewById(R.id.service_pay_lin1);
         num= (TextView) findViewById(R.id.servicepay_num);
         walletcb= (CheckBox) findViewById(R.id.servicepay_wallet_cb);

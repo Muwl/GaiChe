@@ -108,6 +108,12 @@ public class ShoporderItemAdapter  extends BaseAdapter{
             holder.lin.setVisibility(View.VISIBLE);
             holder.orgbtn.setVisibility(View.GONE);
             holder.graybtn.setVisibility(View.VISIBLE);
+            if ("0".equals(orderState)){
+                holder.graybtn.setVisibility(View.GONE);
+            }
+            if ("3".equals(orderState)){
+                holder.graybtn.setVisibility(View.GONE);
+            }
             holder.graybtn.setText("查看物流");
             holder.graybtn.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -126,7 +132,12 @@ public class ShoporderItemAdapter  extends BaseAdapter{
             holder.graybtn.setVisibility(View.VISIBLE);
             holder.orgbtn.setText("确认收货");
             holder.graybtn.setText("查看物流");
-
+            if ("0".equals(orderState)){
+                holder.graybtn.setVisibility(View.GONE);
+            }
+            if ("3".equals(orderState)){
+                holder.graybtn.setVisibility(View.GONE);
+            }
             holder.orgbtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

@@ -132,7 +132,7 @@ public class OrderEvaluteAvtivity extends BaseActivity implements View.OnClickLi
         rp.addBodyParameter("sign", ShareDataTool.getToken(this));
         rp.addBodyParameter("orderId",orderId);
         rp.addBodyParameter("commodityId",entity.id);
-        rp.addBodyParameter("score", String.valueOf(bar.getStar()));
+        rp.addBodyParameter("score", String.valueOf((int)(bar.getStar())));
         rp.addBodyParameter("evaluation", ToosUtils.getTextContent(evalute));
         if (cb.isChecked()){
             rp.addBodyParameter("anonymous", "1");

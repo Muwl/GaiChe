@@ -364,6 +364,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
+            android:visibility="gone"
             android:drawableTop="@mipmap/service"
             android:text="客服"
             android:textSize="@dimen/second_font" />

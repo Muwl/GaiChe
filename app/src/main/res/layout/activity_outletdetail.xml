@@ -274,6 +274,7 @@
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
                         android:gravity="center"
+                        android:visibility="invisible"
                         android:padding="8dp"
                         android:background="@drawable/item_bg"
                         android:layout_weight="1">
@@ -289,6 +290,7 @@
                             android:singleLine="true"
                             android:layout_marginLeft="10dp"
                             android:text="在线预约"
+
                             android:textColor="#5F5D5D"
                             android:textSize="@dimen/second_font" />
 

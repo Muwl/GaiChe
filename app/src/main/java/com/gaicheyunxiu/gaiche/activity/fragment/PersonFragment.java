@@ -144,7 +144,7 @@ public class PersonFragment extends Fragment implements View.OnClickListener{
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        rigService.setVisibility(View.VISIBLE);
+        rigService.setVisibility(View.GONE);
         rigService.setOnClickListener(this);
         cartView.setOnClickListener(this);
         orderView.setOnClickListener(this);

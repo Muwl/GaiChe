@@ -17,8 +17,10 @@ import android.widget.TextView;
 import com.gaicheyunxiu.gaiche.R;
 import com.gaicheyunxiu.gaiche.adapter.BrandAdapter;
 import com.gaicheyunxiu.gaiche.adapter.YxListEditAdapter;
+import com.gaicheyunxiu.gaiche.adapter.YxListItemAdapter;
 import com.gaicheyunxiu.gaiche.model.BrandCatyState;
 import com.gaicheyunxiu.gaiche.model.BrandEntity;
+import com.gaicheyunxiu.gaiche.model.BrandState;
 import com.gaicheyunxiu.gaiche.model.CommodityEntity;
 import com.gaicheyunxiu.gaiche.model.CommodityState;
 import com.gaicheyunxiu.gaiche.model.MyCarEntity;
@@ -68,7 +70,7 @@ public class YxListChangeActivity extends BaseActivity implements View.OnClickLi
 
     private List<CommodityEntity> commodityEntities;
 
-    private YxListEditAdapter adapter;
+    private YxListItemAdapter adapter;
 
     private View pro;
 
@@ -111,7 +113,7 @@ public class YxListChangeActivity extends BaseActivity implements View.OnClickLi
 
     private void initView() {
         bitmapUtils=new BitmapUtils(this);
-        ids=getIntent().getStringExtra("id");
+        ids=getIntent().getStringExtra("ids");
         commodityEntities= new ArrayList<>();
 
         back= (ImageView) findViewById(R.id.title_back);
@@ -138,7 +140,7 @@ public class YxListChangeActivity extends BaseActivity implements View.OnClickLi
         brandEntities=new ArrayList<>();
         brandAdapter=new BrandAdapter(this,brandEntities);
 
-        adapter=new YxListEditAdapter(this,commodityEntities,handler);
+        adapter=new YxListItemAdapter(this,commodityEntities);
         listView.setAdapter(adapter);
 
         group.check(R.id.yxlist_shoprb);
@@ -178,13 +180,19 @@ public class YxListChangeActivity extends BaseActivity implements View.OnClickLi
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 if (group.getCheckedRadioButtonId() == R.id.yxlist_shoprb) {
-                    Intent intent=new Intent();
-                    intent.putExtra("position",position);
-                    intent.putExtra("entity",commodityEntities.get(position));
+                    Intent intent=new Intent(YxListChangeActivity.this,YxListEditActivity.class);
+
+                    intent.putExtra("position", position);
+                    CommodityEntity commodityEntity=commodityEntities.get(position-1);
+                    LogManager.LogShow("------------------", commodityEntity.toString(), LogManager.ERROR);
+                    Bundle bundle=new Bundle();
+                    bundle.putSerializable("entity",commodityEntity);
+                    intent.putExtras(bundle);
+//                    intent.putExtra("entity",commodityEntity);
                     setResult(RESULT_OK, intent);
                     finish();
                 }else{
-                    brandName=brandEntities.get(position).name;
+                    brandName=brandEntities.get(position-1).name;
                     group.check(R.id.yxlist_shoprb);
                     openPro();
                     getMaceComm(1);
@@ -239,6 +247,8 @@ public class YxListChangeActivity extends BaseActivity implements View.OnClickLi
         }
         rp.addBodyParameter("pageNo", String.valueOf(page));
         rp.addBodyParameter("ids", ids);
+
+        LogManager.LogShow("----------------", "0-921-30190***" + ids, LogManager.ERROR);
         rp.addBodyParameter("sort", "0");
         rp.addBodyParameter("brand",brandName);
         utils.send(HttpRequest.HttpMethod.POST, Constant.ROOT_PATH
@@ -335,15 +345,31 @@ public class YxListChangeActivity extends BaseActivity implements View.OnClickLi
                     if (Constant.RETURN_OK.equals(state.msg)) {
                         LogManager.LogShow("-----", arg0.result,
                                 LogManager.ERROR);
-                        BrandCatyState brandCatyState=gson.fromJson(arg0.result,BrandCatyState.class);
-                        for (int i=0;i<brandCatyState.result.size();i++){
-                            BrandEntity entity=new BrandEntity();
-                            entity.name=brandCatyState.result.get(i);
-                            if (!ToosUtils.isStringEmpty(brandName) && brandName.equals(brandCatyState.result.get(i))){
-                                entity.isSel=true;
+                        brandEntities.clear();
+                        BrandState brandState=gson.fromJson(arg0.result,BrandState.class);
+                        for (int i=0;i<brandState.result.size();i++){
+                            if (!ToosUtils.isStringEmpty(brandName) && brandName.equals(brandState.result.get(i).name)){
+                                brandState.result.get(i).isSel=true;
                             }
-                            brandEntities.add(entity);
+                            brandEntities.add(brandState.result.get(i));
                         }
+                        BrandEntity entity=new BrandEntity();
+                        entity.name="全部";
+                        if (ToosUtils.isStringEmpty(brandName) || "全部".equals(brandName)){
+                            entity.isSel=true;
+                        }else{
+                            entity.isSel=false;
+                        }
+                        brandEntities.add(0,entity);
+//                        BrandCatyState brandCatyState=gson.fromJson(arg0.result,BrandCatyState.class);
+//                        for (int i=0;i<brandCatyState.result.size();i++){
+//                            BrandEntity entity=new BrandEntity();
+//                            entity.name=brandCatyState.result.get(i);
+//                            if (!ToosUtils.isStringEmpty(brandName) && brandName.equals(brandCatyState.result.get(i))){
+//                                entity.isSel=true;
+//                            }
+//                            brandEntities.add(entity);
+//                        }
                         brandAdapter.notifyDataSetChanged();
 
                     } else if (Constant.TOKEN_ERR.equals(state.msg)) {

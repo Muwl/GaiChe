@@ -395,12 +395,14 @@
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="1px"
+                android:visibility="gone"
                 android:background="@color/bottom_div"/>
 
             <RelativeLayout
                 android:id="@+id/person_message"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:visibility="gone"
                 android:background="@drawable/item_bg"
                 android:clickable="true"
                 android:paddingLeft="20dp"

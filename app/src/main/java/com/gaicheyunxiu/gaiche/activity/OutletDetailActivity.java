@@ -30,6 +30,7 @@ import com.gaicheyunxiu.gaiche.adapter.FOuletAdapter;
 import com.gaicheyunxiu.gaiche.adapter.OutletDetailAdapter;
 import com.gaicheyunxiu.gaiche.adapter.OutletdetailSerAdapter;
 import com.gaicheyunxiu.gaiche.adapter.OutletdetailpinjiaAdapter;
+import com.gaicheyunxiu.gaiche.dialog.BaiduDialog;
 import com.gaicheyunxiu.gaiche.model.CommodityState;
 import com.gaicheyunxiu.gaiche.model.MyCarEntity;
 import com.gaicheyunxiu.gaiche.model.OuletEvaluaEntity;
@@ -142,6 +143,8 @@ public class OutletDetailActivity extends BaseActivity implements View.OnClickLi
 
     private String type="2";
 
+    private BaiduDialog baiduDialog;
+
     private Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -214,6 +217,7 @@ public class OutletDetailActivity extends BaseActivity implements View.OnClickLi
         sermeironglist= (MyListView) findViewById(R.id.outletdetail_sermeironglist);
         sermoney= (TextView) findViewById(R.id.outletdetail_sermoney);
         serkehu= (TextView) findViewById(R.id.outletdetail_serkehu);
+        serkehu.setVisibility(View.INVISIBLE);
         serok= (TextView) findViewById(R.id.outletdetail_serok);
         pinjialist= (PullToRefreshListView) findViewById(R.id.outletdetail_pinjialist);
 
@@ -335,6 +339,7 @@ public class OutletDetailActivity extends BaseActivity implements View.OnClickLi
                     List<BNRoutePlanNode> list = new ArrayList<BNRoutePlanNode>();
                     list.add(sNode);
                     list.add(eNode);
+                    baiduDialog=new BaiduDialog(OutletDetailActivity.this);
                     BaiduNaviManager.getInstance().launchNavigator(OutletDetailActivity.this, list, 1, true, new DemoRoutePlanListener(sNode));
                 }
                 break;
@@ -692,6 +697,9 @@ public class OutletDetailActivity extends BaseActivity implements View.OnClickLi
                     return;
                 }
             }
+            if (baiduDialog!=null){
+                baiduDialog.dismiss();
+            }
             Intent intent = new Intent(OutletDetailActivity.this, BNDemoGuideActivity.class);
             Bundle bundle = new Bundle();
             bundle.putSerializable(ROUTE_PLAN_NODE, (BNRoutePlanNode) mBNRoutePlanNode);
@@ -703,6 +711,9 @@ public class OutletDetailActivity extends BaseActivity implements View.OnClickLi
         @Override
         public void onRoutePlanFailed() {
             // TODO Auto-generated method stub
+            if (baiduDialog!=null){
+                baiduDialog.dismiss();
+            }
             Toast.makeText(OutletDetailActivity.this, "算路失败", Toast.LENGTH_SHORT).show();
         }
     }

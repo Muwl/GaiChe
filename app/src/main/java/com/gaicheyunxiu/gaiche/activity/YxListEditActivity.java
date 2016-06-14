@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -13,7 +14,9 @@ import com.gaicheyunxiu.gaiche.R;
 import com.gaicheyunxiu.gaiche.adapter.YxListEditAdapter;
 import com.gaicheyunxiu.gaiche.model.CommodityEntity;
 import com.gaicheyunxiu.gaiche.model.MyCarEntity;
+import com.gaicheyunxiu.gaiche.utils.LogManager;
 import com.gaicheyunxiu.gaiche.utils.MyApplication;
+import com.google.gson.Gson;
 import com.lidroid.xutils.BitmapUtils;
 
 import java.io.Serializable;
@@ -60,7 +63,7 @@ public class YxListEditActivity extends BaseActivity implements View.OnClickList
                     int poi= (int) msg.obj;
                     Intent intent=new Intent(YxListEditActivity.this,YxListChangeActivity.class);
                     intent.putExtra("position",poi);
-                    intent.putExtra("id",ids);
+                    intent.putExtra("ids",ids);
                     startActivityForResult(intent, 4715);
                     break;
             }
@@ -80,6 +83,7 @@ public class YxListEditActivity extends BaseActivity implements View.OnClickList
 
         position=getIntent().getIntExtra("position", 0);
         serName=getIntent().getStringExtra("name");
+        ids=getIntent().getStringExtra("ids");
         commodityEntities= (List<CommodityEntity>) getIntent().getSerializableExtra("entity");
 
         back= (ImageView) findViewById(R.id.title_back);
@@ -126,6 +130,7 @@ public class YxListEditActivity extends BaseActivity implements View.OnClickList
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode==4715 && resultCode==RESULT_OK){
             int poi=data.getIntExtra("position",0);
+            LogManager.LogShow("----------",poi+"************",LogManager.ERROR);
             if (poi==-1){
                 Intent intent=new Intent();
                 intent.putExtra("position",position);
@@ -133,7 +138,7 @@ public class YxListEditActivity extends BaseActivity implements View.OnClickList
                 setResult(RESULT_OK,intent);
                 finish();
             }else{
-                CommodityEntity commodityEntity= (CommodityEntity) getIntent().getSerializableExtra("entity");
+                CommodityEntity commodityEntity= (CommodityEntity) data.getSerializableExtra("entity");
                 commodityEntities.set(poi,commodityEntity);
                 adapter.notifyDataSetChanged();
             }

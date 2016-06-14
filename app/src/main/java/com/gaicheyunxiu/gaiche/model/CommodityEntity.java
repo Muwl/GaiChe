@@ -16,4 +16,17 @@ public class CommodityEntity implements Serializable {
     public String sales;
     public int num=1;
 
+    @Override
+    public String toString() {
+        return "CommodityEntity{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", briefImage='" + briefImage + '\'' +
+                ", originalPrice='" + originalPrice + '\'' +
+                ", presentPrice='" + presentPrice + '\'' +
+                ", mValue='" + mValue + '\'' +
+                ", sales='" + sales + '\'' +
+                ", num=" + num +
+                '}';
+    }
 }

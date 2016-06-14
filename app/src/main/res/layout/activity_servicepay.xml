@@ -288,6 +288,7 @@
                 android:layout_height="wrap_content"
                 android:background="@color/write"
                 android:clickable="true"
+                android:visibility="gone"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
                 android:paddingLeft="22dp"

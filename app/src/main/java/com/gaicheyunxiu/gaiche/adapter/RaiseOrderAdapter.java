@@ -125,6 +125,10 @@ public class RaiseOrderAdapter extends BaseAdapter{
                     holder.organbtn.setText("确认收货");
                     holder.graybtn.setText("查看物流");
 
+                    if ("0".equals(shopOrderEntity.orderState) || "3".equals(shopOrderEntity.orderState) ){
+                        holder.graybtn.setVisibility(View.GONE);
+                    }
+
                     holder.organbtn.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
