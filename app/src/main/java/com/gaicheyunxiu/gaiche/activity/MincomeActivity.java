@@ -3,6 +3,7 @@ package com.gaicheyunxiu.gaiche.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Adapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -88,6 +89,7 @@ public class MincomeActivity extends BaseActivity implements View.OnClickListene
         no.setText(ShareDataTool.getRegiterEntity(this).gcCode);
         money.setText(incomeEntity.earningsMoney);
         listView.setMode(PullToRefreshBase.Mode.BOTH);
+        listView.setAdapter(adapter);
         listView.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener<ListView>() {
             @Override
             public void onRefresh(PullToRefreshBase<ListView> refreshView) {

@@ -61,6 +61,7 @@ public class OrderEvaluteAvtivity extends BaseActivity implements View.OnClickLi
 
     private String orderId;
     private String createDate;
+    private String sorderNo;
     private ShopOrderVo entity;
 
     private BitmapUtils bitmapUtils;
@@ -75,6 +76,7 @@ public class OrderEvaluteAvtivity extends BaseActivity implements View.OnClickLi
     private void initView() {
         orderId=getIntent().getStringExtra("orderId");
         createDate=getIntent().getStringExtra("createDate");
+        sorderNo=getIntent().getStringExtra("orderNo");
         entity= (ShopOrderVo) getIntent().getSerializableExtra("entity");
         bitmapUtils=new BitmapUtils(this);
         back= (ImageView) findViewById(R.id.title_back);
@@ -95,7 +97,7 @@ public class OrderEvaluteAvtivity extends BaseActivity implements View.OnClickLi
         back.setOnClickListener(this);
         title.setText("评价商品订单");
         ok.setOnClickListener(this);
-        orderNo.setText("订单号" + orderNo);
+        orderNo.setText("订单号：" + sorderNo);
         time.setText(createDate);
         bitmapUtils.display(imageView,entity.briefImage);
         name.setText("【"+entity.name+"】"+entity.businessName);

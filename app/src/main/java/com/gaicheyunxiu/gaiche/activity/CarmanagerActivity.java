@@ -310,12 +310,14 @@ public class CarmanagerActivity extends BaseActivity implements View.OnClickList
             ToastUtils.displayShortToast(CarmanagerActivity.this,
                     "删除成功！");
             entities.remove(position);
-            adapter.notifyDataSetChanged();
             if (entities.size()==0){
                 MyApplication.getInstance().setCarEntity(null);
             }else if (entities.size()>0 &&MyApplication.getInstance().getCarEntity()!=null &&MyApplication.getInstance().getCarEntity().carTypeId.equals(id)){
                 MyApplication.getInstance().setCarEntity(entities.get(0));
+                entities.get(0).isDefault=true;
+                utils.updateDefault(entities.get(position));
             }
+            adapter.notifyDataSetChanged();
             return;
         }
         RequestParams rp = new RequestParams();
@@ -349,7 +351,15 @@ public class CarmanagerActivity extends BaseActivity implements View.OnClickList
                                 LogManager.ERROR);
                         ToastUtils.displayShortToast(CarmanagerActivity.this,
                                 "删除成功！");
-                        entities.remove(position);
+                        entities.clear();
+                        MyApplication.getInstance().setCarEntity(null);
+                        MyCarState carState = gson.fromJson(arg0.result, MyCarState.class);
+                        for (int i = 0; i < carState.result.size(); i++) {
+                            entities.add(carState.result.get(i));
+                            if (entities.get(i).isDefault){
+                                MyApplication.getInstance().setCarEntity(entities.get(i));
+                            }
+                        }
                         adapter.notifyDataSetChanged();
                     } else if (Constant.TOKEN_ERR.equals(state.msg)) {
                         ToastUtils.displayShortToast(CarmanagerActivity.this,

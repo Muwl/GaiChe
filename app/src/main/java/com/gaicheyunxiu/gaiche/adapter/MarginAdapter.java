@@ -47,6 +47,8 @@ public class MarginAdapter extends BaseAdapter{
             convertView=View.inflate(context, R.layout.margin_item,null);
             holder=new ViewHolder();
             holder.gcView= (TextView) convertView.findViewById(R.id.margin_item_gc);
+            holder.money= (TextView) convertView.findViewById(R.id.margin_item_money);
+            holder.earn= (TextView) convertView.findViewById(R.id.margin_item_earn);
             convertView.setTag(holder);
         }else{
             holder= (ViewHolder) convertView.getTag();

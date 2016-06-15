@@ -131,6 +131,7 @@ public class RaiseOrderActivity extends BaseActivity implements View.OnClickList
                     Intent intent = new Intent(RaiseOrderActivity.this, OrderEvaluteAvtivity.class);
                     intent.putExtra("orderId",entities.get(groupPoi1).orderId);
                     intent.putExtra("createDate", entities.get(groupPoi1).createDate);
+                    intent.putExtra("orderNo", entities.get(groupPoi1).orderNo);
                     if ("0".equals(entities.get(groupPoi1).split)){
                         intent.putExtra("entity", entities.get(groupPoi1).orderListVos.get(position1));
                     }else{
@@ -470,7 +471,7 @@ public class RaiseOrderActivity extends BaseActivity implements View.OnClickList
     /**
      *商品确认收货
      */
-    private void confirmOrder(final int position,int poi) {
+    private void confirmOrder(final int position, final int poi) {
         RequestParams rp = new RequestParams();
         HttpUtils utils = new HttpUtils();
         utils.configTimeout(20000);
@@ -508,7 +509,12 @@ public class RaiseOrderActivity extends BaseActivity implements View.OnClickList
                                 LogManager.ERROR);
                         ToastUtils.displayShortToast(RaiseOrderActivity.this,
                                 "确认收货成功！");
-
+                        if ("0".equals(entities.get(position).split)){
+                            entities.get(position).orderListVos.get(poi).state="2";
+                        } else {
+                            entities.get(position).vos.get(poi).state="2";
+                        }
+                        adapter.notifyDataSetChanged();
                     } else if (Constant.TOKEN_ERR.equals(state.msg)) {
                         ToastUtils.displayShortToast(RaiseOrderActivity.this,
                                 "验证错误，请重新登录");

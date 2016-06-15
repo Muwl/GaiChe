@@ -74,7 +74,7 @@ public class ReqrefundActivity extends BaseActivity implements View.OnClickListe
 
     private String commodityId;
 
-    private String smoney;
+    private double smoney;
 
     private List<File> files;
 
@@ -132,7 +132,7 @@ public class ReqrefundActivity extends BaseActivity implements View.OnClickListe
         width = DensityUtil.getScreenWidth(this);
         orderId = getIntent().getStringExtra("orderId");
         commodityId = getIntent().getStringExtra("commodityId");
-        smoney = getIntent().getStringExtra("money");
+        smoney = getIntent().getDoubleExtra("money",0);
         files = new ArrayList<>();
         initView();
     }

@@ -32,6 +32,7 @@ import com.baidu.navisdk.adapter.BNRoutePlanNode;
 import com.baidu.navisdk.adapter.BNaviSettingManager;
 import com.baidu.navisdk.adapter.BaiduNaviManager;
 import com.gaicheyunxiu.gaiche.R;
+import com.gaicheyunxiu.gaiche.dialog.BaiduDialog;
 import com.gaicheyunxiu.gaiche.dialog.CustomeDialog;
 import com.gaicheyunxiu.gaiche.model.CommodityState;
 import com.gaicheyunxiu.gaiche.model.MyCarEntity;
@@ -67,6 +68,7 @@ public class NavitaActivity extends BaseActivity implements View.OnClickListener
     private MapView mMapView;
     private BaiduMap mBaiduMap;
     private InfoWindow mInfoWindow;
+    private BaiduDialog baiduDialog;
 
 
     public static List<Activity> activityList = new LinkedList<Activity>();
@@ -147,6 +149,7 @@ public class NavitaActivity extends BaseActivity implements View.OnClickListener
                             List<BNRoutePlanNode> list = new ArrayList<BNRoutePlanNode>();
                             list.add(sNode);
                             list.add(eNode);
+                            baiduDialog=new BaiduDialog(NavitaActivity.this);
                             BaiduNaviManager.getInstance().launchNavigator(NavitaActivity.this, list, 1, true, new DemoRoutePlanListener(sNode));
                             mBaiduMap.hideInfoWindow();
                         }
@@ -361,6 +364,9 @@ public class NavitaActivity extends BaseActivity implements View.OnClickListener
                     return;
                 }
             }
+            if (baiduDialog!=null){
+                baiduDialog.dismiss();
+            }
             Intent intent = new Intent(NavitaActivity.this, BNDemoGuideActivity.class);
             Bundle bundle = new Bundle();
             bundle.putSerializable(ROUTE_PLAN_NODE, (BNRoutePlanNode) mBNRoutePlanNode);
@@ -372,6 +378,9 @@ public class NavitaActivity extends BaseActivity implements View.OnClickListener
         @Override
         public void onRoutePlanFailed() {
             // TODO Auto-generated method stub
+            if (baiduDialog!=null){
+                baiduDialog.dismiss();
+            }
             Toast.makeText(NavitaActivity.this, "算路失败", Toast.LENGTH_SHORT).show();
         }
     }

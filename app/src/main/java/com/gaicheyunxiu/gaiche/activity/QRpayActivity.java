@@ -101,10 +101,10 @@ public class QRpayActivity extends BaseActivity implements View.OnClickListener{
                     ToastUtils.displayShortToast(QRpayActivity.this,"请输入支付金额");
                     return;
                 }
-                if (ToosUtils.isTextEmpty(info)){
-                    ToastUtils.displayShortToast(QRpayActivity.this,"请输入支付说明");
-                    return;
-                }
+//                if (ToosUtils.isTextEmpty(info)){
+//                    ToastUtils.displayShortToast(QRpayActivity.this,"请输入支付说明");
+//                    return;
+//                }
 
                 PaymentQRDialog dialog=new PaymentQRDialog(QRpayActivity.this,qrEntity.id,ToosUtils.getTextContent(money),ToosUtils.getTextContent(info));
                 break;

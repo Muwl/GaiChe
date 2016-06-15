@@ -150,7 +150,18 @@
         android:text="2.00M"
         android:gravity="right"
         android:layout_height="wrap_content" />
-
+    <TextView
+        android:id="@+id/cart_item_installmon"
+        android:layout_width="match_parent"
+        android:layout_marginLeft="13dp"
+        android:layout_marginRight="13dp"
+        android:layout_marginTop="8dp"
+        android:textColor="#332C2B"
+        android:visibility="gone"
+        android:textSize="@dimen/thrid_font"
+        android:text="2.00M"
+        android:gravity="right"
+        android:layout_height="wrap_content" />
 
     <TextView
         android:id="@+id/cart_item_ok"

@@ -15,6 +15,7 @@ import com.gaicheyunxiu.gaiche.dialog.CustomeDialog;
 import com.gaicheyunxiu.gaiche.dialog.OutSelDialog;
 import com.gaicheyunxiu.gaiche.model.ShopCartCommodityEntity;
 import com.gaicheyunxiu.gaiche.model.ShopCartEntity;
+import com.gaicheyunxiu.gaiche.utils.MathUtils;
 import com.gaicheyunxiu.gaiche.view.MyListView;
 import com.lidroid.xutils.BitmapUtils;
 
@@ -63,6 +64,7 @@ public class CartAdapter extends BaseAdapter{
             holder.outText= (TextView) convertView.findViewById(R.id.cart_item_outlet);
             holder.num= (TextView) convertView.findViewById(R.id.cart_item_num);
             holder.money= (TextView) convertView.findViewById(R.id.cart_item_money);
+            holder.installmoney= (TextView) convertView.findViewById(R.id.cart_item_installmon);
             holder.m= (TextView) convertView.findViewById(R.id.cart_item_m);
             holder.ok= (TextView) convertView.findViewById(R.id.cart_item_ok);
             convertView.setTag(holder);
@@ -122,14 +124,18 @@ public class CartAdapter extends BaseAdapter{
 
         if (entities.get(position).outFlag==0){
             holder.outText.setText("请选择安装门店");
+            holder.installmoney.setVisibility(View.GONE);
         }else if(entities.get(position).outFlag==1 && entities.get(position).outSelEntity!=null){
             holder.outText.setText(entities.get(position).outSelEntity.name);
+            holder.installmoney.setVisibility(View.VISIBLE);
+            holder.installmoney.setText("安装费：￥"+entities.get(position).outSelEntity.sumPrice);
         }else{
             holder.outText.setText("无法确认,暂不选择门店");
+            holder.installmoney.setVisibility(View.GONE);
         }
         holder.num.setText("共"+m+"件商品");
-        holder.money.setText("￥"+smoney);
-        holder.m.setText(mva+"M");
+        holder.money.setText("￥"+ MathUtils.getMathDem(smoney));
+        holder.m.setText(MathUtils.getMathDem(mva)+"M");
         return convertView;
     }
     class ViewHolder{
@@ -140,6 +146,7 @@ public class CartAdapter extends BaseAdapter{
         public TextView outText;
         public TextView num;
         public TextView money;
+        public TextView installmoney;
         public TextView m;
         public TextView ok;
     }

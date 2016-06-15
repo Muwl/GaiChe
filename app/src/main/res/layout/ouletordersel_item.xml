@@ -36,7 +36,7 @@
         android:layout_marginTop="15dp"
         android:layout_toLeftOf="@id/outlet_item_cb"
         android:layout_marginLeft="8dp"
-        android:layout_marginRight="20dp"
+        android:layout_marginRight="12dp"
         android:layout_toRightOf="@id/outlet_item_image">
 
         <TextView
@@ -75,6 +75,10 @@
                 hedgehog:starImageSize="18dp"
                 android:id="@+id/outlet_item_bar">
             </com.gaicheyunxiu.gaiche.view.RatingBar>
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"/>
 
             <TextView
                 android:id="@+id/outlet_item_discussnum"
@@ -83,7 +87,6 @@
                 android:textColor="#5F5D5D"
                 android:text="868条"
                 android:singleLine="true"
-                android:layout_marginLeft="10dp"
                 android:textSize="@dimen/thrid_font"/>
         </LinearLayout>
 

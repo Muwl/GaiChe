@@ -34,6 +34,7 @@ import com.gaicheyunxiu.gaiche.model.ShopCartEntity;
 import com.gaicheyunxiu.gaiche.model.ShopDetailEntity;
 import com.gaicheyunxiu.gaiche.utils.Constant;
 import com.gaicheyunxiu.gaiche.utils.LogManager;
+import com.gaicheyunxiu.gaiche.utils.MathUtils;
 import com.gaicheyunxiu.gaiche.utils.MyApplication;
 import com.gaicheyunxiu.gaiche.utils.ShareDataTool;
 import com.gaicheyunxiu.gaiche.utils.ToastUtils;
@@ -687,13 +688,14 @@ public class ClearingActivity extends BaseActivity implements View.OnClickListen
                                 LogManager.ERROR);
                         CostState costState=gson.fromJson(arg0.result,CostState.class);
                         costEntity=costState.result;
-                        smoney=costState.result.price+costState.result.freight+costState.result.shopServicePrice;
+                        String sshopMoney= MathUtils.getMathDem(costState.result.price-costState.result.freight-costState.result.shopServicePrice);
+                        smoney=costState.result.price;
                         if (costEntity.freight==0){
                             delivery.setText("包邮");
                         }else{
                             delivery.setText(costEntity.freight+"元");
                         }
-                        shopPrice.setText("商品价格￥"+costState.result.price);
+                        shopPrice.setText("商品价格￥"+sshopMoney);
                         installcost.setText("安装费￥"+costState.result.shopServicePrice);
                         freightcost.setText("运费￥"+costState.result.freight);
                         money.setText("￥"+smoney);
