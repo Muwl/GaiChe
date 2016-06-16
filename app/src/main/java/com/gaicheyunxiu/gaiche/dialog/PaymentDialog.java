@@ -51,6 +51,7 @@ public class PaymentDialog extends Dialog implements
 	private PayEntity payEntity;
 	private View pro;
 	private String smoney;
+	private  PayDialog payDialog;
 
 	public PaymentDialog(Context context,PayEntity payEntity,String smoney) {
 		super(context, R.style.dialog2);
@@ -110,6 +111,7 @@ public class PaymentDialog extends Dialog implements
 			ToastUtils.displayShortToast(context,"请输入密码");
 			return;
 		}
+		payDialog=new PayDialog(context);
 		RequestParams rp = new RequestParams();
 		HttpUtils utils = new HttpUtils();
 		utils.configTimeout(20000);
@@ -135,12 +137,18 @@ public class PaymentDialog extends Dialog implements
 			@Override
 			public void onFailure(HttpException arg0, String arg1) {
 				ToastUtils.displayFailureToast(context);
+				if (payDialog!=null){
+					payDialog.dismiss();
+				}
 //				pro.setVisibility(View.GONE);
 			}
 
 			@Override
 			public void onSuccess(ResponseInfo<String> arg0) {
 //				pro.setVisibility(View.GONE);
+				if (payDialog!=null){
+					payDialog.dismiss();
+				}
 				try {
 					Gson gson = new Gson();
 					ReturnState state = gson.fromJson(arg0.result,

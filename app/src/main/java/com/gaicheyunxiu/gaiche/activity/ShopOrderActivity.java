@@ -86,6 +86,7 @@ public class ShopOrderActivity extends  BaseActivity implements View.OnClickList
         public void handleMessage(Message msg) {
             switch (msg.what){
                 case 1336:
+                    LogManager.LogShow("----------------","====================",LogManager.ERROR);
                     //查看物流
                     int groupPoi=msg.arg2;
                     int position=msg.arg1;
@@ -96,7 +97,7 @@ public class ShopOrderActivity extends  BaseActivity implements View.OnClickList
                         shopOrderVo=entities.get(groupPoi).vos.get(position);
                     }
                     Gson gson=new Gson();
-                    if ("0".equals(shopOrderVo.distributionType)){
+                    if ("1".equals(shopOrderVo.distributionType)){
                         Map<String,String> logmaps=shopOrderVo.distributionDetail;
                         if (!ToosUtils.isStringEmpty(logmaps.get("LPN")) && !ToosUtils.isStringEmpty(logmaps.get("mobile"))){
                             LogisticDialog dialog=new LogisticDialog(ShopOrderActivity.this,logmaps.get("LPN"),logmaps.get("mobile"));
@@ -105,8 +106,8 @@ public class ShopOrderActivity extends  BaseActivity implements View.OnClickList
                     }else{
                         Intent intent11=new Intent(ShopOrderActivity.this, LogisticDetailActivity.class);
                         Map<String,String> logmaps=shopOrderVo.distributionDetail;
-                        intent11.putExtra("expressNo",logmaps.get("LPN"));
-                        intent11.putExtra("expressCompany",logmaps.get("mobile"));
+                        intent11.putExtra("expressNo",logmaps.get("expressNo"));
+                        intent11.putExtra("expressCompany",logmaps.get("expressCompany"));
                         intent11.putExtra("orderId",entities.get(groupPoi).orderId);
                         intent11.putExtra("commodityId",shopOrderVo.id);
                         startActivity(intent11);
@@ -401,6 +402,9 @@ public class ShopOrderActivity extends  BaseActivity implements View.OnClickList
                         ToastUtils.displayShortToast(ShopOrderActivity.this,
                                 "取消成功！");
                         entities.get(position).orderState="3";
+                        if(!ToosUtils.isStringEmpty(orderState)){
+                            entities.remove(position);
+                        }
                         adapter.notifyDataSetChanged();
                     } else if (Constant.TOKEN_ERR.equals(state.msg)) {
                         ToastUtils.displayShortToast(ShopOrderActivity.this,
@@ -577,6 +581,9 @@ public class ShopOrderActivity extends  BaseActivity implements View.OnClickList
                             entities.get(position).orderListVos.get(poi).state="2";
                         } else {
                             entities.get(position).vos.get(poi).state="2";
+                        }
+                        if(!ToosUtils.isStringEmpty(orderState)){
+                            entities.remove(position);
                         }
                         adapter.notifyDataSetChanged();
                     } else if (Constant.TOKEN_ERR.equals(state.msg)) {

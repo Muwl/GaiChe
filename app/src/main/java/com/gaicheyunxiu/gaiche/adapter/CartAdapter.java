@@ -128,6 +128,7 @@ public class CartAdapter extends BaseAdapter{
         }else if(entities.get(position).outFlag==1 && entities.get(position).outSelEntity!=null){
             holder.outText.setText(entities.get(position).outSelEntity.name);
             holder.installmoney.setVisibility(View.VISIBLE);
+            smoney=smoney+Double.valueOf(entities.get(position).outSelEntity.sumPrice);
             holder.installmoney.setText("安装费：￥"+entities.get(position).outSelEntity.sumPrice);
         }else{
             holder.outText.setText("无法确认,暂不选择门店");

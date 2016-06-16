@@ -53,7 +53,7 @@ public class PaymentQRDialog extends Dialog implements
     private String smoney;
     private String shopId;
     private String payInfo;
-
+    private  PayDialog payDialog;
 
     public PaymentQRDialog(Context context, String shopId, String smoney, String payInfo) {
         super(context, R.style.dialog2);
@@ -114,6 +114,7 @@ public class PaymentQRDialog extends Dialog implements
             ToastUtils.displayShortToast(context, "请输入密码");
             return;
         }
+        payDialog=new PayDialog(context);
         RequestParams rp = new RequestParams();
         HttpUtils utils = new HttpUtils();
         utils.configTimeout(20000);
@@ -151,12 +152,18 @@ public class PaymentQRDialog extends Dialog implements
             @Override
             public void onFailure(HttpException arg0, String arg1) {
                 ToastUtils.displayFailureToast(context);
+                if (payDialog!=null){
+                    payDialog.dismiss();
+                }
 //				pro.setVisibility(View.GONE);
             }
 
             @Override
             public void onSuccess(ResponseInfo<String> arg0) {
 //				pro.setVisibility(View.GONE);
+                if (payDialog!=null){
+                    payDialog.dismiss();
+                }
                 try {
                     Gson gson = new Gson();
                     ReturnState state = gson.fromJson(arg0.result,
